@@ -1,0 +1,21 @@
+[
+  {"q": "1 project manager PMP certified", "category": "team", "expect": "covered", "allowed": ["CV_Sami_Trabelsi.md"], "why": "Hana is a Scrum Master without PMP; she must not be proposed"},
+  {"q": "Chef de projet certifie PRINCE2", "category": "team", "expect": "covered", "allowed": ["CV_Sami_Trabelsi.md"], "why": "French wording + certification"},
+  {"q": "1 Scrum Master PSM certified", "category": "team", "expect": "covered", "allowed": ["CV_Hana_Ktari.md"], "why": "exact certification"},
+  {"q": "Minimum 3 senior developers", "category": "team", "expect": "covered", "min_found": 3, "allowed": ["CV_Ahmed_Bouazizi.md", "CV_Karim_Jlassi.md", "CV_Nour_BenSalah.md", "CV_Rania_Chaabane.md"], "why": "count + seniority; the junior PHP developer must not count"},
+  {"q": "Minimum 5 senior developers", "category": "team", "expect": "partial", "why": "only 4 senior developers exist"},
+  {"q": "Senior PHP developer", "category": "team", "expect": "missing", "why": "the only PHP developer is junior"},
+  {"q": "Senior iOS Swift developer", "category": "team", "expect": "missing", "why": "senior web developers exist, but nobody knows iOS or Swift"},
+  {"q": "2 formateurs certifies en intelligence artificielle", "category": "team", "expect": "partial", "allowed": ["CV_Firas_Ayari.md"], "why": "only one AI trainer"},
+  {"q": "ISO 27001 lead auditor", "category": "team", "expect": "covered", "allowed": ["CV_Mehdi_Karray.md"], "why": "certification held by one person only"},
+  {"q": "AWS certified engineer", "category": "team", "expect": "covered", "allowed": ["CV_Youssef_Gharbi.md"], "why": "Ahmed uses AWS but is not certified"},
+  {"q": "1 data engineer", "category": "team", "expect": "covered", "allowed": ["CV_Rania_Chaabane.md"], "why": "role match"},
+  {"q": "Kubernetes and Terraform", "category": "technical", "expect": "covered", "allowed": ["CV_Youssef_Gharbi.md"], "why": "AND: both skills needed"},
+  {"q": "React and Flutter", "category": "technical", "expect": "missing", "why": "AND: nobody has both"},
+  {"q": "Salesforce CRM integration", "category": "technical", "expect": "missing", "why": "not in the knowledge base"},
+  {"q": "Solidity smart contracts", "category": "technical", "expect": "missing", "why": "not in the knowledge base"},
+  {"q": "3+ public sector projects", "category": "experience", "expect": "covered", "min_found": 3, "why": "count of public projects"},
+  {"q": "2+ projects in the health sector", "category": "experience", "expect": "partial", "why": "only one health project"},
+  {"q": "Experience in the tourism sector", "category": "experience", "expect": "covered", "allowed": ["Project_HotelChain_BookingPlatform.md"], "why": "sector match"},
+  {"q": "Blockchain supply-chain traceability for a port authority", "category": "experience", "expect": "missing", "why": "not in the knowledge base"}
+]

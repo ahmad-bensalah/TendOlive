@@ -1,0 +1,912 @@
+{
+  "matches": [
+    {
+      "doc_id": "CV_09_Emma_Foster.pdf",
+      "type": "cv",
+      "title": "Emma Foster - Data Engineer",
+      "similarity_score": 0.8654,
+      "summary": "Data Engineer with over 3 years of experience designing, implementing, and maintaining end-to-end data pipelines across the MENA region. Expert in building robust Apache Airflow DAGs, optimizing ETL workflows with Talend...",
+      "evidence": {
+        "quote": "the MENA region. Expert in building robust Apache Airflow DAGs, optimizing ETL workflows with Talend, and ensuring",
+        "line": 5
+      },
+      "supports": "Data pipelines with Talend or Apache Airflow"
+    },
+    {
+      "doc_id": "CV_Sami_Trabelsi.md",
+      "type": "cv",
+      "title": "Sami Trabelsi - Project Manager (PMP)",
+      "similarity_score": 0.8824,
+      "summary": "PMP-certified project manager, 10 years, delivered 6 government digital projects; manages budgets up to 1M TND.",
+      "evidence": {
+        "quote": "Certifications: PMP (Project Management Professional, PMI), PRINCE2 Foundation",
+        "line": 2
+      },
+      "supports": "1 project manager PMP certified"
+    },
+    {
+      "doc_id": "CV_Rania_Chaabane.md",
+      "type": "cv",
+      "title": "Rania Chaabane - Data Engineer / BI",
+      "similarity_score": 0.8768,
+      "summary": "Data engineer, 5 years, Power BI and analytics dashboards, Airflow pipelines, data warehouses.",
+      "evidence": {
+        "quote": "Skills: Python, SQL, Apache Airflow, dbt, Power BI, Metabase, data warehouse design, KPI dashboards",
+        "line": 3
+      },
+      "supports": "Power BI dashboards"
+    },
+    {
+      "doc_id": "Project_HealthAnalytics_Dashboard.md",
+      "type": "past_project",
+      "title": "National Health Analytics Dashboard (2024)",
+      "similarity_score": 0.8732,
+      "summary": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+      "evidence": {
+        "quote": "Stack: Python, Airflow, Azure SQL, Power BI, Azure hosting.",
+        "line": 4
+      },
+      "supports": "Power BI dashboards"
+    },
+    {
+      "doc_id": "CV_15_Zoe_Walker.pdf",
+      "type": "cv",
+      "title": "Zoe Walker - Data Engineer",
+      "similarity_score": 0.8697,
+      "summary": "Data & Cloud Engineer with a strong focus on Google Cloud Platform, building scalable and reliable data pipelines. Passionate about turning complex datasets into actionable insights, optimizing workloads, and delivering ...",
+      "evidence": {
+        "quote": "Google Cloud Professional Data Engineer (x4)",
+        "line": 62
+      },
+      "supports": "1 Google Cloud Professional Data Engineer certified"
+    },
+    {
+      "doc_id": "CV_16_Nora_Ellis.pdf",
+      "type": "cv",
+      "title": "Nora Ellis - Data Platform BI Team Lead",
+      "similarity_score": 0.8631,
+      "summary": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and optimizing end-to-end data pipelines for clients across finance, retail, and logistics. Proven track re...",
+      "evidence": {
+        "quote": "Google Cloud Certified – Professional Data Engineer (PDE)",
+        "line": 52
+      },
+      "supports": "1 Google Cloud Professional Data Engineer certified"
+    },
+    {
+      "doc_id": "TechStack_Data_AI.md",
+      "type": "tech_stack",
+      "title": "OliveSoft Data and AI Stack",
+      "similarity_score": 0.8628,
+      "summary": "Data and AI offering: Python, Airflow, Power BI dashboards, LLMs, RAG and vector databases.",
+      "evidence": {
+        "quote": "Analytics: Power BI, Metabase dashboards",
+        "line": 2
+      },
+      "supports": "Power BI dashboards"
+    },
+    {
+      "doc_id": "CV_07_Olivia_Morris.pdf",
+      "type": "cv",
+      "title": "Olivia Morris - Data Engineer",
+      "similarity_score": 0.8481,
+      "summary": "Data Engineer with 2+ years of experience designing scalable data pipelines and data-warehousing solutions. Proven ability to improve data latency and quality through automation, and to collaborate effectively with cross...",
+      "evidence": {
+        "quote": "Google Cloud Professional Data Engineer (2024)",
+        "line": 48
+      },
+      "supports": "1 Google Cloud Professional Data Engineer certified"
+    },
+    {
+      "doc_id": "CV_18_Leila_Morgan.pdf",
+      "type": "cv",
+      "title": "Leila Morgan - Data Engineer",
+      "similarity_score": 0.8472,
+      "summary": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data pipelines, workflow orchestration, and cloud-native architectures that enable intelligent appli...",
+      "evidence": {
+        "quote": "Data Engineer July 2026 – Present",
+        "line": 14
+      },
+      "supports": "At least 3 data engineers"
+    },
+    {
+      "doc_id": "CV_13_Isabella_Ross.pdf",
+      "type": "cv",
+      "title": "Isabella Ross - Data Engineer Consultant",
+      "similarity_score": 0.8376,
+      "summary": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI solutions. Proven ability to increase data availability by 30 % and reduce ETL processing time ...",
+      "evidence": {
+        "quote": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI",
+        "line": 4
+      },
+      "supports": "At least 3 data engineers"
+    },
+    {
+      "doc_id": "CV_01_Ava_Thompson.pdf",
+      "type": "cv",
+      "title": "Ava Thompson - Cloud Infrastructure Engineer",
+      "similarity_score": 0.8341,
+      "summary": "Cloud Infrastructure Engineer with over three years of experience designing, automating, and operating scalable Kubernetesbased platforms for enterprise customers. Proven ability to cut deployment times by up to 30 % and...",
+      "evidence": {
+        "quote": "Infrastructure as Code: Terraform, Ansible, Pulumi",
+        "line": 45
+      },
+      "supports": "Terraform infrastructure as code"
+    },
+    {
+      "doc_id": "CV_03_Maya_Patel.pdf",
+      "type": "cv",
+      "title": "Maya Patel - Cloud and DevOps Engineer",
+      "similarity_score": 0.8332,
+      "summary": "Cloud and DevOps Engineer with a Computer Science engineering background, specialized in designing, automating, and managing cloud-native infrastructures on Azure and Kubernetes. Proven ability to deliver end-to-end MLOp...",
+      "evidence": {
+        "quote": "Infrastructure as Code: Terraform, ARM Templates, Helm",
+        "line": 42
+      },
+      "supports": "Terraform infrastructure as code"
+    },
+    {
+      "doc_id": "CV_14_Henry_Price.pdf",
+      "type": "cv",
+      "title": "Henry Price - Technical Delivery Manager",
+      "similarity_score": 0.831,
+      "summary": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering largescale web solutions, and driving DevOps transformations. Proven track record of improving delive...",
+      "evidence": {
+        "quote": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering large-",
+        "line": 4
+      },
+      "supports": "1 senior delivery manager"
+    },
+    {
+      "doc_id": "CV_11_Chloe_Martin.pdf",
+      "type": "cv",
+      "title": "Chloe Martin - Data-Engineering student",
+      "similarity_score": 0.8287,
+      "summary": "Data-Engineering student with solid hands-on experience designing and benchmarking end-to-end streaming pipelines on both Google Cloud and Azure. Proven ability to translate business requirements into scalable, cost-effe...",
+      "evidence": {
+        "quote": "Provisioned Google Cloud resources with Terraform; reduced infrastructure-as-code deployment time by 40 %.",
+        "line": 20
+      },
+      "supports": "Terraform infrastructure as code"
+    },
+    {
+      "doc_id": "Project_Insurance_ISO27001.md",
+      "type": "past_project",
+      "title": "Insurance Company - ISO 27001 Certification Program (2023)",
+      "similarity_score": 0.8046,
+      "summary": "ISO 27001 ISMS implementation and certification for an insurance company.",
+      "evidence": {
+        "quote": "Client: insurance company (private, finance)",
+        "line": 1
+      },
+      "supports": "At least 1 previous project in the finance sector"
+    },
+    {
+      "doc_id": "CV_06_Ethan_Brooks.pdf",
+      "type": "cv",
+      "title": "Ethan Brooks - Data Engineer",
+      "similarity_score": 0.8278,
+      "summary": "Data Engineering student at Faculté des Sciences de Sfax with solid expertise in Big Data ecosystems, distributed processing, and scalable data architectures. Proven ability to design and optimise end-to-end data pipelin...",
+      "evidence": {
+        "quote": "Built a streaming pipeline with Apache Kafka, Spark Structured Streaming, and PostgreSQL that processed 1 M+ sales",
+        "line": 38
+      },
+      "supports": "Kafka streaming"
+    }
+  ],
+  "requirement_matches": [
+    {
+      "requirement": "Data pipelines with Talend or Apache Airflow",
+      "category": "technical",
+      "method": "rules+reranker",
+      "matches": [
+        {
+          "doc_id": "CV_09_Emma_Foster.pdf",
+          "type": "cv",
+          "title": "Emma Foster - Data Engineer",
+          "similarity_score": 0.8654,
+          "rrf_score": 0.0325,
+          "rerank_score": 9.142,
+          "matched_on": [
+            "airflow",
+            "talend"
+          ],
+          "summary": "Data Engineer with over 3 years of experience designing, implementing, and maintaining end-to-end data pipelines across the MENA region. Expert in building robust Apache Airflow DAGs, optimizing ETL workflows with Talend...",
+          "evidence": {
+            "quote": "the MENA region. Expert in building robust Apache Airflow DAGs, optimizing ETL workflows with Talend, and ensuring",
+            "line": 5
+          }
+        },
+        {
+          "doc_id": "CV_13_Isabella_Ross.pdf",
+          "type": "cv",
+          "title": "Isabella Ross - Data Engineer Consultant",
+          "similarity_score": 0.8379,
+          "rrf_score": 0.03,
+          "rerank_score": 4.327,
+          "matched_on": [
+            "airflow",
+            "talend"
+          ],
+          "summary": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI solutions. Proven ability to increase data availability by 30 % and reduce ETL processing time ...",
+          "evidence": {
+            "quote": "Data Engineering: Talend, Azure Data Factory, Apache Airflow, Snowflake, Databricks",
+            "line": 59
+          }
+        },
+        {
+          "doc_id": "CV_18_Leila_Morgan.pdf",
+          "type": "cv",
+          "title": "Leila Morgan - Data Engineer",
+          "similarity_score": 0.8501,
+          "rrf_score": 0.0313,
+          "rerank_score": 4.225,
+          "matched_on": [
+            "airflow",
+            "talend"
+          ],
+          "summary": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data pipelines, workflow orchestration, and cloud-native architectures that enable intelligent appli...",
+          "evidence": {
+            "quote": "Built reusable Apache Airflow DAGs and integrated them with n8 n, Talend, Azure Blob Storage, GCP, GitHub, SFTP,",
+            "line": 17
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "Kafka streaming",
+      "category": "technical",
+      "method": "rules+reranker",
+      "matches": [
+        {
+          "doc_id": "CV_07_Olivia_Morris.pdf",
+          "type": "cv",
+          "title": "Olivia Morris - Data Engineer",
+          "similarity_score": 0.8112,
+          "rrf_score": 0.0308,
+          "rerank_score": 2.095,
+          "matched_on": [
+            "kafka"
+          ],
+          "summary": "Data Engineer with 2+ years of experience designing scalable data pipelines and data-warehousing solutions. Proven ability to improve data latency and quality through automation, and to collaborate effectively with cross...",
+          "evidence": {
+            "quote": "Built a streaming pipeline with Apache Kafka and Spark Structured Streaming to ingest POS data, achieving sub-second",
+            "line": 28
+          }
+        },
+        {
+          "doc_id": "CV_11_Chloe_Martin.pdf",
+          "type": "cv",
+          "title": "Chloe Martin - Data-Engineering student",
+          "similarity_score": 0.8207,
+          "rrf_score": 0.0317,
+          "rerank_score": 1.146,
+          "matched_on": [
+            "kafka"
+          ],
+          "summary": "Data-Engineering student with solid hands-on experience designing and benchmarking end-to-end streaming pipelines on both Google Cloud and Azure. Proven ability to translate business requirements into scalable, cost-effe...",
+          "evidence": {
+            "quote": "Designed and implemented two parallel streaming paths (Kafka $",
+            "line": 17
+          }
+        },
+        {
+          "doc_id": "CV_06_Ethan_Brooks.pdf",
+          "type": "cv",
+          "title": "Ethan Brooks - Data Engineer",
+          "similarity_score": 0.8278,
+          "rrf_score": 0.0328,
+          "rerank_score": 0.55,
+          "matched_on": [
+            "kafka"
+          ],
+          "summary": "Data Engineering student at Faculté des Sciences de Sfax with solid expertise in Big Data ecosystems, distributed processing, and scalable data architectures. Proven ability to design and optimise end-to-end data pipelin...",
+          "evidence": {
+            "quote": "Built a streaming pipeline with Apache Kafka, Spark Structured Streaming, and PostgreSQL that processed 1 M+ sales",
+            "line": 38
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "Power BI dashboards",
+      "category": "technical",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "CV_Rania_Chaabane.md",
+          "type": "cv",
+          "title": "Rania Chaabane - Data Engineer / BI",
+          "similarity_score": 0.8768,
+          "rrf_score": 0.0328,
+          "rerank_score": null,
+          "matched_on": [
+            "power bi",
+            "dashboard"
+          ],
+          "summary": "Data engineer, 5 years, Power BI and analytics dashboards, Airflow pipelines, data warehouses.",
+          "evidence": {
+            "quote": "Skills: Python, SQL, Apache Airflow, dbt, Power BI, Metabase, data warehouse design, KPI dashboards",
+            "line": 3
+          }
+        },
+        {
+          "doc_id": "Project_HealthAnalytics_Dashboard.md",
+          "type": "past_project",
+          "title": "National Health Analytics Dashboard (2024)",
+          "similarity_score": 0.8732,
+          "rrf_score": 0.032,
+          "rerank_score": null,
+          "matched_on": [
+            "power bi",
+            "dashboard"
+          ],
+          "summary": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+          "evidence": {
+            "quote": "Stack: Python, Airflow, Azure SQL, Power BI, Azure hosting.",
+            "line": 4
+          }
+        },
+        {
+          "doc_id": "TechStack_Data_AI.md",
+          "type": "tech_stack",
+          "title": "OliveSoft Data and AI Stack",
+          "similarity_score": 0.8628,
+          "rrf_score": 0.0318,
+          "rerank_score": null,
+          "matched_on": [
+            "power bi",
+            "dashboard"
+          ],
+          "summary": "Data and AI offering: Python, Airflow, Power BI dashboards, LLMs, RAG and vector databases.",
+          "evidence": {
+            "quote": "Analytics: Power BI, Metabase dashboards",
+            "line": 2
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "Terraform infrastructure as code",
+      "category": "technical",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "CV_01_Ava_Thompson.pdf",
+          "type": "cv",
+          "title": "Ava Thompson - Cloud Infrastructure Engineer",
+          "similarity_score": 0.8341,
+          "rrf_score": 0.0328,
+          "rerank_score": null,
+          "matched_on": [
+            "terraform",
+            "infrastructure as code"
+          ],
+          "summary": "Cloud Infrastructure Engineer with over three years of experience designing, automating, and operating scalable Kubernetesbased platforms for enterprise customers. Proven ability to cut deployment times by up to 30 % and...",
+          "evidence": {
+            "quote": "Infrastructure as Code: Terraform, Ansible, Pulumi",
+            "line": 45
+          }
+        },
+        {
+          "doc_id": "CV_03_Maya_Patel.pdf",
+          "type": "cv",
+          "title": "Maya Patel - Cloud and DevOps Engineer",
+          "similarity_score": 0.8332,
+          "rrf_score": 0.0323,
+          "rerank_score": null,
+          "matched_on": [
+            "terraform",
+            "infrastructure as code"
+          ],
+          "summary": "Cloud and DevOps Engineer with a Computer Science engineering background, specialized in designing, automating, and managing cloud-native infrastructures on Azure and Kubernetes. Proven ability to deliver end-to-end MLOp...",
+          "evidence": {
+            "quote": "Infrastructure as Code: Terraform, ARM Templates, Helm",
+            "line": 42
+          }
+        },
+        {
+          "doc_id": "CV_11_Chloe_Martin.pdf",
+          "type": "cv",
+          "title": "Chloe Martin - Data-Engineering student",
+          "similarity_score": 0.8287,
+          "rrf_score": 0.0317,
+          "rerank_score": null,
+          "matched_on": [
+            "terraform",
+            "infrastructure as code"
+          ],
+          "summary": "Data-Engineering student with solid hands-on experience designing and benchmarking end-to-end streaming pipelines on both Google Cloud and Azure. Proven ability to translate business requirements into scalable, cost-effe...",
+          "evidence": {
+            "quote": "Provisioned Google Cloud resources with Terraform; reduced infrastructure-as-code deployment time by 40 %.",
+            "line": 20
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "Qlik Sense reporting preferred",
+      "category": "technical",
+      "method": "reranker",
+      "matches": [],
+      "closest": {
+        "doc_id": "CV_07_Olivia_Morris.pdf",
+        "type": "cv",
+        "title": "Olivia Morris - Data Engineer",
+        "similarity_score": 0.7989,
+        "rrf_score": 0.0299,
+        "rerank_score": -6.812,
+        "matched_on": [],
+        "summary": "Data Engineer with 2+ years of experience designing scalable data pipelines and data-warehousing solutions. Proven ability to improve data latency and quality through automation, and to collaborate effectively with cross...",
+        "evidence": {
+          "quote": "h ( 67 % reduction).",
+          "line": 16
+        }
+      }
+    },
+    {
+      "requirement": "At least 3 data engineers",
+      "category": "team",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "CV_16_Nora_Ellis.pdf",
+          "type": "cv",
+          "title": "Nora Ellis - Data Platform BI Team Lead",
+          "similarity_score": 0.8376,
+          "rrf_score": 0.0318,
+          "rerank_score": null,
+          "matched_on": [
+            "data engineer"
+          ],
+          "summary": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and optimizing end-to-end data pipelines for clients across finance, retail, and logistics. Proven track re...",
+          "evidence": {
+            "quote": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and",
+            "line": 4
+          }
+        },
+        {
+          "doc_id": "CV_18_Leila_Morgan.pdf",
+          "type": "cv",
+          "title": "Leila Morgan - Data Engineer",
+          "similarity_score": 0.8472,
+          "rrf_score": 0.0313,
+          "rerank_score": null,
+          "matched_on": [
+            "data engineer"
+          ],
+          "summary": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data pipelines, workflow orchestration, and cloud-native architectures that enable intelligent appli...",
+          "evidence": {
+            "quote": "Data Engineer July 2026 – Present",
+            "line": 14
+          }
+        },
+        {
+          "doc_id": "CV_13_Isabella_Ross.pdf",
+          "type": "cv",
+          "title": "Isabella Ross - Data Engineer Consultant",
+          "similarity_score": 0.8376,
+          "rrf_score": 0.031,
+          "rerank_score": null,
+          "matched_on": [
+            "data engineer"
+          ],
+          "summary": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI solutions. Proven ability to increase data availability by 30 % and reduce ETL processing time ...",
+          "evidence": {
+            "quote": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI",
+            "line": 4
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "1 Google Cloud Professional Data Engineer certified",
+      "category": "team",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "CV_15_Zoe_Walker.pdf",
+          "type": "cv",
+          "title": "Zoe Walker - Data Engineer",
+          "similarity_score": 0.8697,
+          "rrf_score": 0.0325,
+          "rerank_score": null,
+          "matched_on": [
+            "gcp",
+            "GCP Professional Data Engineer",
+            "Google Cloud Certified"
+          ],
+          "summary": "Data & Cloud Engineer with a strong focus on Google Cloud Platform, building scalable and reliable data pipelines. Passionate about turning complex datasets into actionable insights, optimizing workloads, and delivering ...",
+          "evidence": {
+            "quote": "Google Cloud Professional Data Engineer (x4)",
+            "line": 62
+          }
+        },
+        {
+          "doc_id": "CV_16_Nora_Ellis.pdf",
+          "type": "cv",
+          "title": "Nora Ellis - Data Platform BI Team Lead",
+          "similarity_score": 0.8631,
+          "rrf_score": 0.0315,
+          "rerank_score": null,
+          "matched_on": [
+            "gcp",
+            "GCP Professional Data Engineer",
+            "Google Cloud Certified"
+          ],
+          "summary": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and optimizing end-to-end data pipelines for clients across finance, retail, and logistics. Proven track re...",
+          "evidence": {
+            "quote": "Google Cloud Certified – Professional Data Engineer (PDE)",
+            "line": 52
+          }
+        },
+        {
+          "doc_id": "CV_07_Olivia_Morris.pdf",
+          "type": "cv",
+          "title": "Olivia Morris - Data Engineer",
+          "similarity_score": 0.8481,
+          "rrf_score": 0.0293,
+          "rerank_score": null,
+          "matched_on": [
+            "gcp",
+            "GCP Professional Data Engineer",
+            "Google Cloud Certified"
+          ],
+          "summary": "Data Engineer with 2+ years of experience designing scalable data pipelines and data-warehousing solutions. Proven ability to improve data latency and quality through automation, and to collaborate effectively with cross...",
+          "evidence": {
+            "quote": "Google Cloud Professional Data Engineer (2024)",
+            "line": 48
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "1 senior delivery manager",
+      "category": "team",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "CV_14_Henry_Price.pdf",
+          "type": "cv",
+          "title": "Henry Price - Technical Delivery Manager",
+          "similarity_score": 0.831,
+          "rrf_score": 0.0325,
+          "rerank_score": null,
+          "matched_on": [
+            "delivery manager",
+            "senior (9 years)"
+          ],
+          "summary": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering largescale web solutions, and driving DevOps transformations. Proven track record of improving delive...",
+          "evidence": {
+            "quote": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering large-",
+            "line": 4
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "1 project manager PMP certified",
+      "category": "team",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "CV_Sami_Trabelsi.md",
+          "type": "cv",
+          "title": "Sami Trabelsi - Project Manager (PMP)",
+          "similarity_score": 0.8824,
+          "rrf_score": 0.0328,
+          "rerank_score": null,
+          "matched_on": [
+            "PMP",
+            "project manager"
+          ],
+          "summary": "PMP-certified project manager, 10 years, delivered 6 government digital projects; manages budgets up to 1M TND.",
+          "evidence": {
+            "quote": "Certifications: PMP (Project Management Professional, PMI), PRINCE2 Foundation",
+            "line": 2
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "At least 1 previous project in the finance sector",
+      "category": "experience",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "Project_Insurance_ISO27001.md",
+          "type": "past_project",
+          "title": "Insurance Company - ISO 27001 Certification Program (2023)",
+          "similarity_score": 0.8046,
+          "rrf_score": 0.0328,
+          "rerank_score": null,
+          "matched_on": [
+            "finance sector"
+          ],
+          "summary": "ISO 27001 ISMS implementation and certification for an insurance company.",
+          "evidence": {
+            "quote": "Client: insurance company (private, finance)",
+            "line": 1
+          }
+        }
+      ],
+      "closest": null
+    }
+  ],
+  "requirements_matrix": [
+    {
+      "requirement": "Data pipelines with Talend or Apache Airflow",
+      "category": "technical",
+      "mandatory": true,
+      "status": "covered",
+      "found": 3,
+      "needed": 1,
+      "method": "rules+reranker",
+      "best_doc": "CV_09_Emma_Foster.pdf",
+      "evidence": "the MENA region. Expert in building robust Apache Airflow DAGs, optimizing ETL workflows with Talend, and ensuring",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "technical",
+        "skills": [
+          "airflow",
+          "talend"
+        ],
+        "min_count": 1,
+        "mandatory": true,
+        "leftover": [
+          "data"
+        ]
+      }
+    },
+    {
+      "requirement": "Kafka streaming",
+      "category": "technical",
+      "mandatory": true,
+      "status": "covered",
+      "found": 3,
+      "needed": 1,
+      "method": "rules+reranker",
+      "best_doc": "CV_07_Olivia_Morris.pdf",
+      "evidence": "Built a streaming pipeline with Apache Kafka and Spark Structured Streaming to ingest POS data, achieving sub-second",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "technical",
+        "skills": [
+          "kafka"
+        ],
+        "min_count": 1,
+        "mandatory": true,
+        "leftover": [
+          "streaming"
+        ]
+      }
+    },
+    {
+      "requirement": "Power BI dashboards",
+      "category": "technical",
+      "mandatory": true,
+      "status": "covered",
+      "found": 15,
+      "needed": 1,
+      "method": "rules",
+      "best_doc": "CV_Rania_Chaabane.md",
+      "evidence": "Skills: Python, SQL, Apache Airflow, dbt, Power BI, Metabase, data warehouse design, KPI dashboards",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "technical",
+        "skills": [
+          "power bi",
+          "dashboard"
+        ],
+        "min_count": 1,
+        "mandatory": true,
+        "all_skills": true
+      }
+    },
+    {
+      "requirement": "Terraform infrastructure as code",
+      "category": "technical",
+      "mandatory": true,
+      "status": "covered",
+      "found": 7,
+      "needed": 1,
+      "method": "rules",
+      "best_doc": "CV_01_Ava_Thompson.pdf",
+      "evidence": "Infrastructure as Code: Terraform, Ansible, Pulumi",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "technical",
+        "skills": [
+          "terraform",
+          "infrastructure as code"
+        ],
+        "min_count": 1,
+        "mandatory": true,
+        "all_skills": true
+      }
+    },
+    {
+      "requirement": "Qlik Sense reporting preferred",
+      "category": "technical",
+      "mandatory": false,
+      "status": "missing",
+      "found": 0,
+      "needed": 1,
+      "method": "reranker",
+      "best_doc": null,
+      "evidence": null,
+      "closest_doc": "CV_07_Olivia_Morris.pdf",
+      "percent": 0,
+      "parsed": {
+        "category": "technical",
+        "min_count": 1,
+        "leftover": [
+          "qlik",
+          "sense",
+          "reporting"
+        ]
+      }
+    },
+    {
+      "requirement": "At least 3 data engineers",
+      "category": "team",
+      "mandatory": true,
+      "status": "covered",
+      "found": 9,
+      "needed": 3,
+      "method": "rules",
+      "best_doc": "CV_16_Nora_Ellis.pdf",
+      "evidence": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "team",
+        "roles": [
+          "data engineer"
+        ],
+        "min_count": 3,
+        "mandatory": true
+      }
+    },
+    {
+      "requirement": "1 Google Cloud Professional Data Engineer certified",
+      "category": "team",
+      "mandatory": true,
+      "status": "covered",
+      "found": 3,
+      "needed": 1,
+      "method": "rules",
+      "best_doc": "CV_15_Zoe_Walker.pdf",
+      "evidence": "Google Cloud Professional Data Engineer (x4)",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "team",
+        "skills": [
+          "gcp"
+        ],
+        "certs": [
+          "GCP Professional Data Engineer",
+          "Google Cloud Certified"
+        ],
+        "min_count": 1,
+        "mandatory": true
+      }
+    },
+    {
+      "requirement": "1 senior delivery manager",
+      "category": "team",
+      "mandatory": true,
+      "status": "covered",
+      "found": 1,
+      "needed": 1,
+      "method": "rules",
+      "best_doc": "CV_14_Henry_Price.pdf",
+      "evidence": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering large-",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "team",
+        "roles": [
+          "delivery manager"
+        ],
+        "seniority": "senior",
+        "min_count": 1,
+        "mandatory": true
+      }
+    },
+    {
+      "requirement": "1 project manager PMP certified",
+      "category": "team",
+      "mandatory": true,
+      "status": "covered",
+      "found": 1,
+      "needed": 1,
+      "method": "rules",
+      "best_doc": "CV_Sami_Trabelsi.md",
+      "evidence": "Certifications: PMP (Project Management Professional, PMI), PRINCE2 Foundation",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "team",
+        "certs": [
+          "PMP"
+        ],
+        "roles": [
+          "project manager"
+        ],
+        "min_count": 1,
+        "mandatory": true
+      }
+    },
+    {
+      "requirement": "At least 1 previous project in the finance sector",
+      "category": "experience",
+      "mandatory": true,
+      "status": "covered",
+      "found": 1,
+      "needed": 1,
+      "method": "rules",
+      "best_doc": "Project_Insurance_ISO27001.md",
+      "evidence": "Client: insurance company (private, finance)",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "experience",
+        "sectors": [
+          "finance"
+        ],
+        "min_count": 1,
+        "mandatory": true
+      }
+    }
+  ],
+  "fit_score": {
+    "technical_fit": 89,
+    "experience_fit": 100,
+    "team_fit": 100,
+    "domain_fit": 100,
+    "certification_fit": 100,
+    "overall": 98
+  },
+  "domain_evidence": [
+    {
+      "doc_id": "Project_Insurance_ISO27001.md",
+      "type": "past_project",
+      "title": "Insurance Company - ISO 27001 Certification Program (2023)",
+      "similarity_score": 0.7959,
+      "rrf_score": 0.0325,
+      "rerank_score": null,
+      "matched_on": [
+        "finance sector"
+      ],
+      "summary": "ISO 27001 ISMS implementation and certification for an insurance company.",
+      "evidence": {
+        "quote": "Client: insurance company (private, finance)",
+        "line": 1
+      }
+    }
+  ],
+  "benchmark_context": {
+    "embedding_model": "intfloat/multilingual-e5-small",
+    "retrieval": "hybrid BM25 + dense (RRF)",
+    "reranker": "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1",
+    "structured_rules": true,
+    "chunk_size_words": 200,
+    "chunk_overlap_words": 50
+  },
+  "warnings": [
+    "No internal evidence for optional requirement(s): Qlik Sense reporting preferred"
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "matches": [
+    {
+      "doc_id": "CV_Mehdi_Karray.md",
+      "type": "cv",
+      "similarity_score": 0.8336,
+      "summary": "Security consultant, ISO 27001 Lead Auditor, led the ISO 27001 program at an insurance company; pentesting and security software.",
+      "evidence": {
+        "quote": "Skills: information security management systems (ISMS), risk assessment, penetration testing, SIEM, firewalls, antivirus and endpoint security software selection",
+        "line": 4
+      },
+      "supports": "Logiciels de securite informatique"
+    },
+    {
+      "doc_id": "Project_PublicAgency_SecuritySoftware.md",
+      "type": "past_project",
+      "similarity_score": 0.8324,
+      "summary": "Supply and deployment of IT security software (antivirus, EDR, firewall management) for a public agency.",
+      "evidence": {
+        "quote": "Scope: acquisition and licensing of security software: endpoint protection (EDR), antivirus, firewall management console, vulnerability scanner; installation and staff training.",
+        "line": 3
+      },
+      "supports": "Logiciels de securite informatique"
+    },
+    {
+      "doc_id": "TechStack_Security_Infrastructure.md",
+      "type": "tech_stack",
+      "similarity_score": 0.8303,
+      "summary": "Security and infrastructure offering: ISO 27001 consulting, security software supply, network hardware.",
+      "evidence": {
+        "quote": "Security: ISO 27001 consulting and audits, security software supply (EDR, antivirus, firewall), pentesting",
+        "line": 1
+      },
+      "supports": "Logiciels de securite informatique"
+    }
+  ],
+  "requirement_matches": [
+    {
+      "requirement": "Logiciels de securite informatique",
+      "category": "technical",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "CV_Mehdi_Karray.md",
+          "type": "cv",
+          "similarity_score": 0.8336,
+          "rrf_score": 0.0328,
+          "rerank_score": null,
+          "matched_on": [
+            "security software"
+          ],
+          "summary": "Security consultant, ISO 27001 Lead Auditor, led the ISO 27001 program at an insurance company; pentesting and security software.",
+          "evidence": {
+            "quote": "Skills: information security management systems (ISMS), risk assessment, penetration testing, SIEM, firewalls, antivirus and endpoint security software selection",
+            "line": 4
+          }
+        },
+        {
+          "doc_id": "Project_PublicAgency_SecuritySoftware.md",
+          "type": "past_project",
+          "similarity_score": 0.8324,
+          "rrf_score": 0.0323,
+          "rerank_score": null,
+          "matched_on": [
+            "security software"
+          ],
+          "summary": "Supply and deployment of IT security software (antivirus, EDR, firewall management) for a public agency.",
+          "evidence": {
+            "quote": "Scope: acquisition and licensing of security software: endpoint protection (EDR), antivirus, firewall management console, vulnerability scanner; installation and staff training.",
+            "line": 3
+          }
+        },
+        {
+          "doc_id": "TechStack_Security_Infrastructure.md",
+          "type": "tech_stack",
+          "similarity_score": 0.8303,
+          "rrf_score": 0.0317,
+          "rerank_score": null,
+          "matched_on": [
+            "security software"
+          ],
+          "summary": "Security and infrastructure offering: ISO 27001 consulting, security software supply, network hardware.",
+          "evidence": {
+            "quote": "Security: ISO 27001 consulting and audits, security software supply (EDR, antivirus, firewall), pentesting",
+            "line": 1
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "Blockchain supply-chain traceability for a port authority",
+      "category": "experience",
+      "method": "reranker",
+      "matches": [],
+      "closest": {
+        "doc_id": "Project_Ministry_NetworkInfrastructure.md",
+        "type": "past_project",
+        "similarity_score": 0.7781,
+        "rrf_score": 0.0302,
+        "rerank_score": -10.096,
+        "matched_on": [],
+        "summary": "Supply and installation of network hardware in 9 lots for a ministry: switches, routers, Wi-Fi.",
+        "evidence": {
+          "quote": "Client: ministry (public sector, government)",
+          "line": 1
+        }
+      }
+    }
+  ],
+  "requirements_matrix": [
+    {
+      "requirement": "Logiciels de securite informatique",
+      "category": "technical",
+      "mandatory": true,
+      "status": "covered",
+      "found": 3,
+      "needed": 1,
+      "method": "rules",
+      "best_doc": "CV_Mehdi_Karray.md",
+      "evidence": "Skills: information security management systems (ISMS), risk assessment, penetration testing, SIEM, firewalls, antivirus and endpoint security software selection",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "technical",
+        "skills": [
+          "security software"
+        ],
+        "min_count": 1,
+        "mandatory": true
+      }
+    },
+    {
+      "requirement": "Blockchain supply-chain traceability for a port authority",
+      "category": "experience",
+      "mandatory": true,
+      "status": "missing",
+      "found": 0,
+      "needed": 1,
+      "method": "reranker",
+      "best_doc": null,
+      "evidence": null,
+      "closest_doc": "Project_Ministry_NetworkInfrastructure.md",
+      "percent": 0,
+      "parsed": {
+        "category": "experience",
+        "min_count": 1,
+        "mandatory": true,
+        "leftover": [
+          "blockchain",
+          "supply-chain",
+          "traceability",
+          "port",
+          "authority"
+        ]
+      }
+    }
+  ],
+  "fit_score": {
+    "technical_fit": 100,
+    "experience_fit": 0,
+    "team_fit": null,
+    "domain_fit": null,
+    "certification_fit": null,
+    "overall": 50
+  },
+  "domain_evidence": [],
+  "benchmark_context": {
+    "embedding_model": "intfloat/multilingual-e5-small",
+    "retrieval": "hybrid BM25 + dense (RRF)",
+    "reranker": "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1",
+    "structured_rules": true,
+    "chunk_size_words": 200,
+    "chunk_overlap_words": 50
+  },
+  "warnings": [
+    "No 'team' requirements given; team_fit not computed.",
+    "BLOCKING - no internal evidence for mandatory requirement(s): Blockchain supply-chain traceability for a port authority"
+  ]
+}

@@ -1,0 +1,6 @@
+# Line endings: Windows scripts keep CRLF, shell scripts keep LF, on every computer.
+* text=auto
+*.bat text eol=crlf
+*.sh text eol=lf
+*.pdf binary
+*.png binary

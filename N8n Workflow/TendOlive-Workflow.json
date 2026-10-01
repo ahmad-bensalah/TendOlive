@@ -1,0 +1,2100 @@
+{
+  "name": "TendOlive-Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 6
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -288,
+        1008
+      ],
+      "name": "Schedule Trigger (production preset)",
+      "id": "7afa137c-5074-491e-8d39-8caa44f6894d"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================================\n// 00 - Config  (the ONLY place with limits, keywords and model settings; NO secrets here)\n// Secrets live in n8n Credentials: \"Firecrawl API\" and \"Gemini API\" (Header Auth).\n// Manual runs use the \"test\" preset, scheduled runs use \"production\".\n// Set FORCE_PRESET to 'test' or 'production' to override.\n// ============================================================================\nconst FORCE_PRESET = null;\nconst PRESET = FORCE_PRESET || ($execution.mode === 'test' ? 'test' : 'production');\n\nconst PRESETS = {\n  test: {\n    fmKeywordMode: 'quick',        // quick = 1 keyword | category_test = 1 per category | full = all keywords\n    fmPagesPerKeyword: 1,\n    fmMaxDetailPages: 5,           // 0 = scrape every tender found\n    boampPagesPerType: 1,          // 100 records per page\n    tnListPages: 1,\n    tnMaxDetailPages: 3,           // 0 = all\n    maxBuyersToEnrich: 5,          // 0 = all (France buyers, highest priority first)\n    aiMaxTenders: 10               // 0 = all\n  },\n  production: {\n    fmKeywordMode: 'full',\n    fmPagesPerKeyword: 2,\n    fmMaxDetailPages: 0,\n    boampPagesPerType: 3,\n    tnListPages: 3,\n    tnMaxDetailPages: 0,\n    maxBuyersToEnrich: 60,\n    aiMaxTenders: 0\n  }\n};\n\n// One taxonomy drives BOTH the France Marchés search keywords AND category classification for every source.\n// Short acronyms (<=3 letters, or ALL-CAPS <=5) are matched case-sensitively to avoid \"mode\", \"ai\", \"ml\" style noise.\nconst taxonomy = {\n  'Data': ['Data platform', 'plateforme de données', 'Data warehouse', 'entrepôt de données', 'Data lake', 'intégration de données', 'ETL', 'API REST', 'Middleware', 'interopérabilité'],\n  'CRM / Customer Data': ['Salesforce', 'CRM', 'gestion de la relation client', 'Customer Data Platform', 'CDP', 'données clients'],\n  'BI / Analytics': ['Business Intelligence', 'Power BI', 'outils de reporting', 'tableaux de bord', 'data analytics', 'décisionnel'],\n  'AI': ['Artificial Intelligence', 'Intelligence Artificielle', 'IA', 'Machine Learning', 'apprentissage automatique', 'systèmes de recommandation', 'analyse prédictive', 'predictive analytics'],\n  'E-commerce / Digital Commerce': ['E-commerce', 'commerce électronique', 'plateforme e-commerce', 'omnicanal', 'personnalisation client', 'commerce digital'],\n  'Enterprise Software': ['ERP', 'SAP', 'MuleSoft', 'Talend', 'Boomi', 'Workato', 'progiciel de gestion intégré'],\n  'Supply Chain': ['supply chain', 'chaîne logistique', 'prévision des ventes', 'prévision de la demande', 'gestion des stocks', 'demand forecasting', 'inventory management'],\n  'Fashion / Retail': ['fashion retail', 'prêt-à-porter', 'textile', 'habillement', 'marketplace', 'détection de contrefaçon']\n};\n\n// Generic IT vocabulary: a tender whose TITLE matches one of these (or the taxonomy) passes the relevance gate.\nconst coreTerms = ['informatique', 'logiciel', 'logiciels', 'progiciel', \"système d'information\", \"systèmes d'information\", 'cloud', 'SaaS', 'cybersécurité', 'hébergement', 'infogérance', 'maintenance applicative', 'base de données', 'bases de données', 'application web', 'application mobile', 'site internet', 'numérique', 'dématérialisation', 'GED', 'SIRH'];\n\nreturn [{ json: {\n  preset: PRESET,\n  today: new Date().toISOString().slice(0, 10),\n  limits: PRESETS[PRESET],\n  fm: { baseUrl: 'https://www.francemarches.com/recherche', pageParam: 'page' },   // verify pageParam on the site\n  boamp: { types: ['SERVICES', 'FOURNITURES', 'TRAVAUX'], pageSize: 100 },\n  tn: { listUrl: 'https://www.domainetat.tn/?cat=19&lang=fr', pageParam: 'paged', issuer: \"Ministère des Domaines de l'État et des Affaires Foncières\", requireKeywordMatch: true },\n  includeAwards: false,\n  taxonomy,\n  coreTerms,\n  enrichment: { registryMinSimilarity: 0.6 },\n  gemini: { model: 'gemini-flash-latest' },\n  companyProfile: 'A consultancy delivering data platforms and integration, CRM, BI/analytics, AI/ML, e-commerce/digital commerce, ERP/enterprise integration and supply-chain software, with a focus on retail and fashion.'\n} }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        1008
+      ],
+      "name": "00 - Config",
+      "id": "6a9b1c9c-d24c-4202-b345-aa8764a37ae3",
+      "notes": "All limits, keywords and model settings live here. Manual run = test preset, scheduled run = production preset."
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1lxeQb1SV-oNvg4t0JokFaPSnL4ClbqSrSd7p49QA8VU",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "tenders",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        144,
+        1008
+      ],
+      "name": "01 - Load Known IDs (Google Sheets)",
+      "alwaysOutputData": true,
+      "id": "f75cb61c-1e37-4b41-b046-001d36ff27a2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kGp5gm2q8zWTl0Wy",
+          "name": "Google Sheets account"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "OPTIONAL. Enable together with \"Save to Google Sheet\" to make runs incremental (already-seen tender_ids are skipped)."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Rows come from the (optional) Google Sheet. If that node is disabled, this receives the Config item and known_ids stays empty.\nconst known = new Set();\nfor (const it of $input.all()) { const id = it.json.tender_id; if (id) known.add(String(id)); }\nreturn [{ json: { known_ids: Array.from(known), known_count: known.size } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        352,
+        1008
+      ],
+      "name": "02 - Collect Known IDs",
+      "id": "14041d55-3bf8-4349-8063-08fa295402d5"
+    },
+    {
+      "parameters": {
+        "jsCode": "const CFG = $('00 - Config').first().json;\nconst mode = CFG.limits.fmKeywordMode;\nconst tax = CFG.taxonomy;\nlet list = [];\nif (mode === 'quick') list = [{ category: 'Enterprise Software', keyword: 'ERP' }];\nelse if (mode === 'category_test') { for (const [cat, kws] of Object.entries(tax)) list.push({ category: cat, keyword: kws[0] }); }\nelse { for (const [cat, kws] of Object.entries(tax)) for (const kw of kws) list.push({ category: cat, keyword: kw }); }\n\nconst out = [];\nconst pages = Math.max(1, CFG.limits.fmPagesPerKeyword);\nfor (const { category, keyword } of list) {\n  for (let p = 1; p <= pages; p++) {\n    let url = CFG.fm.baseUrl + '?q=' + encodeURIComponent(keyword) + '&etat=en-cours';\n    if (p > 1) url += '&' + CFG.fm.pageParam + '=' + p;\n    out.push({ json: { keyword, category, page: p, searchUrl: url } });\n  }\n}\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        608,
+        816
+      ],
+      "name": "FM1 - Build Search Requests",
+      "id": "9add1a86-553a-4b71-a646-b38bf3ab7fe3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ url: $json.searchUrl, formats: ['markdown'], onlyMainContent: true }) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 6500
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        816,
+        816
+      ],
+      "name": "FM2 - Firecrawl Search Pages",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "id": "eac00c8c-dbcb-49da-a327-cbeb0a7ef1e1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "eIdR98axqDaNAkp4",
+          "name": "FireCrawl API"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "Rate limited to 1 request / 6.5 s (Firecrawl ~10 req/min)."
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\nconst items = $input.all();\nconst map = new Map();\n\nfor (let i = 0; i < items.length; i++) {\n  const j = items[i].json;\n  if (j.error) continue;                       // failed page: skipped here, counted in the run summary\n  const markdown = (j.data || j).markdown || '';\n  if (!markdown) continue;\n\n  let searchCategory = '';\n  try { searchCategory = $('FM1 - Build Search Requests').itemMatching(i).json.category || ''; } catch (e) {}\n\n  // France Marchés card: [001\\ ... **Title** ... Date parution : ...](https://www.francemarches.com/appel-offre/<slug>)\n  const cardRegex = /\\[([0-9]{3}\\\\?[\\s\\S]*?)\\]\\((https?:\\/\\/[^\\s\\)]*francemarches\\.com\\/appel-offre\\/[^\\s\\)]+)\\)/g;\n  let match;\n  while ((match = cardRegex.exec(markdown)) !== null) {\n    const source_url = match[2].split('?')[0];\n    const cleanBody = match[1].replace(/\\\\/g, '').trim();\n\n    const titleMatch = cleanBody.match(/\\*\\*([^*]+)\\*\\*/);\n    const title = titleMatch ? clean(titleMatch[1]) : '';\n    if (!title) continue;\n    if (!isRelevant(title)) continue;           // shared relevance gate, on the TITLE only (kills \"mode\", \"retail\" style noise)\n\n    const slug = source_url.split('/appel-offre/')[1] || '';\n    const refMatch = slug.match(/^([a-zA-Z0-9]+-[0-9]{4})/);\n    const reference = refMatch ? refMatch[1] : (slug.split('-')[0] || slug);\n\n    const idxTitle = cleanBody.indexOf('**' + title + '**');\n    let issuer = '';\n    if (idxTitle > 0) {\n      const lines = cleanBody.substring(0, idxTitle).split('\\n').map(l => l.trim())\n        .filter(l => l && !/^[0-9]+$/.test(l) && !l.startsWith('![') && !l.startsWith('[!'));\n      if (lines.length) issuer = clean(lines[lines.length - 1]);\n    }\n    const parution = cleanBody.match(/Date parution\\s*:\\s*([0-9]{2}\\/[0-9]{2}\\/[0-9]{4})/i);\n    const cloture = cleanBody.match(/Date cl[ôo]t[ûu]re\\s*:\\s*\\*?\\*?([0-9]{2}\\/[0-9]{2}\\/[0-9]{4})\\*?\\*?/i);\n\n    const key = reference || source_url;\n    if (map.has(key)) continue;\n    map.set(key, {\n      source_key: 'francemarches', source_id: reference, reference, title, issuer,\n      date: parution ? parution[1] : '', deadline: cloture ? cloture[1] : '',\n      raw_text: cleanBody.replace(/\\s+/g, ' ').trim(), source_url, search_category: searchCategory\n    });\n  }\n}\nreturn Array.from(map.values()).map(t => ({ json: t }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        816
+      ],
+      "name": "FM3 - Extract FM Tenders",
+      "id": "25bda3bb-1f58-4027-b5b3-1b72515ab791"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Detail-page limit comes from the Config node (0 = scrape every tender found).\nconst CFG = $('00 - Config').first().json;\nconst max = Number(CFG.limits.fmMaxDetailPages || 0);\nconst items = $input.all();\nreturn (max > 0 && items.length > max) ? items.slice(0, max) : items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1264,
+        816
+      ],
+      "name": "FM4 - Select for Detail",
+      "id": "392ee74c-fe6b-45da-8397-58179f2176b1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ url: $json.source_url, formats: ['markdown'], onlyMainContent: true }) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 6500
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1488,
+        816
+      ],
+      "name": "FM5 - Firecrawl Detail",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "id": "cd9ce702-cd3d-4609-b295-6558fd846d05",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "eIdR98axqDaNAkp4",
+          "name": "FireCrawl API"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\nconst items = $input.all();\nconst out = [];\n\nfor (let i = 0; i < items.length; i++) {\n  const item = items[i];\n  let base = {};\n  try { base = $('FM4 - Select for Detail').itemMatching(i).json; } catch (e) { base = {}; }\n\n  const markdown = (item.json.data || item.json).markdown || '';\n  const txt = markdown.replace(/\\\\/g, '');\n\n  let scrapeError = '';\n  if (item.json.error || (!markdown && item.json.message)) {\n    const e = item.json.error || item.json.message;\n    scrapeError = typeof e === 'object' ? (e.message || JSON.stringify(e)) : String(e);\n  }\n\n  const description = (txt.match(/Description\\s*:\\s*([^\\n\\r]+(?:\\n[^\\n\\r]+)*?)(?=\\n\\s*(?:Identifiant|Nature|2\\.|5\\.|$))/i) || [])[1] || base.title || '';\n  const cpvM = txt.match(/(?:cpv\\)?)\\s*:\\s*([0-9]{8})\\s*([^\\n\\r]*)/i) || txt.match(/Nomenclature principale[^:]*:\\s*([0-9]{8})\\s*([^\\n\\r]*)/i);\n  const cpv = cpvM ? cpvM[1] + ' - ' + cpvM[2].trim() : '';\n\n  const nameM = txt.match(/1\\.1\\.?\\s*Acheteur[\\s\\S]*?Nom officiel\\s*:\\s*([^\\n\\r]+)/i) || txt.match(/Nom officiel\\s*:\\s*([^\\n\\r]+)/i);\n  const name = clean(nameM ? nameM[1] : (base.issuer || ''));\n  const email = (txt.match(/Adresse électronique\\s*:\\s*\\[?([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})\\]?/i) || [])[1] || '';\n  const phone = ((txt.match(/Téléphone\\s*:\\s*([+0-9\\s.-]{8,})/i) || [])[1] || '').trim();\n  const website = (txt.match(/Adresse internet\\s*:\\s*\\[?(https?:\\/\\/[^\\s\\]]+)\\]?/i) || [])[1] || '';\n  const profileUrl = (txt.match(/Profil de l.acheteur\\s*:\\s*\\[?(https?:\\/\\/[^\\s\\]]+)\\]?/i) || [])[1] || '';\n  const street = ((txt.match(/Adresse postale\\s*:\\s*([^\\n\\r]+)/i) || [])[1] || '').trim();\n  const city = ((txt.match(/Ville\\s*:\\s*([^\\n\\r]+)/i) || [])[1] || '').trim();\n  const zip = ((txt.match(/Code postal\\s*:\\s*([^\\n\\r]+)/i) || [])[1] || '').trim();\n  const address = [street, zip, city].filter(Boolean).join(', ');\n  const legalForm = ((txt.match(/Forme juridique de l.acheteur\\s*:\\s*([^\\n\\r]+)/i) || [])[1] || '').trim();\n\n  const procType = ((txt.match(/Type de procédure\\s*:\\s*([^\\n\\r]+)/i) || [])[1] || '').trim();\n  const internalId = ((txt.match(/Identifiant interne\\s*:\\s*([^\\n\\r]+)/i) || [])[1] || '').trim();\n  const durM = txt.match(/Durée[^\\n\\r:]*:\\s*([0-9]+)\\s*([A-Za-z]+)/i);\n  const duration = durM ? durM[1] + ' ' + durM[2] : '';\n\n  const valM = txt.match(/Valeur estimée[^\\n\\r:]*:\\s*([0-9\\s,.]+)\\s*(?:Euro|EUR|€)/i) || txt.match(/Valeur de tous les contrats attribués[^\\n\\r:]*:\\s*([0-9\\s,.]+)\\s*(?:Euro|EUR|€)/i) || txt.match(/Valeur[^\\n\\r:]*:\\s*([0-9\\s,.]+)\\s*(?:Euro|EUR|€)/i);\n  const value = valM ? valM[1].trim() : '';\n  const winner = ((txt.match(/Adjudicataire\\/attributaire:\\s*Nom officiel:\\s*([^\\n\\r]+)/i) || [])[1] || '').trim();\n\n  // deadline: keep the one from the search card, fall back to the notice text\n  let deadline = base.deadline || '';\n  if (!toISO(deadline)) {\n    const dl = txt.match(/(?:Date limite|Délai)[^\\n:]{0,80}:\\s*([^\\n]{0,40})/i);\n    if (dl && toISO(dl[1])) deadline = dl[1];\n  }\n  const isAward = !!winner || /avis d.attribution|résultat de marché/i.test(txt.slice(0, 1500));\n\n  // cleaned legal notice text\n  let legal = '';\n  if (markdown) {\n    let raw = markdown.replace(/\\\\/g, '').replace(/window\\.NREUM[\\s\\S]*$/i, '').replace(/<script[\\s\\S]*?<\\/script>/gi, '');\n    const lm = raw.match(/(?:##\\s*Texte légal|##\\s*Nom et adresse|#\\s*Intitulé)[\\s\\S]*?(?=\\n##\\s*Appels d'offres|\\n##\\s*Livre blanc|\\n##\\s*Imprimer|\\n##\\s*Partager|\\n##\\s*Telecharger|\\n##\\s*Compte Abonné|\\n!\\[JOUE\\]|$)/i);\n    legal = (lm ? lm[0] : raw.replace(/^[\\s\\S]*?(?=Intitulé de l'appel|Nom officiel|Avis de marché)/i, '').replace(/(?:Appels d'offres à proximité|Livre blanc|Compte Abonné)[\\s\\S]*$/i, ''))\n      .replace(/\\[([^\\]]+)\\]\\([^\\)]+\\)/g, '$1').replace(/!\\[[^\\]]*\\]\\([^\\)]+\\)/g, '').replace(/\\s+/g, ' ').trim();\n  }\n\n  out.push({ json: {\n    source_key: 'francemarches', source_id: base.reference || '', record_type: isAward ? 'award' : 'open_tender',\n    country: 'France', currency: 'EUR',\n    reference: base.reference || '', title: base.title || '', issuer: name || base.issuer || '',\n    date: base.date || '', deadline,\n    description: clean(description), raw_text: (legal || base.raw_text || '').slice(0, 6000),\n    source_url: base.source_url || '', search_category: base.search_category || '',\n    cpv, duration, estimated_value: value,\n    buyer_information: { name: name || base.issuer || '', email, phone, website, profile_url: profileUrl, address, legal_form: legalForm },\n    procedure: { type: procType, internal_id: internalId },\n    award_information: { winner, amount: isAward ? value : '' },\n    scrape_status: scrapeError ? 'Error: ' + scrapeError : 'OK'\n  } });\n}\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1712,
+        816
+      ],
+      "name": "FM6 - Parse FM Details",
+      "id": "ad153ff7-e5fc-4741-afd3-95207bebbddd"
+    },
+    {
+      "parameters": {
+        "jsCode": "const CFG = $('00 - Config').first().json;\nconst out = [];\nconst pages = Math.max(1, CFG.limits.boampPagesPerType);\nfor (const type of CFG.boamp.types) {\n  for (let p = 0; p < pages; p++) {\n    out.push({ json: { type, refine: 'type_marche:' + type, limit: CFG.boamp.pageSize, offset: p * CFG.boamp.pageSize } });\n  }\n}\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        608,
+        1008
+      ],
+      "name": "BOAMP1 - Build Requests",
+      "id": "597c5dbf-5021-484b-b804-d056a8fad5dd"
+    },
+    {
+      "parameters": {
+        "url": "https://boamp-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/boamp/records",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "={{ $json.limit }}"
+            },
+            {
+              "name": "offset",
+              "value": "={{ $json.offset }}"
+            },
+            {
+              "name": "order_by",
+              "value": "dateparution DESC"
+            },
+            {
+              "name": "refine",
+              "value": "={{ $json.refine }}"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 500
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        816,
+        1008
+      ],
+      "name": "BOAMP Fetch",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "id": "9da59df3-9edc-4f0d-87b8-eb053b830eaf",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\nconst IT_DESCRIPTORS = ['consommable informatique', 'informatique (assistance)', 'informatique (maintenance serveurs et réseaux)', 'informatique (prestations de services)', 'informatique', 'logiciel'];\n\nconst records = [];\nfor (const it of $input.all()) {\n  if (it.json && Array.isArray(it.json.results)) records.push(...it.json.results);   // error items have no results and are skipped\n}\n\nconst seen = new Set();\nconst out = [];\nfor (const r of records) {\n  if (!r.idweb || seen.has(r.idweb)) continue;\n  seen.add(r.idweb);\n\n  // deadline: datelimitereponse (now mapped!), fall back to end of diffusion for the expiry test only\n  const deadline = toISO(r.datelimitereponse);\n  const expiryRef = deadline || toISO(r.datefindiffusion);\n  if (!expiryRef || expiryRef < TODAY_ISO) continue;\n\n  const nature = String(r.nature_libelle || r.nature || r.nature_categorise || '');\n  const isAward = /attribution|resultat/i.test(stripAccents(nature));\n\n  let desc = r.descripteur_libelle;\n  desc = Array.isArray(desc) ? desc.join(', ') : (typeof desc === 'object' && desc ? JSON.stringify(desc) : String(desc || ''));\n  desc = desc.toLowerCase();\n  const itByDescriptor = desc && IT_DESCRIPTORS.some(c => desc.includes(c));\n  const title = clean(r.objet);\n  if (!(itByDescriptor || isRelevant(title))) continue;\n\n  out.push({ json: {\n    source_key: 'boamp', source_id: String(r.idweb), record_type: isAward ? 'award' : 'open_tender',\n    country: 'France', currency: 'EUR',\n    reference: 'boamp-' + r.idweb, title, issuer: clean(r.nomacheteur),\n    date: r.dateparution || '', deadline: r.datelimitereponse || '',\n    description: title, raw_text: title + '. Acheteur: ' + clean(r.nomacheteur) + (desc ? '. Descripteurs: ' + desc : ''),\n    source_url: 'https://www.boamp.fr/pages/avis/?q=idweb:' + r.idweb,\n    cpv: '', duration: '', estimated_value: '',\n    buyer_information: { name: clean(r.nomacheteur), email: '', phone: '', website: '', profile_url: '', address: '', legal_form: '' },\n    procedure: { type: String(r.type_marche || ''), internal_id: String(r.idweb) },\n    award_information: { winner: '', amount: '' },\n    scrape_status: 'OK'\n  } });\n}\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        1008
+      ],
+      "name": "BOAMP2 - Filter & Adapt",
+      "id": "68857a64-e764-4e98-af95-34eee782a10e"
+    },
+    {
+      "parameters": {
+        "jsCode": "const CFG = $('00 - Config').first().json;\nconst out = [];\nconst pages = Math.max(1, CFG.limits.tnListPages);\nfor (let p = 1; p <= pages; p++) {\n  out.push({ json: { page: p, listUrl: CFG.tn.listUrl + (p > 1 ? '&' + CFG.tn.pageParam + '=' + p : '') } });\n}\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        608,
+        1216
+      ],
+      "name": "TN1 - Build List Requests",
+      "id": "a59e1341-8e8f-4857-a844-4e0659ed000e"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v2/scrape",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ url: $json.listUrl, formats: ['markdown', 'links'] }) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 6500
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        816,
+        1216
+      ],
+      "name": "TN2 - Firecrawl List Pages",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "id": "2556bf84-efac-4869-b84d-11febc26906c",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "eIdR98axqDaNAkp4",
+          "name": "FireCrawl API"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const CFG = $('00 - Config').first().json;\nconst seen = new Set();\nconst out = [];\nfor (const it of $input.all()) {\n  if (it.json.error) continue;\n  const links = (it.json.data && it.json.data.links) || [];\n  for (const url of links) {\n    const m = String(url).match(/[?&]p=(\\d+)/);\n    if (!m) continue;                 // skip category, pagination, anchors\n    if (seen.has(m[1])) continue;\n    seen.add(m[1]);\n    out.push({ json: { post_id: m[1], source_url: 'https://www.domainetat.tn/?p=' + m[1] + '&lang=fr' } });\n  }\n}\nconst max = Number(CFG.limits.tnMaxDetailPages || 0);\nreturn max > 0 ? out.slice(0, max) : out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        1216
+      ],
+      "name": "TN3 - Extract Tender Links",
+      "id": "83c05a9d-4f5e-410f-a67c-51b9b881001f"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v2/scrape",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ url: $json.source_url, formats: ['markdown'], onlyMainContent: true }) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 6500
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1264,
+        1216
+      ],
+      "name": "TN4 - Firecrawl Detail",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "id": "a7ce365a-6d3d-4c3e-9b9c-ac74285c1e80",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "eIdR98axqDaNAkp4",
+          "name": "FireCrawl API"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\n// One item per tender (the old version packed everything into one item and later kept only offers[0]).\nconst out = [];\nfor (const it of $input.all()) {\n  const d = it.json.data || {};\n  const md = d.markdown || '';\n  const meta = d.metadata || {};\n  if (md.length < 50) continue;                                   // empty scrape = failure\n\n  let title = clean((meta.title || '').split(' – ')[0]);\n  if (!title) title = clean(meta.ogTitle || '');\n\n  // Tunisian notices have terse titles (\"Appel d'offres N° 28/2026\"), so the relevance gate also reads the body\n  if (CFG.tn.requireKeywordMatch && !isRelevant(title + ' ' + md.slice(0, 2500))) continue;\n\n  const refM = title.match(/N°\\s*:?\\s*(\\d+\\s*\\/\\s*\\d{4})/i);\n  const reference = refM ? refM[1].replace(/\\s/g, '') : '';\n  const postId = (String(meta.sourceURL || meta.url || '').match(/[?&]p=(\\d+)/) || [])[1] || '';\n\n  const dateM = md.match(/Publication publiée\\s*:\\s*([^\\n]+)/i);\n  const dlM = md.match(/(?:date limite|dernier d[ée]lai|au plus tard|avant le|cl[ôo]ture|d[ée]p[ôo]t des offres)[^\\n]{0,120}?(\\d{1,2}(?:er)?\\s+[A-Za-zéèêûôîàç]+\\s+\\d{4}|\\d{1,2}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{4})/i);\n  const body = md.replace(/\\[([^\\]]+)\\]\\([^\\)]+\\)/g, '$1').replace(/!\\[[^\\]]*\\]\\([^\\)]+\\)/g, '').replace(/\\s+/g, ' ').trim();\n\n  out.push({ json: {\n    source_key: 'domainetat', source_id: postId || reference, record_type: 'open_tender',\n    country: 'Tunisia', currency: 'TND',\n    reference: reference ? 'domainetat-' + reference : (postId ? 'domainetat-p' + postId : ''),\n    title, issuer: CFG.tn.issuer,\n    date: dateM ? dateM[1].trim() : '', deadline: dlM ? dlM[1] : '',\n    description: body.slice(0, 500), raw_text: body.slice(0, 6000),\n    source_url: meta.sourceURL || meta.url || '',\n    cpv: '', duration: '', estimated_value: '',\n    buyer_information: { name: CFG.tn.issuer, email: '', phone: '', website: '', profile_url: 'https://www.domainetat.tn/', address: 'Tunisia', legal_form: '' },\n    procedure: { type: '', internal_id: reference },\n    award_information: { winner: '', amount: '' },\n    scrape_status: 'OK'\n  } });\n}\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1488,
+        1216
+      ],
+      "name": "TN5 - Parse & Filter Tenders",
+      "id": "221aaa4b-c145-4b33-af6a-de78d2017ec8"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1936,
+        992
+      ],
+      "name": "Merge Sources",
+      "id": "f126f829-9fa0-4701-9a99-6e20cba29440"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\n// One shared normalisation for ALL sources: ISO dates, taxonomy categories, country/currency, record type, single source label.\nconst SOURCE_LABELS = { francemarches: 'France Marchés', boamp: 'BOAMP', domainetat: 'domainetat.tn' };\nfunction urgencyPts(d){ if (d === null) return 8; if (d <= 3) return 10; if (d <= 14) return 30; if (d <= 30) return 25; if (d <= 60) return 15; return 10; }\nfunction urgencyLabel(d){ if (d === null) return 'unknown'; if (d <= 3) return 'critical'; if (d <= 14) return 'high'; if (d <= 30) return 'medium'; return 'low'; }\n\nconst out = [];\nfor (const it of $input.all()) {\n  const t = it.json;\n  if (!t || t._empty || t._note || !t.title) continue;           // drop \"no results\" placeholders (no more junk CSV row)\n\n  const record_type = t.record_type || 'open_tender';\n  if (record_type === 'award' && !CFG.includeAwards) continue;\n\n  const date = toISO(t.date);\n  const deadline = toISO(t.deadline);\n  if (deadline && deadline < TODAY_ISO) continue;                 // expired filter now applies to every source\n  const days = daysUntil(deadline);\n\n  let categories = classify(t.title + ' ' + (t.description || '') + ' ' + String(t.raw_text || '').slice(0, 1500));\n  if (!categories.length) categories = t.search_category ? [t.search_category] : ['IT - Other'];\n\n  const country = t.country || 'France';\n  const currency = t.currency || (country === 'Tunisia' ? 'TND' : 'EUR');\n  const b = t.buyer_information || {};\n  const portalWebsite = isPortal(b.website);\n  let value = String(t.estimated_value || '').trim();\n  if (value && !/[A-Za-z€]/.test(value)) value = value + ' ' + currency;\n\n  out.push({ json: {\n    source: SOURCE_LABELS[t.source_key] || t.source_key, source_key: t.source_key, source_id: String(t.source_id || ''),\n    record_type, country, currency,\n    reference: t.reference || '', title: clean(t.title), issuer: clean(t.issuer || b.name || ''),\n    date, deadline, days_to_deadline: days, urgency: urgencyLabel(days),\n    categories, description: t.description || '', raw_text: String(t.raw_text || '').slice(0, 4000),\n    source_url: t.source_url || '', cpv: t.cpv || '', duration: t.duration || '', estimated_value: value,\n    buyer_information: {\n      name: clean(b.name || t.issuer || ''), email: b.email || '', phone: b.phone || '',\n      website: portalWebsite ? '' : (b.website || ''),                 // tender-portal URLs are not the buyer's website\n      profile_url: b.profile_url || (portalWebsite ? b.website : ''),\n      address: b.address || '', legal_form: b.legal_form || ''\n    },\n    procedure: t.procedure || { type: '', internal_id: '' },\n    award_information: t.award_information || { winner: '', amount: '' },\n    scrape_status: t.scrape_status || 'OK',\n    heuristic_score: Math.min(categories.filter(c => c !== 'IT - Other').length, 3) * 15 + urgencyPts(days)\n  } });\n}\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        1008
+      ],
+      "name": "Normalize & Classify",
+      "id": "01b350b8-9362-47d6-9b17-b38a5ad1dee0"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\nconst known = new Set(($('02 - Collect Known IDs').first().json.known_ids) || []);\nconst tenders = $input.all().map(i => i.json);\n\nfunction quality(t){\n  let q = 0;\n  for (const k of ['deadline', 'date', 'cpv', 'duration', 'estimated_value', 'description']) if (t[k]) q++;\n  const b = t.buyer_information || {};\n  for (const k of ['email', 'phone', 'website', 'address']) if (b[k]) q++;\n  return q;\n}\nfunction mergeInto(base, other){\n  base.categories = Array.from(new Set([...(base.categories || []), ...(other.categories || [])]));\n  for (const k of ['deadline', 'date', 'cpv', 'duration', 'estimated_value']) if (!base[k] && other[k]) base[k] = other[k];\n  if (base.deadline) { base.days_to_deadline = daysUntil(base.deadline); }\n  base.heuristic_score = Math.max(base.heuristic_score || 0, other.heuristic_score || 0);\n  base.buyer_information = base.buyer_information || {};\n  for (const k of ['email', 'phone', 'website', 'profile_url', 'address', 'legal_form']) {\n    if (!base.buyer_information[k] && other.buyer_information && other.buyer_information[k]) base.buyer_information[k] = other.buyer_information[k];\n  }\n}\n\n// 1) inside each source: by source id\nconst perSource = new Map();\nfor (const t of tenders) {\n  const k = t.source_key + ':' + (t.source_id || t.source_url || normFlat(t.title));\n  if (perSource.has(k)) mergeInto(perSource.get(k), t); else perSource.set(k, t);\n}\n\n// 2) across sources: normalised title + buyer + deadline (or date)\nconst groups = new Map();\nfor (const t of perSource.values()) {\n  const buyer = normFlat(buyerName(t));\n  const key = normFlat(t.title).slice(0, 140) + '|' + (buyer === 'nonspecifie' ? '' : buyer) + '|' + (t.deadline || t.date || '') + '|' + t.country;\n  if (!groups.has(key)) groups.set(key, []);\n  groups.get(key).push(t);\n}\n\nconst out = [];\nfor (const [key, list] of groups) {\n  list.sort((a, b) => quality(b) - quality(a));\n  const base = list[0];\n  for (const o of list.slice(1)) mergeInto(base, o);\n  base.sources = list.map(t => ({ source: t.source, source_id: t.source_id, source_url: t.source_url }));\n  base.tender_id = 'T-' + hash(key);                             // stable id used for every later join and for persistence\n  base.buyer_key = buyerKey(base);\n  base.is_new = true;\n  if (known.has(base.tender_id)) continue;                        // already stored in the sheet: skip (saves Firecrawl + Gemini credits)\n  out.push({ json: base });\n}\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2384,
+        1008
+      ],
+      "name": "Dedupe & Assign IDs",
+      "id": "f808dfa8-2021-44d1-938a-03ef059cc3ea"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\nconst tenders = $input.all().map(i => i.json).filter(t => t && t.title);\nconst maxBuyers = Number(CFG.limits.maxBuyersToEnrich || 0);\n\n// One record per UNIQUE buyer (the old steps 09/10/11 ran once per tender)\nconst buyers = new Map();\nfor (const t of tenders) {\n  const key = buyerKey(t);\n  const b = t.buyer_information || {};\n  if (!buyers.has(key)) {\n    buyers.set(key, {\n      buyer_key: key, name: buyerName(t), country: t.country,\n      contacts: { email: '', phone: '', website: '', address: '', legal_form: '', profile_url: '' },\n      contact_sources: {}, tender_ids: [], tender_source_ids: [], tender_titles: [], priority: 0\n    });\n  }\n  const x = buyers.get(key);\n  for (const f of ['email', 'phone', 'website', 'address', 'legal_form', 'profile_url']) {\n    let v = b[f] || '';\n    if (f === 'website' && isPortal(v)) v = '';                   // portal URLs count as missing\n    if (!x.contacts[f] && v) { x.contacts[f] = v; if (['email', 'phone', 'website'].includes(f)) x.contact_sources[f] = 'tender_notice'; }\n  }\n  x.tender_ids.push(t.tender_id);\n  for (const s of (t.sources || [])) if (s.source_id) x.tender_source_ids.push(String(s.source_id));\n  if (x.tender_titles.length < 5) x.tender_titles.push(t.title);\n  x.priority = Math.max(x.priority, t.heuristic_score || 0);\n}\n\n// Budget: France only, highest priority first. Everything else is labelled, never silently dropped.\nconst list = Array.from(buyers.values());\nconst eligible = list.filter(x => x.country === 'France' && x.buyer_key !== 'France:unknown').sort((a, b) => b.priority - a.priority);\nconst attempted = new Set((maxBuyers > 0 ? eligible.slice(0, maxBuyers) : eligible).map(x => x.buyer_key));\nfor (const x of list) {\n  x.attempt = attempted.has(x.buyer_key);\n  if (x.attempt) x.enrichment_status = 'queued';\n  else if (x.buyer_key.endsWith(':unknown')) x.enrichment_status = 'skipped_no_buyer_name';\n  else if (x.country !== 'France') x.enrichment_status = 'skipped_country_' + x.country;\n  else x.enrichment_status = 'not_attempted_budget';\n}\nreturn list.map(x => ({ json: x }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2624,
+        1008
+      ],
+      "name": "Select Unique Buyers",
+      "id": "e63cc7b2-1b98-4cf4-b645-852f53584c38"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a949fbd7-86b5-4277-9ef8-b61922981b93",
+              "leftValue": "={{ $json.attempt }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2816,
+        1008
+      ],
+      "name": "Buyer in enrichment budget?",
+      "id": "3779aa45-06c1-43b1-9e8b-960bc485c4b7"
+    },
+    {
+      "parameters": {
+        "url": "https://recherche-entreprises.api.gouv.fr/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "per_page",
+              "value": "5"
+            },
+            {
+              "name": "etat_administratif",
+              "value": "A"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 350
+            }
+          },
+          "timeout": 15000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        3072,
+        816
+      ],
+      "name": "Registry Lookup (France)",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "id": "3899bbeb-a341-4d1a-b5ca-6d07d269b59c",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\n\nfunction nameTokens(name){\n  return normKey(name).split(' ')\n    .map(t => (t === 'ville' || t === 'mairie') ? 'commune' : t)\n    .filter(t => t.length > 1 && !STOPWORDS.has(t));\n}\nfunction dice(a, b){\n  const A = new Set(nameTokens(a)), B = new Set(nameTokens(b));\n  if (!A.size || !B.size) return 0;\n  let inter = 0; for (const t of A) if (B.has(t)) inter++;\n  return (2 * inter) / (A.size + B.size);\n}\nfunction distinctiveTokens(name){\n  const all = nameTokens(name);\n  const d = all.filter(t => !GENERIC_ORG.has(t));\n  return d.length ? d : all;\n}\nfunction tokenCoverage(text, name){\n  const toks = distinctiveTokens(name);\n  if (!toks.length) return 0;\n  const flat = normFlat(text);\n  return toks.filter(t => flat.includes(t)).length / toks.length;\n}\n\nconst items = $input.all();\nconst minSim = CFG.enrichment.registryMinSimilarity;\nconst q = s => String(s || '').replace(/[\"\\\\]/g, ' ').trim();\nconst out = [];\n\nfor (let i = 0; i < items.length; i++) {\n  let b;\n  try { b = $('Buyer in enrichment budget?').itemMatching(i).json; } catch (e) { continue; }\n  const resp = items[i].json;\n  const results = Array.isArray(resp.results) ? resp.results : [];\n\n  // Name-similarity gate: the registry's top hit is no longer accepted blindly\n  let best = null, bestScore = 0;\n  for (const c of results) {\n    const names = [c.nom_complet, c.nom_raison_sociale, c.sigle].filter(Boolean);\n    for (const n of names) { const s = dice(b.name, n); if (s > bestScore) { bestScore = s; best = c; } }\n  }\n  const ok = !!best && bestScore >= minSim;\n  const siege = (best && best.siege) || {};\n  const registry = {\n    match_ok: ok, score: Math.round(bestScore * 100) / 100,\n    reason: resp.error ? 'registry error' : (!results.length ? 'no results' : (ok ? 'name similarity above threshold' : 'best candidate below threshold: ' + (best ? best.nom_complet : ''))),\n    legal_name: ok ? (best.nom_complet || '') : '', siren: ok ? (best.siren || '') : '', siret: ok ? (siege.siret || '') : '',\n    address: ok ? (siege.adresse || siege.geo_adresse || '') : '', legal_form: ok ? String(best.nature_juridique || '') : '',\n    date_creation: ok ? (siege.date_creation || '') : ''\n  };\n\n  const domain = (b.contacts.website && !isPortal(b.contacts.website)) ? hostOf(b.contacts.website) : '';\n  const searchName = registry.legal_name || b.name;\n  out.push({ json: {\n    ...b, registry,\n    boamp_where: 'nomacheteur like \"%' + q(b.name) + '%\"',\n    decp_where: (ok && registry.siren) ? 'acheteur_id like \"' + registry.siren + '%\"' : 'acheteur_id = \"__no_registry_match__\"',\n    search_query: domain ? ('site:' + domain + ' contact téléphone email') : ('\"' + q(searchName) + '\" site officiel contact téléphone email')\n  } });\n}\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3280,
+        816
+      ],
+      "name": "Validate Registry Match",
+      "id": "f47fc3ab-a010-4ef3-9d2a-bd2e0e4c93e8"
+    },
+    {
+      "parameters": {
+        "url": "https://boamp-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/boamp/records",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "where",
+              "value": "={{ $json.boamp_where }}"
+            },
+            {
+              "name": "limit",
+              "value": "20"
+            },
+            {
+              "name": "order_by",
+              "value": "dateparution DESC"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 300
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        3504,
+        816
+      ],
+      "name": "BOAMP History",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "id": "bbf82de3-5f6a-4b84-bc16-cc25606b92a4",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/decp-2022-marches-valides/records",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "where",
+              "value": "={{ $('Validate Registry Match').item.json.decp_where }}"
+            },
+            {
+              "name": "limit",
+              "value": "8"
+            },
+            {
+              "name": "order_by",
+              "value": "datenotification DESC"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 300
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        3728,
+        816
+      ],
+      "name": "DECP Awards",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "id": "eb3be233-91c3-495a-af6f-632d1c357dc5",
+      "onError": "continueRegularOutput",
+      "notes": "DECP is used as past-awards EVIDENCE per buyer (matched by SIREN), not as a tender source."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ query: $('Validate Registry Match').item.json.search_query, limit: 3, lang: 'fr', country: 'FR', scrapeOptions: { formats: ['markdown'], onlyMainContent: true } }) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 6500
+            }
+          },
+          "timeout": 45000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        3952,
+        816
+      ],
+      "name": "Contact Web Search",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "id": "86e40654-decb-49eb-96c0-88b2ac2c028c",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "eIdR98axqDaNAkp4",
+          "name": "FireCrawl API"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\n\nfunction nameTokens(name){\n  return normKey(name).split(' ')\n    .map(t => (t === 'ville' || t === 'mairie') ? 'commune' : t)\n    .filter(t => t.length > 1 && !STOPWORDS.has(t));\n}\nfunction dice(a, b){\n  const A = new Set(nameTokens(a)), B = new Set(nameTokens(b));\n  if (!A.size || !B.size) return 0;\n  let inter = 0; for (const t of A) if (B.has(t)) inter++;\n  return (2 * inter) / (A.size + B.size);\n}\nfunction distinctiveTokens(name){\n  const all = nameTokens(name);\n  const d = all.filter(t => !GENERIC_ORG.has(t));\n  return d.length ? d : all;\n}\nfunction tokenCoverage(text, name){\n  const toks = distinctiveTokens(name);\n  if (!toks.length) return 0;\n  const flat = normFlat(text);\n  return toks.filter(t => flat.includes(t)).length / toks.length;\n}\n\n\nfunction parseGemini(resp){\n  if (!resp) return { ok: false, error: 'empty response' };\n  if (resp.error) return { ok: false, error: typeof resp.error === 'string' ? resp.error : (resp.error.message || JSON.stringify(resp.error)).slice(0, 300) };\n  const parts = (((resp.candidates || [])[0] || {}).content || {}).parts || [];\n  let text = parts.map(p => p.text || '').join('').trim().replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();\n  if (!text) return { ok: false, error: 'Gemini returned no text (finish reason: ' + ((resp.candidates || [])[0] || {}).finishReason + ')' };\n  try { return { ok: true, data: JSON.parse(text) }; } catch (e) {}\n  const m = text.match(/\\{[\\s\\S]*\\}/);\n  if (m) { try { return { ok: true, data: JSON.parse(m[0]) }; } catch (e) {} }\n  return { ok: false, error: 'Unparseable Gemini output: ' + text.slice(0, 120) };\n}\nfunction geminiBody(system, user, maxTokens){\n  return {\n    systemInstruction: { parts: [{ text: system }] },\n    contents: [{ role: 'user', parts: [{ text: user }] }],\n    generationConfig: { temperature: 0.1, responseMimeType: 'application/json', maxOutputTokens: maxTokens || 4096 }\n  };\n}\n\nconst BLOCK_RE = /(google|bing|facebook|twitter|x\\.com|linkedin|wikipedia|youtube|instagram|indeed|emploi-collectivites|societe\\.com|pappers|verif\\.com|infogreffe|annuaire-mairie|pagesjaunes|mairie\\.net|data\\.gouv|legifrance|journal-officiel)/i;\nconst PHONE_RE = /(?:\\+33\\s?\\(?0?\\)?\\s?|0)[1-9](?:[\\s.\\-]?\\d{2}){4}/;\nconst EMAIL_RE = /[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}/g;\nconst BAD_EMAIL = /(example|noreply|no-reply|sentry|placeholder|wixpress|\\.png|\\.jpg|\\.gif|\\.svg|\\.webp)/i;\n\nfunction pickTitulaires(r){\n  const vals = [r.titulaire, r.titulaires, r.titulaire_nom, r.titulaire_denominationsociale, r.titulaire_denomination_sociale_1, r.titulaire_denominationsociale_1];\n  const res = [];\n  for (const v of vals) {\n    if (!v) continue;\n    const arr = Array.isArray(v) ? v : [v];\n    for (const x of arr) res.push(typeof x === 'object' ? (x.denominationSociale || x.nom || '') : x);\n  }\n  return Array.from(new Set(res.map(clean).filter(Boolean)));\n}\n\nconst items = $input.all();\nconst out = [];\nfor (let i = 0; i < items.length; i++) {\n  const resp = items[i].json;\n  const b = $('Validate Registry Match').itemMatching(i).json;\n  let boamp = {}, decp = {};\n  try { boamp = $('BOAMP History').itemMatching(i).json || {}; } catch (e) {}\n  try { decp = $('DECP Awards').itemMatching(i).json || {}; } catch (e) {}\n\n  const results = Array.isArray(resp.data) ? resp.data : [];\n  const contacts = { ...b.contacts };\n  const sources = { ...b.contact_sources };\n  const searchName = b.registry.legal_name || b.name;\n\n  // --- 1) which domain is the OFFICIAL one?\n  let domain = (contacts.website && !isPortal(contacts.website)) ? hostOf(contacts.website) : '';\n  let domainVerified = !!domain;       // a website taken from the tender notice is the buyer's own declaration\n  if (!domain) {\n    for (const r of results) {\n      const h = hostOf(r.url);\n      if (!h || BLOCK_RE.test(h) || isPortal(h) || /service-public\\.(gouv\\.)?fr$/.test(h)) continue;\n      if (tokenCoverage(h + ' ' + (r.title || ''), searchName) >= 0.5) { domain = h; domainVerified = true; break; }\n    }\n  }\n  const onDomain = r => { const h = hostOf(r.url); return domain && (h === domain || h.endsWith('.' + domain)); };\n  const isDirectory = r => /(^|\\.)service-public\\.(gouv\\.)?fr$/.test(hostOf(r.url)) && tokenCoverage((r.title || '') + ' ' + String(r.markdown || '').slice(0, 400), searchName) >= 0.6;\n\n  // --- 2) contacts: ONLY from the official domain (or the service-public directory with a strong name match)\n  const trusted = results.filter(r => onDomain(r) || isDirectory(r));\n  if (!contacts.website && domain && domainVerified) { contacts.website = 'https://' + domain; sources.website = 'official-domain search'; }\n  const emailScore = e => /(marche|achat|commande|contact|accueil|secretariat|mairie|info)/i.test(e.split('@')[0]) ? 0 : 1;\n  for (const r of trusted) {\n    const text = (r.title || '') + ' ' + (r.description || '') + ' ' + (r.markdown || '');\n    if (!contacts.email) {\n      const found = (text.match(EMAIL_RE) || []).filter(e => !BAD_EMAIL.test(e)).filter(e => {\n        const d = e.split('@')[1].toLowerCase();\n        return onDomain(r) ? (d === domain || d.endsWith('.' + domain)) : true;\n      }).sort((a, z) => emailScore(a) - emailScore(z));\n      if (found.length) { contacts.email = found[0]; sources.email = r.url; }\n    }\n    if (!contacts.phone) {\n      const labelled = text.match(/(?:Tél|Téléphone|Standard|Accueil|Contact)[^0-9+]{0,40}((?:\\+33\\s?\\(?0?\\)?\\s?|0)[1-9](?:[\\s.\\-]?\\d{2}){4})/i);\n      const ph = labelled ? labelled[1] : (text.match(PHONE_RE) || [])[0];\n      if (ph) { contacts.phone = ph.trim(); sources.phone = r.url; }\n    }\n  }\n  const siteSnippet = (trusted.find(onDomain) || {}).markdown || '';\n\n  // --- 3) history: BOAMP (exact normalised buyer name) and DECP (by SIREN), excluding the current tender(s)\n  const names = [b.name, b.registry.legal_name].filter(Boolean).map(normFlat);\n  const exclude = new Set(b.tender_source_ids || []);\n  const past_projects = [], suppliers = [];\n  for (const r of (boamp.results || [])) {\n    if (!names.includes(normFlat(r.nomacheteur))) continue;\n    if (exclude.has(String(r.idweb))) continue;\n    if (past_projects.length < 6) past_projects.push({ title: clean(r.objet), date: toISO(r.dateparution), source: 'BOAMP', id: String(r.idweb) });\n    for (const s of pickTitulaires(r)) suppliers.push({ name: s, source: 'BOAMP', contract: clean(r.objet) });\n  }\n  for (const r of (decp.results || [])) {\n    if (past_projects.length < 10) past_projects.push({ title: clean(r.objet), date: toISO(r.datenotification), amount: r.montant || '', source: 'DECP', id: '' });\n    for (const s of pickTitulaires(r)) suppliers.push({ name: s, source: 'DECP', contract: clean(r.objet) });\n  }\n  const seenS = new Set();\n  const past_suppliers = suppliers.filter(s => { const k = normFlat(s.name); if (seenS.has(k)) return false; seenS.add(k); return true; }).slice(0, 10);\n\n  const client_identified = !!(b.registry.match_ok || past_projects.length || (domain && domainVerified));\n  const gotContact = ['email', 'phone', 'website'].some(f => contacts[f] && !b.contacts[f]);\n  const enrichment_status = (gotContact || b.registry.match_ok || past_projects.length) ? 'enriched' : 'attempted_no_data';\n  if (b.registry.match_ok && b.registry.address && !contacts.address) contacts.address = b.registry.address;\n  if (b.registry.match_ok && b.registry.legal_form && !contacts.legal_form) contacts.legal_form = b.registry.legal_form;\n\n  const evidence =\n    'Buyer (as published): ' + b.name + '\\n' +\n    'Registry legal name: ' + (b.registry.legal_name || 'no reliable match') + '\\n' +\n    'Official website: ' + (contacts.website || 'unknown') + '\\n' +\n    'Sample current tenders: ' + b.tender_titles.join(' | ') + '\\n\\n' +\n    '== Past procurement (BOAMP/DECP) ==\\n' + (past_projects.map(p => '- [' + p.source + (p.date ? ' ' + p.date : '') + '] ' + p.title).join('\\n') || '(none found)') + '\\n\\n' +\n    '== Official site excerpt ==\\n' + (siteSnippet.replace(/\\s+/g, ' ').slice(0, 1500) || '(none)');\n\n  const system = 'You are a public-procurement analyst. Use ONLY the evidence provided. Never invent organisations, projects or facts. If the evidence is insufficient, use null or empty arrays. Return ONE JSON object and nothing else, with this schema: ' +\n    '{\"sector\": string|null, \"organization_description\": string|null (max 2 sentences), \"scale\": string|null, ' +\n    '\"past_digital_projects\": [string] (only IT/digital/software projects that appear in the evidence), ' +\n    '\"institutional_partners\": [string] (supervising bodies or partner organisations explicitly named in the evidence; NOT suppliers), ' +\n    '\"evidence_confidence\": \"high\"|\"medium\"|\"low\", \"notes\": string|null}';\n\n  out.push({ json: {\n    ...b, contacts, contact_sources: sources,\n    official_domain: domain, official_domain_verified: domainVerified,\n    past_projects, past_suppliers, client_identified, enrichment_status,\n    search_status: resp.error ? 'Error: ' + String((resp.error && resp.error.message) || resp.error).slice(0, 200) : 'OK (' + results.length + ' results)',\n    _gemini_body: geminiBody(system, evidence.slice(0, 5000), 8192)\n  } });\n}\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4176,
+        816
+      ],
+      "name": "Assemble Buyer Profile",
+      "id": "effe238b-edae-42df-9349-60ce22b0bb52"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/{{ $('00 - Config').first().json.gemini.model }}:generateContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": []
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json._gemini_body) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 4500
+            }
+          },
+          "timeout": 90000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        4400,
+        816
+      ],
+      "name": "Gemini - Buyer Profile",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "id": "f23f20a1-0ace-4cf1-8961-5adccc5595e5",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vGeLTj75PJ5lqUNF",
+          "name": "Header Auth account"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "Organisation profile is generated ONCE per buyer (cached by design), tender-specific requirements are generated per tender later."
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\n\nfunction parseGemini(resp){\n  if (!resp) return { ok: false, error: 'empty response' };\n  if (resp.error) return { ok: false, error: typeof resp.error === 'string' ? resp.error : (resp.error.message || JSON.stringify(resp.error)).slice(0, 300) };\n  const parts = (((resp.candidates || [])[0] || {}).content || {}).parts || [];\n  let text = parts.map(p => p.text || '').join('').trim().replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();\n  if (!text) return { ok: false, error: 'Gemini returned no text (finish reason: ' + ((resp.candidates || [])[0] || {}).finishReason + ')' };\n  try { return { ok: true, data: JSON.parse(text) }; } catch (e) {}\n  const m = text.match(/\\{[\\s\\S]*\\}/);\n  if (m) { try { return { ok: true, data: JSON.parse(m[0]) }; } catch (e) {} }\n  return { ok: false, error: 'Unparseable Gemini output: ' + text.slice(0, 120) };\n}\nfunction geminiBody(system, user, maxTokens){\n  return {\n    systemInstruction: { parts: [{ text: system }] },\n    contents: [{ role: 'user', parts: [{ text: user }] }],\n    generationConfig: { temperature: 0.1, responseMimeType: 'application/json', maxOutputTokens: maxTokens || 4096 }\n  };\n}\n\nconst items = $input.all();\nconst arr = v => Array.isArray(v) ? v.map(x => clean(typeof x === 'string' ? x : JSON.stringify(x))).filter(Boolean) : [];\nconst out = [];\nfor (let i = 0; i < items.length; i++) {\n  const b = $('Assemble Buyer Profile').itemMatching(i).json;\n  const p = parseGemini(items[i].json);\n  const { _gemini_body, ...rest } = b;\n  let org = null;\n  if (p.ok && p.data && typeof p.data === 'object') {\n    const d = p.data;\n    org = {\n      sector: d.sector || null, organization_description: d.organization_description || null, scale: d.scale || null,\n      past_digital_projects: arr(d.past_digital_projects), institutional_partners: arr(d.institutional_partners),\n      evidence_confidence: d.evidence_confidence || 'low', notes: d.notes || null\n    };\n  }\n  out.push({ json: { ...rest, org_profile: org, ai_status: p.ok ? 'OK' : 'Error: ' + p.error } });\n}\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4624,
+        816
+      ],
+      "name": "Parse Buyer Profile",
+      "id": "cd52f195-f91c-4ff0-9b83-c547dc6c0196"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        4848,
+        1008
+      ],
+      "name": "Merge Buyers",
+      "id": "627de344-50e3-430b-8ee7-21fced332ed5"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\nconst buyers = new Map();\nfor (const it of $input.all()) buyers.set(it.json.buyer_key, it.json);\nconst tenders = $('Dedupe & Assign IDs').all().map(i => i.json);\n\nconst out = tenders.map(t => {\n  const b = buyers.get(buyerKey(t)) || null;\n  const bi = { ...(t.buyer_information || {}) };\n  const tenderHad = { email: !!bi.email, phone: !!bi.phone, website: !!bi.website };\n  const contact_source = {}, contact_status = {};\n  const attempted = b && ['enriched', 'attempted_no_data'].includes(b.enrichment_status);\n\n  for (const f of ['email', 'phone', 'website']) {\n    if (tenderHad[f]) { contact_source[f] = 'tender_notice'; contact_status[f] = 'found_in_notice'; continue; }\n    const v = b && b.contacts ? b.contacts[f] : '';\n    if (v) { bi[f] = v; contact_source[f] = (b.contact_sources && b.contact_sources[f]) || ''; contact_status[f] = 'found_web'; }\n    else contact_status[f] = attempted ? 'not_found' : 'not_attempted';\n  }\n  if (b && b.contacts) { if (!bi.address && b.contacts.address) bi.address = b.contacts.address; if (!bi.legal_form && b.contacts.legal_form) bi.legal_form = b.contacts.legal_form; }\n\n  // never list the tender itself as one of the buyer's \"past projects\"\n  const ownIds = new Set((t.sources || []).map(s => String(s.source_id)));\n  const past_projects = ((b && b.past_projects) || []).filter(p => !(p.id && ownIds.has(String(p.id))) && normFlat(p.title) !== normFlat(t.title));\n  const org = (b && b.org_profile) || null;\n\n  return { json: {\n    ...t,\n    buyer_information: bi, contact_source, contact_status,\n    legal_name: b && b.registry ? b.registry.legal_name : '',\n    siret: b && b.registry ? b.registry.siret : '',\n    enrichment_status: b ? b.enrichment_status : 'not_attempted',\n    buyer_profile: {\n      client_identified: b ? !!b.client_identified : false,\n      registry_match: b && b.registry ? { ok: b.registry.match_ok, score: b.registry.score, reason: b.registry.reason } : null,\n      sector: org ? org.sector : null, organization_description: org ? org.organization_description : null, scale: org ? org.scale : null,\n      past_digital_projects: org ? org.past_digital_projects : [],\n      key_partners: org ? org.institutional_partners : [],          // institutional partners only\n      past_suppliers: (b && b.past_suppliers) || [],                 // BOAMP/DECP suppliers, kept separate on purpose\n      past_projects,\n      evidence_confidence: org ? org.evidence_confidence : null,\n      ai_status: b ? (b.ai_status || 'n/a') : 'n/a'\n    }\n  } };\n});\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5072,
+        1008
+      ],
+      "name": "Join Buyers to Tenders",
+      "id": "e263f522-71ca-4682-b74a-1040d00d0691"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\n\nfunction parseGemini(resp){\n  if (!resp) return { ok: false, error: 'empty response' };\n  if (resp.error) return { ok: false, error: typeof resp.error === 'string' ? resp.error : (resp.error.message || JSON.stringify(resp.error)).slice(0, 300) };\n  const parts = (((resp.candidates || [])[0] || {}).content || {}).parts || [];\n  let text = parts.map(p => p.text || '').join('').trim().replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();\n  if (!text) return { ok: false, error: 'Gemini returned no text (finish reason: ' + ((resp.candidates || [])[0] || {}).finishReason + ')' };\n  try { return { ok: true, data: JSON.parse(text) }; } catch (e) {}\n  const m = text.match(/\\{[\\s\\S]*\\}/);\n  if (m) { try { return { ok: true, data: JSON.parse(m[0]) }; } catch (e) {} }\n  return { ok: false, error: 'Unparseable Gemini output: ' + text.slice(0, 120) };\n}\nfunction geminiBody(system, user, maxTokens){\n  return {\n    systemInstruction: { parts: [{ text: system }] },\n    contents: [{ role: 'user', parts: [{ text: user }] }],\n    generationConfig: { temperature: 0.1, responseMimeType: 'application/json', maxOutputTokens: maxTokens || 4096 }\n  };\n}\n\nconst items = $input.all();\nconst max = Number(CFG.limits.aiMaxTenders || 0);\nconst ranked = items.map((it, i) => ({ i, s: it.json.heuristic_score || 0 })).sort((a, z) => z.s - a.s);\nconst allowed = new Set((max > 0 ? ranked.slice(0, max) : ranked).map(x => x.i));\n\nfunction cleanText(s){\n  return String(s || '').replace(/<script[\\s\\S]*?<\\/script>/gi,' ').replace(/<[^>]+>/g,' ')\n    .replace(/!\\[[^\\]]*\\]\\([^)]*\\)/g,' ').replace(/\\[([^\\]]+)\\]\\([^)]*\\)/g,'$1')\n    .replace(/https?:\\/\\/\\S+/g,' ').replace(/[#*_`>|]+/g,' ').replace(/\\s+/g,' ').trim();\n}\n\nconst system = 'You qualify and structure public tenders for a consultancy. Company profile: ' + CFG.companyProfile + ' ' +\n  'The tender may be in French or English: keep the tender\\'s original language in every extracted requirement. ' +\n  'Use ONLY the tender text for requirements. Never invent or infer a requirement; if not stated, return null or []. ' +\n  'Requirements are only conditions imposed on the supplier, not generic tender information. ' +\n  'Return ONE JSON object and nothing else, with this schema: ' +\n  '{\"relevance_score\": integer 0-100, \"relevance_rationale\": string (max 2 sentences), ' +\n  '\"matched_service_lines\": [string], \"suggested_angle\": string, \"risks\": [string], ' +\n  '\"sector\": string|null, ' +\n  '\"requirements\": {\"technical\": [string] (technologies, platforms, standards, certifications, concrete technical scope), ' +\n  '\"team\": [string] (roles, profiles, qualifications, headcount), ' +\n  '\"experience\": [string] (years, references, sector or public-sector experience), ' +\n  '\"timeline\": string|null}}';\n\nconst out = items.map((it, i) => {\n  const t = it.json;\n  const bp = t.buyer_profile || {};\n  const user =\n    'Tender: ' + t.title + '\\nCountry: ' + t.country + '\\nCategories: ' + (t.categories || []).join(', ') +\n    '\\nDeadline: ' + (t.deadline || 'unknown') + (t.days_to_deadline !== null && t.days_to_deadline !== undefined ? ' (' + t.days_to_deadline + ' days left)' : '') +\n    '\\nEstimated value: ' + (t.estimated_value || 'unknown') + '\\nCPV: ' + (t.cpv || 'n/a') +\n    '\\n\\nBuyer: ' + (t.legal_name || t.issuer) + '\\nSector: ' + (bp.sector || 'unknown') + '\\nAbout: ' + (bp.organization_description || 'unknown') +\n    '\\nPast digital projects: ' + ((bp.past_digital_projects || []).slice(0, 4).join(' | ') || 'none known') +\n    '\\n\\nTENDER TEXT:\\n' + cleanText(t.raw_text || t.description || t.title).slice(0, 3500);\n  return { json: { ...t, do_ai: allowed.has(i), _gemini_body: geminiBody(system, user, 8192) } };\n});\nreturn out;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5296,
+        1008
+      ],
+      "name": "Build Tender Prompt",
+      "id": "63c7c33f-dd8f-43c0-8be2-904eac40570c"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "21110601-6e28-48f6-9b90-eeaa14a9812e",
+              "leftValue": "={{ $json.do_ai }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        5520,
+        1008
+      ],
+      "name": "Run AI analysis?",
+      "id": "a2da2885-9b25-4d9d-9315-6fccf46ebaeb"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/{{ $('00 - Config').first().json.gemini.model }}:generateContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json._gemini_body) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 4500
+            }
+          },
+          "timeout": 90000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        5744,
+        912
+      ],
+      "name": "Gemini - Tender Analysis",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "id": "b42da7e6-b426-4e47-8d01-75536bc8b80d",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "vGeLTj75PJ5lqUNF",
+          "name": "Header Auth account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\n\nfunction parseGemini(resp){\n  if (!resp) return { ok: false, error: 'empty response' };\n  if (resp.error) return { ok: false, error: typeof resp.error === 'string' ? resp.error : (resp.error.message || JSON.stringify(resp.error)).slice(0, 300) };\n  const parts = (((resp.candidates || [])[0] || {}).content || {}).parts || [];\n  let text = parts.map(p => p.text || '').join('').trim().replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();\n  if (!text) return { ok: false, error: 'Gemini returned no text (finish reason: ' + ((resp.candidates || [])[0] || {}).finishReason + ')' };\n  try { return { ok: true, data: JSON.parse(text) }; } catch (e) {}\n  const m = text.match(/\\{[\\s\\S]*\\}/);\n  if (m) { try { return { ok: true, data: JSON.parse(m[0]) }; } catch (e) {} }\n  return { ok: false, error: 'Unparseable Gemini output: ' + text.slice(0, 120) };\n}\nfunction geminiBody(system, user, maxTokens){\n  return {\n    systemInstruction: { parts: [{ text: system }] },\n    contents: [{ role: 'user', parts: [{ text: user }] }],\n    generationConfig: { temperature: 0.1, responseMimeType: 'application/json', maxOutputTokens: maxTokens || 4096 }\n  };\n}\n\nconst items = $input.all();\nconst arr = v => Array.isArray(v) ? v.map(x => clean(typeof x === 'string' ? x : JSON.stringify(x))).filter(Boolean) : [];\nconst toList = v => Array.isArray(v)\n  ? v.map(x => String(x == null ? '' : x).trim()).filter(x => x && !/^(none|null|n\\/a)$/i.test(x)).slice(0, 8)\n  : [];\n\nconst out = [];\nfor (let i = 0; i < items.length; i++) {\n  const t = $('Build Tender Prompt').itemMatching(i).json;\n  const p = parseGemini(items[i].json);\n  const d = (p.ok && p.data && typeof p.data === 'object') ? p.data : null;\n  const r = (d && d.requirements) || {};\n\n  const analysis = d ? {\n    relevance_score: Math.max(0, Math.min(100, Math.round(Number(d.relevance_score) || 0))),\n    relevance_rationale: d.relevance_rationale || '',\n    matched_service_lines: arr(d.matched_service_lines),\n    suggested_angle: d.suggested_angle || '',\n    risks: arr(d.risks),\n    sector: d.sector || null,\n    requirements: {\n      technical: toList(r.technical),\n      team: toList(r.team),\n      experience: toList(r.experience),\n      timeline: r.timeline ? String(r.timeline).trim() : null\n    }\n  } : null;\n\n  const { _gemini_body, ...rest } = t;\n  out.push({ json: { ...rest, analysis, analysis_status: p.ok ? 'OK' : 'Error: ' + p.error } });\n}\nreturn out;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5968,
+        912
+      ],
+      "name": "Parse Tender Analysis",
+      "id": "884ce7e0-2edf-467e-a23b-cf58f4bb6bf8"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        6192,
+        1008
+      ],
+      "name": "Merge Analysis",
+      "id": "cf4a69fd-a751-425d-9a38-85d09eae9752"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\nfunction all(name){ try { return $(name).all(); } catch (e) { return null; } }\nfunction count(name, pred){ const a = all(name); return a === null ? null : a.filter(i => pred ? pred(i.json) : true).length; }\n\nconst merged = all('Merge Sources') || [];\nconst bySource = {};\nfor (const s of ['francemarches', 'boamp', 'domainetat']) bySource[s] = merged.filter(i => i.json.source_key === s).length;\n\nconst failures = {\n  'FM search pages': count('FM2 - Firecrawl Search Pages', j => j.error),\n  'FM detail pages': count('FM5 - Firecrawl Detail', j => j.error),\n  'BOAMP requests': count('BOAMP Fetch', j => j.error),\n  'TN list pages': count('TN2 - Firecrawl List Pages', j => j.error),\n  'TN detail pages': count('TN4 - Firecrawl Detail', j => j.error),\n  'Registry lookups': count('Registry Lookup (France)', j => j.error),\n  'Contact web searches': count('Contact Web Search', j => j.error),\n  'Gemini buyer calls': count('Gemini - Buyer Profile', j => j.error),\n  'Gemini tender calls': count('Gemini - Tender Analysis', j => j.error)\n};\nconst failedTotal = Object.values(failures).reduce((a, v) => a + (v || 0), 0);\n\nconst rows = $input.all().map(i => i.json);\nconst byStatus = {};\nfor (const r of rows) byStatus[r.enrichment_status] = (byStatus[r.enrichment_status] || 0) + 1;\n\nconst summary = {\n  run_date: TODAY_ISO, preset: CFG.preset,\n  fetched_after_relevance_gate: bySource,\n  after_normalize: (all('Normalize & Classify') || []).length,\n  new_tenders_after_dedupe: (all('Dedupe & Assign IDs') || []).length,\n  unique_buyers: (all('Select Unique Buyers') || []).length,\n  tenders_exported: rows.length,\n  high_priority: rows.filter(r => r.priority === 'high').length,\n  enrichment_status: byStatus,\n  ai_analysis_ok: rows.filter(r => r.analysis_status === 'OK').length,\n  failed_calls: failures, failed_total: failedTotal\n};\nconst lines = [\n  'RFP pipeline run ' + TODAY_ISO + ' (' + CFG.preset + ')',\n  'Fetched: France Marchés ' + bySource.francemarches + ', BOAMP ' + bySource.boamp + ', domainetat.tn ' + bySource.domainetat,\n  'New tenders: ' + summary.new_tenders_after_dedupe + ' | exported: ' + rows.length + ' | high priority: ' + summary.high_priority,\n  'Failed calls: ' + failedTotal + (failedTotal ? ' -> ' + Object.entries(failures).filter(([k, v]) => v).map(([k, v]) => k + ': ' + v).join(', ') : '')\n];\nreturn [{ json: { ...summary, message: lines.join('\\n'), has_warnings: failedTotal > 0 || Object.values(bySource).some(v => v === 0) } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6672,
+        912
+      ],
+      "name": "Run Summary",
+      "id": "7f645108-e94c-494b-9cdc-d51bcd51c964"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1lxeQb1SV-oNvg4t0JokFaPSnL4ClbqSrSd7p49QA8VU",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "tenders",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "tender_id"
+          ],
+          "schema": [
+            {
+              "id": "tender_id",
+              "displayName": "tender_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "record_type",
+              "displayName": "record_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "currency",
+              "displayName": "currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "priority_score",
+              "displayName": "priority_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "relevance_score",
+              "displayName": "relevance_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "relevance_basis",
+              "displayName": "relevance_basis",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "urgency",
+              "displayName": "urgency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "reference",
+              "displayName": "reference",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "issuer",
+              "displayName": "issuer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "legal_name",
+              "displayName": "legal_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "siret",
+              "displayName": "siret",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "deadline",
+              "displayName": "deadline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "days_to_deadline",
+              "displayName": "days_to_deadline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "categories",
+              "displayName": "categories",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "estimated_value",
+              "displayName": "estimated_value",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "duration",
+              "displayName": "duration",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "cpv",
+              "displayName": "cpv",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "buyer_email",
+              "displayName": "buyer_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "buyer_phone",
+              "displayName": "buyer_phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "buyer_website",
+              "displayName": "buyer_website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "buyer_address",
+              "displayName": "buyer_address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "contact_status",
+              "displayName": "contact_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "contact_sources",
+              "displayName": "contact_sources",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "enrichment_status",
+              "displayName": "enrichment_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "client_identified",
+              "displayName": "client_identified",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "client_sector",
+              "displayName": "client_sector",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "client_scale",
+              "displayName": "client_scale",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "client_org_description",
+              "displayName": "client_org_description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "client_past_projects",
+              "displayName": "client_past_projects",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "client_past_digital_projects",
+              "displayName": "client_past_digital_projects",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "client_key_partners",
+              "displayName": "client_key_partners",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "client_past_suppliers",
+              "displayName": "client_past_suppliers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "requirements_technical",
+              "displayName": "requirements_technical",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "requirements_team",
+              "displayName": "requirements_team",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "requirements_experience",
+              "displayName": "requirements_experience",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "timeline",
+              "displayName": "timeline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "matched_service_lines",
+              "displayName": "matched_service_lines",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "relevance_rationale",
+              "displayName": "relevance_rationale",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "suggested_angle",
+              "displayName": "suggested_angle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "risks",
+              "displayName": "risks",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "procedure_type",
+              "displayName": "procedure_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "award_winner",
+              "displayName": "award_winner",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "source_url",
+              "displayName": "source_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "scrape_status",
+              "displayName": "scrape_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "analysis_status",
+              "displayName": "analysis_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        6672,
+        1072
+      ],
+      "name": "Save to Google Sheet",
+      "id": "ef6151c5-c63a-4e35-8476-c99de212a385",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kGp5gm2q8zWTl0Wy",
+          "name": "Google Sheets account"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "OPTIONAL persistence, keyed on tender_id. Sheet needs a header row; the first run creates the columns from the CSV fields."
+    },
+    {
+      "parameters": {
+        "content": "## Setup\n1. Create two **Header Auth** credentials:\n   - **Firecrawl API**: name `Authorization`, value `Bearer fc-...`\n   - **Gemini API**: name `x-goog-api-key`, value your key\n2. No API key is stored in any node any more. **Rotate the keys that were in the old file.**\n3. Manual run = *test* preset, scheduled run = *production* preset. Edit limits in node `00 - Config`.\n4. Optional: enable the 2 Google Sheets nodes (+ email alert) for incremental runs.\n\nUnverified assumptions: France Marchés page param (`page`), domainetat.tn page param (`paged`), DECP supplier field names.",
+        "height": 390,
+        "width": 880,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -96
+      ],
+      "name": "Note 43",
+      "id": "bede55f1-2fa7-48ce-9bf5-ff5cacc8ca03"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/retrieve/tender",
+        "sendBody": true,
+        "specifyBody": "=json",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "jsonBody": "={{ JSON.stringify($json.rag_payload) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        6736,
+        1280
+      ],
+      "id": "a5717eea-403d-46d6-9f91-7c300562d99e",
+      "name": "Call RAG1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const toList = v => Array.isArray(v) ? v.filter(Boolean) : [];\nconst out = [];\n\nfor (const it of $input.all()) {\n  const t = it.json;\n  const a = t.analysis;\n  if (!a || !a.requirements) continue;               // AI not run or failed: nothing for the RAG\n\n  const requirements = {\n    technical: toList(a.requirements.technical),\n    team: toList(a.requirements.team),\n    experience: toList(a.requirements.experience)\n  };\n  if (!requirements.technical.length && !requirements.team.length && !requirements.experience.length) continue;   // nothing useful to index\n\n  const ref = String(t.reference || '').replace(/^(domainetat|boamp)-/, '');\n  out.push({ json: { rag_payload: {\n    tender_id: ref || t.tender_id,\n    client: t.legal_name || (t.buyer_information && t.buyer_information.name) || t.issuer || null,\n    sector: a.sector || (t.buyer_profile && t.buyer_profile.sector) || null,\n    requirements\n  } } });\n}\nreturn out;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6448,
+        1280
+      ],
+      "id": "59805c36-96cf-4e7d-aa4d-dd13b35ebda6",
+      "name": "Build RAG Payload1"
+    },
+    {
+      "parameters": {
+        "content": "##  PART 1 — Start & settings\n**What it does:** wakes the workflow up and gets everything ready. Nothing is fetched yet.\n\n**Nodes, in order**\n1. `Schedule Trigger` – runs every Monday at 06:00 (a manual click also works).\n2. `00 - Config` – the ONLY place for limits, keywords and the Gemini model. A manual run uses the *test* preset (small and cheap), the schedule uses the *production* preset (full).\n3. `01 - Load Known IDs` – (disabled) reads the Google Sheet of tenders already saved.\n4. `02 - Collect Known IDs` – turns those rows into a simple list of IDs. The list is empty when the Sheet is off.\n\n**Easy picture:** the alarm clock + the instruction sheet + the \"already seen\" list.\n**Next:** the result fans out to the 3 sources at the same time (Part 2).",
+        "height": 1120,
+        "width": 892,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        336
+      ],
+      "id": "eef0d9bd-6792-407d-a519-4ec0dbd52f85",
+      "name": "Part 1 - Start & settings"
+    },
+    {
+      "parameters": {
+        "content": "##  PART 2 — Collect tenders (3 lanes in parallel)\n**What it does:** visits 3 sources and brings back raw tender notices, already filtered to IT-related ones. All 3 lanes output the same shape (title, issuer, dates, buyer_information…) so Part 3 can merge them.\n\n**Lane A – France Marchés (top row)** `FM1` → `FM6`\nBuild one search URL per keyword (keywords come from Config) → Firecrawl scrapes the result pages → `FM3` reads each card (title, buyer, dates) and keeps relevant titles → `FM4` applies the test limit → Firecrawl opens each detail page → `FM6` extracts buyer contacts, CPV code, value, deadline.\n\n**Lane B – BOAMP (middle row)** `BOAMP1` → `BOAMP2`\nAsks the official open-data API (no scraping needed) for Services / Supplies / Works notices → drops expired ones and keeps the IT ones.\n\n**Lane C – domainetat.tn, Tunisia (bottom row)** `TN1` → `TN5`\nScrape the list pages → collect the tender links → open each tender → keep only those whose text matches a keyword.\n\n**Why the 6.5 s waits?** The Firecrawl nodes send 1 request every 6.5 s to avoid hitting rate limits.",
+        "height": 1124,
+        "width": 1308,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        544,
+        336
+      ],
+      "id": "c172bfe8-8c06-4f10-a11a-ab046ca99291",
+      "name": "Part 2 - Collect tenders"
+    },
+    {
+      "parameters": {
+        "content": "##  PART 3 — Clean & dedupe\n**What it does:** puts the 3 lanes into one clean list.\n\n1. `Merge Sources` – 3 inputs become 1 list.\n2. `Normalize & Classify` – one date format (yyyy-mm-dd), category tags (Data, AI, ERP…), country and currency. Drops expired tenders and award notices. Adds a quick `heuristic_score` (categories + urgency).\n3. `Dedupe & Assign IDs` – merges the same tender found twice (even across sources), gives it a stable `tender_id`, and skips IDs already in the Sheet.\n\n**Flow:**\nSources (FM / BOAMP / domainetat.tn) -> Merge -> Normalize -> Dedupe + stable ID -> unique buyers -> France registry + BOAMP/DECP history + official-domain contact search -> Gemini buyer profile -> join back -> Gemini tender scoring -> CSV/JSON (+ Sheet)\n\n**Result:** one row per new, open, relevant tender.\n",
+        "height": 1124,
+        "width": 612,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1904,
+        336
+      ],
+      "id": "d193e737-3e4a-4c8d-9f79-77828065999e",
+      "name": "Part 3 - Clean & dedupe"
+    },
+    {
+      "parameters": {
+        "content": "##  PART 4 — Pick buyers\n**Why:** many tenders share one buyer. Research each buyer once, not once per tender.\n\n1. `Select Unique Buyers` – groups tenders by buyer. Only French buyers are eligible, highest priority first, up to `maxBuyersToEnrich`.\n2. `Buyer in enrichment budget?` – YES goes to Part 5. NO is skipped but labelled (no name / not France / over budget).\n3. `Merge Buyers` (further right, after Part 5) – brings both paths back together.",
+        "height": 1128,
+        "width": 456
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        336
+      ],
+      "id": "ca82f7c5-cf5c-4556-8c67-c2806944ce5c",
+      "name": "Part 4 - Pick buyers"
+    },
+    {
+      "parameters": {
+        "content": "##  PART 5 — Research each buyer (only buyers \"in budget\")\n**What it does:** like a detective, it collects evidence about the buyer, then asks AI to summarise it.\n\n1. `Registry Lookup (France)` – asks the official company register for the buyer name.\n2. `Validate Registry Match` – compares names (similarity of 0.6 or more) so a wrong organisation is never accepted. Gets legal name, SIREN, SIRET.\n3. `BOAMP History` – the buyer's past notices (up to 20).\n4. `DECP Awards` – past awarded contracts found by SIREN (up to 8), which shows who won before.\n5. `Contact Web Search` – Firecrawl search for the official site, to find email and phone.\n6. `Assemble Buyer Profile` – picks the official domain, keeps contacts ONLY from it, builds past projects and suppliers, and writes the evidence text for Gemini.\n7. `Gemini - Buyer Profile` – the AI writes sector, short description, scale and past digital projects, using ONLY the evidence (no invention).\n8. `Parse Buyer Profile` – turns the AI answer into clean fields. An error becomes a status, not a crash.",
+        "height": 1128,
+        "width": 1914,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        336
+      ],
+      "id": "28361d82-b7f3-4133-a7ff-6145199308da",
+      "name": "Part 5 - Research each buyer"
+    },
+    {
+      "parameters": {
+        "content": "##  PART 6 — Score tenders with AI\n1. `Join Buyers to Tenders` – pastes the buyer info back onto every tender. Each contact is marked found_in_notice / found_web / not_found.\n2. `Build Tender Prompt` – prepares the Gemini request: company profile + tender + buyer. Only the top N tenders by heuristic score get AI (`aiMaxTenders`).\n3. `Run AI analysis?` – YES goes to Gemini. NO goes straight to the merge.\n4. `Gemini - Tender Analysis` – returns a relevance score (0–100), rationale, matched services, suggested angle, risks, and requirements (technical / team / experience / timeline), using ONLY the tender text.\n5. `Parse Tender Analysis` – cleans the answer. Errors are saved in `analysis_status`.\n6. `Merge Analysis` – AI and non-AI tenders come back together in one list.",
+        "height": 1120,
+        "width": 1288,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5024,
+        336
+      ],
+      "id": "4f604183-0c1c-4656-995d-9bb06c62e40f",
+      "name": "Part 6 - Score with AI"
+    },
+    {
+      "parameters": {
+        "content": "##  PART 7 — Export & send\n1. `Finalize & Export` – priority_score = 60% relevance + 25% urgency + 15% evidence. High is 70 or more, medium is 45 or more, otherwise low. Sorts everything and builds the CSV + JSON files.\n2. `Run Summary` – counts per source, new tenders, high priority, failed calls.\n3. `Send Run Alert` – (disabled) emails the summary.\n4. `Save to Google Sheet` – (disabled) saves by tender_id and gives Part 1 its memory.\n5. `Build RAG Payload` → `Call RAG` – sends the requirements (+ client, sector) of AI-analysed tenders to the local RAG service at port 8001. Runs in parallel with the export.",
+        "height": 1128,
+        "width": 700,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        6368,
+        336
+      ],
+      "id": "0fc6c944-4b06-4602-8a1b-075bf6ded5fe",
+      "name": "Part 7 - Export & send"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ---------- shared helpers (identical in every node that uses them) ----------\nconst CFG = $('00 - Config').first().json;\nconst TODAY_ISO = CFG.today;\nconst STOPWORDS = new Set(['de','du','des','la','le','les','et','d','l','sur','en','au','aux','a','pour']);\nconst GENERIC_ORG = new Set(['commune','ville','mairie','departement','conseil','region','communaute','agglomeration','metropole','syndicat','centre','etablissement','public','service','services','office','agence','ministere','direction','groupement','communes','intercommunal','intercommunale','regional','departemental']);\n\nfunction stripAccents(s){ return String(s == null ? '' : s).normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''); }\nfunction normKey(s){ return stripAccents(s).toLowerCase().replace(/&#0?39;/g, \"'\").replace(/[^a-z0-9]+/g, ' ').trim(); }\nfunction normFlat(s){ return normKey(s).replace(/ /g, ''); }\nfunction escRe(s){ return String(s).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&'); }\nfunction clean(s){ return String(s == null ? '' : s).replace(/&#0?39;/g, \"'\").replace(/&amp;/g, '&').replace(/\\s+/g, ' ').trim(); }\n\nconst MONTHS = { janvier:1, fevrier:2, mars:3, avril:4, mai:5, juin:6, juillet:7, aout:8, septembre:9, octobre:10, novembre:11, decembre:12 };\nfunction pad2(n){ return String(n).padStart(2, '0'); }\nfunction validYMD(y, m, d){ return y >= 2000 && y <= 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31; }\n// Converts ISO, dd/mm/yyyy, dd-mm-yyyy and French text (\"20 août 2026\") to yyyy-mm-dd. Returns '' if unparsable.\nfunction toISO(v){\n  if (v === null || v === undefined || v === '') return '';\n  if (v instanceof Date && !isNaN(v)) return v.toISOString().slice(0, 10);\n  const s = String(v).trim();\n  let m = s.match(/(\\d{4})-(\\d{2})-(\\d{2})/);\n  if (m && validYMD(+m[1], +m[2], +m[3])) return m[1] + '-' + m[2] + '-' + m[3];\n  m = s.match(/(\\d{1,2})[\\/.\\-](\\d{1,2})[\\/.\\-](\\d{4})/);\n  if (m && validYMD(+m[3], +m[2], +m[1])) return m[3] + '-' + pad2(m[2]) + '-' + pad2(m[1]);\n  m = stripAccents(s).toLowerCase().match(/(\\d{1,2})(?:er)?\\s+([a-z]+)\\s+(\\d{4})/);\n  if (m && MONTHS[m[2]] && validYMD(+m[3], MONTHS[m[2]], +m[1])) return m[3] + '-' + pad2(MONTHS[m[2]]) + '-' + pad2(m[1]);\n  return '';\n}\nfunction daysUntil(iso){\n  if (!iso) return null;\n  return Math.round((new Date(iso + 'T00:00:00Z') - new Date(TODAY_ISO + 'T00:00:00Z')) / 86400000);\n}\n\n// ---------- keyword matching (one taxonomy, defined in the Config node) ----------\nfunction buildMatcher(pairs){\n  return pairs.map(({ category, kw }) => {\n    const cs = kw.length <= 3 || (kw === kw.toUpperCase() && /[A-Z]/.test(kw) && kw.length <= 5);\n    const pat = escRe(cs ? kw : stripAccents(kw).toLowerCase());\n    return { category, kw, cs, re: new RegExp('(^|[^A-Za-z0-9])' + pat + '([^A-Za-z0-9]|$)') };\n  });\n}\nconst TAXO = buildMatcher(Object.entries(CFG.taxonomy).flatMap(([category, kws]) => kws.map(kw => ({ category, kw }))));\nconst CORE = buildMatcher(CFG.coreTerms.map(kw => ({ category: 'IT - Other', kw })));\nfunction matchAll(matchers, text){\n  const raw = String(text || '').replace(/\\s+/g, ' ');\n  const folded = stripAccents(raw).toLowerCase();\n  const hits = [];\n  for (const m of matchers) { if (m.re.test(m.cs ? raw : folded)) hits.push(m); }\n  return hits;\n}\nfunction classify(text){\n  const raw = String(text || '');\n  // \"CRM\" is also a French driver-training diploma (Conducteur Routier Marchandises): not a CRM software tender\n  const driverTraining = /\\b(?:bac\\s*pro|cap)\\s*crm\\b/i.test(raw) && !/salesforce|hubspot|zendesk|dynamics|client/i.test(raw);\n  const cats = [];\n  for (const h of matchAll(TAXO, raw)) {\n    if (h.category === 'CRM / Customer Data' && driverTraining) continue;\n    if (!cats.includes(h.category)) cats.push(h.category);\n  }\n  return cats;\n}\nfunction isRelevant(text){ return classify(text).length > 0 || matchAll(CORE, text).length > 0; }\n\nconst PORTAL_RE = /(francemarches|boamp|marches-publics|marchespublics|achatpublic|e-marchespublics|aws-achat|maximilien|klekoon|dematis|marches-securises|marchesonline|domainetat\\.tn|megalis|approlys|proxylis|webmarche|atexo|centraledesmarches|synapse-entreprises)/i;\nfunction isPortal(url){ return !!url && PORTAL_RE.test(String(url)); }\nfunction hostOf(url){ try { return new URL(url).hostname.replace(/^www\\./, '').toLowerCase(); } catch (e) { return ''; } }\n\nfunction buyerName(t){ return clean((t.buyer_information && t.buyer_information.name) || t.issuer || ''); }\nfunction buyerKey(t){\n  const n = normFlat(buyerName(t));\n  return (t.country || 'unknown') + ':' + ((!n || n === 'nonspecifie') ? 'unknown' : n);\n}\n\n// 64-bit non-cryptographic hash (no require('crypto') needed)\nfunction hash(str){\n  let h1 = 0xdeadbeef, h2 = 0x41c6ce57;\n  for (let i = 0; i < str.length; i++) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }\n  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);\n  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);\n  return (h2 >>> 0).toString(16).padStart(8, '0') + (h1 >>> 0).toString(16).padStart(8, '0');\n}\n\nconst items = $input.all().map(i => i.json);\n\nfunction urgencyPts(d){ if (d === null || d === undefined) return 40; if (d < 0) return 0; if (d <= 3) return 35; if (d <= 14) return 100; if (d <= 30) return 80; if (d <= 60) return 55; return 35; }\nfunction stripInternal(v){\n  if (Array.isArray(v)) return v.map(stripInternal);\n  if (v && typeof v === 'object') { const o = {}; for (const [k, x] of Object.entries(v)) { if (k.startsWith('_')) continue; o[k] = stripInternal(x); } return o; }\n  return v;\n}\n\nconst tenders = items.map(t => {\n  const a = t.analysis || null;\n  const buyer = t.buyer_information || {};\n  const contactsFound = ['email', 'phone', 'website'].filter(f => buyer[f]).length;\n  const relevance = a ? a.relevance_score : Math.min(100, Math.round((t.heuristic_score || 0) * 100 / 75));\n  const evidence = Math.round(((t.buyer_profile && t.buyer_profile.client_identified) ? 60 : 20) + contactsFound * 13);\n  const priority_score = Math.round(0.6 * relevance + 0.25 * urgencyPts(t.days_to_deadline) + 0.15 * Math.min(100, evidence));\n  const priority = priority_score >= 70 ? 'high' : (priority_score >= 45 ? 'medium' : 'low');\n  const { do_ai, raw_text, ...rest } = t;\n  return stripInternal({\n    ...rest,\n    analysis_status: t.analysis_status || 'not_attempted',\n    relevance_score: relevance, relevance_basis: a ? 'gemini' : 'heuristic', priority_score, priority\n  });\n}).sort((x, y) => y.priority_score - x.priority_score);\n\nconst DQ = String.fromCharCode(34);\nconst esc = v => { if (v === null || v === undefined) return DQ + DQ; return DQ + String(v).replace(/[\\r\\n]+/g, ' ').replace(new RegExp(DQ, 'g'), DQ + DQ) + DQ; };\nconst j = (a, s) => Array.isArray(a) ? a.filter(Boolean).join(s || '; ') : (a || '');\n\nconst rows = tenders.map(t => {\n  const b = t.buyer_information || {}, bp = t.buyer_profile || {}, a = t.analysis || {};\n  const cs = t.contact_status || {}, src = t.contact_source || {};\n  return {\n    tender_id: t.tender_id, source: j((t.sources || []).map(s => s.source), ' + ') || t.source, country: t.country, record_type: t.record_type, currency: t.currency,\n    priority: t.priority, priority_score: t.priority_score, relevance_score: t.relevance_score, relevance_basis: t.relevance_basis, urgency: t.urgency,\n    reference: t.reference, title: t.title, issuer: t.issuer, legal_name: t.legal_name || '', siret: t.siret || '',\n    date: t.date, deadline: t.deadline, days_to_deadline: t.days_to_deadline === null ? '' : t.days_to_deadline,\n    categories: j(t.categories), estimated_value: t.estimated_value, duration: t.duration, cpv: t.cpv,\n    buyer_email: b.email || '', buyer_phone: b.phone || '', buyer_website: b.website || '', buyer_address: b.address || '',\n    contact_status: 'email:' + (cs.email || '') + ' | phone:' + (cs.phone || '') + ' | website:' + (cs.website || ''),\n    contact_sources: j(Object.entries(src).map(([k, v]) => k + '=' + v), ' | '),\n    enrichment_status: t.enrichment_status, client_identified: bp.client_identified === undefined ? '' : bp.client_identified,\n    client_sector: bp.sector || '', client_scale: bp.scale || '', client_org_description: bp.organization_description || '',\n    client_past_projects: j((bp.past_projects || []).slice(0, 4).map(p => (p.date ? '[' + p.date + '] ' : '') + p.title)),\n    client_past_digital_projects: j(bp.past_digital_projects),\n    client_key_partners: j(bp.key_partners),\n    client_past_suppliers: j((bp.past_suppliers || []).map(s => s.name)),\n  requirements_technical: j(a.requirements && a.requirements.technical),\n  requirements_team: j(a.requirements && a.requirements.team),\n  requirements_experience: j(a.requirements && a.requirements.experience),\n  timeline: (a.requirements && a.requirements.timeline) || '',\n  matched_service_lines: j(a.matched_service_lines),\n    relevance_rationale: a.relevance_rationale || '', suggested_angle: a.suggested_angle || '', risks: j(a.risks),\n    procedure_type: (t.procedure || {}).type || '', award_winner: (t.award_information || {}).winner || '',\n    source_url: t.source_url, scrape_status: t.scrape_status, analysis_status: t.analysis_status\n  };\n});\n\nconst headers = Object.keys(rows[0] || {});\nconst csv = '\\ufeff' + [headers.map(esc).join(',')].concat(rows.map(r => headers.map(h => esc(r[h])).join(','))).join('\\r\\n');\nconst stamp = TODAY_ISO;\nlet binCsv, binJson;\ntry {\n  binCsv = await this.helpers.prepareBinaryData(Buffer.from(csv, 'utf-8'), 'tenders_master_' + stamp + '.csv', 'text/csv');\n  binJson = await this.helpers.prepareBinaryData(Buffer.from(JSON.stringify(tenders, null, 2), 'utf-8'), 'tenders_master_' + stamp + '.json', 'application/json');\n} catch (e) {}\n\nreturn rows.map((r, idx) => {\n  const o = { json: r };\n  if (idx === 0) { o.binary = {}; if (binCsv) o.binary.data_csv = binCsv; if (binJson) o.binary.data_json = binJson; }\n  return o;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6448,
+        912
+      ],
+      "name": "Finalize & Export (CSV + JSON)",
+      "id": "faa5da4e-3611-4b2b-9627-11acc28e7f29"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger (production preset)": {
+      "main": [
+        [
+          {
+            "node": "00 - Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "00 - Config": {
+      "main": [
+        [
+          {
+            "node": "01 - Load Known IDs (Google Sheets)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "01 - Load Known IDs (Google Sheets)": {
+      "main": [
+        [
+          {
+            "node": "02 - Collect Known IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FM1 - Build Search Requests": {
+      "main": [
+        [
+          {
+            "node": "FM2 - Firecrawl Search Pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FM2 - Firecrawl Search Pages": {
+      "main": [
+        [
+          {
+            "node": "FM3 - Extract FM Tenders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FM3 - Extract FM Tenders": {
+      "main": [
+        [
+          {
+            "node": "FM4 - Select for Detail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FM4 - Select for Detail": {
+      "main": [
+        [
+          {
+            "node": "FM5 - Firecrawl Detail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FM5 - Firecrawl Detail": {
+      "main": [
+        [
+          {
+            "node": "FM6 - Parse FM Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BOAMP1 - Build Requests": {
+      "main": [
+        [
+          {
+            "node": "BOAMP Fetch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BOAMP Fetch": {
+      "main": [
+        [
+          {
+            "node": "BOAMP2 - Filter & Adapt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TN1 - Build List Requests": {
+      "main": [
+        [
+          {
+            "node": "TN2 - Firecrawl List Pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TN2 - Firecrawl List Pages": {
+      "main": [
+        [
+          {
+            "node": "TN3 - Extract Tender Links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TN3 - Extract Tender Links": {
+      "main": [
+        [
+          {
+            "node": "TN4 - Firecrawl Detail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TN4 - Firecrawl Detail": {
+      "main": [
+        [
+          {
+            "node": "TN5 - Parse & Filter Tenders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "02 - Collect Known IDs": {
+      "main": [
+        [
+          {
+            "node": "FM1 - Build Search Requests",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "BOAMP1 - Build Requests",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "TN1 - Build List Requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FM6 - Parse FM Details": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BOAMP2 - Filter & Adapt": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "TN5 - Parse & Filter Tenders": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge Sources": {
+      "main": [
+        [
+          {
+            "node": "Normalize & Classify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize & Classify": {
+      "main": [
+        [
+          {
+            "node": "Dedupe & Assign IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dedupe & Assign IDs": {
+      "main": [
+        [
+          {
+            "node": "Select Unique Buyers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Unique Buyers": {
+      "main": [
+        [
+          {
+            "node": "Buyer in enrichment budget?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buyer in enrichment budget?": {
+      "main": [
+        [
+          {
+            "node": "Registry Lookup (France)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Buyers",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Registry Lookup (France)": {
+      "main": [
+        [
+          {
+            "node": "Validate Registry Match",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Registry Match": {
+      "main": [
+        [
+          {
+            "node": "BOAMP History",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BOAMP History": {
+      "main": [
+        [
+          {
+            "node": "DECP Awards",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DECP Awards": {
+      "main": [
+        [
+          {
+            "node": "Contact Web Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contact Web Search": {
+      "main": [
+        [
+          {
+            "node": "Assemble Buyer Profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assemble Buyer Profile": {
+      "main": [
+        [
+          {
+            "node": "Gemini - Buyer Profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini - Buyer Profile": {
+      "main": [
+        [
+          {
+            "node": "Parse Buyer Profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Buyer Profile": {
+      "main": [
+        [
+          {
+            "node": "Merge Buyers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Buyers": {
+      "main": [
+        [
+          {
+            "node": "Join Buyers to Tenders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Join Buyers to Tenders": {
+      "main": [
+        [
+          {
+            "node": "Build Tender Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Tender Prompt": {
+      "main": [
+        [
+          {
+            "node": "Run AI analysis?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run AI analysis?": {
+      "main": [
+        [
+          {
+            "node": "Gemini - Tender Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Analysis",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Gemini - Tender Analysis": {
+      "main": [
+        [
+          {
+            "node": "Parse Tender Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Tender Analysis": {
+      "main": [
+        [
+          {
+            "node": "Merge Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Analysis": {
+      "main": [
+        [
+          {
+            "node": "Finalize & Export (CSV + JSON)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Build RAG Payload1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Summary": {
+      "main": [
+        []
+      ]
+    },
+    "Build RAG Payload1": {
+      "main": [
+        [
+          {
+            "node": "Call RAG1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finalize & Export (CSV + JSON)": {
+      "main": [
+        [
+          {
+            "node": "Run Summary",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Save to Google Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ae46b4db-f64e-4da1-88de-b52627a30df6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2d9e8f752c4c10ea8e077334bbce2f191d23ffc7a78086cfdfdd08a3b3e756fd"
+  },
+  "nodeGroups": [],
+  "id": "cjRCTZYFn1wDavg6",
+  "tags": []
+}

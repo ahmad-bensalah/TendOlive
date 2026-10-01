@@ -1,0 +1,447 @@
+{
+  "matches": [
+    {
+      "doc_id": "CV_Firas_Ayari.md",
+      "type": "cv",
+      "similarity_score": 0.8993,
+      "summary": "Formateur certifie en intelligence artificielle, anime des sessions de formation sur les fondamentaux de l'IA.",
+      "evidence": {
+        "quote": "Poste : Formateur et consultant en Intelligence Artificielle",
+        "line": 1
+      },
+      "supports": "2 formateurs certifies en intelligence artificielle"
+    },
+    {
+      "doc_id": "Project_University_AITraining.md",
+      "type": "past_project",
+      "similarity_score": 0.8916,
+      "summary": "Sessions de formation sur les fondamentaux de l'intelligence artificielle pour le personnel d'une universite publique.",
+      "evidence": {
+        "quote": "Perimetre : 12 sessions de formation sur les fondamentaux de l'IA et du machine learning, supports pedagogiques, evaluation des participants, 240 participants.",
+        "line": 3
+      },
+      "supports": "Sessions de formation sur les fondamentaux de l'intelligence artificielle"
+    },
+    {
+      "doc_id": "CV_Sami_Trabelsi.md",
+      "type": "cv",
+      "similarity_score": 0.8347,
+      "summary": "PMP-certified project manager, 10 years, delivered 6 government digital projects; manages budgets up to 1M TND.",
+      "evidence": {
+        "quote": "Role: Senior Project Manager",
+        "line": 1
+      },
+      "supports": "1 chef de projet"
+    },
+    {
+      "doc_id": "CV_Rania_Chaabane.md",
+      "type": "cv",
+      "similarity_score": 0.8196,
+      "summary": "Data engineer, 5 years, Power BI and analytics dashboards, Airflow pipelines, data warehouses.",
+      "evidence": {
+        "quote": "Skills: Python, SQL, Apache Airflow, dbt, Power BI, Metabase, data warehouse design, KPI dashboards",
+        "line": 3
+      },
+      "supports": "Ateliers pratiques en Python"
+    },
+    {
+      "doc_id": "CV_Omar_Sassi.md",
+      "type": "cv",
+      "similarity_score": 0.8128,
+      "summary": "AI engineer, 4 years, NLP, LLMs and RAG chatbots; built a customer-service assistant for a telecom operator.",
+      "evidence": {
+        "quote": "Skills: Python, PyTorch, LLMs, RAG, LangChain, vector databases, NLP in French and Arabic, MLOps",
+        "line": 3
+      },
+      "supports": "Ateliers pratiques en Python"
+    },
+    {
+      "doc_id": "Project_PublicAgency_SecuritySoftware.md",
+      "type": "past_project",
+      "similarity_score": 0.8074,
+      "summary": "Supply and deployment of IT security software (antivirus, EDR, firewall management) for a public agency.",
+      "evidence": {
+        "quote": "Client: public agency (public sector)",
+        "line": 1
+      },
+      "supports": "Au moins 1 programme de formation similaire dans le secteur public"
+    }
+  ],
+  "requirement_matches": [
+    {
+      "requirement": "Sessions de formation sur les fondamentaux de l'intelligence artificielle",
+      "category": "technical",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "Project_University_AITraining.md",
+          "type": "past_project",
+          "similarity_score": 0.8916,
+          "rrf_score": 0.0325,
+          "rerank_score": null,
+          "matched_on": [
+            "artificial intelligence",
+            "training"
+          ],
+          "summary": "Sessions de formation sur les fondamentaux de l'intelligence artificielle pour le personnel d'une universite publique.",
+          "evidence": {
+            "quote": "Perimetre : 12 sessions de formation sur les fondamentaux de l'IA et du machine learning, supports pedagogiques, evaluation des participants, 240 participants.",
+            "line": 3
+          }
+        },
+        {
+          "doc_id": "CV_Firas_Ayari.md",
+          "type": "cv",
+          "similarity_score": 0.8614,
+          "rrf_score": 0.0325,
+          "rerank_score": null,
+          "matched_on": [
+            "artificial intelligence",
+            "training"
+          ],
+          "summary": "Formateur certifie en intelligence artificielle, anime des sessions de formation sur les fondamentaux de l'IA.",
+          "evidence": {
+            "quote": "Poste : Formateur et consultant en Intelligence Artificielle",
+            "line": 1
+          }
+        },
+        {
+          "doc_id": "Project_PublicAgency_SecuritySoftware.md",
+          "type": "past_project",
+          "similarity_score": 0.7709,
+          "rrf_score": 0.0281,
+          "rerank_score": null,
+          "matched_on": [
+            "training"
+          ],
+          "summary": "Supply and deployment of IT security software (antivirus, EDR, firewall management) for a public agency.",
+          "evidence": {
+            "quote": "Scope: acquisition and licensing of security software: endpoint protection (EDR), antivirus, firewall management console, vulnerability scanner; installation and staff training.",
+            "line": 3
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "Ateliers pratiques en Python",
+      "category": "technical",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "CV_Firas_Ayari.md",
+          "type": "cv",
+          "similarity_score": 0.8476,
+          "rrf_score": 0.0328,
+          "rerank_score": null,
+          "matched_on": [
+            "python"
+          ],
+          "summary": "Formateur certifie en intelligence artificielle, anime des sessions de formation sur les fondamentaux de l'IA.",
+          "evidence": {
+            "quote": "Competences : conception de programmes de formation, fondamentaux de l'intelligence artificielle, apprentissage automatique, Python, ateliers pratiques",
+            "line": 4
+          }
+        },
+        {
+          "doc_id": "CV_Rania_Chaabane.md",
+          "type": "cv",
+          "similarity_score": 0.8196,
+          "rrf_score": 0.0315,
+          "rerank_score": null,
+          "matched_on": [
+            "python"
+          ],
+          "summary": "Data engineer, 5 years, Power BI and analytics dashboards, Airflow pipelines, data warehouses.",
+          "evidence": {
+            "quote": "Skills: Python, SQL, Apache Airflow, dbt, Power BI, Metabase, data warehouse design, KPI dashboards",
+            "line": 3
+          }
+        },
+        {
+          "doc_id": "CV_Omar_Sassi.md",
+          "type": "cv",
+          "similarity_score": 0.8128,
+          "rrf_score": 0.0308,
+          "rerank_score": null,
+          "matched_on": [
+            "python"
+          ],
+          "summary": "AI engineer, 4 years, NLP, LLMs and RAG chatbots; built a customer-service assistant for a telecom operator.",
+          "evidence": {
+            "quote": "Skills: Python, PyTorch, LLMs, RAG, LangChain, vector databases, NLP in French and Arabic, MLOps",
+            "line": 3
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "2 formateurs certifies en intelligence artificielle",
+      "category": "team",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "CV_Firas_Ayari.md",
+          "type": "cv",
+          "similarity_score": 0.8993,
+          "rrf_score": 0.0328,
+          "rerank_score": null,
+          "matched_on": [
+            "artificial intelligence",
+            "trainer"
+          ],
+          "summary": "Formateur certifie en intelligence artificielle, anime des sessions de formation sur les fondamentaux de l'IA.",
+          "evidence": {
+            "quote": "Poste : Formateur et consultant en Intelligence Artificielle",
+            "line": 1
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "1 chef de projet",
+      "category": "team",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "CV_Sami_Trabelsi.md",
+          "type": "cv",
+          "similarity_score": 0.8347,
+          "rrf_score": 0.0328,
+          "rerank_score": null,
+          "matched_on": [
+            "project manager"
+          ],
+          "summary": "PMP-certified project manager, 10 years, delivered 6 government digital projects; manages budgets up to 1M TND.",
+          "evidence": {
+            "quote": "Role: Senior Project Manager",
+            "line": 1
+          }
+        }
+      ],
+      "closest": null
+    },
+    {
+      "requirement": "Au moins 1 programme de formation similaire dans le secteur public",
+      "category": "experience",
+      "method": "rules",
+      "matches": [
+        {
+          "doc_id": "Project_University_AITraining.md",
+          "type": "past_project",
+          "similarity_score": 0.8384,
+          "rrf_score": 0.0328,
+          "rerank_score": null,
+          "matched_on": [
+            "training",
+            "public sector"
+          ],
+          "summary": "Sessions de formation sur les fondamentaux de l'intelligence artificielle pour le personnel d'une universite publique.",
+          "evidence": {
+            "quote": "Client : universite publique (secteur public, education)",
+            "line": 1
+          }
+        },
+        {
+          "doc_id": "Project_PublicAgency_SecuritySoftware.md",
+          "type": "past_project",
+          "similarity_score": 0.8074,
+          "rrf_score": 0.0323,
+          "rerank_score": null,
+          "matched_on": [
+            "training",
+            "public sector"
+          ],
+          "summary": "Supply and deployment of IT security software (antivirus, EDR, firewall management) for a public agency.",
+          "evidence": {
+            "quote": "Client: public agency (public sector)",
+            "line": 1
+          }
+        }
+      ],
+      "closest": null
+    }
+  ],
+  "requirements_matrix": [
+    {
+      "requirement": "Sessions de formation sur les fondamentaux de l'intelligence artificielle",
+      "category": "technical",
+      "mandatory": true,
+      "status": "covered",
+      "found": 3,
+      "needed": 1,
+      "method": "rules",
+      "best_doc": "Project_University_AITraining.md",
+      "evidence": "Perimetre : 12 sessions de formation sur les fondamentaux de l'IA et du machine learning, supports pedagogiques, evaluation des participants, 240 participants.",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "technical",
+        "skills": [
+          "artificial intelligence",
+          "training"
+        ],
+        "min_count": 1,
+        "mandatory": true
+      }
+    },
+    {
+      "requirement": "Ateliers pratiques en Python",
+      "category": "technical",
+      "mandatory": true,
+      "status": "covered",
+      "found": 6,
+      "needed": 1,
+      "method": "rules",
+      "best_doc": "CV_Firas_Ayari.md",
+      "evidence": "Competences : conception de programmes de formation, fondamentaux de l'intelligence artificielle, apprentissage automatique, Python, ateliers pratiques",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "technical",
+        "skills": [
+          "python"
+        ],
+        "min_count": 1,
+        "mandatory": true
+      }
+    },
+    {
+      "requirement": "2 formateurs certifies en intelligence artificielle",
+      "category": "team",
+      "mandatory": true,
+      "status": "partial",
+      "found": 1,
+      "needed": 2,
+      "method": "rules",
+      "best_doc": "CV_Firas_Ayari.md",
+      "evidence": "Poste : Formateur et consultant en Intelligence Artificielle",
+      "closest_doc": null,
+      "percent": 50,
+      "parsed": {
+        "category": "team",
+        "skills": [
+          "artificial intelligence"
+        ],
+        "roles": [
+          "trainer"
+        ],
+        "min_count": 2,
+        "mandatory": true
+      }
+    },
+    {
+      "requirement": "1 chef de projet",
+      "category": "team",
+      "mandatory": true,
+      "status": "covered",
+      "found": 1,
+      "needed": 1,
+      "method": "rules",
+      "best_doc": "CV_Sami_Trabelsi.md",
+      "evidence": "Role: Senior Project Manager",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "team",
+        "roles": [
+          "project manager"
+        ],
+        "min_count": 1,
+        "mandatory": true
+      }
+    },
+    {
+      "requirement": "Au moins 1 programme de formation similaire dans le secteur public",
+      "category": "experience",
+      "mandatory": true,
+      "status": "covered",
+      "found": 2,
+      "needed": 1,
+      "method": "rules",
+      "best_doc": "Project_University_AITraining.md",
+      "evidence": "Client : universite publique (secteur public, education)",
+      "closest_doc": null,
+      "percent": 100,
+      "parsed": {
+        "category": "experience",
+        "skills": [
+          "training"
+        ],
+        "sectors": [
+          "public"
+        ],
+        "min_count": 1,
+        "mandatory": true
+      }
+    }
+  ],
+  "fit_score": {
+    "technical_fit": 100,
+    "experience_fit": 100,
+    "team_fit": 75,
+    "domain_fit": 100,
+    "certification_fit": null,
+    "overall": 94
+  },
+  "domain_evidence": [
+    {
+      "doc_id": "Project_PublicAgency_SecuritySoftware.md",
+      "type": "past_project",
+      "similarity_score": 0.8288,
+      "rrf_score": 0.0323,
+      "rerank_score": null,
+      "matched_on": [
+        "public sector"
+      ],
+      "summary": "Supply and deployment of IT security software (antivirus, EDR, firewall management) for a public agency.",
+      "evidence": {
+        "quote": "Client: public agency (public sector)",
+        "line": 1
+      }
+    },
+    {
+      "doc_id": "Project_HealthAnalytics_Dashboard.md",
+      "type": "past_project",
+      "similarity_score": 0.812,
+      "rrf_score": 0.032,
+      "rerank_score": null,
+      "matched_on": [
+        "public sector"
+      ],
+      "summary": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+      "evidence": {
+        "quote": "Client: National public health agency (public sector)",
+        "line": 1
+      }
+    },
+    {
+      "doc_id": "Project_University_AITraining.md",
+      "type": "past_project",
+      "similarity_score": 0.7892,
+      "rrf_score": 0.0315,
+      "rerank_score": null,
+      "matched_on": [
+        "public sector"
+      ],
+      "summary": "Sessions de formation sur les fondamentaux de l'intelligence artificielle pour le personnel d'une universite publique.",
+      "evidence": {
+        "quote": "Client : universite publique (secteur public, education)",
+        "line": 1
+      }
+    }
+  ],
+  "benchmark_context": {
+    "embedding_model": "intfloat/multilingual-e5-small",
+    "retrieval": "hybrid BM25 + dense (RRF)",
+    "reranker": "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1",
+    "structured_rules": true,
+    "chunk_size_words": 200,
+    "chunk_overlap_words": 50
+  },
+  "warnings": [
+    "Only partly covered: 2 formateurs certifies en intelligence artificielle (found 1 of 2)"
+  ]
+}

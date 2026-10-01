@@ -1,0 +1,20 @@
+{
+  "technical": [
+    "Data pipelines with Talend or Apache Airflow",
+    "Kafka streaming",
+    "Power BI dashboards",
+    "Terraform infrastructure as code",
+    "Qlik Sense reporting preferred"
+  ],
+  "team": [
+    "At least 3 data engineers",
+    "1 Google Cloud Professional Data Engineer certified",
+    "1 senior delivery manager",
+    "1 project manager PMP certified"
+  ],
+  "experience": [
+    "At least 1 previous project in the finance sector"
+  ],
+  "sector": "Finance / Banking",
+  "client": "Regional bank (data platform modernisation)"
+}

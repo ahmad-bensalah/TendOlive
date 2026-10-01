@@ -1,0 +1,1514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAG Console</title>
+<meta name="description" content="Dashboard for the OliveSoft RAG retrieval service: match tenders, check requirements, manage documents and run the benchmark.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232a78d6'/%3E%3Cpath d='M10 16.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+/* ------------------------------------------------------------------ tokens */
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --subtle: #f0efec;
+  --hover: rgba(11, 11, 11, .045);
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --baseline: #c3c2b7;
+  --border: rgba(11, 11, 11, .10);
+  --border-strong: rgba(11, 11, 11, .20);
+  --accent: #2a78d6;
+  --accent-ink: #1c5cab;
+  --accent-btn: #2a78d6;
+  --accent-wash: rgba(42, 120, 214, .10);
+  --track: #cde2fb;
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --deemph: #898781;
+  --good: #0ca30c;
+  --warning: #fab219;
+  --critical: #d03b3b;
+  --good-wash: rgba(12, 163, 12, .10);
+  --warning-wash: rgba(250, 178, 25, .16);
+  --critical-wash: rgba(208, 59, 59, .10);
+  --good-ink: #006300;
+  --critical-ink: #b52f2f;
+  --shadow: 0 1px 2px rgba(11, 11, 11, .04), 0 1px 1px rgba(11, 11, 11, .02);
+  --radius: 12px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "Cascadia Code", Consolas, "SF Mono", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --subtle: #242423; --hover: rgba(255, 255, 255, .05);
+    --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --baseline: #383835;
+    --border: rgba(255, 255, 255, .10); --border-strong: rgba(255, 255, 255, .20);
+    --accent: #3987e5; --accent-ink: #86b6ef; --accent-btn: #256abf; --accent-wash: rgba(57, 135, 229, .16);
+    --track: #184f95; --series-1: #3987e5; --series-2: #d95926;
+    --good-wash: rgba(12, 163, 12, .16); --warning-wash: rgba(250, 178, 25, .14); --critical-wash: rgba(208, 59, 59, .18);
+    --good-ink: #0ca30c; --critical-ink: #ec7b7b;
+    --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --subtle: #242423; --hover: rgba(255, 255, 255, .05);
+  --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --baseline: #383835;
+  --border: rgba(255, 255, 255, .10); --border-strong: rgba(255, 255, 255, .20);
+  --accent: #3987e5; --accent-ink: #86b6ef; --accent-btn: #256abf; --accent-wash: rgba(57, 135, 229, .16);
+  --track: #184f95; --series-1: #3987e5; --series-2: #d95926;
+  --good-wash: rgba(12, 163, 12, .16); --warning-wash: rgba(250, 178, 25, .14); --critical-wash: rgba(208, 59, 59, .18);
+  --good-ink: #0ca30c; --critical-ink: #ec7b7b;
+  --shadow: none;
+}
+
+/* ------------------------------------------------------------------ base */
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--page); color: var(--ink);
+  font: 14px/1.5 var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, p { margin: 0; }
+h2 { font-size: 20px; font-weight: 650; letter-spacing: -.01em; }
+h3 { font-size: 15px; font-weight: 600; }
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: var(--accent-ink); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+[hidden] { display: none !important; }
+.sub { color: var(--ink-2); }
+.small { font-size: 12px; }
+.mono { font-family: var(--mono); font-size: 12.5px; }
+.num { font-variant-numeric: tabular-nums; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.ic { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75;
+      stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; }
+
+/* ------------------------------------------------------------------ top bar */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; gap: 16px;
+  padding: 10px 24px; min-height: 60px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 10px; flex: none; }
+.brand-mark { width: 30px; height: 30px; border-radius: 8px; background: var(--accent-btn);
+              display: grid; place-items: center; color: #fff; }
+.brand-mark .ic { width: 18px; height: 18px; stroke-width: 2.4; }
+.brand strong { display: block; font-size: 15px; line-height: 1.2; }
+.brand span { display: block; font-size: 12px; color: var(--ink-2); line-height: 1.2; }
+.tabs { display: flex; gap: 4px; margin: 0 auto; padding: 3px; background: var(--subtle);
+        border-radius: 10px; overflow-x: auto; scrollbar-width: none; max-width: 100%; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { border: 0; background: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;
+       color: var(--ink-2); font-weight: 500; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+:root[data-theme="dark"] .tab[aria-selected="true"] { background: #383835; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .tab[aria-selected="true"] { background: #383835; } }
+.top-right { display: flex; align-items: center; gap: 8px; flex: none; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px;
+        border: 1px solid var(--border); font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+.dot.good { background: var(--good); } .dot.warning { background: var(--warning); } .dot.critical { background: var(--critical); }
+.icon-btn { border: 1px solid var(--border); background: var(--surface); border-radius: 8px;
+            width: 32px; height: 32px; display: grid; place-items: center; cursor: pointer; color: var(--ink-2); }
+.icon-btn:hover { background: var(--hover); color: var(--ink); }
+
+/* ------------------------------------------------------------------ layout */
+main { max-width: 1320px; margin: 0 auto; padding: 24px; }
+.panel-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+              flex-wrap: wrap; margin-bottom: 16px; }
+.panel-head p { margin-top: 2px; }
+.stack { display: grid; gap: 16px; align-content: start; }
+.split { display: grid; gap: 16px; grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); align-items: start; }
+.split-r { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr) minmax(280px, 340px); align-items: start; }
+.grid-2 { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+@media (max-width: 1080px) { .split, .split-r { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 820px) { .grid-2 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  .topbar { flex-wrap: wrap; padding: 10px 16px; gap: 10px; }
+  .tabs { order: 3; width: 100%; margin: 0; }
+  .top-right { margin-left: auto; }
+  main { padding: 16px; }
+  .hide-sm { display: none !important; }
+}
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+        box-shadow: var(--shadow); padding: 16px; min-width: 0; }
+.card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.card-head .sub { font-size: 12.5px; margin-top: 2px; }
+.sticky { position: sticky; top: 76px; }
+@media (max-width: 1080px) { .sticky { position: static; } }
+
+/* ------------------------------------------------------------------ controls */
+label.field { display: grid; gap: 4px; margin-bottom: 12px; }
+.field-label { font-size: 12.5px; font-weight: 600; display: flex; justify-content: space-between; gap: 8px; }
+.field-label .count { font-weight: 500; color: var(--ink-2); }
+input[type="text"], input[type="search"], select, textarea {
+  width: 100%; border: 1px solid var(--border-strong); background: var(--surface);
+  border-radius: 8px; padding: 7px 10px; min-height: 36px;
+}
+textarea { resize: vertical; min-height: 72px; line-height: 1.45; }
+input::placeholder, textarea::placeholder { color: var(--muted); }
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+       min-height: 36px; padding: 6px 14px; border-radius: 8px; cursor: pointer;
+       border: 1px solid var(--border-strong); background: var(--surface); font-weight: 550; white-space: nowrap; }
+.btn:hover { background: var(--hover); }
+.btn.primary { background: var(--accent-btn); border-color: transparent; color: #fff; }
+.btn.primary:hover { filter: brightness(1.07); }
+.btn.ghost { border-color: transparent; background: none; color: var(--ink-2); }
+.btn.ghost:hover { color: var(--ink); background: var(--hover); }
+.btn.danger { color: var(--critical-ink); }
+.btn.small { min-height: 30px; padding: 4px 10px; font-size: 13px; }
+.btn[disabled] { opacity: .55; cursor: progress; }
+.btn.busy .ic { display: none; }
+.btn.busy::before { content: ""; width: 14px; height: 14px; border-radius: 50%;
+                    border: 2px solid currentColor; border-right-color: transparent; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.row.end { justify-content: flex-end; }
+.grow { flex: 1 1 auto; min-width: 0; }
+.row > input.grow, .row > select.grow { width: auto; flex: 1 1 240px; }
+.seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--subtle); border-radius: 9px; }
+.seg button { border: 0; background: none; padding: 5px 12px; border-radius: 7px; cursor: pointer; color: var(--ink-2); font-weight: 500; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+:root[data-theme="dark"] .seg button[aria-pressed="true"] { background: #383835; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .seg button[aria-pressed="true"] { background: #383835; } }
+.hint { font-size: 12px; color: var(--ink-2); }
+kbd { font-family: var(--mono); font-size: 11px; border: 1px solid var(--border-strong); border-bottom-width: 2px;
+      border-radius: 4px; padding: 0 4px; background: var(--subtle); }
+
+/* ------------------------------------------------------------------ chips + status */
+.chip { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 999px;
+        font-size: 12px; background: var(--subtle); color: var(--ink); white-space: nowrap; max-width: 100%;
+        overflow: hidden; text-overflow: ellipsis; }
+.chip.outline { background: none; border: 1px solid var(--border-strong); }
+.chip.accent { background: var(--accent-wash); }
+.chip.btn-chip { border: 1px solid var(--border-strong); background: var(--surface); cursor: pointer; padding: 4px 10px; }
+.chip.btn-chip:hover { background: var(--hover); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.status { font-weight: 600; }
+.status.good { background: var(--good-wash); } .status.good .ic { color: var(--good); }
+.status.warning { background: var(--warning-wash); } .status.warning .ic { color: #c98500; }
+.status.critical { background: var(--critical-wash); } .status.critical .ic { color: var(--critical); }
+:root[data-theme="dark"] .status.warning .ic { color: var(--warning); }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) .status.warning .ic { color: var(--warning); } }
+.status.lg { font-size: 14px; padding: 4px 12px; }
+.type { font-size: 11.5px; color: var(--ink-2); background: var(--subtle); border-radius: 6px; padding: 1px 6px; white-space: nowrap; }
+
+/* ------------------------------------------------------------------ KPI tiles */
+.kpis { display: grid; gap: 12px; grid-template-columns: minmax(180px, 1.4fr) repeat(3, minmax(120px, 1fr)); }
+.kpis.four { grid-template-columns: repeat(4, minmax(150px, 1fr)); }
+.kpis.five { grid-template-columns: repeat(5, minmax(120px, 1fr)); }
+@media (max-width: 900px) { .kpis, .kpis.four, .kpis.five { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile.hero .tile-value { font-size: 40px; } }
+.tile { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+        box-shadow: var(--shadow); padding: 14px 16px; min-width: 0; }
+.tile-label { font-size: 12.5px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.tile-value { font-size: 28px; font-weight: 650; line-height: 1.15; margin-top: 4px; letter-spacing: -.01em; }
+.tile-value .unit { font-size: 15px; font-weight: 500; color: var(--ink-2); margin-left: 2px; }
+.tile-note { font-size: 12px; color: var(--ink-2); margin-top: 2px; }
+.tile.hero .tile-value { font-size: 52px; line-height: 1; margin-top: 6px; }
+.tile-value.text { font-size: 20px; line-height: 1.3; margin-top: 8px; }
+.spinner { width: 14px; height: 14px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent;
+           animation: spin .8s linear infinite; display: inline-block; flex: none; color: var(--accent); }
+.tile .ic.good { color: var(--good); } .tile .ic.warning { color: #c98500; } .tile .ic.critical { color: var(--critical); }
+
+/* ------------------------------------------------------------------ meters */
+.meters { display: grid; gap: 10px; }
+.meter { display: grid; grid-template-columns: 118px minmax(0, 1fr) 44px; align-items: center; gap: 10px;
+         padding: 2px 0; border-radius: 6px; cursor: default; }
+.meter-label { font-size: 13px; color: var(--ink-2); }
+.meter-track { height: 10px; border-radius: 5px; background: var(--track); overflow: hidden; display: block; }
+.meter-track.none { background: var(--subtle); }
+.meter-fill { display: block; height: 100%; background: var(--accent); border-radius: 5px; }
+.meter-value { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.meter-value.none { color: var(--muted); font-weight: 500; font-size: 12px; }
+.meter:hover .meter-label, .meter:focus-visible .meter-label { color: var(--ink); }
+
+/* ------------------------------------------------------------------ lists: warnings, matches */
+.notes { display: grid; gap: 8px; }
+.note { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; border-radius: 8px; background: var(--subtle); }
+.note .ic { margin-top: 2px; }
+.note.critical { background: var(--critical-wash); } .note.critical .ic { color: var(--critical); }
+.note.warning { background: var(--warning-wash); } .note.warning .ic { color: #c98500; }
+.note.info .ic { color: var(--ink-2); }
+.note b { font-weight: 650; }
+
+.table-wrap { position: relative; overflow-x: auto; margin: 0 -16px; padding: 0 16px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { font-size: 12px; font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+td.numcell, th.numcell { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tbody tr.clickable { cursor: pointer; }
+tbody tr.clickable:hover > td { background: var(--hover); }
+tr.detail > td { background: var(--subtle); padding: 12px 14px 14px; }
+tr.detail .chip:not(.status):not(.accent),
+#kb-table .chip:not(.accent):not(.outline) { background: var(--surface); border: 1px solid var(--border); }
+.expander { border: 0; background: none; cursor: pointer; color: var(--ink-2); padding: 2px; border-radius: 6px; }
+.expander .ic { transition: transform .15s; }
+tr[aria-expanded="true"] .expander .ic { transform: rotate(90deg); }
+.req-text { font-weight: 550; }
+#kb-table td:nth-child(1) { min-width: 220px; }
+#kb-table td:nth-child(3) { min-width: 170px; }
+#kb-table td:nth-child(4) { min-width: 150px; }
+.req-opt { font-size: 11.5px; color: var(--ink-2); margin-left: 6px; font-weight: 500; }
+.evidence { color: var(--ink-2); font-size: 12.5px; }
+.evidence q { quotes: "\201C" "\201D"; }
+.doc-link { border: 0; background: none; padding: 0; color: var(--accent-ink); cursor: pointer; font-weight: 550; text-align: left; }
+.doc-link:hover { text-decoration: underline; }
+
+.match { display: grid; gap: 4px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+.match + .match { margin-top: 8px; }
+.match-head { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.scores { display: flex; gap: 10px; flex-wrap: wrap; font-size: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+blockquote { margin: 2px 0 0; padding: 6px 10px; border-left: 3px solid var(--accent); background: var(--subtle);
+             border-radius: 0 6px 6px 0; font-size: 13px; }
+blockquote .line { color: var(--ink-2); font-size: 11.5px; margin-left: 6px; white-space: nowrap; }
+.closest { border-style: dashed; }
+.understood { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.understood > .k { font-size: 12px; color: var(--ink-2); margin-right: 2px; }
+
+.assets { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.asset { display: grid; gap: 6px; align-content: start; padding: 12px; border: 1px solid var(--border); border-radius: 10px; }
+.asset .proves { font-size: 12px; color: var(--ink-2); }
+
+.filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.filters .chip { cursor: pointer; border: 1px solid transparent; padding: 3px 10px; }
+.filters .chip[aria-pressed="true"] { border-color: var(--ink); background: var(--surface); }
+
+.empty { display: grid; place-items: center; text-align: center; gap: 8px; padding: 48px 24px; color: var(--ink-2); }
+.empty .ic { width: 28px; height: 28px; color: var(--muted); stroke-width: 1.5; }
+.empty h3 { color: var(--ink); }
+.results { transition: opacity .15s; }
+.results.loading { opacity: .45; pointer-events: none; }
+
+/* ------------------------------------------------------------------ bar charts */
+.chart-card .card-head { margin-bottom: 8px; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--ink-2); margin-bottom: 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.swatch { width: 12px; height: 10px; border-radius: 2px; display: inline-block; }
+.bars { display: grid; gap: 6px; }
+.bar-row { display: grid; grid-template-columns: minmax(96px, 36%) minmax(0, 1fr); gap: 12px; align-items: center;
+           padding: 4px 0; border-radius: 6px; }
+.bar-row:hover, .bar-row:focus-visible { background: var(--hover); }
+.bar-label { font-size: 12.5px; color: var(--ink-2); text-align: right; line-height: 1.3; overflow-wrap: anywhere; }
+.bar-label b { color: var(--ink); font-weight: 600; }
+.bar-area { position: relative; display: grid; gap: 2px; padding: 2px 0; }
+.bar-grid { position: absolute; inset: 0 52px 0 0; border-left: 1px solid var(--baseline); pointer-events: none; }
+.bar-grid i { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--grid); }
+.bar-line { position: relative; display: flex; align-items: center; gap: 6px; height: 16px; }
+.bar { display: block; height: 14px; width: calc((100% - 52px) * var(--v)); min-width: 2px;
+       border-radius: 0 4px 4px 0; }
+.bar-value { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.axis { display: grid; grid-template-columns: minmax(96px, 36%) minmax(0, 1fr); gap: 12px; margin-top: 2px; }
+.axis-ticks { position: relative; height: 16px; margin-right: 52px; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.axis-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.axis-ticks span:first-child { transform: none; }
+.axis-ticks span:last-child { transform: translateX(-100%); }
+.view-toggle { flex: none; }
+
+/* ------------------------------------------------------------------ tooltip, toast, dialog */
+#tooltip { position: fixed; z-index: 50; pointer-events: none; max-width: 300px;
+           background: var(--surface); border: 1px solid var(--border-strong); border-radius: 8px;
+           box-shadow: 0 6px 20px rgba(0,0,0,.14); padding: 8px 10px; font-size: 12.5px; }
+.tip-row { display: flex; align-items: center; gap: 8px; }
+.tip-row + .tip-row { margin-top: 3px; }
+.tip-row strong { font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.tip-row span { color: var(--ink-2); }
+.tip-key { width: 12px; height: 2px; border-radius: 1px; flex: none; }
+.tip-note { color: var(--ink-2); margin-top: 4px; }
+
+#toasts { position: fixed; z-index: 60; right: 16px; bottom: 16px; display: grid; gap: 8px; max-width: min(420px, calc(100vw - 32px)); }
+.toast { display: flex; gap: 8px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border-strong);
+         border-radius: 10px; padding: 10px 12px; box-shadow: 0 8px 24px rgba(0,0,0,.16); animation: rise .18s ease-out; }
+.toast.good .ic { color: var(--good); } .toast.critical .ic { color: var(--critical); } .toast.info .ic { color: var(--accent); }
+@keyframes rise { from { transform: translateY(6px); opacity: 0; } }
+
+dialog { border: 1px solid var(--border-strong); border-radius: 14px; padding: 0; width: min(760px, calc(100vw - 32px));
+         max-height: min(84vh, 900px); background: var(--surface); color: var(--ink); box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+dialog::backdrop { background: rgba(0,0,0,.35); }
+.dlg-head { display: flex; justify-content: space-between; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; background: var(--surface); }
+.dlg-body { padding: 16px 18px 20px; display: grid; gap: 14px; }
+.kv { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 6px 12px; font-size: 13px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; min-width: 0; }
+ol.lines { margin: 0; padding: 0; list-style: none; counter-reset: ln; font-size: 13px;
+           border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+ol.lines li { counter-increment: ln; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 8px; padding: 4px 10px 4px 0; }
+ol.lines li::before { content: counter(ln); text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 11.5px; padding-top: 2px; }
+ol.lines li:nth-child(odd) { background: var(--subtle); }
+ol.lines li.hit { background: var(--accent-wash); box-shadow: inset 3px 0 0 var(--accent); }
+
+.dropzone { border: 1.5px dashed var(--border-strong); border-radius: 10px; padding: 18px 12px; text-align: center;
+            color: var(--ink-2); cursor: pointer; display: grid; gap: 4px; place-items: center; }
+.dropzone.over { border-color: var(--accent); background: var(--accent-wash); }
+.dropzone .ic { width: 22px; height: 22px; color: var(--accent); }
+.file-name { font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+
+details.log summary { cursor: pointer; color: var(--ink-2); font-size: 12.5px; }
+pre.log { max-height: 260px; overflow: auto; background: var(--subtle); border-radius: 8px; padding: 10px;
+          font: 12px/1.45 var(--mono); white-space: pre-wrap; margin: 8px 0 0; }
+.job { display: flex; gap: 8px; align-items: center; font-size: 13px; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } }
+@media (forced-colors: active) { .bar, .meter-fill { forced-color-adjust: none; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true"><svg class="ic" viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></div>
+    <div><strong>RAG Console</strong><span>OliveSoft tender matching</span></div>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" id="tab-match" aria-controls="panel-match" data-tab="match">Match a tender</button>
+    <button class="tab" role="tab" id="tab-check" aria-controls="panel-check" data-tab="check">Check a requirement</button>
+    <button class="tab" role="tab" id="tab-kb" aria-controls="panel-kb" data-tab="kb">Knowledge base</button>
+    <button class="tab" role="tab" id="tab-bench" aria-controls="panel-bench" data-tab="bench">Benchmark &amp; tests</button>
+  </nav>
+  <div class="top-right">
+    <span class="pill" id="server-pill" title="Server status"><span class="dot"></span><span>Connecting…</span></span>
+    <a class="icon-btn hide-sm" href="/docs" target="_blank" rel="noopener" title="API documentation" aria-label="API documentation">
+      <svg class="ic" viewBox="0 0 16 16"><path d="M6 4L2.5 8 6 12M10 4l3.5 4-3.5 4"/></svg></a>
+    <button class="icon-btn" id="theme-btn" title="Switch light / dark" aria-label="Switch light or dark theme">
+      <svg class="ic" viewBox="0 0 16 16"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/></svg></button>
+  </div>
+</header>
+
+<main>
+  <!-- ============================================================ MATCH -->
+  <section id="panel-match" role="tabpanel" aria-labelledby="tab-match" hidden>
+    <div class="panel-head">
+      <div><h2>Match a tender</h2>
+        <p class="sub">Paste the tender requirements, run the matching, and see what OliveSoft can offer, with proof.</p></div>
+    </div>
+    <div class="split">
+      <form class="card sticky" id="match-form" autocomplete="off">
+        <div class="card-head"><div><h3>Tender</h3><p class="sub">One requirement per line.</p></div>
+          <button type="button" class="btn ghost small" id="paste-toggle">Paste JSON</button></div>
+        <div id="paste-box" hidden>
+          <label class="field"><span class="field-label">Tender extraction or requirements JSON</span>
+            <textarea id="paste-json" rows="6" class="mono" placeholder='{"client": "...", "requirements": {"technical": ["..."]}}'></textarea></label>
+          <div class="row end" style="margin:-4px 0 12px"><button type="button" class="btn small" id="paste-load">Load into the form</button></div>
+        </div>
+        <label class="field"><span class="field-label">Start from an example</span>
+          <select id="example-select"><option value="">Choose an example…</option></select></label>
+        <div class="grid-2" style="gap:10px">
+          <label class="field"><span class="field-label">Client</span><input type="text" id="f-client" placeholder="Ministry of…"></label>
+          <label class="field"><span class="field-label">Sector</span><input type="text" id="f-sector" placeholder="Public / Government"></label>
+        </div>
+        <label class="field"><span class="field-label">Technical <span class="count" id="c-technical"></span></span>
+          <textarea id="f-technical" rows="4" placeholder="React or Angular frontend&#10;PostgreSQL"></textarea></label>
+        <label class="field"><span class="field-label">Team <span class="count" id="c-team"></span></span>
+          <textarea id="f-team" rows="3" placeholder="Minimum 3 senior developers&#10;1 project manager PMP certified"></textarea></label>
+        <label class="field"><span class="field-label">Experience <span class="count" id="c-experience"></span></span>
+          <textarea id="f-experience" rows="3" placeholder="2+ previous public sector digital projects&#10;ISO 27001 preferred"></textarea></label>
+        <div class="row">
+          <button type="submit" class="btn primary grow" id="match-btn">
+            <svg class="ic" viewBox="0 0 16 16"><path d="M5 3.5v9l7-4.5z"/></svg>Run matching</button>
+          <button type="button" class="btn ghost" id="clear-btn">Clear</button>
+        </div>
+        <p class="hint" style="margin-top:8px"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> runs the matching. Write "preferred" to mark an optional requirement.</p>
+      </form>
+      <div class="results" id="match-results" aria-live="polite">
+        <div class="card empty">
+          <svg class="ic" viewBox="0 0 16 16"><path d="M4 2.5h5.5L12 5v8.5H4z"/><path d="M6.5 8.5l1.5 1.5 2.5-3"/></svg>
+          <h3>No results yet</h3>
+          <p>Choose an example or type requirements, then press <b>Run matching</b>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ CHECK -->
+  <section id="panel-check" role="tabpanel" aria-labelledby="tab-check" hidden>
+    <div class="panel-head">
+      <div><h2>Check a requirement</h2>
+        <p class="sub">Test one sentence and see how the system understands it and why it decides.</p></div>
+    </div>
+    <div class="stack" style="max-width:980px">
+      <form class="card" id="check-form" autocomplete="off">
+        <div class="row">
+          <input type="text" id="check-input" class="grow" style="min-width:240px" placeholder="e.g. 1 project manager PMP certified" aria-label="Requirement">
+          <div class="seg" role="group" aria-label="Category" id="check-cat">
+            <button type="button" data-cat="technical" aria-pressed="false">Technical</button>
+            <button type="button" data-cat="team" aria-pressed="true">Team</button>
+            <button type="button" data-cat="experience" aria-pressed="false">Experience</button>
+          </div>
+          <button type="submit" class="btn primary" id="check-btn">
+            <svg class="ic" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L13.5 13.5"/></svg>Check</button>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <span class="hint">Try:</span>
+          <div class="chips" id="check-examples"></div>
+        </div>
+      </form>
+      <div class="results" id="check-results" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================ KNOWLEDGE BASE -->
+  <section id="panel-kb" role="tabpanel" aria-labelledby="tab-kb" hidden>
+    <div class="panel-head">
+      <div><h2>Knowledge base</h2>
+        <p class="sub">The documents the system searches, and what it extracted from each one.</p></div>
+      <button class="btn" id="reindex-btn"><svg class="ic" viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.5-3.5M13 3v2.5h-2.5"/></svg>Rebuild index</button>
+    </div>
+    <div class="stack">
+      <div class="kpis five" id="kb-kpis"></div>
+      <div class="split-r">
+        <div class="card">
+          <div class="filters-row row" style="margin-bottom:10px">
+            <input type="search" id="kb-search" class="grow" style="min-width:200px" placeholder="Search name, skill, certification…" aria-label="Search documents">
+            <select id="kb-type" style="width:auto" aria-label="Document type">
+              <option value="">All types</option><option value="cv">CVs</option><option value="past_project">Past projects</option>
+              <option value="tech_stack">Tech stacks</option><option value="client_portfolio">Client portfolio</option>
+            </select>
+          </div>
+          <div class="table-wrap"><table id="kb-table">
+            <thead><tr><th>Document</th><th>Type</th><th>Profile</th><th>Skills</th><th>Certifications</th></tr></thead>
+            <tbody></tbody></table></div>
+          <p class="hint" id="kb-count" style="margin-top:8px"></p>
+        </div>
+        <div class="stack sticky">
+          <form class="card" id="upload-form">
+            <div class="card-head"><div><h3>Add a document</h3><p class="sub">PDF, Word, Markdown or text. It is indexed at once.</p></div></div>
+            <input type="file" id="upload-file" accept=".pdf,.docx,.md,.txt" hidden>
+            <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a file">
+              <svg class="ic" viewBox="0 0 16 16"><path d="M8 11V3M5 6l3-3 3 3M3 11v2h10v-2"/></svg>
+              <span id="drop-text">Drop a file here or <b>browse</b></span>
+            </div>
+            <label class="field" style="margin-top:12px"><span class="field-label">Type</span>
+              <select id="upload-type"><option value="cv">CV</option><option value="past_project">Past project</option>
+                <option value="tech_stack">Tech stack</option><option value="client_portfolio">Client portfolio</option></select></label>
+            <button type="submit" class="btn primary" style="width:100%" id="upload-btn" disabled>
+              <svg class="ic" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg>Add and index</button>
+            <p class="hint" style="margin-top:8px">Remove phone numbers, emails and home addresses from real CVs first.</p>
+          </form>
+          <div class="card">
+            <div class="card-head"><div><h3>Added from here</h3><p class="sub">Only these can be removed from the dashboard.</p></div></div>
+            <div id="uploaded-list" class="notes"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ BENCHMARK -->
+  <section id="panel-bench" role="tabpanel" aria-labelledby="tab-bench" hidden>
+    <div class="panel-head">
+      <div><h2>Benchmark &amp; tests</h2><p class="sub" id="bench-meta">Loading…</p></div>
+      <div class="row">
+        <button class="btn" id="run-tests-btn"><svg class="ic" viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg>Run tests</button>
+        <button class="btn primary" id="run-bench-btn"><svg class="ic" viewBox="0 0 16 16"><path d="M5 3.5v9l7-4.5z"/></svg>Run benchmark</button>
+      </div>
+    </div>
+    <div class="card" id="job-card" hidden style="margin-bottom:16px">
+      <div class="job" id="job-line"></div>
+      <details class="log"><summary>Show output</summary><pre class="log" id="job-log"></pre></details>
+    </div>
+    <div class="stack" id="bench-body"></div>
+  </section>
+</main>
+
+<div id="tooltip" role="tooltip" hidden></div>
+<div id="toasts" role="status" aria-live="polite"></div>
+<dialog id="doc-dialog" aria-labelledby="dlg-title">
+  <div class="dlg-head">
+    <div><h3 id="dlg-title">Document</h3><p class="sub small" id="dlg-sub"></p></div>
+    <button class="icon-btn" id="dlg-close" aria-label="Close"><svg class="ic" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+  </div>
+  <div class="dlg-body" id="dlg-body"></div>
+</dialog>
+
+<script>
+"use strict";
+/* ================================================================== helpers */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const NS = "http://www.w3.org/2000/svg";
+
+// Build DOM safely: all data goes through textContent / attributes, never innerHTML.
+function el(tag, props, ...kids) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(props || {})) {
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") n.className = v;
+    else if (k === "text") n.textContent = v;
+    else if (k === "style") n.style.cssText = v;
+    else if (k.startsWith("on") && typeof v === "function") n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v === true ? "" : v);
+  }
+  for (const c of kids.flat(Infinity)) {
+    if (c === null || c === undefined || c === false) continue;
+    n.append(c instanceof Node ? c : document.createTextNode(String(c)));
+  }
+  return n;
+}
+// Icons are constant markup written here, not data.
+const ICONS = {
+  check: '<path d="M3.5 8.5l3 3 6-7"/>',
+  x: '<path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/>',
+  half: '<circle cx="8" cy="8" r="5.25"/><path d="M8 2.75v10.5a5.25 5.25 0 0 0 0-10.5z" fill="currentColor" stroke="none"/>',
+  alert: '<path d="M8 2.5l6 10.5H2z"/><path d="M8 7v2.5M8 11.3v.2"/>',
+  info: '<circle cx="8" cy="8" r="5.5"/><path d="M8 7.3v3.5M8 5.2v.2"/>',
+  chevron: '<path d="M6 3.5L10.5 8 6 12.5"/>',
+  download: '<path d="M8 3v7M5 7.5l3 3 3-3M3 12.5h10"/>',
+  copy: '<rect x="5.5" y="5.5" width="7" height="8" rx="1.5"/><path d="M3.5 10.5v-7a1 1 0 0 1 1-1h5"/>',
+  doc: '<path d="M4 2.5h5.5L12 5v8.5H4z"/><path d="M9.5 2.5V5H12"/>',
+  trash: '<path d="M3.5 4.5h9M6.5 4.5V3h3v1.5M5 4.5l.6 8.5h4.8l.6-8.5"/>',
+  sun: '<circle cx="8" cy="8" r="2.8"/><path d="M8 1.8v1.4M8 12.8v1.4M1.8 8h1.4M12.8 8h1.4M3.6 3.6l1 1M11.4 11.4l1 1M3.6 12.4l1-1M11.4 4.6l1-1"/>',
+  moon: '<path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/>',
+};
+function icon(name, cls) {
+  const s = document.createElementNS(NS, "svg");
+  s.setAttribute("viewBox", "0 0 16 16");
+  s.setAttribute("aria-hidden", "true");
+  s.setAttribute("class", "ic" + (cls ? " " + cls : ""));
+  s.innerHTML = ICONS[name];
+  return s;
+}
+
+const STATUS = {
+  covered: { label: "Covered", icon: "check", cls: "good" },
+  partial: { label: "Partial", icon: "half", cls: "warning" },
+  missing: { label: "Missing", icon: "x", cls: "critical" },
+};
+const TYPE_LABEL = { cv: "CV", past_project: "Past project", tech_stack: "Tech stack", client_portfolio: "Client portfolio" };
+const CAT_LABEL = { technical: "Technical", team: "Team", experience: "Experience" };
+const METHOD_LABEL = { rules: "Rules", "rules+reranker": "Rules + reranker", reranker: "Reranker", similarity: "Similarity" };
+const FIT = [
+  ["technical_fit", "Technical", "Average of the technical requirements"],
+  ["team_fit", "Team", "Average of the team requirements"],
+  ["experience_fit", "Experience", "Average of the experience requirements"],
+  ["domain_fit", "Domain", "Past projects in the client's sector"],
+  ["certification_fit", "Certification", "Requirements that name a certification"],
+];
+const EXAMPLE_LABELS = {
+  tender_requirements: "Tourism ministry platform (task file)",
+  tender_hard: "Hospital platform (with gaps)",
+  tender_ai_training: "AI training (French tender)",
+  edge_case_incomplete: "Incomplete tender (edge case)",
+};
+const CHECK_EXAMPLES = [
+  ["1 project manager PMP certified", "team"],
+  ["Minimum 5 senior developers", "team"],
+  ["Chef de projet certifie PRINCE2", "team"],
+  ["Kubernetes and Terraform", "technical"],
+  ["Salesforce CRM integration", "technical"],
+  ["2+ projects in the health sector", "experience"],
+];
+
+function statusChip(status, big) {
+  const s = STATUS[status] || STATUS.missing;
+  return el("span", { class: `chip status ${s.cls}${big ? " lg" : ""}` }, icon(s.icon), s.label);
+}
+// Document titles from the server ("CV_03.pdf" -> "Daniel Kim - Cloud Infrastructure Engineer").
+const TITLES = {};
+function rememberTitles(x, depth = 0) {
+  if (!x || typeof x !== "object" || depth > 6) return;
+  if (Array.isArray(x)) { x.forEach((v) => rememberTitles(v, depth + 1)); return; }
+  if (typeof x.doc_id === "string" && typeof x.title === "string" && x.title) TITLES[x.doc_id] = x.title;
+  Object.values(x).forEach((v) => { if (v && typeof v === "object") rememberTitles(v, depth + 1); });
+}
+function docTitle(id) { return TITLES[id] || String(id || "").replace(/\.(md|txt|pdf|docx)$/i, "").replace(/_/g, " "); }
+const pct = (x) => (x === null || x === undefined ? "–" : `${Math.round(x * 100 + 1e-9)}%`);
+const fmt2 = (x) => (x === null || x === undefined ? "–" : Number(x).toFixed(2));
+function toList(v) { return Array.isArray(v) ? v.filter((x) => typeof x === "string") : (typeof v === "string" && v ? [v] : []); }
+function lines(textarea) { return textarea.value.split(/\r?\n/).map((s) => s.trim()).filter(Boolean); }
+
+async function api(path, { method = "GET", body, timeout = 900000 } = {}) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeout);
+  try {
+    const res = await fetch(path, {
+      method, signal: ctrl.signal,
+      headers: body !== undefined ? { "Content-Type": "application/json" } : {},
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
+    const text = await res.text();
+    let data = null;
+    try { data = text ? JSON.parse(text) : null; } catch { data = text; }
+    if (!res.ok) {
+      const d = data && data.detail;
+      throw new Error(typeof d === "string" ? d : Array.isArray(d) ? d.map((x) => x.msg).join("; ") : `Request failed (${res.status})`);
+    }
+    rememberTitles(data);
+    return data;
+  } catch (e) {
+    if (e.name === "AbortError") throw new Error("The server took too long to answer.");
+    if (e instanceof TypeError) throw new Error("Cannot reach the server. Is the dashboard window still open?");
+    throw e;
+  } finally { clearTimeout(timer); }
+}
+
+function toast(message, kind = "info", ms = 5000) {
+  const t = el("div", { class: `toast ${kind}` },
+    icon(kind === "good" ? "check" : kind === "critical" ? "alert" : "info"), el("div", { text: message }));
+  $("#toasts").append(t);
+  setTimeout(() => t.remove(), ms);
+}
+async function busy(btn, fn) {
+  if (btn.disabled) return;
+  btn.disabled = true; btn.classList.add("busy");
+  try { return await fn(); }
+  catch (e) { toast(e.message, "critical", 8000); }
+  finally { btn.disabled = false; btn.classList.remove("busy"); }
+}
+function download(name, content, type) {
+  const url = URL.createObjectURL(new Blob([content], { type }));
+  const a = el("a", { href: url, download: name });
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* ---------------------------------------------------------------- tooltip */
+const tipBox = $("#tooltip");
+function tipRow(value, label, color) {
+  return el("div", { class: "tip-row" },
+    color ? el("span", { class: "tip-key", style: `background:${color}` }) : null,
+    el("strong", { text: value }), label ? el("span", { text: label }) : null);
+}
+function attachTip(node, build) {
+  const show = (x, y) => {
+    tipBox.replaceChildren(...build());
+    tipBox.hidden = false;
+    const w = tipBox.offsetWidth, h = tipBox.offsetHeight;
+    let left = x + 14, top = y + 14;
+    if (left + w > innerWidth - 8) left = x - w - 14;
+    if (top + h > innerHeight - 8) top = y - h - 14;
+    tipBox.style.left = Math.max(8, left) + "px";
+    tipBox.style.top = Math.max(8, top) + "px";
+  };
+  const hide = () => { tipBox.hidden = true; };
+  node.addEventListener("pointermove", (e) => show(e.clientX, e.clientY));
+  node.addEventListener("pointerleave", hide);
+  node.addEventListener("focus", () => { const r = node.getBoundingClientRect(); show(r.left + r.width * 0.4, r.bottom - 6); });
+  node.addEventListener("blur", hide);
+}
+addEventListener("scroll", () => { tipBox.hidden = true; }, { passive: true });
+
+/* ---------------------------------------------------------------- theme */
+const THEME_KEY = "rag-console-theme";
+function effectiveTheme() {
+  const t = document.documentElement.dataset.theme;
+  if (t) return t;
+  return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+function paintThemeButton() {
+  const b = $("#theme-btn");
+  b.replaceChildren(icon(effectiveTheme() === "dark" ? "sun" : "moon"));
+}
+try { const saved = localStorage.getItem(THEME_KEY); if (saved) document.documentElement.dataset.theme = saved; } catch {}
+$("#theme-btn").addEventListener("click", () => {
+  const next = effectiveTheme() === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem(THEME_KEY, next); } catch {}
+  paintThemeButton();
+});
+paintThemeButton();
+
+/* ---------------------------------------------------------------- tabs */
+const TABS = ["match", "check", "kb", "bench"];
+const loaded = {};
+function showTab(name) {
+  if (!TABS.includes(name)) name = "match";
+  for (const t of TABS) {
+    $(`#panel-${t}`).hidden = t !== name;
+    const b = $(`#tab-${t}`);
+    b.setAttribute("aria-selected", String(t === name));
+    b.tabIndex = t === name ? 0 : -1;
+  }
+  if (location.hash !== "#" + name) history.replaceState(null, "", "#" + name);
+  if (name === "kb" && !loaded.kb) { loaded.kb = true; loadDocuments(); }
+  if (name === "bench" && !loaded.bench) { loaded.bench = true; loadBenchmark(); }
+  if (name === "check") setTimeout(() => $("#check-input").focus(), 0);
+}
+$$(".tab").forEach((b) => {
+  b.addEventListener("click", () => showTab(b.dataset.tab));
+  b.addEventListener("keydown", (e) => {
+    const i = TABS.indexOf(b.dataset.tab);
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+      const next = TABS[(i + (e.key === "ArrowRight" ? 1 : TABS.length - 1)) % TABS.length];
+      showTab(next); $(`#tab-${next}`).focus();
+    }
+  });
+});
+addEventListener("hashchange", () => showTab(location.hash.slice(1)));
+
+/* ---------------------------------------------------------------- server status */
+const state = { docs: [], lastResult: null, lastInput: null, examples: [], bench: null };
+async function refreshStatus() {
+  const pill = $("#server-pill");
+  try {
+    const h = await api("/health", { timeout: 8000 });
+    const model = (h.model || "").split("/").pop();
+    const ok = h.index_ready;
+    pill.replaceChildren(el("span", { class: `dot ${ok ? "good" : "warning"}` }),
+      el("span", { text: ok ? `Ready · ${model}${h.reranker ? " + reranker" : ""}` : "Index not built" }));
+    pill.title = `Version ${h.version} · embedding: ${h.model} · reranker: ${h.reranker || "off"}`;
+  } catch {
+    pill.replaceChildren(el("span", { class: "dot critical" }), el("span", { text: "Server offline" }));
+    pill.title = "Start the dashboard again with start.bat or python app.py";
+  }
+}
+refreshStatus();
+setInterval(refreshStatus, 30000);
+api("/api/documents").catch(() => {});   // learn the document titles early
+
+/* ================================================================== MATCH */
+const F = {
+  client: $("#f-client"), sector: $("#f-sector"),
+  technical: $("#f-technical"), team: $("#f-team"), experience: $("#f-experience"),
+};
+function autosize(t) {
+  t.style.height = "auto";
+  t.style.height = Math.min(Math.max(t.scrollHeight + 2, 72), 320) + "px";
+}
+function updateCounts() {
+  for (const k of ["technical", "team", "experience"]) {
+    const n = lines(F[k]).length;
+    $(`#c-${k}`).textContent = n ? `${n} line${n > 1 ? "s" : ""}` : "";
+  }
+}
+["technical", "team", "experience"].forEach((k) => F[k].addEventListener("input", () => { updateCounts(); autosize(F[k]); }));
+
+function fillForm(data) {
+  const r = data && typeof data.requirements === "object" && data.requirements ? data.requirements : (data || {});
+  F.client.value = data.client || r.client || "";
+  F.sector.value = data.sector || r.sector || "";
+  for (const k of ["technical", "team", "experience"]) {
+    F[k].value = toList(r[k]).filter((s) => s.trim()).join("\n");
+    autosize(F[k]);
+  }
+  updateCounts();
+}
+
+async function loadExamples() {
+  try {
+    state.examples = await api("/api/examples");
+    const sel = $("#example-select");
+    for (const ex of state.examples) sel.append(el("option", { value: ex.name, text: EXAMPLE_LABELS[ex.name] || ex.name }));
+    if (!F.technical.value && !F.team.value && !F.experience.value && state.examples.length) {
+      const first = state.examples.find((e) => e.name === "tender_requirements") || state.examples[0];
+      sel.value = first.name; fillForm(first.data);
+    }
+  } catch (e) { toast(e.message, "critical"); }
+}
+$("#example-select").addEventListener("change", (e) => {
+  const ex = state.examples.find((x) => x.name === e.target.value);
+  if (ex) { fillForm(ex.data); runMatch(); }
+});
+$("#paste-toggle").addEventListener("click", () => { const b = $("#paste-box"); b.hidden = !b.hidden; if (!b.hidden) $("#paste-json").focus(); });
+$("#paste-load").addEventListener("click", () => {
+  try {
+    const data = JSON.parse($("#paste-json").value);
+    if (!data || typeof data !== "object" || Array.isArray(data)) throw new Error();
+    fillForm(data); $("#example-select").value = ""; $("#paste-box").hidden = true;
+    toast("Loaded into the form.", "good", 2500);
+  } catch { toast("This is not valid JSON. Paste one tender object.", "critical"); }
+});
+$("#clear-btn").addEventListener("click", () => { fillForm({}); $("#example-select").value = ""; F.technical.focus(); });
+$("#match-form").addEventListener("submit", (e) => { e.preventDefault(); runMatch(); });
+$("#match-form").addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); runMatch(); } });
+
+let matchQueued = false;
+async function runMatch() {
+  if ($("#match-btn").disabled) { matchQueued = true; return; }  // run again when the current one ends
+  matchQueued = false;
+  const body = {
+    technical: lines(F.technical), team: lines(F.team), experience: lines(F.experience),
+    sector: F.sector.value.trim() || null, client: F.client.value.trim() || null,
+  };
+  if (!body.technical.length && !body.team.length && !body.experience.length) {
+    toast("Add at least one requirement first.", "critical"); return;
+  }
+  const box = $("#match-results");
+  await busy($("#match-btn"), async () => {
+    box.classList.add("loading");
+    const t0 = performance.now();
+    try {
+      const res = await api("/retrieve", { method: "POST", body });
+      state.lastResult = res; state.lastInput = body;
+      if (!matchQueued) renderResult(res, performance.now() - t0, body);
+    } finally { box.classList.remove("loading"); }
+  });
+  if (matchQueued) runMatch();
+}
+
+function kpiTile({ label, value, unit, note, iconName, cls, hero, textValue }) {
+  return el("div", { class: `tile${hero ? " hero" : ""}` },
+    el("div", { class: "tile-label" }, iconName ? icon(iconName, cls) : null, label),
+    el("div", { class: `tile-value${textValue ? " text" : ""}` }, value, unit ? el("span", { class: "unit", text: unit }) : null),
+    note ? el("div", { class: "tile-note", text: note }) : null);
+}
+
+function meter(label, value, note) {
+  const has = value !== null && value !== undefined;
+  const row = el("div", { class: "meter", tabindex: "0", role: "img",
+      "aria-label": `${label} fit: ${has ? value + " out of 100" : "not scored"}` },
+    el("span", { class: "meter-label", text: label }),
+    el("span", { class: `meter-track${has ? "" : " none"}` },
+      has ? el("span", { class: "meter-fill", style: `width:${Math.max(0, Math.min(100, value))}%` }) : null),
+    el("span", { class: `meter-value${has ? "" : " none"}`, text: has ? String(value) : "n/a" }));
+  attachTip(row, () => [tipRow(has ? `${value} / 100` : "Not scored", `${label} fit`, has ? "var(--accent)" : null),
+    el("div", { class: "tip-note", text: has ? note : "No requirement of this kind in the tender." })]);
+  return row;
+}
+
+function noteItem(text) {
+  let kind = "info", iconName = "info", head = null, rest = text;
+  if (text.startsWith("BLOCKING")) { kind = "critical"; iconName = "alert"; head = "Blocking"; rest = text.replace(/^BLOCKING\s*-\s*/, ""); }
+  else if (/^Only partly covered/.test(text)) { kind = "warning"; iconName = "half"; head = "Partial"; rest = text.replace(/^Only partly covered:\s*/, ""); }
+  else if (/^No internal evidence for optional/.test(text)) { kind = "warning"; iconName = "half"; head = "Optional gap"; rest = text.replace(/^No internal evidence for optional requirement\(s\):\s*/, ""); }
+  return el("div", { class: `note ${kind}` }, icon(iconName), el("div", {}, head ? el("b", { text: head + ": " }) : null, rest));
+}
+
+function understoodChips(parsed) {
+  const p = parsed || {};
+  const chips = [];
+  const add = (k, v) => chips.push(el("span", { class: "chip outline" }, el("span", { class: "sub", text: k + ":" }), v));
+  (p.roles || []).forEach((r) => add("Role", r));
+  (p.skills || []).forEach((s) => add("Skill", s));
+  (p.certs || []).forEach((c) => add("Certification", c));
+  (p.sectors || []).forEach((s) => add("Sector", s));
+  if (p.seniority) add("Seniority", p.seniority);
+  if (p.min_count && p.min_count > 1) add("At least", String(p.min_count));
+  if (p.all_skills) add("Needs", "all skills together");
+  if (!p.mandatory) chips.push(el("span", { class: "chip outline", text: "Optional" }));
+  const wrap = el("div", { class: "understood" }, el("span", { class: "k", text: "Understood as" }),
+    chips.length ? chips : el("span", { class: "chip outline", text: "no known terms" }));
+  const out = [wrap];
+  if (p.leftover && p.leftover.length) {
+    out.push(el("div", { class: "understood" }, el("span", { class: "k", text: "Not in the vocabulary" }),
+      p.leftover.map((w) => el("span", { class: "chip", text: w })),
+      el("span", { class: "hint", text: "so the reranker decides" })));
+  }
+  return out;
+}
+
+function evidenceQuote(ev) {
+  if (!ev || !ev.quote) return null;
+  return el("blockquote", {}, el("q", { text: ev.quote }), el("span", { class: "line", text: `line ${ev.line}` }));
+}
+function docButton(id, ev) {
+  return el("button", { type: "button", class: "doc-link", text: docTitle(id), title: id,
+    onclick: (e) => { e.stopPropagation(); openDoc(id, ev && ev.line); } });
+}
+function matchCard(m, extraClass) {
+  const isClosest = extraClass === "closest";
+  const scores = [];
+  if (m.similarity_score !== null && m.similarity_score !== undefined) scores.push(`similarity ${fmt2(m.similarity_score)}`);
+  if (m.rrf_score !== null && m.rrf_score !== undefined) scores.push(`fusion ${Number(m.rrf_score).toFixed(3)}`);
+  if (m.rerank_score !== null && m.rerank_score !== undefined) scores.push(`reranker ${Number(m.rerank_score).toFixed(1)}`);
+  return el("div", { class: `match${extraClass ? " " + extraClass : ""}` },
+    el("div", { class: "match-head" }, docButton(m.doc_id, m.evidence), el("span", { class: "type", text: TYPE_LABEL[m.type] || m.type }),
+      (m.matched_on || []).length ? el("span", { class: "chips" }, m.matched_on.map((x) => el("span", { class: "chip accent", text: x }))) : null),
+    scores.length ? el("div", { class: "scores" }, scores.map((s) => el("span", { text: s }))) : null,
+    isClosest ? el("div", { class: "small sub", text: m.summary }) : evidenceQuote(m.evidence));
+}
+
+function renderResult(res, ms, input) {
+  const box = $("#match-results");
+  const matrix = res.requirements_matrix || [];
+  const count = (s) => matrix.filter((r) => r.status === s).length;
+  const fit = res.fit_score || {};
+  box.replaceChildren();
+
+  const head = el("div", { class: "panel-head", style: "margin-bottom:12px" },
+    el("div", {}, el("h3", { text: input.client ? `Results for ${input.client}` : "Results" }),
+      el("p", { class: "sub small", text: `${matrix.length} requirement${matrix.length === 1 ? "" : "s"} · answered in ${(ms / 1000).toFixed(1)} s` })),
+    el("div", { class: "row" },
+      el("button", { class: "btn small", type: "button", onclick: () => download("rag_output.json", JSON.stringify(res, null, 2), "application/json") }, icon("download"), "Proposal JSON"),
+      el("button", { class: "btn small", type: "button", onclick: () => download("requirements_matrix.csv", toCSV(matrix), "text/csv;charset=utf-8") }, icon("download"), "Matrix CSV"),
+      el("button", { class: "btn small ghost", type: "button", onclick: async () => {
+        try { await navigator.clipboard.writeText(JSON.stringify(res, null, 2)); toast("JSON copied.", "good", 2000); }
+        catch { toast("Copy is blocked by the browser. Use the JSON download.", "critical"); } } }, icon("copy"), "Copy")));
+
+  const kpis = el("div", { class: "kpis" },
+    kpiTile({ label: "Overall fit", value: fit.overall === null || fit.overall === undefined ? "–" : String(fit.overall),
+      unit: fit.overall === null || fit.overall === undefined ? "" : "/100", hero: true,
+      note: fit.overall === null || fit.overall === undefined ? "Nothing to score" : "Average of the fit scores" }),
+    kpiTile({ label: "Covered", value: String(count("covered")), iconName: "check", cls: "good", note: "Proof found" }),
+    kpiTile({ label: "Partial", value: String(count("partial")), iconName: "half", cls: "warning", note: "Not enough, or weak proof" }),
+    kpiTile({ label: "Missing", value: String(count("missing")), iconName: "x", cls: "critical", note: "No proof in our documents" }));
+
+  const meters = el("div", { class: "card" },
+    el("div", { class: "card-head" }, el("div", {}, el("h3", { text: "Fit score" }), el("p", { class: "sub", text: "0 to 100 per area. Hover a bar for details." }))),
+    el("div", { class: "meters" }, FIT.map(([k, label, note]) => meter(label, fit[k], note))));
+
+  const warnings = res.warnings || [];
+  const notes = el("div", { class: "card" },
+    el("div", { class: "card-head" }, el("div", {}, el("h3", { text: "Warnings" }), el("p", { class: "sub", text: warnings.length ? "Read these before writing the proposal." : "Nothing to flag." }))),
+    warnings.length ? el("div", { class: "notes" }, warnings.map(noteItem))
+      : el("div", { class: "note" }, icon("check"), el("div", { text: "Every requirement has proof in our documents." })));
+
+  box.append(head, kpis, el("div", { class: "grid-2", style: "margin-top:16px" }, meters, notes));
+  box.append(matrixCard(res));
+  box.append(assetsCard(res));
+}
+
+function matrixCard(res) {
+  const matrix = res.requirements_matrix || [];
+  const details = res.requirement_matches || [];
+  const tbody = el("tbody");
+  matrix.forEach((r, i) => {
+    const d = details[i] || {};
+    const detailRow = el("tr", { class: "detail", hidden: true },
+      el("td", { colspan: "6" },
+        el("div", { class: "stack", style: "gap:10px" },
+          understoodChips(r.parsed),
+          (d.matches || []).length
+            ? el("div", {}, d.matches.map((m) => matchCard(m)))
+            : el("div", {},
+                el("p", { class: "sub", style: "margin-bottom:6px", text: "Nothing in our documents meets this requirement." }),
+                d.closest ? el("div", {}, el("p", { class: "hint", style: "margin-bottom:4px", text: "Closest document (not enough to count):" }), matchCard(d.closest, "closest")) : null))));
+    const row = el("tr", { class: "clickable", "data-status": r.status, "aria-expanded": "false", tabindex: "0" },
+      el("td", {}, statusChip(r.status)),
+      el("td", {}, el("span", { class: "req-text", text: r.requirement }), r.mandatory ? null : el("span", { class: "req-opt", text: "optional" }),
+        el("div", { class: "hint", text: CAT_LABEL[r.category] || r.category })),
+      el("td", { class: "numcell", text: `${r.found} / ${r.needed}` }),
+      el("td", { class: "hide-sm", text: METHOD_LABEL[r.method] || r.method }),
+      el("td", {}, r.best_doc ? docButton(r.best_doc, ((d.matches || []).find((m) => m.doc_id === r.best_doc) || {}).evidence) : (r.closest_doc ? el("span", { class: "hint", text: "closest: " + docTitle(r.closest_doc) }) : el("span", { class: "hint", text: "–" })),
+        r.evidence ? el("div", { class: "evidence" }, el("q", { text: r.evidence.length > 110 ? r.evidence.slice(0, 110) + "…" : r.evidence })) : null),
+      el("td", {}, el("button", { class: "expander", type: "button", "aria-label": "Show details", tabindex: "-1" }, icon("chevron"))));
+    const toggle = () => { const open = row.getAttribute("aria-expanded") === "true"; row.setAttribute("aria-expanded", String(!open)); detailRow.hidden = open; };
+    row.addEventListener("click", toggle);
+    row.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+    tbody.append(row, detailRow);
+  });
+
+  const filterBtns = ["all", "covered", "partial", "missing"].map((f) => {
+    const n = f === "all" ? matrix.length : matrix.filter((r) => r.status === f).length;
+    const b = el("button", { type: "button", class: `chip${f !== "all" ? " status " + STATUS[f].cls : ""}`, "aria-pressed": String(f === "all") },
+      f === "all" ? null : icon(STATUS[f].icon), `${f === "all" ? "All" : STATUS[f].label} ${n}`);
+    b.addEventListener("click", () => {
+      filterBtns.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      $$("tr[data-status]", tbody).forEach((tr) => {
+        const show = f === "all" || tr.dataset.status === f;
+        tr.hidden = !show;
+        if (!show) { tr.setAttribute("aria-expanded", "false"); tr.nextElementSibling.hidden = true; }
+      });
+    });
+    return b;
+  });
+
+  return el("div", { class: "card", style: "margin-top:16px" },
+    el("div", { class: "card-head" }, el("div", {}, el("h3", { text: "Requirements matrix" }),
+      el("p", { class: "sub", text: "Click a row to see how it was understood, every match, and the quotes." }))),
+    el("div", { class: "filters", role: "group", "aria-label": "Filter by status" }, filterBtns),
+    el("div", { class: "table-wrap" }, el("table", {},
+      el("thead", {}, el("tr", {}, el("th", { text: "Status" }), el("th", { text: "Requirement" }), el("th", { class: "numcell", text: "Found / needed" }),
+        el("th", { class: "hide-sm", text: "Decided by" }), el("th", { text: "Best proof" }), el("th", {}, el("span", { class: "sr-only", text: "Details" })))),
+      tbody)));
+}
+
+function assetsCard(res) {
+  const assets = res.matches || [];
+  return el("div", { class: "card", style: "margin-top:16px" },
+    el("div", { class: "card-head" }, el("div", {}, el("h3", { text: `Assets for the proposal (${assets.length})` }),
+      el("p", { class: "sub", text: "People, projects and stacks to cite. Click a name to open the document." }))),
+    assets.length ? el("div", { class: "assets" }, assets.map((m) => el("div", { class: "asset" },
+      el("div", { class: "match-head" }, docButton(m.doc_id, m.evidence), el("span", { class: "type", text: TYPE_LABEL[m.type] || m.type })),
+      el("div", { class: "small", text: m.summary }),
+      m.supports ? el("div", { class: "proves" }, el("b", { text: "Proves: " }), m.supports) : null,
+      evidenceQuote(m.evidence))))
+      : el("p", { class: "sub", text: "No document meets the requirements." }));
+}
+
+function toCSV(matrix) {
+  const cols = ["status", "category", "requirement", "mandatory", "found", "needed", "method", "best_doc", "evidence", "closest_doc"];
+  const esc = (v) => { const s = v === null || v === undefined ? "" : String(v); return /[",\n;]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  return "﻿" + [cols.join(","), ...matrix.map((r) => cols.map((c) => esc(r[c])).join(","))].join("\r\n");
+}
+
+/* ================================================================== CHECK */
+let checkCat = "team";
+$$("#check-cat button").forEach((b) => b.addEventListener("click", () => {
+  checkCat = b.dataset.cat;
+  $$("#check-cat button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+}));
+function setCat(cat) { const b = $(`#check-cat button[data-cat="${cat}"]`); if (b) b.click(); }
+for (const [text, cat] of CHECK_EXAMPLES) {
+  $("#check-examples").append(el("button", { type: "button", class: "chip btn-chip", text,
+    onclick: () => { $("#check-input").value = text; setCat(cat); runCheck(); } }));
+}
+$("#check-form").addEventListener("submit", (e) => { e.preventDefault(); runCheck(); });
+(function checkEmpty() {
+  $("#check-results").append(el("div", { class: "card empty" }, icon("info"),
+    el("h3", { text: "Type a requirement" }),
+    el("p", { text: "Pick the category, then press Check. The result shows what the system understood and the proof it found." })));
+})();
+
+let checkQueued = false;
+async function runCheck() {
+  if ($("#check-btn").disabled) { checkQueued = true; return; }
+  checkQueued = false;
+  const requirement = $("#check-input").value.trim();
+  if (!requirement) { toast("Type a requirement first.", "critical"); $("#check-input").focus(); return; }
+  const box = $("#check-results");
+  await busy($("#check-btn"), async () => {
+    box.classList.add("loading");
+    try {
+      const r = await api("/match", { method: "POST", body: { requirement, category: checkCat } });
+      if (!checkQueued) renderCheck(r);
+    } finally { box.classList.remove("loading"); }
+  });
+  if (checkQueued) runCheck();
+}
+function renderCheck(r) {
+  const box = $("#check-results");
+  const parsed = { ...(r.parsed || {}) };
+  const methodNote = {
+    rules: "The rules understood every word, so they decided by counting the documents that meet all conditions.",
+    "rules+reranker": "The rules found candidates, but some words are unknown to them. A candidate counts only if the reranker is confident, or if those words appear in its text.",
+    reranker: "No known terms, so the reranker read the requirement and the documents together. A document counts only if the reranker is confident, or if the words appear in its text.",
+    similarity: "Decided by vector similarity only.",
+  }[r.method] || "";
+  box.replaceChildren(el("div", { class: "card stack", style: "gap:14px" },
+    el("div", { class: "row" }, statusChip(r.status, true), el("h3", { class: "grow", text: r.requirement }),
+      el("span", { class: "chip outline", text: CAT_LABEL[r.category] || r.category }),
+      r.mandatory ? null : el("span", { class: "chip outline", text: "Optional" })),
+    el("div", { class: "kpis four" },
+      kpiTile({ label: "Found", value: String(r.found), unit: ` / ${r.needed}`, note: r.needed > 1 ? `Needs at least ${r.needed}` : "Needs at least 1" }),
+      kpiTile({ label: "Decided by", value: METHOD_LABEL[r.method] || r.method, textValue: true }),
+      kpiTile({ label: "Score", value: String(r.percent), unit: "/100", note: "Used in the fit score" }),
+      kpiTile({ label: r.method === "rules" ? "Documents meeting all rules" : "Best reranker score",
+        value: r.method === "rules" ? String(r.found) : Number(r.score).toFixed(1),
+        note: r.method === "rules" ? "" : "Covered at 0 or more" })),
+    el("p", { class: "sub", text: methodNote }),
+    understoodChips(parsed),
+    (r.matches || []).length
+      ? el("div", {}, el("h3", { style: "margin-bottom:8px", text: `Proof (${r.matches.length})` }), r.matches.map((m) => matchCard(m)))
+      : el("div", {}, el("p", { class: "sub", style: "margin-bottom:6px", text: "Nothing in our documents meets this requirement." }),
+          r.closest ? el("div", {}, el("p", { class: "hint", style: "margin-bottom:4px", text: "Closest document (not enough to count):" }), matchCard(r.closest, "closest")) : null)));
+}
+
+/* ================================================================== DOCUMENT DIALOG */
+const dlg = $("#doc-dialog");
+$("#dlg-close").addEventListener("click", () => dlg.close());
+dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+async function openDoc(id, line) {
+  $("#dlg-title").textContent = docTitle(id);
+  $("#dlg-sub").textContent = id;
+  $("#dlg-body").replaceChildren(el("p", { class: "sub", text: "Loading…" }));
+  if (!dlg.open) dlg.showModal();
+  try {
+    const d = await api(`/api/documents/${encodeURIComponent(id)}`);
+    const p = d.profile || {};
+    const kv = el("dl", { class: "kv" });
+    const add = (k, v) => { if (v === null || v === undefined || v === "" || (Array.isArray(v) && !v.length)) return;
+      kv.append(el("dt", { text: k }), el("dd", {}, Array.isArray(v) ? el("div", { class: "chips" }, v.map((x) => el("span", { class: "chip", text: x }))) : String(v))); };
+    add("Type", TYPE_LABEL[d.type] || d.type);
+    add("File", d.path);
+    add("Summary", d.summary);
+    if (d.type === "cv") { add("Role", p.role); add("Roles found", p.roles); add("Seniority", p.seniority); }
+    add("Years", p.years); add("Skills", p.skills); add("Certifications", p.certifications);
+    add("Sectors", p.sectors); add("Client", p.client); add("Year", p.year); add("Extracted by", p.extractor);
+    const ol = el("ol", { class: "lines" }, (d.text_lines || []).map((t, i) => el("li", { class: line && i + 1 === line ? "hit" : null, text: t })));
+    $("#dlg-body").replaceChildren(
+      el("div", {}, el("h3", { style: "margin-bottom:8px", text: "What the system extracted" }), kv),
+      el("div", {}, el("h3", { style: "margin-bottom:8px", text: "Text" + (line ? ` (quoted line ${line} highlighted)` : "") }), ol));
+    const hit = $("li.hit", ol);
+    if (hit) setTimeout(() => hit.scrollIntoView({ block: "center" }), 50);
+  } catch (e) {
+    $("#dlg-body").replaceChildren(el("p", { class: "sub", text: e.message }));
+  }
+}
+
+/* ================================================================== KNOWLEDGE BASE */
+async function loadDocuments() {
+  try {
+    const data = await api("/api/documents");
+    state.docs = data.documents || [];
+    state.builtAt = data.built_at || null;
+    renderKB();
+  } catch (e) { toast(e.message, "critical"); }
+}
+function profileText(d) {
+  const p = d.profile || {};
+  if (d.type === "cv") {
+    const role = (p.role || "").length > 48 ? p.role.slice(0, 48) + "…" : (p.role || "");
+    return [role, [p.seniority && p.seniority !== "unknown" ? p.seniority : null, p.years ? `${p.years} years` : null].filter(Boolean).join(" · ")];
+  }
+  if (d.type === "past_project") return [[p.year, (p.sectors || []).join(", ")].filter(Boolean).join(" · "), ""];
+  return [(p.sectors || []).join(", "), ""];
+}
+function renderKB() {
+  const docs = state.docs;
+  const n = (t) => docs.filter((d) => d.type === t).length;
+  $("#kb-kpis").replaceChildren(
+    kpiTile({ label: "CVs", value: String(n("cv")) }),
+    kpiTile({ label: "Past projects", value: String(n("past_project")) }),
+    kpiTile({ label: "Tech stacks", value: String(n("tech_stack")) }),
+    kpiTile({ label: "Client portfolio", value: String(n("client_portfolio")) }),
+    kpiTile({ label: "Added from here", value: String(docs.filter((d) => d.uploaded).length) }));
+
+  const q = $("#kb-search").value.trim().toLowerCase();
+  const type = $("#kb-type").value;
+  const rows = docs.filter((d) => (!type || d.type === type) &&
+    (!q || [d.doc_id, d.title, d.summary, ...(d.profile.skills || []), ...(d.profile.certifications || []), ...(d.profile.roles || []), d.profile.role || ""]
+      .join(" ").toLowerCase().includes(q)));
+  const tbody = $("#kb-table tbody");
+  tbody.replaceChildren(...rows.map((d) => {
+    const [p1, p2] = profileText(d);
+    const skills = d.profile.skills || [];
+    const tr = el("tr", { class: "clickable", tabindex: "0" },
+      el("td", {}, el("div", { class: "req-text", text: d.title }), el("div", { class: "hint mono", text: d.doc_id }),
+        d.uploaded ? el("span", { class: "chip accent", style: "margin-top:4px", text: "added from here" }) : null),
+      el("td", {}, el("span", { class: "type", text: TYPE_LABEL[d.type] || d.type })),
+      el("td", {}, el("div", { text: p1 }), p2 ? el("div", { class: "hint", text: p2 }) : null),
+      el("td", {}, el("div", { class: "chips" }, skills.slice(0, 4).map((s) => el("span", { class: "chip", text: s })),
+        skills.length > 4 ? el("span", { class: "chip outline", text: `+${skills.length - 4}` }) : null)),
+      el("td", {}, el("div", { class: "chips" }, (d.profile.certifications || []).map((c) => el("span", { class: "chip accent", text: c })))));
+    tr.addEventListener("click", () => openDoc(d.doc_id));
+    tr.addEventListener("keydown", (e) => { if (e.key === "Enter") openDoc(d.doc_id); });
+    return tr;
+  }));
+  if (!rows.length) tbody.append(el("tr", {}, el("td", { colspan: "5", class: "sub", text: docs.length ? "No document matches the search." : "No documents yet." })));
+  $("#kb-count").textContent = `${rows.length} of ${docs.length} documents · click a row to see the text and the extracted profile`
+    + (state.builtAt ? ` · index built ${state.builtAt}` : "");
+
+  const up = docs.filter((d) => d.uploaded);
+  $("#uploaded-list").replaceChildren(...(up.length ? up.map((d) => el("div", { class: "note" }, icon("doc"),
+      el("div", { class: "grow" }, docButton(d.doc_id), el("div", { class: "hint", text: TYPE_LABEL[d.type] })),
+      el("button", { class: "btn small ghost danger", type: "button", "aria-label": `Remove ${d.doc_id}`,
+        onclick: (e) => removeDoc(d.doc_id, e.currentTarget) }, icon("trash"), "Remove")))
+    : [el("p", { class: "sub small", text: "Nothing yet. Add a CV to see it matched right away." })]));
+}
+$("#kb-search").addEventListener("input", renderKB);
+$("#kb-type").addEventListener("change", renderKB);
+$("#reindex-btn").addEventListener("click", (e) => busy(e.currentTarget, async () => {
+  const r = await api("/reindex", { method: "POST" });
+  await loadDocuments();
+  toast(`Index rebuilt: ${state.docs.length} documents, ${r.chunks} chunks.`, "good");
+  refreshStatus();
+}));
+
+let pickedFile = null;
+const drop = $("#dropzone"), fileInput = $("#upload-file");
+function pickFile(f) {
+  if (!f) return;
+  const ext = (f.name.split(".").pop() || "").toLowerCase();
+  if (!["pdf", "docx", "md", "txt"].includes(ext)) { toast("Use a PDF, Word (.docx), Markdown or text file.", "critical"); return; }
+  if (f.size > 15 * 1024 * 1024) { toast("The file is larger than 15 MB.", "critical"); return; }
+  pickedFile = f;
+  $("#drop-text").replaceChildren(el("span", { class: "file-name", text: f.name }), el("span", { class: "hint", text: ` · ${(f.size / 1024).toFixed(0)} KB · click to change` }));
+  $("#upload-btn").disabled = false;
+  if (/cv|resume/i.test(f.name)) $("#upload-type").value = "cv";
+  else if (/project|projet/i.test(f.name)) $("#upload-type").value = "past_project";
+}
+drop.addEventListener("click", () => fileInput.click());
+drop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fileInput.click(); } });
+fileInput.addEventListener("change", () => pickFile(fileInput.files[0]));
+["dragenter", "dragover"].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave", "drop"].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", (e) => pickFile(e.dataTransfer.files[0]));
+function readBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result).split(",")[1] || "");
+    r.onerror = () => reject(new Error("The file could not be read."));
+    r.readAsDataURL(file);
+  });
+}
+$("#upload-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (!pickedFile) return;
+  busy($("#upload-btn"), async () => {
+    const content = await readBase64(pickedFile);
+    const r = await api("/api/documents", { method: "POST", body: { filename: pickedFile.name, content_base64: content, doc_type: $("#upload-type").value } });
+    const p = r.added.profile || {};
+    const found = [...(p.skills || []).slice(0, 4), ...(p.certifications || [])];
+    toast(`Added ${r.added.doc_id}.${found.length ? " Found: " + found.join(", ") + "." : ""} Try it in "Match a tender".`, "good", 8000);
+    pickedFile = null; fileInput.value = "";
+    $("#drop-text").replaceChildren("Drop a file here or ", el("b", { text: "browse" }));
+    await loadDocuments();
+  }).finally(() => { $("#upload-btn").disabled = !pickedFile; });
+});
+async function removeDoc(id, btn) {
+  if (!confirm(`Remove ${id} from the knowledge base? The file is deleted.`)) return;
+  await busy(btn, async () => {
+    await api(`/api/documents/${encodeURIComponent(id)}`, { method: "DELETE" });
+    toast(`Removed ${id}.`, "good");
+    await loadDocuments();
+  });
+}
+
+/* ================================================================== BENCHMARK */
+function chartCard({ title, subtitle, rows, series, max, format, ticks, emphasis, tableCols }) {
+  // rows: [{label, sub, values: [...], tip: string}], series: [{name, color}]
+  const multi = series.length > 1;
+  const plot = el("div", {});
+  const bars = el("div", { class: "bars", role: "list" });
+  rows.forEach((r, ri) => {
+    const lines = r.values.map((v, si) => {
+      const color = multi ? series[si].color : (emphasis === undefined || emphasis === ri ? series[0].color : "var(--deemph)");
+      const frac = Math.max(0, Math.min(1, (v || 0) / max));
+      return el("div", { class: "bar-line" },
+        el("span", { class: "bar", style: `--v:${frac};background:${color}` }),
+        el("span", { class: "bar-value", text: format(v) }));
+    });
+    const row = el("div", { class: "bar-row", role: "listitem", tabindex: "0",
+        "aria-label": `${r.label}: ${r.values.map((v, i) => (multi ? series[i].name + " " : "") + format(v)).join(", ")}` },
+      el("div", { class: "bar-label" }, el("b", { text: r.label }), r.sub ? el("div", { text: r.sub }) : null),
+      el("div", { class: "bar-area" },
+        el("span", { class: "bar-grid" }, ticks.filter((t) => t > 0).map((t) => el("i", { style: `left:${(t / max) * 100}%` }))),
+        lines));
+    attachTip(row, () => [
+      ...r.values.map((v, i) => tipRow(format(v), multi ? series[i].name : r.label,
+        multi ? series[i].color : (emphasis === undefined || emphasis === ri ? series[0].color : "var(--deemph)"))),
+      multi ? el("div", { class: "tip-note", text: r.label }) : null,
+      r.tip ? el("div", { class: "tip-note", text: r.tip }) : null].filter(Boolean));
+    bars.append(row);
+  });
+  const axis = el("div", { class: "axis", "aria-hidden": "true" }, el("span"),
+    el("div", { class: "axis-ticks" }, ticks.map((t) => el("span", { style: `left:${(t / max) * 100}%`, text: format(t) }))));
+  plot.append(bars, axis);
+
+  const cols = tableCols || ["", ...series.map((s) => s.name)];
+  const table = el("div", { class: "table-wrap", hidden: true }, el("table", {},
+    el("thead", {}, el("tr", {}, cols.map((c, i) => el("th", { class: i ? "numcell" : null, text: c })))),
+    el("tbody", {}, rows.map((r) => el("tr", {}, el("td", { text: r.label + (r.sub ? ` (${r.sub})` : "") }),
+      r.values.map((v) => el("td", { class: "numcell", text: format(v) })))))));
+  const toggle = el("button", { class: "btn small ghost view-toggle", type: "button", "aria-pressed": "false", text: "Table" });
+  toggle.addEventListener("click", () => {
+    const toTable = table.hidden;
+    table.hidden = !toTable; plot.hidden = toTable;
+    toggle.textContent = toTable ? "Chart" : "Table";
+    toggle.setAttribute("aria-pressed", String(toTable));
+  });
+  return el("figure", { class: "card chart-card", style: "margin:0" },
+    el("div", { class: "card-head" }, el("div", {}, el("h3", { text: title }), subtitle ? el("p", { class: "sub", text: subtitle }) : null), toggle),
+    multi ? el("div", { class: "legend" }, series.map((s) => el("span", {}, el("i", { class: "swatch", style: `background:${s.color}` }), s.name))) : null,
+    plot, table);
+}
+
+function shortModel(m) {
+  return ({
+    "sentence-transformers/all-MiniLM-L6-v2": "all-MiniLM-L6-v2",
+    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2": "multilingual MiniLM-L12",
+    "intfloat/multilingual-e5-small": "multilingual-e5-small",
+    "BAAI/bge-m3": "bge-m3",
+  })[m] || m.split("/").pop();
+}
+
+async function loadBenchmark() {
+  try {
+    state.bench = await api("/api/benchmark");
+    renderBench(state.bench);
+  } catch (e) { toast(e.message, "critical"); }
+}
+
+function renderBench(b) {
+  const body = $("#bench-body");
+  if (!b || !b.available) {
+    $("#bench-meta").textContent = "No results yet.";
+    body.replaceChildren(el("div", { class: "card empty" }, icon("info"), el("h3", { text: "No benchmark results yet" }),
+      el("p", { text: "Press Run benchmark. It takes a few minutes." })));
+    return;
+  }
+  const meta = b.meta || {};
+  const cons = b.constraints || {}, cov = b.coverage || {}, abl = b.ablation || {};
+  const final = cons["Rules + reranker (final)"], base = cons["Similarity threshold (baseline)"];
+  const covF = cov["Rules + reranker (final)"], covB = cov["Similarity threshold (baseline)"];
+  const best = abl["Hybrid + structured rules"];
+  const hoF = (b.holdout || {})["Rules + reranker (final)"];
+  const realF = (b.real_cvs || {})["Rules + reranker (final)"], realB = (b.real_cvs || {})["Similarity threshold (baseline)"];
+  const tests = b.tests || { counts: {}, rows: [] };
+  const nQ = meta.queries || 40, nNeg = meta.negatives || 15, nT = meta.constraint_tests || (final && final.total) || 18;
+  $("#bench-meta").textContent = `Last run ${b.updated} · ${nQ} test queries (English + French), ${nNeg} things we do not have, ${nT} hard cases`
+    + (realF ? ` · ${realF.total} checks on ${realF.documents || 20} real CVs` : "");
+
+  const passedTests = tests.counts.passed || 0, failedTests = (tests.counts.failed || 0) + (tests.counts.error || 0) + (tests.counts.errors || 0);
+  const kpis = el("div", { class: "kpis four" },
+    kpiTile({ label: "Hard cases passed", iconName: final && final.passed === final.total ? "check" : "half",
+      cls: final && final.passed === final.total ? "good" : "warning",
+      value: final ? `${final.passed}` : "–", unit: final ? ` / ${final.total}` : "",
+      note: [base ? `Similarity baseline: ${base.passed} / ${base.total}` : "",
+             realF ? `Real CVs: ${realF.passed} / ${realF.total}` : ""].filter(Boolean).join(" · ") }),
+    kpiTile({ label: "Has / has not decisions", value: covF ? pct(covF.accuracy) : "–",
+      note: [covB ? `Baseline: ${pct(covB.accuracy)}` : "",
+             hoF ? `Unseen set: ${hoF.correct}/${hoF.total}` : ""].filter(Boolean).join(" · ") }),
+    kpiTile({ label: "Right document first (Hit@1)", value: best ? pct(best.hit1) : "–",
+      note: best ? `Right document in top 3: ${pct(best.recall3)}` : "" }),
+    kpiTile({ label: "Unit tests", iconName: failedTests ? "x" : "check", cls: failedTests ? "critical" : "good",
+      value: String(passedTests), unit: failedTests ? ` passed, ${failedTests} failed` : " passed",
+      note: tests.summary || "Press Run tests to refresh" }));
+
+  const methods = ["Similarity threshold (baseline)", "Reranker only", "Rules + reranker (final)"].filter((k) => cov[k]);
+  const covChart = chartCard({
+    title: "Has / has not decisions",
+    subtitle: `Accuracy on ${nQ} things OliveSoft has and ${nNeg} it does not have`,
+    rows: methods.map((k) => ({ label: k.replace(" (baseline)", "").replace(" (final)", ""), sub: k.includes("final") ? "final system" : k.includes("baseline") ? "baseline" : "",
+      values: [cov[k].accuracy], tip: `Found ${pct(cov[k].found)} of what we have · rejected ${pct(cov[k].rejected)} of what we do not have` })),
+    series: [{ name: "Accuracy", color: "var(--accent)" }], max: 1, format: pct, ticks: [0, 0.25, 0.5, 0.75, 1],
+    emphasis: methods.findIndex((k) => k.includes("final")), tableCols: ["Method", "Accuracy"],
+  });
+  const consChart = chartCard({
+    title: "Hard cases passed",
+    subtitle: `${nT} cases: certifications, counts, seniority, AND rules, missing skills`,
+    rows: methods.filter((k) => cons[k]).map((k) => ({ label: k.replace(" (baseline)", "").replace(" (final)", ""),
+      sub: k.includes("final") ? "final system" : k.includes("baseline") ? "baseline" : "",
+      values: [cons[k].passed], tip: `${cons[k].passed} of ${cons[k].total} cases fully right` })),
+    series: [{ name: "Passed", color: "var(--accent)" }], max: nT, format: (v) => `${v}`,
+    ticks: [0, Math.round(nT / 2), nT], emphasis: methods.filter((k) => cons[k]).findIndex((k) => k.includes("final")),
+    tableCols: ["Method", "Cases passed"],
+  });
+
+  const models = Object.keys(b.models || {});
+  const chosen = meta.embedding_model || "intfloat/multilingual-e5-small";
+  const modelsChart = models.length ? chartCard({
+    title: "Embedding models: right document first",
+    subtitle: "Hit@1 on English and on French queries (vector search only)",
+    rows: models.map((m) => ({ label: shortModel(m), sub: m === chosen ? "chosen" : "", values: [b.models[m].hit1_en, b.models[m].hit1_fr],
+      tip: `All queries: ${pct(b.models[m].hit1)} · MRR ${fmt2(b.models[m].mrr)}` })),
+    series: [{ name: "English", color: "var(--series-1)" }, { name: "French", color: "var(--series-2)" }],
+    max: 1, format: pct, ticks: [0, 0.25, 0.5, 0.75, 1], tableCols: ["Model", "English", "French"],
+  }) : null;
+  const maxMs = models.length ? Math.max(...models.map((m) => b.models[m].ms)) : 0;
+  const tickStep = maxMs > 100 ? 50 : 10;
+  const topMs = Math.ceil(maxMs / tickStep) * tickStep || tickStep;
+  const speedChart = models.length ? chartCard({
+    title: "Embedding models: search time",
+    subtitle: "Milliseconds per query on CPU (lower is better)",
+    rows: models.map((m) => ({ label: shortModel(m), sub: m === chosen ? "chosen" : "", values: [b.models[m].ms] })),
+    series: [{ name: "ms per query", color: "var(--accent)" }], max: topMs, format: (v) => `${Math.round(v)} ms`,
+    ticks: [0, topMs / 2, topMs], emphasis: models.indexOf(chosen), tableCols: ["Model", "ms per query"],
+  }) : null;
+
+  const ablRows = Object.entries(abl);
+  const ablation = el("div", { class: "card" },
+    el("div", { class: "card-head" }, el("div", {}, el("h3", { text: "Adding one step at a time" }),
+      el("p", { class: "sub", text: `Retrieval quality with ${shortModel(chosen)}. Hit@1: right document first. Recall@3: right documents in the top 3.` }))),
+    el("div", { class: "table-wrap" }, el("table", {},
+      el("thead", {}, el("tr", {}, ["Retrieval", "Hit@1", "Recall@3", "MRR", "Hit@1 French", "ms / query"].map((c, i) => el("th", { class: i ? "numcell" : null, text: c })))),
+      el("tbody", {}, ablRows.map(([k, v]) => el("tr", {}, el("td", { text: k }),
+        el("td", { class: "numcell", text: pct(v.hit1) }), el("td", { class: "numcell", text: pct(v.recall3) }),
+        el("td", { class: "numcell", text: fmt2(v.mrr) }), el("td", { class: "numcell", text: pct(v.hit1_fr) }),
+        el("td", { class: "numcell", text: Math.round(v.ms) }))))))
+  );
+
+  const caseRows = (final && final.rows) || [];
+  const cases = el("div", { class: "card" },
+    el("div", { class: "card-head" }, el("div", {}, el("h3", { text: "Hard cases, one by one (final system)" }),
+      el("p", { class: "sub", text: "A case passes only if the status is right, no wrong person or project is proposed, and the count is met." }))),
+    el("div", { class: "table-wrap" }, el("table", {},
+      el("thead", {}, el("tr", {}, ["", "Requirement", "Expected", "Got", "Decided by", "Why it matters"].map((c) => el("th", { text: c })))),
+      el("tbody", {}, caseRows.map((r) => el("tr", {},
+        el("td", {}, el("span", { class: `chip status ${r.pass ? "good" : "critical"}` }, icon(r.pass ? "check" : "x"), r.pass ? "Pass" : "Fail")),
+        el("td", { class: "req-text", text: r.q }),
+        el("td", {}, statusChip(r.expect)), el("td", {}, statusChip(r.got)),
+        el("td", { text: METHOD_LABEL[r.method] || r.method }),
+        el("td", { class: "sub", text: r.why })))))));
+
+  const hoRows = (hoF && hoF.rows) || [];
+  const unseen = hoRows.length ? el("div", { class: "card" },
+    el("div", { class: "card-head" }, el("div", {}, el("h3", { text: `Unseen requirements: ${hoF.correct} / ${hoF.total} right` }),
+      el("p", { class: "sub", text: "Written after the system was built and never used to tune it. Right = found when we have it, missing when we do not." }))),
+    el("div", { class: "table-wrap" }, el("table", {},
+      el("thead", {}, el("tr", {}, ["", "Requirement", "We have it?", "Got", "Decided by"].map((c) => el("th", { text: c })))),
+      el("tbody", {}, hoRows.map((r) => el("tr", {},
+        el("td", {}, el("span", { class: `chip status ${r.pass ? "good" : "critical"}` }, icon(r.pass ? "check" : "x"), r.pass ? "Right" : "Wrong")),
+        el("td", { class: "req-text", text: r.q }),
+        el("td", { text: r.have ? "Yes" : "No" }),
+        el("td", {}, statusChip(r.got)),
+        el("td", { text: METHOD_LABEL[r.method] || r.method })))))))
+    : null;
+
+  const realRows = (realF && realF.rows) || [];
+  const realCard = realRows.length ? el("div", { class: "card" },
+    el("div", { class: "card-head" }, el("div", {}, el("h3", { text: `Real CVs: ${realF.passed} / ${realF.total} checks passed` }),
+      el("p", { class: "sub", text: `${realF.documents || 20} sample OliveSoft CVs: PDF files made with LaTeX, with no labelled fields. `
+        + (realB ? `Similarity baseline: ${realB.passed} / ${realB.total}. ` : "")
+        + "A check passes only if the status is right, no wrong person is proposed, and the count is met." }))),
+    el("div", { class: "table-wrap" }, el("table", {},
+      el("thead", {}, el("tr", {}, ["", "Requirement", "Expected", "Got", "Found", "Decided by", "Why it matters"].map((c, i) => el("th", { class: i === 4 ? "numcell" : null, text: c })))),
+      el("tbody", {}, realRows.map((r) => el("tr", {},
+        el("td", {}, el("span", { class: `chip status ${r.pass ? "good" : "critical"}` }, icon(r.pass ? "check" : "x"), r.pass ? "Pass" : "Fail")),
+        el("td", { class: "req-text", text: r.q }),
+        el("td", {}, r.expect === "found" ? el("span", { class: "hint", text: "covered or partial" }) : statusChip(r.expect)),
+        el("td", {}, statusChip(r.got)),
+        el("td", { class: "numcell", text: String(r.found) }),
+        el("td", { text: METHOD_LABEL[r.method] || r.method }),
+        el("td", { class: "sub", text: r.why })))))))
+    : null;
+
+  const testList = el("div", { class: "card" },
+    el("div", { class: "card-head" }, el("div", {}, el("h3", { text: `Unit tests (${tests.rows.length})` }),
+      el("p", { class: "sub", text: tests.summary || "No test run saved yet." }))),
+    tests.rows.length ? el("details", {}, el("summary", { class: "sub", style: "cursor:pointer", text: "Show every test" }),
+      el("div", { class: "table-wrap", style: "margin-top:8px" }, el("table", {}, el("tbody", {}, tests.rows.map((t) => el("tr", {},
+        el("td", {}, el("span", { class: `chip status ${t.result === "PASSED" ? "good" : "critical"}` }, icon(t.result === "PASSED" ? "check" : "x"), t.result === "PASSED" ? "Pass" : t.result.toLowerCase())),
+        el("td", { class: "mono", text: t.test }))))))) : null);
+
+  body.replaceChildren(kpis,
+    el("div", { class: "grid-2" }, covChart, consChart),
+    modelsChart || speedChart ? el("div", { class: "grid-2" }, modelsChart, speedChart) : null,
+    ablation, cases, unseen, realCard, testList);
+}
+
+let jobTimer = null;
+function jobLine(text, kind) {
+  $("#job-card").hidden = false;
+  const iconName = kind === "running" ? null : kind === "done" ? "check" : "alert";
+  $("#job-line").replaceChildren(
+    kind === "running" ? el("span", { class: "spinner", "aria-hidden": "true" }) : icon(iconName),
+    el("span", { text }));
+  const ic = $("#job-line .ic"); if (ic) ic.style.color = kind === "done" ? "var(--good)" : "var(--critical)";
+}
+async function startJob(kind) {
+  const label = kind === "tests" ? "Tests" : "Benchmark";
+  const buttons = [$("#run-tests-btn"), $("#run-bench-btn")];
+  try {
+    const job = await api(`/api/jobs/${kind}`, { method: "POST" });
+    buttons.forEach((b) => (b.disabled = true));
+    jobLine(`${label} running… this takes a few minutes.`, "running");
+    clearInterval(jobTimer);
+    jobTimer = setInterval(async () => {
+      try {
+        const j = await api(`/api/jobs/${job.id}`, { timeout: 10000 });
+        $("#job-log").textContent = (j.log || []).join("\n");
+        if (j.status === "running") { jobLine(`${label} running… ${j.seconds} s`, "running"); return; }
+        clearInterval(jobTimer);
+        buttons.forEach((b) => (b.disabled = false));
+        if (j.status === "done") {
+          const s = kind === "tests" && j.result ? ` · ${j.result.summary}` : "";
+          jobLine(`${label} finished in ${j.seconds} s${s}`, "done");
+          toast(`${label} finished.`, "good");
+        } else {
+          jobLine(`${label} failed after ${j.seconds} s: ${j.error || "see the output"}`, "failed");
+          toast(`${label} failed. Open "Show output" for details.`, "critical", 8000);
+        }
+        loadBenchmark();
+      } catch (e) {
+        clearInterval(jobTimer);
+        buttons.forEach((b) => (b.disabled = false));
+        jobLine(e.message, "failed");
+      }
+    }, 1500);
+  } catch (e) { toast(e.message, "critical"); }
+}
+$("#run-tests-btn").addEventListener("click", () => startJob("tests"));
+$("#run-bench-btn").addEventListener("click", () => startJob("benchmark"));
+
+/* ================================================================== start */
+showTab(location.hash.slice(1) || "match");
+loadExamples().then(() => { if (F.technical.value || F.team.value || F.experience.value) runMatch(); });
+</script>
+</body>
+</html>

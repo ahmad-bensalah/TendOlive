@@ -1,0 +1,2581 @@
+{
+  "models": {
+    "sentence-transformers/all-MiniLM-L6-v2": {
+      "hit1": 0.925,
+      "recall3": 0.9083333333333334,
+      "mrr": 0.9583333333333334,
+      "hit1_en": 0.92,
+      "hit1_fr": 0.9333333333333333,
+      "ms": 15.938297724994754
+    },
+    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2": {
+      "hit1": 0.925,
+      "recall3": 0.875,
+      "mrr": 0.9550000000000001,
+      "hit1_en": 0.92,
+      "hit1_fr": 0.9333333333333333,
+      "ms": 26.247029799947086
+    },
+    "intfloat/multilingual-e5-small": {
+      "hit1": 1.0,
+      "recall3": 0.9291666666666668,
+      "mrr": 1.0,
+      "hit1_en": 1.0,
+      "hit1_fr": 1.0,
+      "ms": 24.18169407503683
+    },
+    "BAAI/bge-m3": {
+      "hit1": 0.975,
+      "recall3": 0.9374999999999998,
+      "mrr": 0.9875,
+      "hit1_en": 0.96,
+      "hit1_fr": 1.0,
+      "ms": 164.5863936750061
+    }
+  },
+  "ablation": {
+    "Dense vectors only": {
+      "hit1": 1.0,
+      "recall3": 0.9291666666666668,
+      "mrr": 1.0,
+      "hit1_fr": 1.0,
+      "ms": 303.53567795000345,
+      "misses": []
+    },
+    "BM25 keywords only": {
+      "hit1": 0.9,
+      "recall3": 0.9833333333333334,
+      "mrr": 0.95,
+      "hit1_fr": 0.8666666666666667,
+      "ms": 83.87244835009824,
+      "misses": [
+        [
+          "Previous public sector digital projects",
+          "Project_University_AITraining.md"
+        ],
+        [
+          "Licensing platform for a government ministry",
+          "Project_University_AITraining.md"
+        ],
+        [
+          "Acquisition de materiels informatiques en plusieurs lots pour un ministere",
+          "Project_University_AITraining.md"
+        ],
+        [
+          "Portail de services en ligne pour une municipalite",
+          "Project_University_AITraining.md"
+        ]
+      ]
+    },
+    "Hybrid (BM25 + dense, RRF)": {
+      "hit1": 1.0,
+      "recall3": 0.9625,
+      "mrr": 1.0,
+      "hit1_fr": 1.0,
+      "ms": 423.3788365249893,
+      "misses": []
+    },
+    "Hybrid + structured rules": {
+      "hit1": 1.0,
+      "recall3": 0.975,
+      "mrr": 1.0,
+      "hit1_fr": 1.0,
+      "ms": 151.6140468750791,
+      "misses": []
+    }
+  },
+  "coverage": {
+    "Similarity threshold (baseline)": {
+      "found": 1.0,
+      "rejected": 0.17647058823529413,
+      "accuracy": 0.7543859649122807
+    },
+    "Reranker only": {
+      "found": 1.0,
+      "rejected": 0.9411764705882353,
+      "accuracy": 0.9824561403508771
+    },
+    "Rules + reranker (final)": {
+      "found": 1.0,
+      "rejected": 1.0,
+      "accuracy": 1.0
+    }
+  },
+  "constraints": {
+    "Similarity threshold (baseline)": {
+      "passed": 3,
+      "total": 19,
+      "rows": [
+        {
+          "q": "1 project manager PMP certified",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_Hana_Ktari.md",
+            "CV_Ines_Mejri.md"
+          ],
+          "pass": false,
+          "why": "Hana is a Scrum Master without PMP; she must not be proposed"
+        },
+        {
+          "q": "Chef de projet certifie PRINCE2",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_Firas_Ayari.md",
+            "CV_Mehdi_Karray.md"
+          ],
+          "pass": false,
+          "why": "French wording + certification"
+        },
+        {
+          "q": "1 Scrum Master PSM certified",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_Ines_Mejri.md",
+            "CV_Youssef_Gharbi.md"
+          ],
+          "pass": false,
+          "why": "exact certification"
+        },
+        {
+          "q": "Minimum 3 senior developers",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "count + seniority; the junior PHP developer must not count"
+        },
+        {
+          "q": "Minimum 5 senior developers",
+          "expect": "partial",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "only 4 senior developers exist"
+        },
+        {
+          "q": "Senior PHP developer",
+          "expect": "missing",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "the only PHP developer is junior"
+        },
+        {
+          "q": "Senior iOS Swift developer",
+          "expect": "missing",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "senior web developers exist, but nobody knows iOS or Swift"
+        },
+        {
+          "q": "2 formateurs certifies en intelligence artificielle",
+          "expect": "partial",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_Walid_Masmoudi.md",
+            "CV_Ahmed_Bouazizi.md"
+          ],
+          "pass": false,
+          "why": "only one AI trainer"
+        },
+        {
+          "q": "ISO 27001 lead auditor",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_Leila_Hammami.md",
+            "CV_Ahmed_Bouazizi.md"
+          ],
+          "pass": false,
+          "why": "certification held by one person only"
+        },
+        {
+          "q": "AWS certified engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_Ahmed_Bouazizi.md",
+            "CV_Ines_Mejri.md"
+          ],
+          "pass": false,
+          "why": "Ahmed uses AWS but is not certified"
+        },
+        {
+          "q": "1 data engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_Hatem_Zouari.md",
+            "CV_Youssef_Gharbi.md"
+          ],
+          "pass": false,
+          "why": "role match"
+        },
+        {
+          "q": "Kubernetes and Terraform",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "TechStack_PublicSector_Cloud.md",
+            "CV_Ines_Mejri.md"
+          ],
+          "pass": false,
+          "why": "AND: both skills needed"
+        },
+        {
+          "q": "React and Flutter",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "AND: nobody has both"
+        },
+        {
+          "q": "Salesforce CRM integration",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "not in the knowledge base"
+        },
+        {
+          "q": "Solidity smart contracts",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "not in the knowledge base"
+        },
+        {
+          "q": "3+ public sector projects",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "count of public projects"
+        },
+        {
+          "q": "2+ projects in the health sector",
+          "expect": "partial",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "only one health project"
+        },
+        {
+          "q": "Experience in the tourism sector",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "Project_Municipality_EServices.md",
+            "Project_MinistryInterior_LicensingPortal.md"
+          ],
+          "pass": false,
+          "why": "sector match"
+        },
+        {
+          "q": "Blockchain supply-chain traceability for a port authority",
+          "expect": "missing",
+          "got": "missing",
+          "method": "similarity",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "not in the knowledge base"
+        }
+      ]
+    },
+    "Reranker only": {
+      "passed": 9,
+      "total": 19,
+      "rows": [
+        {
+          "q": "1 project manager PMP certified",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 2,
+          "wrong_docs": [
+            "CV_Hana_Ktari.md"
+          ],
+          "pass": false,
+          "why": "Hana is a Scrum Master without PMP; she must not be proposed"
+        },
+        {
+          "q": "Chef de projet certifie PRINCE2",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 2,
+          "wrong_docs": [
+            "CV_Youssef_Gharbi.md"
+          ],
+          "pass": false,
+          "why": "French wording + certification"
+        },
+        {
+          "q": "1 Scrum Master PSM certified",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "exact certification"
+        },
+        {
+          "q": "Minimum 3 senior developers",
+          "expect": "covered",
+          "got": "partial",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_Walid_Masmoudi.md"
+          ],
+          "pass": false,
+          "why": "count + seniority; the junior PHP developer must not count"
+        },
+        {
+          "q": "Minimum 5 senior developers",
+          "expect": "partial",
+          "got": "partial",
+          "method": "reranker",
+          "found": 4,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "only 4 senior developers exist"
+        },
+        {
+          "q": "Senior PHP developer",
+          "expect": "missing",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "the only PHP developer is junior"
+        },
+        {
+          "q": "Senior iOS Swift developer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "senior web developers exist, but nobody knows iOS or Swift"
+        },
+        {
+          "q": "2 formateurs certifies en intelligence artificielle",
+          "expect": "partial",
+          "got": "partial",
+          "method": "reranker",
+          "found": 2,
+          "wrong_docs": [
+            "CV_Walid_Masmoudi.md"
+          ],
+          "pass": false,
+          "why": "only one AI trainer"
+        },
+        {
+          "q": "ISO 27001 lead auditor",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "certification held by one person only"
+        },
+        {
+          "q": "AWS certified engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_Ahmed_Bouazizi.md",
+            "CV_Hatem_Zouari.md"
+          ],
+          "pass": false,
+          "why": "Ahmed uses AWS but is not certified"
+        },
+        {
+          "q": "1 data engineer",
+          "expect": "covered",
+          "got": "partial",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_Firas_Ayari.md",
+            "CV_Hatem_Zouari.md"
+          ],
+          "pass": false,
+          "why": "role match"
+        },
+        {
+          "q": "Kubernetes and Terraform",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "AND: both skills needed"
+        },
+        {
+          "q": "React and Flutter",
+          "expect": "missing",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "AND: nobody has both"
+        },
+        {
+          "q": "Salesforce CRM integration",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "not in the knowledge base"
+        },
+        {
+          "q": "Solidity smart contracts",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "not in the knowledge base"
+        },
+        {
+          "q": "3+ public sector projects",
+          "expect": "covered",
+          "got": "partial",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "count of public projects"
+        },
+        {
+          "q": "2+ projects in the health sector",
+          "expect": "partial",
+          "got": "partial",
+          "method": "reranker",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "only one health project"
+        },
+        {
+          "q": "Experience in the tourism sector",
+          "expect": "covered",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "sector match"
+        },
+        {
+          "q": "Blockchain supply-chain traceability for a port authority",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "not in the knowledge base"
+        }
+      ]
+    },
+    "Rules + reranker (final)": {
+      "passed": 19,
+      "total": 19,
+      "rows": [
+        {
+          "q": "1 project manager PMP certified",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "Hana is a Scrum Master without PMP; she must not be proposed"
+        },
+        {
+          "q": "Chef de projet certifie PRINCE2",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "French wording + certification"
+        },
+        {
+          "q": "1 Scrum Master PSM certified",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "exact certification"
+        },
+        {
+          "q": "Minimum 3 senior developers",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 4,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "count + seniority; the junior PHP developer must not count"
+        },
+        {
+          "q": "Minimum 5 senior developers",
+          "expect": "partial",
+          "got": "partial",
+          "method": "rules",
+          "found": 4,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "only 4 senior developers exist"
+        },
+        {
+          "q": "Senior PHP developer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "rules",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "the only PHP developer is junior"
+        },
+        {
+          "q": "Senior iOS Swift developer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "rules+reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "senior web developers exist, but nobody knows iOS or Swift"
+        },
+        {
+          "q": "2 formateurs certifies en intelligence artificielle",
+          "expect": "partial",
+          "got": "partial",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "only one AI trainer"
+        },
+        {
+          "q": "ISO 27001 lead auditor",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules+reranker",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "certification held by one person only"
+        },
+        {
+          "q": "AWS certified engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "Ahmed uses AWS but is not certified"
+        },
+        {
+          "q": "1 data engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "role match"
+        },
+        {
+          "q": "Kubernetes and Terraform",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "AND: both skills needed"
+        },
+        {
+          "q": "React and Flutter",
+          "expect": "missing",
+          "got": "missing",
+          "method": "rules",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "AND: nobody has both"
+        },
+        {
+          "q": "Salesforce CRM integration",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "not in the knowledge base"
+        },
+        {
+          "q": "Solidity smart contracts",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "not in the knowledge base"
+        },
+        {
+          "q": "3+ public sector projects",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 6,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "count of public projects"
+        },
+        {
+          "q": "2+ projects in the health sector",
+          "expect": "partial",
+          "got": "partial",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "only one health project"
+        },
+        {
+          "q": "Experience in the tourism sector",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "sector match"
+        },
+        {
+          "q": "Blockchain supply-chain traceability for a port authority",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "not in the knowledge base"
+        }
+      ]
+    }
+  },
+  "holdout": {
+    "Similarity threshold (baseline)": {
+      "correct": 12,
+      "total": 20,
+      "rows": [
+        {
+          "q": "Angular developer",
+          "have": true,
+          "got": "covered",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Spring Boot microservices",
+          "have": true,
+          "got": "covered",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Terraform infrastructure as code",
+          "have": true,
+          "got": "partial",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Figma prototypes",
+          "have": true,
+          "got": "partial",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Experience with banks",
+          "have": true,
+          "got": "partial",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Power BI reports for a public agency",
+          "have": true,
+          "got": "covered",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Formation en machine learning",
+          "have": true,
+          "got": "covered",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Chef de projet avec 10 ans d'experience",
+          "have": true,
+          "got": "partial",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Penetration testing",
+          "have": true,
+          "got": "partial",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Odoo ERP customization",
+          "have": true,
+          "got": "covered",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Salesforce administrator",
+          "have": false,
+          "got": "partial",
+          "method": "similarity",
+          "pass": false
+        },
+        {
+          "q": "Drone mapping project",
+          "have": false,
+          "got": "missing",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Kotlin Android developer",
+          "have": false,
+          "got": "partial",
+          "method": "similarity",
+          "pass": false
+        },
+        {
+          "q": "Shopify store development",
+          "have": false,
+          "got": "partial",
+          "method": "similarity",
+          "pass": false
+        },
+        {
+          "q": "Hospital information system HL7 integration",
+          "have": false,
+          "got": "partial",
+          "method": "similarity",
+          "pass": false
+        },
+        {
+          "q": "Certified Scrum Product Owner (CSPO)",
+          "have": false,
+          "got": "covered",
+          "method": "similarity",
+          "pass": false
+        },
+        {
+          "q": "Tableau Software dashboards",
+          "have": false,
+          "got": "partial",
+          "method": "similarity",
+          "pass": false
+        },
+        {
+          "q": "Railway signalling experience",
+          "have": false,
+          "got": "missing",
+          "method": "similarity",
+          "pass": true
+        },
+        {
+          "q": "Magento e-commerce",
+          "have": false,
+          "got": "partial",
+          "method": "similarity",
+          "pass": false
+        },
+        {
+          "q": "Specialiste en paie et ressources humaines",
+          "have": false,
+          "got": "partial",
+          "method": "similarity",
+          "pass": false
+        }
+      ]
+    },
+    "Reranker only": {
+      "correct": 16,
+      "total": 20,
+      "rows": [
+        {
+          "q": "Angular developer",
+          "have": true,
+          "got": "covered",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Spring Boot microservices",
+          "have": true,
+          "got": "covered",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Terraform infrastructure as code",
+          "have": true,
+          "got": "missing",
+          "method": "reranker",
+          "pass": false
+        },
+        {
+          "q": "Figma prototypes",
+          "have": true,
+          "got": "partial",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Experience with banks",
+          "have": true,
+          "got": "partial",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Power BI reports for a public agency",
+          "have": true,
+          "got": "covered",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Formation en machine learning",
+          "have": true,
+          "got": "covered",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Chef de projet avec 10 ans d'experience",
+          "have": true,
+          "got": "covered",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Penetration testing",
+          "have": true,
+          "got": "missing",
+          "method": "reranker",
+          "pass": false
+        },
+        {
+          "q": "Odoo ERP customization",
+          "have": true,
+          "got": "covered",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Salesforce administrator",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Drone mapping project",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Kotlin Android developer",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Shopify store development",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Hospital information system HL7 integration",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Certified Scrum Product Owner (CSPO)",
+          "have": false,
+          "got": "partial",
+          "method": "reranker",
+          "pass": false
+        },
+        {
+          "q": "Tableau Software dashboards",
+          "have": false,
+          "got": "partial",
+          "method": "reranker",
+          "pass": false
+        },
+        {
+          "q": "Railway signalling experience",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Magento e-commerce",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Specialiste en paie et ressources humaines",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        }
+      ]
+    },
+    "Rules + reranker (final)": {
+      "correct": 20,
+      "total": 20,
+      "rows": [
+        {
+          "q": "Angular developer",
+          "have": true,
+          "got": "covered",
+          "method": "rules",
+          "pass": true
+        },
+        {
+          "q": "Spring Boot microservices",
+          "have": true,
+          "got": "covered",
+          "method": "rules",
+          "pass": true
+        },
+        {
+          "q": "Terraform infrastructure as code",
+          "have": true,
+          "got": "covered",
+          "method": "rules",
+          "pass": true
+        },
+        {
+          "q": "Figma prototypes",
+          "have": true,
+          "got": "partial",
+          "method": "rules+reranker",
+          "pass": true
+        },
+        {
+          "q": "Experience with banks",
+          "have": true,
+          "got": "partial",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Power BI reports for a public agency",
+          "have": true,
+          "got": "covered",
+          "method": "rules+reranker",
+          "pass": true
+        },
+        {
+          "q": "Formation en machine learning",
+          "have": true,
+          "got": "covered",
+          "method": "rules",
+          "pass": true
+        },
+        {
+          "q": "Chef de projet avec 10 ans d'experience",
+          "have": true,
+          "got": "covered",
+          "method": "rules",
+          "pass": true
+        },
+        {
+          "q": "Penetration testing",
+          "have": true,
+          "got": "covered",
+          "method": "rules",
+          "pass": true
+        },
+        {
+          "q": "Odoo ERP customization",
+          "have": true,
+          "got": "covered",
+          "method": "rules+reranker",
+          "pass": true
+        },
+        {
+          "q": "Salesforce administrator",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Drone mapping project",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Kotlin Android developer",
+          "have": false,
+          "got": "missing",
+          "method": "rules+reranker",
+          "pass": true
+        },
+        {
+          "q": "Shopify store development",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Hospital information system HL7 integration",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Certified Scrum Product Owner (CSPO)",
+          "have": false,
+          "got": "missing",
+          "method": "rules",
+          "pass": true
+        },
+        {
+          "q": "Tableau Software dashboards",
+          "have": false,
+          "got": "missing",
+          "method": "rules",
+          "pass": true
+        },
+        {
+          "q": "Railway signalling experience",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Magento e-commerce",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        },
+        {
+          "q": "Specialiste en paie et ressources humaines",
+          "have": false,
+          "got": "missing",
+          "method": "reranker",
+          "pass": true
+        }
+      ]
+    }
+  },
+  "real_cvs": {
+    "Similarity threshold (baseline)": {
+      "passed": 8,
+      "total": 42,
+      "rows": [
+        {
+          "q": "PMP certification",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_16_Nora_Ellis.pdf",
+            "CV_03_Maya_Patel.pdf"
+          ],
+          "pass": false,
+          "why": "one person holds the PMP"
+        },
+        {
+          "q": "Certified Kubernetes Administrator (CKA)",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_03_Maya_Patel.pdf",
+            "CV_17_Julian_Hayes.pdf"
+          ],
+          "pass": false,
+          "why": "many people use Kubernetes, 1 holds the certificate"
+        },
+        {
+          "q": "AWS Solutions Architect certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_17_Julian_Hayes.pdf",
+            "CV_06_Ethan_Brooks.pdf"
+          ],
+          "pass": false,
+          "why": "two holders, nobody else"
+        },
+        {
+          "q": "Google Cloud Professional Data Engineer certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_11_Chloe_Martin.pdf",
+            "CV_18_Leila_Morgan.pdf"
+          ],
+          "pass": false,
+          "why": "CV 18 only has Google Cloud course certificates"
+        },
+        {
+          "q": "Power BI Data Analyst certification (PL-300)",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_13_Isabella_Ross.pdf"
+          ],
+          "pass": false,
+          "why": "many people use Power BI, 2 are certified"
+        },
+        {
+          "q": "Certified Scrum Master",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_12_Mateo_Silva.pdf",
+            "CV_16_Nora_Ellis.pdf"
+          ],
+          "pass": false,
+          "why": "CV 12 lists Scrum Master as a skill only; CV 19 has Scrum Fundamentals"
+        },
+        {
+          "q": "Certified Salesforce administrator",
+          "expect": "found",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_08_Lucas_Reed.pdf",
+            "CV_14_Henry_Price.pdf"
+          ],
+          "pass": false,
+          "why": "CV 08 is Salesforce-certified as a developer, not as an administrator"
+        },
+        {
+          "q": "Databricks certified data engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_09_Emma_Foster.pdf",
+            "CV_15_Zoe_Walker.pdf"
+          ],
+          "pass": false,
+          "why": "several people use Databricks, 1 is certified"
+        },
+        {
+          "q": "Azure Data Engineer Associate certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_15_Zoe_Walker.pdf",
+            "CV_18_Leila_Morgan.pdf",
+            "CV_05_Sofia_Nguyen.pdf"
+          ],
+          "pass": false,
+          "why": "the certificate is written in two different ways"
+        },
+        {
+          "q": "TOGAF certification",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_15_Zoe_Walker.pdf",
+            "CV_19_Owen_Parker.pdf"
+          ],
+          "pass": false,
+          "why": "written 'TOGAF 9 Certified - 2020'"
+        },
+        {
+          "q": "At least 5 data engineers",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "count people by their current job title"
+        },
+        {
+          "q": "3 senior data engineers",
+          "expect": "partial",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_13_Isabella_Ross.pdf",
+            "CV_18_Leila_Morgan.pdf",
+            "CV_09_Emma_Foster.pdf"
+          ],
+          "pass": false,
+          "why": "only the team lead is senior; the others have 0 to 3 years"
+        },
+        {
+          "q": "Junior data engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_13_Isabella_Ross.pdf",
+            "CV_16_Nora_Ellis.pdf"
+          ],
+          "pass": false,
+          "why": "years counted from the job dates when the CV does not say them"
+        },
+        {
+          "q": "1 Salesforce developer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_04_Noah_Bennett.pdf",
+            "CV_11_Chloe_Martin.pdf"
+          ],
+          "pass": false,
+          "why": "the product owner and the data engineers who know Salesforce are not developers"
+        },
+        {
+          "q": "2 product owners",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_10_Daniel_Kim.pdf"
+          ],
+          "pass": false,
+          "why": "role read from the current job"
+        },
+        {
+          "q": "1 business analyst",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_05_Sofia_Nguyen.pdf",
+            "CV_12_Mateo_Silva.pdf"
+          ],
+          "pass": false,
+          "why": "CV 12 was a business analyst in 2023, now a product owner"
+        },
+        {
+          "q": "1 DevOps engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_01_Ava_Thompson.pdf",
+            "CV_18_Leila_Morgan.pdf"
+          ],
+          "pass": false,
+          "why": "CV 14 was a DevOps engineer before, he is a delivery manager now"
+        },
+        {
+          "q": "Senior delivery manager",
+          "expect": "covered",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_04_Noah_Bennett.pdf",
+            "CV_17_Julian_Hayes.pdf"
+          ],
+          "pass": false,
+          "why": "CV 04 is a delivery manager with 3 years: not senior"
+        },
+        {
+          "q": "2 BI consultants",
+          "expect": "partial",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_13_Isabella_Ross.pdf",
+            "CV_16_Nora_Ellis.pdf"
+          ],
+          "pass": false,
+          "why": "only one BI consultant: found 1 of 2"
+        },
+        {
+          "q": "Apache Airflow orchestration",
+          "expect": "found",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Kafka streaming pipelines",
+          "expect": "found",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Talend ETL jobs",
+          "expect": "found",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Microsoft Fabric",
+          "expect": "found",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_12_Mateo_Silva.pdf"
+          ],
+          "pass": false,
+          "why": "2 people"
+        },
+        {
+          "q": "LangChain RAG assistant",
+          "expect": "found",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "a few people"
+        },
+        {
+          "q": "Terraform infrastructure as code",
+          "expect": "found",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Snowflake data warehouse",
+          "expect": "found",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [
+            "CV_19_Owen_Parker.pdf"
+          ],
+          "pass": false,
+          "why": "4 people"
+        },
+        {
+          "q": "Looker dashboards",
+          "expect": "found",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "a Power BI dashboard is not a Looker dashboard"
+        },
+        {
+          "q": "ETL tools",
+          "expect": "found",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "Talend, SSIS, NiFi, Azure Data Factory... are ETL tools even when 'ETL' is not written"
+        },
+        {
+          "q": "Salesforce CRM",
+          "expect": "found",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "a few people"
+        },
+        {
+          "q": "SAP S/4HANA consultant",
+          "expect": "missing",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "nobody"
+        },
+        {
+          "q": "iOS Swift mobile developer",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "two people built a mobile app, none with iOS or Swift"
+        },
+        {
+          "q": "Blockchain smart contracts (Solidity)",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "nobody"
+        },
+        {
+          "q": "Cisco CCNP network engineer",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "nobody"
+        },
+        {
+          "q": "Oracle E-Business Suite",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "nobody"
+        },
+        {
+          "q": "ISO 27001 lead auditor certification",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "CV 18 mentions ISO 27001 work, but nobody holds the certificate"
+        },
+        {
+          "q": "COBOL mainframe developer",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "nobody"
+        },
+        {
+          "q": "Flutter mobile app",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "mobile apps exist, but not with Flutter"
+        },
+        {
+          "q": "PRINCE2 certified project manager",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "nobody"
+        },
+        {
+          "q": "Angular frontend developer",
+          "expect": "missing",
+          "got": "covered",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "the web developer uses PHP and jQuery"
+        },
+        {
+          "q": "Microsoft Dynamics 365",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "CV 12 has Microsoft 365, which is a different product"
+        },
+        {
+          "q": "Qlik Sense dashboards",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "many dashboards, none in Qlik"
+        },
+        {
+          "q": "Kotlin Android developer",
+          "expect": "missing",
+          "got": "partial",
+          "method": "similarity",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "nobody"
+        }
+      ],
+      "documents": 19
+    },
+    "Reranker only": {
+      "passed": 17,
+      "total": 42,
+      "rows": [
+        {
+          "q": "PMP certification",
+          "expect": "covered",
+          "got": "partial",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_03_Maya_Patel.pdf",
+            "CV_16_Nora_Ellis.pdf"
+          ],
+          "pass": false,
+          "why": "one person holds the PMP"
+        },
+        {
+          "q": "Certified Kubernetes Administrator (CKA)",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_17_Julian_Hayes.pdf",
+            "CV_03_Maya_Patel.pdf"
+          ],
+          "pass": false,
+          "why": "many people use Kubernetes, 1 holds the certificate"
+        },
+        {
+          "q": "AWS Solutions Architect certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_06_Ethan_Brooks.pdf",
+            "CV_17_Julian_Hayes.pdf"
+          ],
+          "pass": false,
+          "why": "two holders, nobody else"
+        },
+        {
+          "q": "Google Cloud Professional Data Engineer certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_11_Chloe_Martin.pdf"
+          ],
+          "pass": false,
+          "why": "CV 18 only has Google Cloud course certificates"
+        },
+        {
+          "q": "Power BI Data Analyst certification (PL-300)",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_13_Isabella_Ross.pdf"
+          ],
+          "pass": false,
+          "why": "many people use Power BI, 2 are certified"
+        },
+        {
+          "q": "Certified Scrum Master",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_12_Mateo_Silva.pdf",
+            "CV_04_Noah_Bennett.pdf"
+          ],
+          "pass": false,
+          "why": "CV 12 lists Scrum Master as a skill only; CV 19 has Scrum Fundamentals"
+        },
+        {
+          "q": "Certified Salesforce administrator",
+          "expect": "found",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_08_Lucas_Reed.pdf",
+            "CV_06_Ethan_Brooks.pdf"
+          ],
+          "pass": false,
+          "why": "CV 08 is Salesforce-certified as a developer, not as an administrator"
+        },
+        {
+          "q": "Databricks certified data engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_13_Isabella_Ross.pdf",
+            "CV_09_Emma_Foster.pdf"
+          ],
+          "pass": false,
+          "why": "several people use Databricks, 1 is certified"
+        },
+        {
+          "q": "Azure Data Engineer Associate certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_15_Zoe_Walker.pdf",
+            "CV_05_Sofia_Nguyen.pdf"
+          ],
+          "pass": false,
+          "why": "the certificate is written in two different ways"
+        },
+        {
+          "q": "TOGAF certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_16_Nora_Ellis.pdf",
+            "CV_19_Owen_Parker.pdf"
+          ],
+          "pass": false,
+          "why": "written 'TOGAF 9 Certified - 2020'"
+        },
+        {
+          "q": "At least 5 data engineers",
+          "expect": "covered",
+          "got": "partial",
+          "method": "reranker",
+          "found": 5,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "count people by their current job title"
+        },
+        {
+          "q": "3 senior data engineers",
+          "expect": "partial",
+          "got": "partial",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_13_Isabella_Ross.pdf",
+            "CV_19_Owen_Parker.pdf",
+            "CV_09_Emma_Foster.pdf"
+          ],
+          "pass": false,
+          "why": "only the team lead is senior; the others have 0 to 3 years"
+        },
+        {
+          "q": "Junior data engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_09_Emma_Foster.pdf",
+            "CV_16_Nora_Ellis.pdf"
+          ],
+          "pass": false,
+          "why": "years counted from the job dates when the CV does not say them"
+        },
+        {
+          "q": "1 Salesforce developer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_06_Ethan_Brooks.pdf",
+            "CV_04_Noah_Bennett.pdf"
+          ],
+          "pass": false,
+          "why": "the product owner and the data engineers who know Salesforce are not developers"
+        },
+        {
+          "q": "2 product owners",
+          "expect": "covered",
+          "got": "partial",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_14_Henry_Price.pdf"
+          ],
+          "pass": false,
+          "why": "role read from the current job"
+        },
+        {
+          "q": "1 business analyst",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_12_Mateo_Silva.pdf",
+            "CV_05_Sofia_Nguyen.pdf"
+          ],
+          "pass": false,
+          "why": "CV 12 was a business analyst in 2023, now a product owner"
+        },
+        {
+          "q": "1 DevOps engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_13_Isabella_Ross.pdf",
+            "CV_18_Leila_Morgan.pdf"
+          ],
+          "pass": false,
+          "why": "CV 14 was a DevOps engineer before, he is a delivery manager now"
+        },
+        {
+          "q": "Senior delivery manager",
+          "expect": "covered",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_04_Noah_Bennett.pdf",
+            "CV_17_Julian_Hayes.pdf"
+          ],
+          "pass": false,
+          "why": "CV 04 is a delivery manager with 3 years: not senior"
+        },
+        {
+          "q": "2 BI consultants",
+          "expect": "partial",
+          "got": "partial",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_13_Isabella_Ross.pdf",
+            "CV_16_Nora_Ellis.pdf"
+          ],
+          "pass": false,
+          "why": "only one BI consultant: found 1 of 2"
+        },
+        {
+          "q": "Apache Airflow orchestration",
+          "expect": "found",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Kafka streaming pipelines",
+          "expect": "found",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Talend ETL jobs",
+          "expect": "found",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Microsoft Fabric",
+          "expect": "found",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [
+            "CV_03_Maya_Patel.pdf"
+          ],
+          "pass": false,
+          "why": "2 people"
+        },
+        {
+          "q": "LangChain RAG assistant",
+          "expect": "found",
+          "got": "covered",
+          "method": "reranker",
+          "found": 2,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "a few people"
+        },
+        {
+          "q": "Terraform infrastructure as code",
+          "expect": "found",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Snowflake data warehouse",
+          "expect": "found",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "4 people"
+        },
+        {
+          "q": "Looker dashboards",
+          "expect": "found",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "a Power BI dashboard is not a Looker dashboard"
+        },
+        {
+          "q": "ETL tools",
+          "expect": "found",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "Talend, SSIS, NiFi, Azure Data Factory... are ETL tools even when 'ETL' is not written"
+        },
+        {
+          "q": "Salesforce CRM",
+          "expect": "found",
+          "got": "covered",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "a few people"
+        },
+        {
+          "q": "SAP S/4HANA consultant",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "nobody"
+        },
+        {
+          "q": "iOS Swift mobile developer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "two people built a mobile app, none with iOS or Swift"
+        },
+        {
+          "q": "Blockchain smart contracts (Solidity)",
+          "expect": "missing",
+          "got": "partial",
+          "method": "reranker",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "nobody"
+        },
+        {
+          "q": "Cisco CCNP network engineer",
+          "expect": "missing",
+          "got": "partial",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "nobody"
+        },
+        {
+          "q": "Oracle E-Business Suite",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "nobody"
+        },
+        {
+          "q": "ISO 27001 lead auditor certification",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "CV 18 mentions ISO 27001 work, but nobody holds the certificate"
+        },
+        {
+          "q": "COBOL mainframe developer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "nobody"
+        },
+        {
+          "q": "Flutter mobile app",
+          "expect": "missing",
+          "got": "partial",
+          "method": "reranker",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "mobile apps exist, but not with Flutter"
+        },
+        {
+          "q": "PRINCE2 certified project manager",
+          "expect": "missing",
+          "got": "partial",
+          "method": "reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "nobody"
+        },
+        {
+          "q": "Angular frontend developer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "the web developer uses PHP and jQuery"
+        },
+        {
+          "q": "Microsoft Dynamics 365",
+          "expect": "missing",
+          "got": "partial",
+          "method": "reranker",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "CV 12 has Microsoft 365, which is a different product"
+        },
+        {
+          "q": "Qlik Sense dashboards",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "many dashboards, none in Qlik"
+        },
+        {
+          "q": "Kotlin Android developer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "nobody"
+        }
+      ],
+      "documents": 19
+    },
+    "Rules + reranker (final)": {
+      "passed": 40,
+      "total": 42,
+      "rows": [
+        {
+          "q": "PMP certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "one person holds the PMP"
+        },
+        {
+          "q": "Certified Kubernetes Administrator (CKA)",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "many people use Kubernetes, 1 holds the certificate"
+        },
+        {
+          "q": "AWS Solutions Architect certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 2,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "two holders, nobody else"
+        },
+        {
+          "q": "Google Cloud Professional Data Engineer certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "CV 18 only has Google Cloud course certificates"
+        },
+        {
+          "q": "Power BI Data Analyst certification (PL-300)",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 2,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "many people use Power BI, 2 are certified"
+        },
+        {
+          "q": "Certified Scrum Master",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "CV 12 lists Scrum Master as a skill only; CV 19 has Scrum Fundamentals"
+        },
+        {
+          "q": "Certified Salesforce administrator",
+          "expect": "found",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "CV 08 is Salesforce-certified as a developer, not as an administrator"
+        },
+        {
+          "q": "Databricks certified data engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people use Databricks, 1 is certified"
+        },
+        {
+          "q": "Azure Data Engineer Associate certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 2,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "the certificate is written in two different ways"
+        },
+        {
+          "q": "TOGAF certification",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "written 'TOGAF 9 Certified - 2020'"
+        },
+        {
+          "q": "At least 5 data engineers",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 8,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "count people by their current job title"
+        },
+        {
+          "q": "3 senior data engineers",
+          "expect": "partial",
+          "got": "partial",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "only the team lead is senior; the others have 0 to 3 years"
+        },
+        {
+          "q": "Junior data engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 4,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "years counted from the job dates when the CV does not say them"
+        },
+        {
+          "q": "1 Salesforce developer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "the product owner and the data engineers who know Salesforce are not developers"
+        },
+        {
+          "q": "2 product owners",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 2,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "role read from the current job"
+        },
+        {
+          "q": "1 business analyst",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "CV 12 was a business analyst in 2023, now a product owner"
+        },
+        {
+          "q": "1 DevOps engineer",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "CV 14 was a DevOps engineer before, he is a delivery manager now"
+        },
+        {
+          "q": "Senior delivery manager",
+          "expect": "covered",
+          "got": "covered",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "CV 04 is a delivery manager with 3 years: not senior"
+        },
+        {
+          "q": "2 BI consultants",
+          "expect": "partial",
+          "got": "partial",
+          "method": "rules",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "only one BI consultant: found 1 of 2"
+        },
+        {
+          "q": "Apache Airflow orchestration",
+          "expect": "found",
+          "got": "covered",
+          "method": "rules+reranker",
+          "found": 2,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Kafka streaming pipelines",
+          "expect": "found",
+          "got": "covered",
+          "method": "rules+reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Talend ETL jobs",
+          "expect": "found",
+          "got": "covered",
+          "method": "rules+reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Microsoft Fabric",
+          "expect": "found",
+          "got": "covered",
+          "method": "rules",
+          "found": 2,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "2 people"
+        },
+        {
+          "q": "LangChain RAG assistant",
+          "expect": "found",
+          "got": "covered",
+          "method": "rules+reranker",
+          "found": 2,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "a few people"
+        },
+        {
+          "q": "Terraform infrastructure as code",
+          "expect": "found",
+          "got": "covered",
+          "method": "rules",
+          "found": 6,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "several people"
+        },
+        {
+          "q": "Snowflake data warehouse",
+          "expect": "found",
+          "got": "covered",
+          "method": "rules",
+          "found": 4,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "4 people"
+        },
+        {
+          "q": "Looker dashboards",
+          "expect": "found",
+          "got": "covered",
+          "method": "rules",
+          "found": 5,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "a Power BI dashboard is not a Looker dashboard"
+        },
+        {
+          "q": "ETL tools",
+          "expect": "found",
+          "got": "covered",
+          "method": "rules",
+          "found": 11,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "Talend, SSIS, NiFi, Azure Data Factory... are ETL tools even when 'ETL' is not written"
+        },
+        {
+          "q": "Salesforce CRM",
+          "expect": "found",
+          "got": "covered",
+          "method": "rules+reranker",
+          "found": 3,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "a few people"
+        },
+        {
+          "q": "SAP S/4HANA consultant",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "nobody"
+        },
+        {
+          "q": "iOS Swift mobile developer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "rules+reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "two people built a mobile app, none with iOS or Swift"
+        },
+        {
+          "q": "Blockchain smart contracts (Solidity)",
+          "expect": "missing",
+          "got": "partial",
+          "method": "reranker",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "nobody"
+        },
+        {
+          "q": "Cisco CCNP network engineer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "rules",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "nobody"
+        },
+        {
+          "q": "Oracle E-Business Suite",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "nobody"
+        },
+        {
+          "q": "ISO 27001 lead auditor certification",
+          "expect": "missing",
+          "got": "missing",
+          "method": "reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "CV 18 mentions ISO 27001 work, but nobody holds the certificate"
+        },
+        {
+          "q": "COBOL mainframe developer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "rules+reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "nobody"
+        },
+        {
+          "q": "Flutter mobile app",
+          "expect": "missing",
+          "got": "missing",
+          "method": "rules",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "mobile apps exist, but not with Flutter"
+        },
+        {
+          "q": "PRINCE2 certified project manager",
+          "expect": "missing",
+          "got": "missing",
+          "method": "rules",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "nobody"
+        },
+        {
+          "q": "Angular frontend developer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "rules",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "the web developer uses PHP and jQuery"
+        },
+        {
+          "q": "Microsoft Dynamics 365",
+          "expect": "missing",
+          "got": "partial",
+          "method": "reranker",
+          "found": 1,
+          "wrong_docs": [],
+          "pass": false,
+          "why": "CV 12 has Microsoft 365, which is a different product"
+        },
+        {
+          "q": "Qlik Sense dashboards",
+          "expect": "missing",
+          "got": "missing",
+          "method": "rules+reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "many dashboards, none in Qlik"
+        },
+        {
+          "q": "Kotlin Android developer",
+          "expect": "missing",
+          "got": "missing",
+          "method": "rules+reranker",
+          "found": 0,
+          "wrong_docs": [],
+          "pass": true,
+          "why": "nobody"
+        }
+      ],
+      "documents": 19
+    }
+  },
+  "meta": {
+    "queries": 40,
+    "negatives": 17,
+    "constraint_tests": 19,
+    "holdout": 20,
+    "real_cv_tests": 42,
+    "embedding_model": "intfloat/multilingual-e5-small",
+    "reranker": "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1",
+    "finished_at": "2026-10-01 15:21:03",
+    "quick": true
+  }
+}

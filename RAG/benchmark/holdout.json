@@ -1,0 +1,22 @@
+[
+  {"q": "Angular developer", "category": "team", "have": true},
+  {"q": "Spring Boot microservices", "category": "technical", "have": true},
+  {"q": "Terraform infrastructure as code", "category": "technical", "have": true},
+  {"q": "Figma prototypes", "category": "technical", "have": true},
+  {"q": "Experience with banks", "category": "experience", "have": true},
+  {"q": "Power BI reports for a public agency", "category": "experience", "have": true},
+  {"q": "Formation en machine learning", "category": "technical", "have": true},
+  {"q": "Chef de projet avec 10 ans d'experience", "category": "team", "have": true},
+  {"q": "Penetration testing", "category": "technical", "have": true},
+  {"q": "Odoo ERP customization", "category": "technical", "have": true},
+  {"q": "Salesforce administrator", "category": "team", "have": false},
+  {"q": "Drone mapping project", "category": "experience", "have": false},
+  {"q": "Kotlin Android developer", "category": "team", "have": false},
+  {"q": "Shopify store development", "category": "technical", "have": false},
+  {"q": "Hospital information system HL7 integration", "category": "technical", "have": false},
+  {"q": "Certified Scrum Product Owner (CSPO)", "category": "team", "have": false},
+  {"q": "Tableau Software dashboards", "category": "technical", "have": false},
+  {"q": "Railway signalling experience", "category": "experience", "have": false},
+  {"q": "Magento e-commerce", "category": "technical", "have": false},
+  {"q": "Specialiste en paie et ressources humaines", "category": "team", "have": false}
+]

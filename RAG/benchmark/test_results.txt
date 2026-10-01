@@ -1,0 +1,54 @@
+tests/test_dashboard.py::test_tests_use_a_private_copy PASSED
+tests/test_dashboard.py::test_page_and_health PASSED
+tests/test_dashboard.py::test_examples_and_documents PASSED
+tests/test_dashboard.py::test_upload_is_matched_then_deleted PASSED
+tests/test_dashboard.py::test_upload_rejects_bad_files PASSED
+tests/test_dashboard.py::test_builtin_documents_cannot_be_deleted PASSED
+tests/test_dashboard.py::test_benchmark_results PASSED
+tests/test_dashboard.py::test_unknown_job_kind PASSED
+tests/test_rag.py::test_parser[Minimum 3 senior developers-team-expected0] PASSED
+tests/test_rag.py::test_parser[1 project manager PMP certified-team-expected1] PASSED
+tests/test_rag.py::test_parser[Chef de projet certifie PMP-team-expected2] PASSED
+tests/test_rag.py::test_parser[React or Angular frontend-technical-expected3] PASSED
+tests/test_rag.py::test_parser[2+ previous public sector digital projects-experience-expected4] PASSED
+tests/test_rag.py::test_parser[Au moins 2 projets dans le secteur public-experience-expected5] PASSED
+tests/test_rag.py::test_optional_and_and PASSED
+tests/test_rag.py::test_unknown_words_are_not_decided_by_rules PASSED
+tests/test_rag.py::test_profiles PASSED
+tests/test_rag.py::test_loader_reads_docx PASSED
+tests/test_rag.py::test_loader_reads_pdf PASSED
+tests/test_rag.py::test_loader_skips_empty_and_broken_files PASSED
+tests/test_rag.py::test_chunking_overlap PASSED
+tests/test_rag.py::test_constraint_cases[1 project manager PMP certified] PASSED
+tests/test_rag.py::test_constraint_cases[Chef de projet certifie PRINCE2] PASSED
+tests/test_rag.py::test_constraint_cases[1 Scrum Master PSM certified] PASSED
+tests/test_rag.py::test_constraint_cases[Minimum 3 senior developers] PASSED
+tests/test_rag.py::test_constraint_cases[Minimum 5 senior developers] PASSED
+tests/test_rag.py::test_constraint_cases[Senior PHP developer] PASSED
+tests/test_rag.py::test_constraint_cases[Senior iOS Swift developer] PASSED
+tests/test_rag.py::test_constraint_cases[2 formateurs certifies en intelligence a] PASSED
+tests/test_rag.py::test_constraint_cases[ISO 27001 lead auditor] PASSED
+tests/test_rag.py::test_constraint_cases[AWS certified engineer] PASSED
+tests/test_rag.py::test_constraint_cases[1 data engineer] PASSED
+tests/test_rag.py::test_constraint_cases[Kubernetes and Terraform] PASSED
+tests/test_rag.py::test_constraint_cases[React and Flutter] PASSED
+tests/test_rag.py::test_constraint_cases[Salesforce CRM integration] PASSED
+tests/test_rag.py::test_constraint_cases[Solidity smart contracts] PASSED
+tests/test_rag.py::test_constraint_cases[3+ public sector projects] PASSED
+tests/test_rag.py::test_constraint_cases[2+ projects in the health sector] PASSED
+tests/test_rag.py::test_constraint_cases[Experience in the tourism sector] PASSED
+tests/test_rag.py::test_constraint_cases[Blockchain supply-chain traceability for] PASSED
+tests/test_rag.py::test_every_match_has_evidence PASSED
+tests/test_rag.py::test_incomplete_tender_does_not_crash PASSED
+tests/test_rag.py::test_missing_requirement_shows_closest_document_separately PASSED
+tests/test_rag.py::test_empty_tender PASSED
+tests/test_real_cvs.py::test_pdf_text_is_repaired PASSED
+tests/test_real_cvs.py::test_sections_are_found PASSED
+tests/test_real_cvs.py::test_years_from_job_dates PASSED
+tests/test_real_cvs.py::test_title_and_summary_of_a_real_cv PASSED
+tests/test_real_cvs.py::test_certifications_come_from_the_certifications_section PASSED
+tests/test_real_cvs.py::test_years_and_seniority PASSED
+tests/test_real_cvs.py::test_roles_come_from_the_current_job PASSED
+tests/test_real_cvs.py::test_implied_skills PASSED
+tests/test_real_cvs.py::test_requirement_reading PASSED
+============================= 53 passed in 58.50s ==============================
