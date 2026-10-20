@@ -1,0 +1,218 @@
+{
+  "agent": "diagrams",
+  "ok": true,
+  "slides": [
+    {
+      "id": "s3b",
+      "type": "content",
+      "title": "Architecture technique",
+      "blocks": [
+        {
+          "kind": "image",
+          "src": "/uploads/mock_architecture.svg",
+          "caption": "Architecture en microservices conteneurisés"
+        },
+        {
+          "kind": "bullets",
+          "items": [
+            "Frontend : Interface utilisateur responsive",
+            "Backend : API REST sécurisées",
+            "Base de données : PostgreSQL haute disponibilité",
+            "Infrastructure : Kubernetes orchestré"
+          ]
+        }
+      ],
+      "sources": {
+        "mermaid": "graph TD; A[Frontend] --> B[API]; B --> C[Database];"
+      }
+    },
+    {
+      "id": "s3c",
+      "type": "content",
+      "title": "Modèle de classes",
+      "blocks": [
+        {
+          "kind": "image",
+          "src": "/uploads/mock_classes.svg",
+          "caption": "Modèle de données principal"
+        }
+      ],
+      "sources": {
+        "mermaid": "classDiagram; User <|-- Admin; User : +login(); User : +logout();"
+      }
+    },
+    {
+      "id": "s5",
+      "type": "content",
+      "title": "Plan de mise en oeuvre",
+      "blocks": [
+        {
+          "kind": "image",
+          "src": "/uploads/mock_roadmap.svg",
+          "caption": "Planning prévisionnel"
+        },
+        {
+          "kind": "table",
+          "columns": [
+            "Phase",
+            "Durée (semaines)",
+            "Équipe"
+          ],
+          "rows": [
+            [
+              "Cadrage et conception",
+              "4",
+              "2 PM + 2 Backend"
+            ],
+            [
+              "Développement socle",
+              "8",
+              "4 Backend + 3 Frontend"
+            ],
+            [
+              "Tests et déploiement",
+              "4",
+              "Toute l'équipe"
+            ],
+            [
+              "Recette et mise en production",
+              "2",
+              "2 DevOps + 1 QA"
+            ]
+          ]
+        },
+        {
+          "kind": "note",
+          "text": "Durée totale estimée : 18 semaines"
+        }
+      ],
+      "sources": {
+        "mermaid": "gantt; section Phase1; Cadrage: 4w;"
+      }
+    },
+    {
+      "id": "s10",
+      "type": "content",
+      "title": "Risques et mitigation",
+      "blocks": [
+        {
+          "kind": "table",
+          "columns": [
+            "Risque",
+            "Impact",
+            "Mitigation"
+          ],
+          "rows": [
+            [
+              "Retard de livraison",
+              "Moyen",
+              "Méthode agile avec sprints courts et livraisons progressives"
+            ],
+            [
+              "Complexité technique",
+              "Élevé",
+              "Architecture modulaire et tests continus"
+            ],
+            [
+              "Conformité RGAA",
+              "Moyen",
+              "Audit accessibilité dès les premières maquettes"
+            ],
+            [
+              "Sécurité des données",
+              "Élevé",
+              "Chiffrement bout en bout et audits de sécurité réguliers"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "data": {
+    "components": [
+      "Frontend",
+      "Backend",
+      "Database",
+      "Infrastructure"
+    ],
+    "plan": [
+      {
+        "phase": "Cadrage",
+        "weeks": 4,
+        "roles": [
+          {
+            "role": "PM",
+            "people": 2
+          },
+          {
+            "role": "Backend",
+            "people": 2
+          }
+        ]
+      },
+      {
+        "phase": "Développement",
+        "weeks": 8,
+        "roles": [
+          {
+            "role": "Backend",
+            "people": 4
+          },
+          {
+            "role": "Frontend",
+            "people": 3
+          }
+        ]
+      },
+      {
+        "phase": "Tests",
+        "weeks": 4,
+        "roles": [
+          {
+            "role": "QA",
+            "people": 2
+          },
+          {
+            "role": "DevOps",
+            "people": 2
+          }
+        ]
+      },
+      {
+        "phase": "Production",
+        "weeks": 2,
+        "roles": [
+          {
+            "role": "DevOps",
+            "people": 2
+          },
+          {
+            "role": "QA",
+            "people": 1
+          }
+        ]
+      }
+    ],
+    "risks": [
+      {
+        "risk": "Retard",
+        "impact": "medium",
+        "mitigation": "Agile"
+      },
+      {
+        "risk": "Complexité",
+        "impact": "high",
+        "mitigation": "Architecture modulaire"
+      }
+    ]
+  },
+  "assumptions": [],
+  "warnings": [],
+  "usage": {
+    "model": "mock-model",
+    "promptTokens": 1200,
+    "completionTokens": 600,
+    "ms": 180,
+    "attempts": 1
+  }
+}

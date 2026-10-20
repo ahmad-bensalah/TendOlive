@@ -1,0 +1,57 @@
+{
+  "last_updated": "2026-10-18",
+  "currency": "USD",
+  "note": "Prices per 1 million tokens. [TO FILL] indicates price not yet known.",
+  "models": {
+    "llama-3.3-70b-versatile": {
+      "provider": "Groq",
+      "input_per_1m": "[TO FILL]",
+      "output_per_1m": "[TO FILL]",
+      "notes": "Fast inference, good for production"
+    },
+    "llama-3.1-70b-versatile": {
+      "provider": "Groq",
+      "input_per_1m": "[TO FILL]",
+      "output_per_1m": "[TO FILL]"
+    },
+    "mixtral-8x7b-32768": {
+      "provider": "Groq",
+      "input_per_1m": "[TO FILL]",
+      "output_per_1m": "[TO FILL]"
+    },
+    "gemma2-9b-it": {
+      "provider": "Groq",
+      "input_per_1m": "[TO FILL]",
+      "output_per_1m": "[TO FILL]",
+      "notes": "Smaller, faster model"
+    },
+    "claude-3-5-sonnet-20241022": {
+      "provider": "Anthropic",
+      "input_per_1m": 3.00,
+      "output_per_1m": 15.00,
+      "notes": "High quality, good for complex reasoning"
+    },
+    "claude-3-5-haiku-20241022": {
+      "provider": "Anthropic",
+      "input_per_1m": 1.00,
+      "output_per_1m": 5.00,
+      "notes": "Fast and economical"
+    },
+    "gpt-4o": {
+      "provider": "OpenAI",
+      "input_per_1m": 2.50,
+      "output_per_1m": 10.00
+    },
+    "gpt-4o-mini": {
+      "provider": "OpenAI",
+      "input_per_1m": 0.15,
+      "output_per_1m": 0.60
+    },
+    "mock-model": {
+      "provider": "Test",
+      "input_per_1m": 0.00,
+      "output_per_1m": 0.00,
+      "notes": "Used in mock mode for testing"
+    }
+  }
+}

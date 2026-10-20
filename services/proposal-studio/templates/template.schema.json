@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Design-only template (templates/library/<id>/template.json)",
+  "type": "object",
+  "required": ["id", "name", "version", "theme", "designs", "zones", "source"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9_-]{1,40}$" },
+    "name": { "type": "string" },
+    "version": { "const": 1 },
+    "approximate": { "type": "boolean" },
+    "source": { "type": "object", "required": ["filename", "type", "sha256", "slideCount"],
+                "properties": { "type": { "enum": ["pptx", "pdf"] } } },
+    "importedAt": { "type": "string" },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "theme": { "type": "object", "required": ["bg", "primary", "secondary", "text", "fontHeading", "fontBody", "background"] },
+    "designs": { "type": "object", "required": ["title", "content", "thankyou"],
+                 "additionalProperties": { "type": "array", "items": { "type": "object",
+                   "required": ["type", "x", "y", "width", "height", "locked", "zIndex"],
+                   "properties": { "type": { "enum": ["shape", "image"] }, "locked": { "const": true },
+                                   "zIndex": { "type": "integer", "maximum": 99 } } } } },
+    "zones": { "type": "object" },
+    "slideRoles": { "type": "object" },
+    "stats": { "type": "object" }
+  },
+  "$defs": { "box": { "type": ["object", "null"], "required": ["x", "y", "w", "h"] } }
+}

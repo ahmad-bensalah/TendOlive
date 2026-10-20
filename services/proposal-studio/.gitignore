@@ -1,0 +1,52 @@
+# Runtime folders (created by the server)
+exports/
+uploads/
+saves/
+screenshots/
+
+# Release archives are built outside the project (../dist/)
+dist/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Local secrets and noise
+.env
+*.log
+.DS_Store
+
+
+# Agent runtime directories
+agents/registry/
+agents/.cache/
+
+# Templates: the library is rebuilt from templates/inbox/ at server start
+templates/library/
+templates/trash/
+templates/settings.json
+# Generation runs and tender trash (runtime)
+generations/
+tenders/trash/
+
+# Agent system
+agents/registry/
+agents/.cache/
+
+# Temporary files
+saves/*.json
+exports/*.pdf
+exports/*.pptx
+screenshots/*.png
+dist/
+__pycache__/
+*.pyc
+
+# Keep structure but ignore content
+!saves/.gitkeep
+!exports/.gitkeep
+!screenshots/.gitkeep
+
+# Except mock diagram images (needed for fixtures)
+!uploads/mock_*.svg

@@ -1,0 +1,279 @@
+{
+  "contract": "olivesoft.proposal-input.v2",
+  "tender_id": "T1vll2ea",
+  "language": "fr",
+  "rank": 1,
+  "run_id": "2026-10-20T05-19-35-615Z",
+  "generated_on": "2026-10-20",
+  "tender": {
+    "title": "Prestations de développement d'agents LLM et services associés",
+    "reference": "T1vll2ea",
+    "issuer": "City'up (972)",
+    "country": "France",
+    "country_code": "FR",
+    "publication_date": "2026-10-06",
+    "deadline": "2026-10-26",
+    "days_to_deadline": 6,
+    "estimated_value": "180000 euros",
+    "cpv": [
+      "72000000"
+    ],
+    "duration": "12 mois",
+    "source": "francemarches",
+    "source_url": "https://www.francemarches.com/appel-offre/3boamp2696703-2026-prestations-developpement-agents?q=Intelligence%20Artificielle",
+    "submission_url": null,
+    "documents_url": null,
+    "description": "Le présent marché a pour objet prestations de conseil, conception, développement, intégration, évolution, optimisation, sécurisation et industrialisation de solutions reposant sur l’intelligence artificielle générative, notamment des agents LLM et des chaînes de génération augmentée par recherche documentaire (RAG).",
+    "lots": [],
+    "award_criteria": []
+  },
+  "analysis": {
+    "relevance_score": 100,
+    "relevance_basis": "fit high (70) + 30 x RAG coverage 1",
+    "fit": "high",
+    "tender_type": "ai_data",
+    "matched_service_lines": [
+      "AI / LLM solutions (chatbots, RAG, document intelligence)"
+    ],
+    "reason": "The tender requests development of agents LLM and RAG chains, which are explicitly covered under AI/LLM solutions.",
+    "proof_quote": "Le présent marché a pour objet prestations de conseil, conception, développement, intégration, évolution, optimisation, sécurisation et industrialisation de solutions reposant sur l’intelligence artificielle générative, notamment des agents LLM et des chaînes de génération augmentée par recherche documentaire (RAG).",
+    "quote_verified": true,
+    "sector": "public sector",
+    "suggested_angle": null,
+    "risks": [
+      "Short deadline: 6 days left"
+    ],
+    "requirements": {
+      "technical": [
+        "LLM agents"
+      ],
+      "team": [],
+      "experience": [],
+      "timeline": "12 mois"
+    }
+  },
+  "buyer_profile": {
+    "name": "City'up (972)",
+    "legal_name": "CITY'UP (CFTU)",
+    "sector": "Public company",
+    "size": "small",
+    "organization_description": "It has published tenders for services including AI agent development and office amenities.",
+    "estimated_revenue": null,
+    "staff": "10-19 employees (registry, 2024)",
+    "website": "https://cityup.mq",
+    "contacts": {
+      "emails": [
+        "cu.commandepublique@cityup.mq"
+      ],
+      "phones": [],
+      "addresses": [
+        "Fort de France, 97200",
+        "19 RUE DE LA LIBERTE 97200 FORT DE FRANCE"
+      ]
+    },
+    "past_digital_projects": [
+      {
+        "title": "CONCEPTION, DEVELOPPEMENT ET MAINTENANCE DEVELOPPEMENT D’APPLICATIONS WEB ET MOBILES",
+        "date": "2026-01-31",
+        "source": "BOAMP"
+      },
+      {
+        "title": "ATTRIBUTION DE MARCHE - INFOGERANCE ET FOURNITURE DE MATERIELS INFORMATIQUES LOTS 2 ET 3",
+        "date": "2024-05-25",
+        "source": "BOAMP"
+      },
+      {
+        "title": "INFOGERANCE ET FOURNITURE DE MATERIELS INFORMATIQUES",
+        "date": "2024-03-16",
+        "source": "BOAMP"
+      }
+    ],
+    "past_winners": [],
+    "key_partners": [],
+    "domain_requirements": [],
+    "research_status": "researched",
+    "enrichment_status": "enriched"
+  },
+  "rag": {
+    "status": "FULL",
+    "data_mode": "company",
+    "coverage_basis": "Recorded capabilities; declarations are not verified document evidence.",
+    "suggested_assets": {
+      "projects": [
+        "olivesoft_Project_GenAI_Content_Agent"
+      ],
+      "team": [
+        "CV_12_Mateo_Silva.pdf"
+      ],
+      "stack": [],
+      "other": []
+    },
+    "assets": [
+      {
+        "asset_id": "olivesoft_Project_GenAI_Content_Agent",
+        "asset_type": "project",
+        "origin": "user_entered",
+        "demo": false,
+        "title": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+        "for": [
+          "R1"
+        ],
+        "weak_for": []
+      },
+      {
+        "asset_id": "CV_12_Mateo_Silva.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Product Owner specialized in AI and Generative AI with a proven track record of turning business ideas into scalable, highimpact solutions. Experienced in AI product strategy, Agile/Scrum leadership, ",
+        "for": [
+          "R1"
+        ],
+        "weak_for": []
+      }
+    ],
+    "team_proposal": null,
+    "knowledge_counts": {
+      "cv": 19,
+      "past_project": 37,
+      "tech_stack": 5,
+      "tool": 4,
+      "client_portfolio": 25,
+      "completed_projects": 31
+    }
+  },
+  "matrix": {
+    "status": "OK",
+    "rows": [
+      {
+        "requirement_id": "R1",
+        "category": "technical",
+        "requirement": "LLM agents",
+        "skill": "LLM agents",
+        "quote": "prestations de développement d'agents LLM et services associés",
+        "mandatory": false,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": 4.02,
+        "origin": "user_entered",
+        "justification_kind": "declaration",
+        "justification": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+          {
+            "asset_id": "olivesoft_Project_GenAI_Content_Agent",
+            "asset_type": "project",
+            "origin": "user_entered",
+            "evidence_kind": "declaration",
+            "title": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+            "snippet": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+            "metadata": null,
+            "proves": true
+          },
+          {
+            "asset_id": "CV_12_Mateo_Silva.pdf",
+            "asset_type": "cv",
+            "origin": "cv_document",
+            "evidence_kind": "document_quote",
+            "title": "Product Owner specialized in AI and Generative AI with a proven track record of turning business ideas into scalable, highimpact solutions. Experienced in AI product strategy, Agile/Scrum leadership, ",
+            "snippet": "% AI & Machine Learning: LLM fine-tuning, Retrieval-Augmented Generation, LangChain, Prompt Engineering",
+            "metadata": null,
+            "proves": true
+          }
+        ],
+        "closest_asset": null
+      }
+    ],
+    "summary": {
+      "fit_score": 100,
+      "rag_overall": 50,
+      "by_category": {
+        "technical": 100,
+        "team": null,
+        "experience": null
+      },
+      "covered": 1,
+      "partial": 0,
+      "gaps": 0,
+      "gaps_list": [],
+      "mandatory_gaps": [],
+      "obligations_not_in_matrix": [],
+      "coverage": 1,
+      "blocking": [],
+      "demo_evidence": [],
+      "knowledge_gaps": [
+        {
+          "requirement_id": null,
+          "requirement": "Domain fit (public sector)",
+          "category": "domain",
+          "mandatory": false,
+          "kind": "project",
+          "gap": "No completed project in the public sector, so domain fit is 0.",
+          "suggestion": "Add a completed project record in Knowledge base > Projects. Set its sector to 'public'."
+        }
+      ],
+      "recommendation": "bid",
+      "recommendation_reason": "every requirement is covered by internal evidence"
+    }
+  },
+  "competition": {
+    "status": "NO_DATA",
+    "detail": "no_data",
+    "declared_value": "180000 euros",
+    "declared_value_amount": 180000,
+    "declared_value_range": null,
+    "budget_estimate": null,
+    "competitors": [],
+    "median_bids": null,
+    "positioning": null,
+    "budget_comment": null,
+    "comparables": []
+  },
+  "options": {
+    "template_id": null,
+    "formats": [
+      "pptx",
+      "pdf"
+    ],
+    "sections": [
+      "context",
+      "understanding",
+      "solution",
+      "team",
+      "references",
+      "timeline",
+      "pricing",
+      "why_us"
+    ],
+    "overrides": {
+      "tone": "formal",
+      "max_slides": 15,
+      "gap_strategy": "mitigate"
+    }
+  },
+  "company": {
+    "name": "OliveSoft",
+    "services": [
+      "web and mobile applications, custom software and digital platforms",
+      "AI / LLM solutions (chatbots, RAG, document intelligence)",
+      "workflow automation and RPA",
+      "data platforms, integration and BI / analytics",
+      "CRM and enterprise software integration"
+    ],
+    "technologies": [
+      "Python",
+      "JavaScript/TypeScript",
+      "React",
+      "Node.js",
+      "PostgreSQL",
+      "cloud",
+      "LLM",
+      "RAG",
+      "machine learning",
+      "n8n",
+      "Power BI",
+      "Salesforce"
+    ]
+  }
+}

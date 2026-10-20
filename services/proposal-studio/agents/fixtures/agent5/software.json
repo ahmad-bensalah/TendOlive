@@ -1,0 +1,110 @@
+{
+  "agent": "credibility",
+  "ok": true,
+  "slides": [
+    {
+      "id": "s4",
+      "type": "content",
+      "title": "Nos atouts",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Équipe certifiée ISO 27001 et RGAA",
+            "12 ingénieurs spécialisés en architecture sécurisée",
+            "3 projets similaires livrés avec succès"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "Differentiators based on input facts",
+      "warnings": []
+    },
+    {
+      "id": "s6",
+      "type": "content",
+      "title": "Équipe et gouvernance",
+      "blocks": [
+        {
+          "kind": "table",
+          "columns": ["Rôle", "Effectif"],
+          "rows": [
+            ["Backend", "5"],
+            ["Frontend", "4"],
+            ["DevOps", "2"],
+            ["PM", "1"]
+          ]
+        },
+        {
+          "kind": "bullets",
+          "items": [
+            "Chef de projet dédié et comité de pilotage",
+            "Points hebdomadaires et revues bimensuelles",
+            "Livraison incrémentale avec validation client"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "Team composition from input, governance proposal generic",
+      "warnings": [],
+      "assumptions": ["Governance proposal: weekly meetings, bi-weekly reviews, incremental delivery"]
+    },
+    {
+      "id": "s7",
+      "type": "content",
+      "title": "Références pertinentes",
+      "blocks": [
+        {
+          "kind": "cards",
+          "cards": [
+            {
+              "title": "Portail Démarches Région Démo",
+              "text": "Client: Conseil Régional Imaginaire. Résultat: Plateforme déployée avec succès. Technologies: Python, FastAPI, React."
+            },
+            {
+              "title": "Guichet Unique Associatif Virtuel",
+              "text": "Client: Métropole Fictive du Sud. Résultat: Interface unifiée opérationnelle. Technologies: Python, Django, Vue.js."
+            }
+          ]
+        }
+      ],
+      "notes": "Top 2 projects from ranking",
+      "warnings": []
+    },
+    {
+      "id": "s8",
+      "type": "content",
+      "title": "Support et SLA",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Support technique [TO FILL: response times]",
+            "Maintenance corrective et évolutive [TO FILL: SLA levels]",
+            "Équipe certifiée ISO 27001 pour sécurité",
+            "Conformité RGAA pour accessibilité"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "SLA values not invented, placeholders used",
+      "warnings": ["SLA levels not provided in input, placeholders used"]
+    }
+  ],
+  "data": {
+    "evidence": [
+      { "claim": "ISO 27001 certified", "source": "match.certifications.list[0]" },
+      { "claim": "12 engineers specialized", "source": "match.engineers.specialized" },
+      { "claim": "3 similar projects", "source": "match.similar_projects.length" }
+    ]
+  },
+  "assumptions": ["Governance proposal: weekly meetings, bi-weekly reviews, incremental delivery"],
+  "warnings": ["SLA levels not provided in input, placeholders used"],
+  "usage": {
+    "model": "mock",
+    "promptTokens": 2000,
+    "completionTokens": 800,
+    "ms": 150,
+    "attempts": 1
+  }
+}

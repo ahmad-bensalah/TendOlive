@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T14:00:00+00:00",
+  "linked_ids": [],
+  "id": "olivesoft_Project_Story_Unified_HR",
+  "type": "past_project",
+  "title": "Unified international HR information system (website success story)",
+  "description": "Centralised HRIS for an international organisation with a MuleSoft integration layer giving real-time, two-way flows between SAP SuccessFactors, Talent Connect and local payroll systems; OliveSoft also runs the platform.",
+  "client": "International organisation (not named)",
+  "company_role": "Integration design and delivery (15+ MuleSoft applications), CI/CD, continuous testing, hyper-care, then Run phase (monitoring, access control, updates).",
+  "scope": "SAP SuccessFactors, Talent Connect, local payroll systems, MuleSoft, CI/CD pipeline.",
+  "technologies": [
+    "mulesoft",
+    "sap successfactors",
+    "talent connect",
+    "ci/cd"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "More than 15 MuleSoft applications in production; run phase managed by OliveSoft.",
+  "source": "https://www.olivesoft.fr/en/article/building-unified-hr-solution-seamless-employee-management (published 19 June 2025)"
+}

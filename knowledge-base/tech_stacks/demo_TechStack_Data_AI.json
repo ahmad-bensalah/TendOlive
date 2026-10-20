@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "demo_TechStack_Data_AI",
+  "type": "tech_stack",
+  "title": "OliveSoft Data and AI Stack",
+  "description": "Data and AI offering: Python, Airflow, Power BI dashboards, LLMs, RAG and vector databases.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [],
+  "technologies": [
+    "airflow",
+    "azure",
+    "dashboard",
+    "dbt",
+    "langchain",
+    "llm",
+    "postgresql",
+    "power bi",
+    "python",
+    "rag",
+    "sql"
+  ],
+  "use_cases": "National health analytics dashboard, Telecom RAG chatbot."
+}

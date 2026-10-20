@@ -1,0 +1,425 @@
+{
+  "id": "RfpRefineSlide01",
+  "name": "RFP - Refine Slide",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Refine one slide with an instruction (Human-in-the-Loop)\n**Refine request** = POST `/webhook/cstam/refine-slide` `{deckId, slideIndex, instruction}` from the CSTAM interface (close the deck editor first: it saves the whole deck every 10 s). **Regenerate with instruction** calls the deck agents' regenerate webhook (the teammate's \"RFP 60\", credential RegenWebhook): the agent that owns the slide runs again with the instruction, code still checks the facts. **Save slide** writes the new slide through the studio's slide route (credential \"Proposal Studio key\"): validated and laid out with the deck's theme, like the editor's Regenerate. Answer: 200 `{status: \"ok\", slideIndex, title, warnings}` or `{status: \"error\", message}` (400 / 404 / 502 / 503 / 504).",
+        "height": 240,
+        "width": 2460,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -200
+      ],
+      "id": "fa89fc36-8737-4a54-a8e3-8901f6301ce5",
+      "name": "Note - Refine"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cstam/refine-slide",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "http://localhost:5173,http://127.0.0.1:5173"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "id": "4061258c-c94c-4238-a9cb-f411b6dacd7e",
+      "name": "Refine request",
+      "webhookId": "a0f2f91a-f39f-4351-afc3-11dca3358d2a"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================================\n// Refine Slide: Check request. A sales person prompt-edits ONE slide of a deck (Human-in-the-Loop AI refinement):\n// body {deckId, slideIndex, instruction} from the CSTAM interface. slideIndex = the slide's place in the studio's editor,\n// 0-based, the same index the studio's own Regenerate button sends (0 = title slide; the last slide is the closing one:\n// both are fixed). A bad request is answered 400 here, before any agent or studio call.\n// ============================================================================\n// where the two services are, as seen from inside n8n\nconst REGENERATE_URL = 'http://127.0.0.1:5678/webhook/rfp/regenerate';   // the deck agents' \"RFP 60 Regenerate one slide\", same n8n (not localhost: IPv6 first)\nconst STUDIO_URL = 'http://host.docker.internal:8091';                   // the proposal studio (Main's Config STUDIO_URL)\nconst MIN_CHARS = 3, MAX_CHARS = 200;                                     // the agents keep at most 200 characters of an instruction\n\nconst raw = $input.first().json.body;\nlet req = raw;\nif (typeof raw === 'string') { try { req = JSON.parse(raw); } catch (e) { req = null; } }   // sent as text/plain\nif (!req || typeof req !== 'object' || Array.isArray(req)) req = {};\nconst bad = message => [{ json: { _ok: false, statusCode: 400, body: { status: 'error', message } } }];\n\nconst deckId = typeof req.deckId === 'string' ? req.deckId.trim() : '';\nif (!/^[A-Za-z0-9_-]{1,64}$/.test(deckId)) return bad('deckId is missing or invalid (letters, digits, _ and -, at most 64).');\nconst n = typeof req.slideIndex === 'string' && /^\\s*\\d+\\s*$/.test(req.slideIndex) ? Number(req.slideIndex) : req.slideIndex;\nif (n === 0) return bad('The title slide cannot be refined.');\nif (!Number.isInteger(n) || n < 1 || n > 999) return bad('slideIndex must be a whole number from 1 (0 is the title slide).');\nconst instruction = typeof req.instruction === 'string' ? req.instruction.replace(/\\s+/g, ' ').trim() : '';\nif (instruction.length < MIN_CHARS) return bad(`Write an instruction of at least ${MIN_CHARS} characters.`);\nif (instruction.length > MAX_CHARS) return bad(`The instruction is too long (${instruction.length} characters, at most ${MAX_CHARS}).`);\n\nreturn [{ json: { _ok: true, deckId, slideIndex: n, instruction, regenerateUrl: REGENERATE_URL, studioUrl: STUDIO_URL,\n  saveUrl: `${STUDIO_URL}/api/decks/${deckId}/slides/${n}`, deckUrl: `${STUDIO_URL}/api/save/${deckId}` } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ],
+      "id": "26eaf772-6773-487b-a772-49c54c61b631",
+      "name": "Check request",
+      "notes": "deckId, slideIndex (1 or more: 0 is the title slide), instruction of 3 to 200 characters; else 400. REGENERATE_URL and STUDIO_URL at its top."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3b963e6a-7e72-4962-a2e3-de4e95279c12",
+              "leftValue": "={{ $json._ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        300
+      ],
+      "id": "e500f93d-33f8-48a8-ae7c-b33ef5c3bd46",
+      "name": "Request OK?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.regenerateUrl }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ deckId: $json.deckId, slideIndex: $json.slideIndex, instruction: $json.instruction }) }}",
+        "options": {
+          "timeout": 90000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        660,
+        220
+      ],
+      "id": "0f08bc4c-5ef2-47a8-a1b2-a9f6c430cb3c",
+      "name": "Regenerate with instruction",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "rfpRegenWebhook1",
+          "name": "RegenWebhook"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "POST {deckId, slideIndex, instruction} to the deck agents' regenerate webhook (RFP 60, credential RegenWebhook): one slide spec, or 400 / 404. Timeout 90 s, every HTTP status read by Check slide."
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================================\n// Refine Slide: Check slide. The answer of the deck agents' regenerate webhook (full HTTP response, never thrown):\n//   200 = ONE slide spec: the agent that owns the slide ran its stage again with the instruction (code still checks the\n//         facts), or the CURRENT slide with a last warning \"... : slide inchangée\" (too slow, no slide, invalid answer);\n//   400 = a fixed slide or a bad request, 404 = a deck the agents' registry does not know, other = a failure.\n// Only a new slide goes on to the studio: the current one, or a slide the agent could not make (placeholders), is never\n// saved over the person's slide. The spec's own warnings are kept (the editor shows them).\n// ============================================================================\nconst req = $('Check request').first().json;\nconst r = $input.first().json || {};\nconst fail = (statusCode, message) => [{ json: { _ok: false, statusCode, body: { status: 'error', message } } }];\n\nif (r.error) {                                                   // no HTTP answer at all (On Error: continue)\n  const m = String((r.error && (r.error.message || r.error.description)) || r.error);\n  return /timeout|timed out|ETIMEDOUT|ESOCKETTIMEDOUT/i.test(m) ? fail(504, 'The deck agents took too long to answer (over 90 s). Try again.')\n    : fail(502, 'The deck agents cannot be reached: is \"RFP 60 Regenerate one slide\" published in this n8n?');\n}\nlet body = r.body;\nif (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { /* not JSON: handled below */ } }\nconst code = Number(r.statusCode) || 0;\nconst said = body && typeof body === 'object' && typeof body.message === 'string' ? body.message : '';\n\nif (code === 404 && /unknown deck/i.test(said)) return fail(404, 'This deck was made before the agents ran in n8n: generate it again to refine it.');\nif (code === 404) return fail(502, 'The agents\\' regenerate webhook is not active: publish \"RFP 60 Regenerate one slide\" in n8n, then restart n8n.');\nif (code === 401 || code === 403) return fail(502, 'The agents\\' regenerate webhook refused the key of the \"RegenWebhook\" credential.');\nif (code === 400 && /cannot be regenerated/i.test(said)) {\n  return fail(400, 'This slide cannot be refined: only the content slides written by the agents can (not the title, contents, closing or added slides).');\n}\nif (code === 400) return fail(400, said ? `The agents refused the request: ${said.slice(0, 160)}` : 'The agents refused the request.');\nif (code !== 200) return fail(502, `The deck agents failed (HTTP ${code || '?'})${said ? `: ${said.slice(0, 160)}` : ''}. See the execution of \"RFP 60 Regenerate one slide\" in n8n.`);\n\nconst spec = body && typeof body === 'object' && !Array.isArray(body) ? body : null;\nif (!spec || spec.type !== 'content' || typeof spec.title !== 'string' || !Array.isArray(spec.blocks)) return fail(502, 'The deck agents did not answer with a slide.');\nconst warnings = (Array.isArray(spec.warnings) ? spec.warnings : []).filter(w => typeof w === 'string');\nconst last = warnings[warnings.length - 1] || '';\nif (/slide inchangée\\s*$/i.test(last)) {                         // pipeline.regenerate kept the current slide\n  return /trop longue/i.test(last) ? fail(504, 'The agents took too long (over 45 s): the slide was not changed. Try again.')\n    : fail(502, 'The agents could not rewrite this slide: it was not changed. Try again, or edit it by hand.');\n}\n// a slide the agent could not make is not saved either. Decided from the slide, not from the stage's warnings: the\n// diagrams stage makes the architecture and the plan with two LLM calls and lists the failure of one on every slide\nconst placeholder = (warnings.find(w => /^Diapositive non générée : /.test(w)) || '').replace(/^Diapositive non générée : /, '');\nconst noLlm = warnings.find(w => /LLM indisponible/.test(w)) || '';      // agent 1 or 5: its one call gave nothing usable\nconst svg = b => { const m = /^data:image\\/svg\\+xml;base64,(.+)$/.exec(String(b.src || '')); return m ? Buffer.from(m[1], 'base64').toString('utf8') : ''; };\nconst noDiagram = spec.blocks.some(b => (b.kind === 'image' && / - À compléter<\\/text>/.test(svg(b)))        // empty architecture\n  || (b.kind === 'table' && (b.rows || []).some(row => /^\\[TO FILL: phases/.test(String((row || [])[0])))));  // plan placeholder\nif ((placeholder && !/^mock mode/.test(placeholder)) || noLlm || noDiagram) {    // mock mode (no LLM) is a test: saved\n  const why = [placeholder, noLlm, ...warnings.filter(w => /à compléter\\)$/.test(w))].join(' ');\n  if (/quota|\\b429\\b/i.test(why)) return fail(503, 'The agents\\' LLM is out of quota: the slide was not changed. Try again later.');\n  if (noLlm) return fail(503, 'The agents\\' LLM gave no usable answer (busy or down): the slide was not changed. Try again later.');\n  if (placeholder) return fail(502, `The agents failed on this slide (${placeholder.slice(0, 160)}): it was not changed. Try again, or edit it by hand.`);\n  return fail(502, 'The agents could not redo the diagram or plan of this slide: it was not changed. Try again, change the instruction, or edit it by hand.');\n}\nreturn [{ json: { _ok: true, spec, warnings, saveUrl: req.saveUrl } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        220
+      ],
+      "id": "43ec9102-3a31-4384-a70a-1671f71d482c",
+      "name": "Check slide",
+      "notes": "Only a NEW slide goes on: the current slide kept by the agents (too slow, invalid) or a slide of placeholders (LLM down) is never saved."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2fa77a8f-0ef1-4722-ab05-d31dcda8a1d8",
+              "leftValue": "={{ $json._ok }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1100,
+        220
+      ],
+      "id": "dac3ef3d-948e-4e2c-a571-92f834ae2b47",
+      "name": "Slide OK?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.saveUrl }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.spec) }}",
+        "options": {
+          "timeout": 30000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1320,
+        140
+      ],
+      "id": "e54650f2-6c07-4270-aa94-4d1ffd182dd2",
+      "name": "Save slide",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "StudioKey0000001",
+          "name": "Proposal Studio key"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "POST the slide spec to the studio's /api/decks/<deckId>/slides/<slideIndex> (credential \"Proposal Studio key\"): validated, laid out with the deck's theme and saved, like the editor's Regenerate."
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================================\n// Refine Slide: Answer. The studio's answer to the slide write (POST /api/decks/<id>/slides/<n>: it validates the spec,\n// lays it out with the deck's theme and saves it, exactly like its own Regenerate route) -> the interface's answer:\n// 200 {status: 'ok', slideIndex, title, warnings[]} or {status: 'error', message} with a 4xx / 5xx code.\n// ============================================================================\nconst req = $('Check request').first().json;\nconst ok = $('Check slide').first().json;\nconst r = $input.first().json || {};\nconst fail = (statusCode, message) => [{ json: { statusCode, _prices: false, body: { status: 'error', message } } }];\n\nif (r.error) return fail(502, 'The proposal studio cannot be reached: the slide was not saved.');\nlet body = r.body;\nif (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { /* not JSON: handled below */ } }\nconst code = Number(r.statusCode) || 0;\nconst said = body && typeof body === 'object' ? String(body.message || body.error || '') : '';\nif (code === 401) return fail(502, 'The proposal studio refused the \"Proposal Studio key\" credential: the slide was not saved.');\nif (code === 404) return fail(404, 'This deck is no longer in the proposal studio.');\nif (code === 400 && /out of range/i.test(said)) return fail(400, `This deck has no slide ${req.slideIndex + 1} any more: open the deck again.`);\nif (code === 400) {\n  const why = body && Array.isArray(body.errors) && body.errors.length ? `: ${String(body.errors[0]).slice(0, 160)}` : '';\n  return fail(502, `The proposal studio refused the new slide${why}. The slide was not changed.`);\n}\nif (code !== 200 || !body || body.status !== 'ok') return fail(502, `The proposal studio could not save the slide (HTTP ${code || '?'}${said ? `: ${said.slice(0, 120)}` : ''}).`);\n\n// a slide that holds prices needs a new approval before export, as after the editor's own Regenerate (next nodes)\nreturn [{ json: { statusCode: 200, _prices: !!(body.slide && body.slide.requiresApproval),\n  body: { status: 'ok', slideIndex: req.slideIndex, title: ok.spec.title, warnings: ok.warnings } } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        140
+      ],
+      "id": "1a8470b4-7608-4cad-ae26-4f5586beb3cd",
+      "name": "Answer"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "518ad0c3-f9f9-4ef6-a341-db582a1cb3b7",
+              "leftValue": "={{ $json._prices }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1760,
+        140
+      ],
+      "id": "e626683f-d0dd-4604-af03-89576b0cd444",
+      "name": "Prices on slide?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================================\n// Refine Slide: Reset price approval. The refined slide holds prices (requiresApproval): like the editor after its own\n// Regenerate, the deck's price approval (approvals.pricing) is dropped, so the prices must be approved again before export.\n// The studio's slide route keeps it, so this node reads the deck (GET /api/save/<id>, no key) and writes it back without\n// the approval (POST /api/save) when one is set. Never fatal: the slide is saved already, a failure adds a warning.\n// ============================================================================\nconst req = $('Check request').first().json;\nconst a = $input.first().json;\nconst out = { statusCode: a.statusCode, body: { ...a.body, warnings: [...(a.body.warnings || [])] } };\ntry {\n  const h = (typeof this !== 'undefined' && this && this.helpers) || helpers;   // n8n's HTTP client (the agents use it too)\n  const deck = await h.httpRequest({ method: 'GET', url: req.deckUrl, json: true, timeout: 15000 });\n  // write back only the deck that was read (its id, its slides), never a partial or empty one\n  if (deck && deck.id === req.deckId && Array.isArray(deck.slides) && deck.slides.length && deck.approvals && deck.approvals.pricing) {\n    delete deck.approvals.pricing;\n    delete deck.approvals.at;\n    await h.httpRequest({ method: 'POST', url: `${req.studioUrl}/api/save`, body: deck, json: true, timeout: 15000 });\n    out.body.warnings.push('The prices changed: approve them again in the editor before export.');\n  }\n} catch (e) {\n  out.body.warnings.push('The price approval could not be reset: check the prices and approve them again in the editor.');\n}\nreturn [{ json: out }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        60
+      ],
+      "id": "4b65906b-c7d7-45f6-a517-e4f9167bc481",
+      "name": "Reset price approval",
+      "notes": "Like the editor after its own Regenerate: a refined slide with prices needs a new approval before export."
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json.body) }}",
+        "options": {
+          "responseCode": "={{ $json.statusCode }}"
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2200,
+        300
+      ],
+      "id": "23addf5a-31ef-454a-aadb-d3c8ea8d1efb",
+      "name": "Respond"
+    }
+  ],
+  "connections": {
+    "Refine request": {
+      "main": [
+        [
+          {
+            "node": "Check request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check request": {
+      "main": [
+        [
+          {
+            "node": "Request OK?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request OK?": {
+      "main": [
+        [
+          {
+            "node": "Regenerate with instruction",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Regenerate with instruction": {
+      "main": [
+        [
+          {
+            "node": "Check slide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check slide": {
+      "main": [
+        [
+          {
+            "node": "Slide OK?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slide OK?": {
+      "main": [
+        [
+          {
+            "node": "Save slide",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save slide": {
+      "main": [
+        [
+          {
+            "node": "Answer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer": {
+      "main": [
+        [
+          {
+            "node": "Prices on slide?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prices on slide?": {
+      "main": [
+        [
+          {
+            "node": "Reset price approval",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reset price approval": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}

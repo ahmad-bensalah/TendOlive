@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Databricks_Lakehouse_GCP",
+  "type": "past_project",
+  "title": "GCP data pipelines and Databricks lakehouse",
+  "description": "Leads a team of 6 engineers delivering 15+ production data pipelines on GCP and a Databricks lakehouse with dbt.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Leads a team of 6 engineers delivering 15+ production data pipelines on GCP and a Databricks lakehouse with dbt.",
+  "scope": "GCP pipelines (200+ TB per month), Databricks lakehouse, dbt transformation with automated tests.",
+  "technologies": [
+    "gcp",
+    "databricks",
+    "dbt"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "Query latency -40 %; storage costs -25 %; code reuse +30 %.",
+  "team_cv_ids": [
+    "CV_16_Nora_Ellis.pdf"
+  ],
+  "source": "CV_16_Nora_Ellis.pdf: OliveSoft experience, Data Platform BI Team Lead, Sep 2022 - Present"
+}

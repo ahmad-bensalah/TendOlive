@@ -1,0 +1,31 @@
+{
+  "name": "rfp-deck-studio-agents",
+  "version": "1.0.0",
+  "description": "n8n agent workflows for RFP deck generation",
+  "scripts": {
+    "test": "node --test 'agents/tests/*.test.js'",
+    "test:contracts": "node --test agents/tests/contracts.test.js",
+    "test:input": "node --test agents/tests/input.test.js",
+    "test:llm": "node --test agents/tests/llm.test.js",
+    "test:log": "node --test agents/tests/log.test.js",
+    "test:agent1": "node --test agents/tests/agent1.test.js",
+    "test:agent5": "node --test agents/tests/agent5.test.js",
+    "test:rank": "node --test agents/tests/rank.test.js",
+    "test:diagrams": "node --test agents/tests/diagrams.test.js",
+    "test:svg": "node --test agents/tests/svg.test.js",
+    "test:adapter": "node --test agents/tests/diagrams_adapter.test.js",
+    "test:contract:diagrams": "node --test agents/tests/contract_diagrams.test.js",
+    "test:budget": "node --test agents/tests/budget.test.js",
+    "test:agent4": "node --test agents/tests/agent4.test.js",
+    "test:contract:agent4": "node --test agents/tests/contract_agent4.test.js",
+    "test:reviewer": "node --test agents/tests/reviewer.test.js",
+    "test:registry": "node --test agents/tests/registry.test.js",
+    "test:platform": "RFP_FAST=1 python3 -m unittest discover tests",
+    "guard": "node agents/tools/guard_check.js",
+    "facts": "node agents/tools/platform_facts.js",
+    "audit:secrets": "node agents/tools/secrets_audit.js"
+  },
+  "keywords": ["rfp", "n8n", "agents", "slides"],
+  "author": "",
+  "license": "UNLICENSED"
+}

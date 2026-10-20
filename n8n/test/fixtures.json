@@ -1,0 +1,173 @@
+{
+ "_info": "Saved web pages and search results served by test/mock_server.js (from the earlier generated repo). Date tokens {{iso+N}} etc. are resolved at serve time.",
+ "pages": {
+  "fixture.test/fr/appels-offres": {
+   "title": "Appels d’offres – Portail Test",
+   "markdown": "[Accueil](https://fixture.test/) [Appels d'offres](https://fixture.test/fr/appels-offres) [Contact](https://fixture.test/contact) [Connexion](https://fixture.test/login)\n\n# Appels d’offres en cours\n\n[![Logo [Ville] Sampleville](https://fixture.test/img/logo-sampleville.png) Développement d'une application mobile de signalement citoyen](https://fixture.test/fr/avis/1001)\nVille de Sampleville — Date limite : {{fr+25}}\n[Lire la suite](https://fixture.test/fr/avis/1001)\n\n[![](https://fixture.test/img/pc.jpg)](https://fixture.test/fr/avis/1002)\n[Fourniture de 200 ordinateurs portables](https://fixture.test/fr/avis/1002)\nLycée Pierre Test — Date limite : {{fr+15}}\n[Lire la suite](https://fixture.test/fr/avis/1002)\n\n[Plateforme de gestion des données patients – AVIS RECTIFICATIF](https://fixture.test/fr/avis/1003)\nCentre Hospitalier Test — Date limite reportée\n[Lire la suite](https://fixture.test/fr/avis/1003)\n\nFiltrer : [Informatique](https://fixture.test/fr/categorie/informatique) [Travaux](https://fixture.test/fr/categorie/travaux) [Trier par date](https://fixture.test/fr/appels-offres?sort=date)\n\n[1](https://fixture.test/fr/appels-offres) [2](https://fixture.test/fr/appels-offres?page=2) [Suivant »](https://fixture.test/fr/appels-offres?page=2)\n\n[Mentions légales](https://fixture.test/mentions) [Facebook](https://facebook.com/portailtest)",
+   "links": [
+    "https://fixture.test/",
+    "https://fixture.test/fr/appels-offres",
+    "https://fixture.test/contact",
+    "https://fixture.test/login",
+    "https://fixture.test/img/logo-sampleville.png",
+    "https://fixture.test/fr/avis/1001",
+    "https://fixture.test/fr/avis/1001",
+    "https://fixture.test/img/pc.jpg",
+    "https://fixture.test/fr/avis/1002",
+    "https://fixture.test/fr/avis/1002",
+    "https://fixture.test/fr/avis/1002",
+    "https://fixture.test/fr/avis/1003",
+    "https://fixture.test/fr/avis/1003",
+    "https://fixture.test/fr/categorie/informatique",
+    "https://fixture.test/fr/categorie/travaux",
+    "https://fixture.test/fr/appels-offres?sort=date",
+    "https://fixture.test/fr/appels-offres",
+    "https://fixture.test/fr/appels-offres?page=2",
+    "https://fixture.test/fr/appels-offres?page=2",
+    "https://fixture.test/mentions",
+    "https://facebook.com/portailtest"
+   ]
+  },
+  "fixture.test/fr/appels-offres?page=2": {
+   "title": "Appels d’offres – page 2",
+   "markdown": "[Accueil](https://fixture.test/) [Appels d'offres](https://fixture.test/fr/appels-offres)\n\n# Appels d’offres en cours – page 2\n\n[Développement d'une plateforme numérique de gestion des demandes citoyennes](https://fixture.test/fr/avis/3boamp2690001)\nVille d'Exemple & Agglomération — Date limite : {{fr+20}}\n[Lire la suite](https://fixture.test/fr/avis/3boamp2690001)\n\n[« Précédent](https://fixture.test/fr/appels-offres) [1](https://fixture.test/fr/appels-offres) [2](https://fixture.test/fr/appels-offres?page=2)",
+   "links": [
+    "https://fixture.test/",
+    "https://fixture.test/fr/appels-offres",
+    "https://fixture.test/fr/avis/3boamp2690001",
+    "https://fixture.test/fr/avis/3boamp2690001",
+    "https://fixture.test/fr/appels-offres",
+    "https://fixture.test/fr/appels-offres",
+    "https://fixture.test/fr/appels-offres?page=2"
+   ]
+  },
+  "fixture.test/fr/avis/1001": {
+   "title": "Développement d’une application mobile de signalement citoyen",
+   "markdown": "[Accueil](https://fixture.test/) > [Appels d'offres](https://fixture.test/fr/appels-offres)\n\n# Développement d'une application mobile de signalement citoyen\n\n**Acheteur :** Ville de Sampleville\n**Publié le :** {{fr-2}}\n**Date limite de remise des offres :** {{frl+25}} à 12h00\n**Lieu d'exécution :** Sampleville (France)\n**Code CPV :** 72212000\n\n## Objet\nLa Ville de Sampleville souhaite disposer d’une application mobile permettant aux habitants de signaler des incidents sur l’espace public (voirie, propreté, éclairage) et d’en suivre le traitement. Le marché comprend la conception, le développement, l’hébergement et la maintenance de l’application et de son back-office.\n\n## Exigences\nL’application devra être disponible sur iOS et Android.\nLes données devront être hébergées en France.\nLe candidat devra présenter au moins deux références de projets similaires réalisés pour des collectivités.\nLa durée du marché est de 24 mois à compter de la notification.\n\n## Contact\nService de la commande publique – marches@sampleville.fr – 01 23 45 67 89\n\n[Partager sur Facebook](https://facebook.com/share) [Retour à la liste](https://fixture.test/fr/appels-offres)",
+   "links": [
+    "https://fixture.test/",
+    "https://fixture.test/fr/appels-offres",
+    "https://facebook.com/share",
+    "https://fixture.test/fr/appels-offres"
+   ]
+  },
+  "fixture.test/fr/avis/1002": {
+   "title": "Fourniture de 200 ordinateurs portables",
+   "markdown": "# Fourniture de 200 ordinateurs portables\n\n**Acheteur :** Lycée Pierre Test\n**Date limite :** {{fr+15}}\n\nLe lycée souhaite acquérir 200 ordinateurs portables pour ses élèves, avec housses et garantie de 3 ans. Livraison au lycée.\nContact : intendance@lycee-test.fr",
+   "links": []
+  },
+  "fixture.test/fr/avis/1003": {
+   "title": "Avis rectificatif – Plateforme de gestion des données patients",
+   "markdown": "# AVIS RECTIFICATIF – Plateforme de gestion des données patients\n\n**Acheteur :** Centre Hospitalier Test\n**Publié le :** {{fr-1}}\n\nLe présent avis rectifie l’avis initial publié le {{fr-30}}.\nAncienne date limite de remise des offres : {{fr-1}}\nNouvelle date limite de remise des offres : {{fr+10}}\n\nObjet du marché : mise en place d’une plateforme logicielle de gestion et d’analyse des données patients, interfacée avec le dossier patient informatisé existant.",
+   "links": []
+  },
+  "fixture.test/fr/avis/3boamp2690001": {
+   "title": "Développement d’une plateforme numérique de gestion des demandes citoyennes",
+   "markdown": "# Développement d'une plateforme numérique de gestion des demandes citoyennes\nAcheteur : Ville d'Exemple & Agglomération\nDate limite : {{fr+20}}\nSource : BOAMP 26-90001\nConception, développement et maintenance d’une application web de gestion des demandes citoyennes.",
+   "links": []
+  },
+  "fixture.test/fr/categorie/informatique": {
+   "title": "Catégorie Informatique",
+   "markdown": "# Informatique\nTous les avis de la catégorie informatique publiés sur le portail. Consultez la liste ci-dessous et utilisez les filtres pour affiner votre recherche par acheteur, par département ou par date de publication.\n[Développement d'une application mobile de signalement citoyen](https://fixture.test/fr/avis/1001)\n[Plateforme de gestion des données patients – AVIS RECTIFICATIF](https://fixture.test/fr/avis/1003)\n[Retour](https://fixture.test/fr/appels-offres)",
+   "links": [
+    "https://fixture.test/fr/avis/1001",
+    "https://fixture.test/fr/avis/1003",
+    "https://fixture.test/fr/appels-offres"
+   ]
+  },
+  "fixture.test/ar/tenders": {
+   "title": "طلبات العروض",
+   "markdown": "[الرئيسية](https://fixture.test/ar) [طلبات العروض](https://fixture.test/ar/tenders) [اتصل بنا](https://fixture.test/ar/contact)\n\n# طلبات العروض\n\n### [طلب عروض لرقمنة خدمات الحالة المدنية وتطوير منصة إلكترونية](https://fixture.test/ar/tender/2001)\nبلدية النموذج — آخر أجل: {{ar+18}}\n[إقرأ المزيد](https://fixture.test/ar/tender/2001)\n\n### [كراء أرض فلاحية على ملك البلدية](https://fixture.test/ar/tender/2002)\nبلدية النموذج — آخر أجل: {{ar+9}}\n[إقرأ المزيد](https://fixture.test/ar/tender/2002)\n\n### [بيع صابة الزيتون لموسم 2026](https://fixture.test/ar/tender/2003)\nبلدية النموذج — آخر أجل: {{ar+7}}\n[إقرأ المزيد](https://fixture.test/ar/tender/2003)\n\n## مقالات ذات صلة\n[افتتاح السوق الأسبوعية](https://fixture.test/ar/news/77) [حملة نظافة](https://fixture.test/ar/news/78)",
+   "links": [
+    "https://fixture.test/ar",
+    "https://fixture.test/ar/tenders",
+    "https://fixture.test/ar/contact",
+    "https://fixture.test/ar/tender/2001",
+    "https://fixture.test/ar/tender/2001",
+    "https://fixture.test/ar/tender/2002",
+    "https://fixture.test/ar/tender/2002",
+    "https://fixture.test/ar/tender/2003",
+    "https://fixture.test/ar/tender/2003",
+    "https://fixture.test/ar/news/77",
+    "https://fixture.test/ar/news/78"
+   ]
+  },
+  "fixture.test/ar/tender/2001": {
+   "title": "طلب عروض لرقمنة خدمات الحالة المدنية",
+   "markdown": "# طلب عروض لرقمنة خدمات الحالة المدنية وتطوير منصة إلكترونية إقرأ المزيد\n\nتعلن بلدية النموذج عن طلب عروض لرقمنة خدمات الحالة المدنية وتطوير منصة إلكترونية تمكن المواطنين من طلب المضامين عن بعد.\nتاريخ النشر: {{ar-3}}\nآخر أجل لقبول العروض: {{ar+18}} على الساعة العاشرة صباحا\nيشمل المشروع تطوير المنصة وربطها بقاعدة البيانات الحالية وتكوين الأعوان.\nيجب أن تكون المنصة باللغتين العربية والفرنسية.\nللاتصال: الهاتف 71 000 111 ، البريد الإلكتروني: marches@commune-namudhaj.tn\n\n## مقالات ذات صلة\n[افتتاح السوق الأسبوعية](https://fixture.test/ar/news/77) — حملة نظافة شاملة بالأحياء\nشارك: [فيسبوك](https://facebook.com/share)",
+   "links": [
+    "https://fixture.test/ar/news/77",
+    "https://facebook.com/share"
+   ]
+  },
+  "fixture.test/ar/tender/2002": {
+   "title": "كراء أرض فلاحية",
+   "markdown": "# كراء أرض فلاحية على ملك البلدية\n\nتعلن بلدية النموذج عن كراء قطعة أرض فلاحية مساحتها 5 هكتارات عن طريق طلب العروض.\nآخر أجل: {{ar+9}}",
+   "links": []
+  },
+  "fixture.test/ar/tender/2003": {
+   "title": "بيع صابة الزيتون",
+   "markdown": "# بيع صابة الزيتون لموسم 2026\n\nتعلن بلدية النموذج عن بيع صابة الزيتون بالمزاد. آخر أجل: {{ar+7}}",
+   "links": []
+  },
+  "fixture.test/en/notice/ai-chatbot": {
+   "title": "RFP – AI chatbot for citizen services",
+   "markdown": "[Home](https://fixture.test/en) [Procurement](https://fixture.test/en/procurement) [News](https://fixture.test/en/news)\n\n# Request for Proposals: AI chatbot for citizen services\n\nIssued by: Ministry of Example Affairs\nPublication date: {{en-5}}\nClosing date for proposals: {{en+21}}\n\nThe Ministry invites qualified firms to design, build and operate an AI-powered chatbot answering citizen questions in Arabic, French and English, integrated with the ministry website and its document base.\nThe solution must be hosted in-country. Bidders shall provide two references of conversational AI projects.\nQuestions: procurement@ministry-example.tn\n\n## Related notices\n[Supply of office furniture](https://fixture.test/en/notice/furniture) [Cleaning services](https://fixture.test/en/notice/cleaning)",
+   "links": [
+    "https://fixture.test/en",
+    "https://fixture.test/en/procurement",
+    "https://fixture.test/en/news",
+    "https://fixture.test/en/notice/furniture",
+    "https://fixture.test/en/notice/cleaning"
+   ]
+  },
+  "sampleville.fr": {
+   "title": "Ville de Sampleville - Site officiel",
+   "markdown": "# Bienvenue à Sampleville\nSampleville, 12 000 habitants. [Démarches](https://www.sampleville.fr/demarches) [Nous contacter](https://www.sampleville.fr/contact)\nPartenaire : [Région Voisine](https://region-voisine.example)",
+   "links": [
+    "https://www.sampleville.fr/demarches",
+    "https://www.sampleville.fr/contact",
+    "https://region-voisine.example"
+   ]
+  },
+  "sampleville.fr/contact": {
+   "title": "Contact",
+   "markdown": "# Contact\nHôtel de ville, 1 place de la Mairie, 99000 Sampleville. Tél. 01 23 45 67 00 — accueil@sampleville.fr",
+   "links": []
+  },
+  "fixture.test": {
+   "title": "Portail Test – Accueil",
+   "markdown": "[Accueil](https://fixture.test/) [Actualités](https://fixture.test/actualites) [Marchés publics](https://fixture.test/fr/marches) [Annuaire](https://fixture.test/annuaire) [Contact](https://fixture.test/contact) [Connexion](https://fixture.test/login)\n\n# Bienvenue sur le Portail Test\n\nLe portail des collectivités et établissements publics de la région Test : actualités, démarches et commande publique.\n\n## À la une\n\n[Inauguration de la nouvelle médiathèque de Sampleville](https://fixture.test/actualites/mediatheque)\nPublié le 12 octobre — La ville a ouvert ses portes au public samedi.\n\n[Résultats du budget participatif 2026](https://fixture.test/actualites/budget-participatif)\nPublié le 3 octobre — 14 projets retenus par les habitants.\n\n## Accès rapides\n\n[Démarches en ligne](https://fixture.test/demarches) [Offres d'emploi](https://fixture.test/emploi) [Plan du site](https://fixture.test/plan)\n\n[Mentions légales](https://fixture.test/mentions) [Facebook](https://facebook.com/portailtest)"
+  },
+  "fixture.test/fr/marches": {
+   "title": "Marchés publics – Portail Test",
+   "markdown": "[Accueil](https://fixture.test/) [Actualités](https://fixture.test/actualites) [Marchés publics](https://fixture.test/fr/marches) [Contact](https://fixture.test/contact)\n\n# Marchés publics\n\nRetrouvez ici toute la commande publique des acheteurs de la région : consultations ouvertes, résultats et documentation.\n\n- [Appels d'offres en cours](https://fixture.test/fr/appels-offres)\n- [Avis d'attribution](https://fixture.test/fr/attributions)\n- [Archives des consultations](https://fixture.test/fr/archives)\n- [Guide du soumissionnaire](https://fixture.test/fr/guide)\n- [S'inscrire aux alertes](https://fixture.test/fr/alertes)\n\n[Mentions légales](https://fixture.test/mentions)"
+  }
+ },
+ "search": {
+  "ville de sampleville": [
+   {
+    "url": "https://www.sampleville.fr/",
+    "title": "Ville de Sampleville - Site officiel",
+    "description": "Mairie de Sampleville, démarches en ligne, actualités."
+   },
+   {
+    "url": "https://fixture.test/fr/avis/1001",
+    "title": "Ville de Sampleville : application mobile",
+    "description": "Appel d’offres"
+   },
+   {
+    "url": "https://annuaire-mairies.example/sampleville",
+    "title": "Mairie Sampleville horaires",
+    "description": "Annuaire"
+   }
+  ],
+  "ministry of example affairs": [
+   {
+    "url": "https://news.example.com/ministry",
+    "title": "Minister visits region",
+    "description": "News article"
+   }
+  ]
+ }
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Salesforce_DataCloud_Loyalty",
+  "type": "past_project",
+  "title": "Salesforce Data Cloud customer profile and loyalty programme",
+  "description": "Deployed Salesforce Data Cloud streams unifying 200 k+ customer records, an Einstein Discovery customer profile, segmentation and a loyalty programme.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Deployed Salesforce Data Cloud streams unifying 200 k+ customer records, an Einstein Discovery customer profile, segmentation and a loyalty programme.",
+  "scope": "Data Cloud streams, Unified Customer Profile, rule-based segmentation for 5 market segments, Loyalty Management.",
+  "technologies": [
+    "salesforce",
+    "salesforce data cloud",
+    "einstein discovery"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "Data latency from 12 h to under 30 min; cross-sell conversion +15 %; repeat purchases +12 %.",
+  "team_cv_ids": [
+    "CV_06_Ethan_Brooks.pdf"
+  ],
+  "source": "CV_06_Ethan_Brooks.pdf: OliveSoft experience, Data Engineer, Feb 2026 - Present"
+}

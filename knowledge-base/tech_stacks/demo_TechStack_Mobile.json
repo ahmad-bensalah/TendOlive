@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "demo_TechStack_Mobile",
+  "type": "tech_stack",
+  "title": "OliveSoft Mobile Stack",
+  "description": "Mobile offering: Flutter and React Native with Firebase.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [],
+  "technologies": [
+    "flutter",
+    "mobile development",
+    "react native"
+  ],
+  "use_cases": "mobile banking app."
+}

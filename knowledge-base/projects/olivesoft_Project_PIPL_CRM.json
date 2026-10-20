@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_PIPL_CRM",
+  "type": "past_project",
+  "title": "CRM roll-out compliant with China's PIPL law",
+  "description": "Rolled out a CRM solution compliant with China's PIPL privacy law.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Rolled out a CRM solution compliant with China's PIPL privacy law.",
+  "scope": "CRM roll-out with data-privacy compliance for more than 200 k customer records.",
+  "technologies": [
+    "crm"
+  ],
+  "delivery_status": "completed",
+  "team_cv_ids": [
+    "CV_04_Noah_Bennett.pdf"
+  ],
+  "source": "CV_04_Noah_Bennett.pdf: OliveSoft experience, Product Owner / Delivery Manager, Jul 2023 - Present"
+}

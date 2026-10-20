@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "demo_Tool_RAG_Accelerator",
+  "type": "tool",
+  "title": "Tender RAG accelerator (fictional)",
+  "description": "Fictional sample: an internal accelerator for retrieval-augmented generation assistants.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "tool_kind": "internal_accelerator",
+  "technologies": [
+    "rag",
+    "llm",
+    "python"
+  ],
+  "use_cases": "Document question answering and tender analysis.",
+  "source": "Fictional sample for Demo mode"
+}

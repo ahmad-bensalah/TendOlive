@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "demo_Project_PublicAgency_SecuritySoftware",
+  "type": "past_project",
+  "title": "Public Agency - Security Software Procurement (2022)",
+  "description": "Supply and deployment of IT security software (antivirus, EDR, firewall management) for a public agency.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [],
+  "client": "public agency",
+  "sector": "public",
+  "scope": "acquisition and licensing of security software: endpoint protection (EDR), antivirus, firewall management console, vulnerability scanner; installation and staff training.",
+  "company_role": "Supply and deployment of IT security software (antivirus, EDR, firewall management) for a public agency.",
+  "technologies": [
+    "security software",
+    "training"
+  ],
+  "delivery_status": "completed",
+  "year": 2022,
+  "outcomes": ""
+}

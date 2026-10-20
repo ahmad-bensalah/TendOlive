@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_VM_Containerisation",
+  "type": "past_project",
+  "title": "Legacy VM migration to Docker Swarm",
+  "description": "Migrated legacy VMs to Docker containers, consolidating 20 servers into a 5-node Swarm, and automated OS patching with Ansible.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Migrated legacy VMs to Docker containers, consolidating 20 servers into a 5-node Swarm, and automated OS patching with Ansible.",
+  "scope": "VM to container migration, Docker Swarm cluster, Ansible playbooks for patching 150+ servers.",
+  "technologies": [
+    "docker",
+    "ansible"
+  ],
+  "delivery_status": "completed",
+  "year": 2024,
+  "outcomes": "25 % infrastructure cost saving; mean-time-to-patch reduced by 48 h.",
+  "team_cv_ids": [
+    "CV_01_Ava_Thompson.pdf"
+  ],
+  "source": "CV_01_Ava_Thompson.pdf: OliveSoft experience, Cloud Infrastructure Engineer Intern, Feb 2024 - Aug 2024"
+}

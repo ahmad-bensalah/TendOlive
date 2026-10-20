@@ -1,0 +1,122 @@
+{
+  "agent": "credibility",
+  "ok": true,
+  "slides": [
+    {
+      "id": "s4",
+      "type": "content",
+      "title": "Nos atouts",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Expertise avérée sur les portails publics à fort trafic",
+            "Certifications ISO 27001, SecNumCloud et Qualiopi",
+            "12 ingénieurs spécialisés en architecture cloud",
+            "Méthodologie agile garantissant livraison en 3 mois"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "Differentiators based only on input data, injected claims ignored",
+      "warnings": []
+    },
+    {
+      "id": "s6",
+      "type": "content",
+      "title": "Équipe et gouvernance",
+      "blocks": [
+        {
+          "kind": "table",
+          "columns": ["Rôle", "Effectif"],
+          "rows": [
+            ["Backend", "4"],
+            ["Frontend", "3"],
+            ["DevOps", "2"],
+            ["PM", "2"],
+            ["QA", "1"]
+          ]
+        },
+        {
+          "kind": "bullets",
+          "items": [
+            "Chef de projet dédié et comité de pilotage",
+            "Sprints de 2 semaines avec démonstrations",
+            "Livraison incrémentale avec validation usager"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "Team from input, governance is generic proposal",
+      "warnings": [],
+      "assumptions": ["Governance: bi-weekly sprints with demos, incremental delivery with user validation"]
+    },
+    {
+      "id": "s7",
+      "type": "content",
+      "title": "Références pertinentes",
+      "blocks": [
+        {
+          "kind": "cards",
+          "cards": [
+            {
+              "title": "Portail Démarches Région Démo",
+              "text": "Client: Conseil Régional Imaginaire. 40 démarches numériques pour 1.2 million d'usagers. Technologies: Python, FastAPI, React. 2025."
+            },
+            {
+              "title": "Plateforme d'Identité Citoyenne Pilote",
+              "text": "Client: Agence Fictive de Transformation Publique. Interopérabilité avec 15 téléservices sans incident de sécurité. Technologies: Go, OpenID Connect. 2024."
+            },
+            {
+              "title": "Guichet Unique Associatif Virtuel",
+              "text": "Client: Métropole Fictive du Sud. Réduction de 45% des délais et conformité RGAA 100%. Technologies: Python, Django, Vue.js. 2024."
+            }
+          ]
+        }
+      ],
+      "notes": "Top 3 projects from ranking, no injected content",
+      "warnings": []
+    },
+    {
+      "id": "s8",
+      "type": "content",
+      "title": "Support et SLA",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Support technique [TO FILL: response times]",
+            "Maintenance corrective et évolutive [TO FILL: SLA levels]",
+            "Certifications ISO 27001 et SecNumCloud pour sécurité",
+            "Conformité RGAA pour accessibilité numérique"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "SLA values not invented, placeholders used",
+      "warnings": ["SLA response times not provided in input"]
+    }
+  ],
+  "data": {
+    "evidence": [
+      { "claim": "Expertise portails publics", "source": "match.why_us[0]" },
+      { "claim": "ISO 27001", "source": "match.certifications.list[0]" },
+      { "claim": "SecNumCloud", "source": "match.certifications.list[1]" },
+      { "claim": "12 ingénieurs spécialisés", "source": "match.engineers.specialized" },
+      { "claim": "Livraison en 3 mois", "source": "match.why_us[3]" }
+    ]
+  },
+  "assumptions": [
+    "Governance: bi-weekly sprints with demos, incremental delivery with user validation"
+  ],
+  "warnings": [
+    "SLA response times not provided in input"
+  ],
+  "usage": {
+    "model": "mock",
+    "promptTokens": 2500,
+    "completionTokens": 950,
+    "ms": 190,
+    "attempts": 1
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "last_updated": "2026-10-20",
+  "currency": "EUR",
+  "daily_rates": {
+    "backend": 250,
+    "frontend": 230,
+    "devops": 280,
+    "pm": 300,
+    "designer": 220,
+    "qa": 200
+  },
+  "cloud": {
+    "app_server_month": 40,
+    "database_month": 60,
+    "storage_gb_month": 0.02
+  },
+  "api": {
+    "llm_input_per_1m_tokens": 0.6,
+    "llm_output_per_1m_tokens": 0.8,
+    "sms_each": 0.06,
+    "email_each": 0.001
+  },
+  "licenses": {
+    "example_saas_user_month": 0
+  },
+  "support_percent_of_build": 0.15,
+  "contingency_percent": 0.1,
+  "margin_percent": 0.15,
+  "workdays_per_week": 5,
+  "status": "estimate"
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_SkillAndYou_GCP_Data_Platform",
+  "type": "past_project",
+  "title": "GCP data platform for Skill and You",
+  "description": "Industrialised and automated the data platform on GCP with dbt, Terraform, Airbyte and Cloud Run, migrating 15+ sources to BigQuery.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [
+    "olivesoft_client_Skill_and_You"
+  ],
+  "client": "Skill and You",
+  "sector": "education",
+  "company_role": "Industrialised and automated the data platform on GCP with dbt, Terraform, Airbyte and Cloud Run, migrating 15+ sources to BigQuery.",
+  "scope": "BigQuery architecture, dbt models, Braze customer-data pipelines, churn-risk scoring, operational dashboards.",
+  "technologies": [
+    "gcp",
+    "bigquery",
+    "dbt",
+    "terraform",
+    "airbyte",
+    "python"
+  ],
+  "delivery_status": "ongoing",
+  "outcomes": "Manual effort -70 %; BigQuery scan costs -50 %.",
+  "team_cv_ids": [
+    "CV_15_Zoe_Walker.pdf"
+  ],
+  "source": "CV_15_Zoe_Walker.pdf: experience entry 'Data Engineer, Skill and You, Oct 2024 - Present' under the client name; Skill and You is listed as an OliveSoft client on https://www.olivesoft.fr/en."
+}

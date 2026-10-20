@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T14:00:00+00:00",
+  "linked_ids": [],
+  "id": "olivesoft_Project_Story_AI_Forecasting_Dashboards",
+  "type": "past_project",
+  "title": "AI-powered forecasting dashboards and integration (website success story)",
+  "description": "Centralised data from the Sage X3 ERP in Google Cloud Storage, built Dataform pipelines and BigQuery analysis, and Power BI dashboards; time-series demand forecasting in an R&D phase.",
+  "client": "Company with supply chain, procurement and production teams (not named)",
+  "company_role": "ERP integration to Google Cloud, data pipelines, analytics and dashboards for sales to finance; forecasting R&D.",
+  "scope": "Sage X3, Google Cloud Storage, Dataform, BigQuery, time-series models, Power BI.",
+  "technologies": [
+    "sage x3",
+    "gcp",
+    "dataform",
+    "bigquery",
+    "machine learning",
+    "power bi"
+  ],
+  "delivery_status": "ongoing",
+  "source": "https://www.olivesoft.fr/en/article/transforming-forecasting-ai-powered-dashboards-and-integration (published 19 June 2025; forecasting described as R&D)"
+}

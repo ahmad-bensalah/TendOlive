@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "demo_Project_Telecom_RAGChatbot",
+  "type": "past_project",
+  "title": "Telecom Operator - RAG Customer Service Chatbot (2024)",
+  "description": "Generative AI chatbot using RAG over product documents for a telecom operator, French and Arabic.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [],
+  "client": "telecom operator",
+  "sector": "telecom",
+  "scope": "LLM assistant answering customer questions from internal documents, vector search, French and Tunisian Arabic support.",
+  "company_role": "Generative AI chatbot using RAG over product documents for a telecom operator, French and Arabic.",
+  "technologies": [
+    "fastapi",
+    "langchain",
+    "llm",
+    "python"
+  ],
+  "delivery_status": "completed",
+  "year": 2024,
+  "outcomes": ""
+}

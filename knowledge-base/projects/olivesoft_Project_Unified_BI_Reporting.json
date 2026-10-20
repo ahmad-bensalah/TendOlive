@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Unified_BI_Reporting",
+  "type": "past_project",
+  "title": "Unified Power BI reporting platform",
+  "description": "Leads a BI team of 4 engineers delivering a unified reporting platform with a Power BI model over 12 source systems.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Leads a BI team of 4 engineers delivering a unified reporting platform with a Power BI model over 12 source systems.",
+  "scope": "Power BI data model consolidating 12 source systems.",
+  "technologies": [
+    "power bi"
+  ],
+  "delivery_status": "ongoing",
+  "outcomes": "Report-generation time cut by 30 %.",
+  "team_cv_ids": [
+    "CV_05_Sofia_Nguyen.pdf"
+  ],
+  "source": "CV_05_Sofia_Nguyen.pdf: OliveSoft experience, Tech Lead - Business Intelligence, May 2026 - Present"
+}

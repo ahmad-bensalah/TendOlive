@@ -1,0 +1,12 @@
+{
+  "company": { "name": "OliveSoft" },
+  "contact": { "name": "", "role": "", "email": "", "phone": "" },
+  "sla": {
+    "levels": [ { "name": "", "response_time": "", "resolution_time": "", "availability": "" } ],
+    "support_hours": "",
+    "maintenance": "",
+    "training": ""
+  },
+  "qr": { "url_template": "" },
+  "language_default": "fr"
+}

@@ -1,0 +1,104 @@
+{
+  "name": "Proposition Cloud & Modernisation SI",
+  "client": "Ministère de la Transition Numérique",
+  "date": "17 Octobre 2026",
+  "language": "fr",
+  "qr_url": "https://rfp-studio.com/dossier/tech-cloud-2026",
+  "theme": {
+    "primary": "#6366f1",
+    "secondary": "#10b981",
+    "background": "#0f172a",
+    "fontHeading": "'Plus Jakarta Sans', sans-serif",
+    "fontBody": "'Inter', sans-serif"
+  },
+  "slides": [
+    {
+      "type": "content",
+      "title": "Architecture Microservices Souveraine",
+      "notes": "Slide d'architecture technique avec diagramme Mermaid pour la validation CCTP.",
+      "warnings": [],
+      "sources": {
+        "mermaid": "graph TD\n  Client[App Web / Mobile] --> Gateway[API Gateway SecNumCloud]\n  Gateway --> Auth[Service IAM & OAuth2]\n  Gateway --> Core[Microservices Métier]\n  Core --> DB[(PostgreSQL Cluster)]",
+        "drawio": "<mxGraphModel><root><mxCell id='0'/><mxCell id='1' parent='0'/></root></mxGraphModel>"
+      },
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Notre architecture garantit l'isolation stricte des données et une scalabilité dynamique conforme au référentiel SecNumCloud."
+        },
+        {
+          "kind": "kpis",
+          "items": [
+            { "label": "Disponibilité SLA", "value": "99.95%" },
+            { "label": "Temps de réponse p95", "value": "< 120ms" },
+            { "label": "Localisation Data", "value": "France 100%" }
+          ]
+        },
+        {
+          "kind": "bullets",
+          "bulletStyle": "check",
+          "items": [
+            "Conteneurisation Kubernetes managée en cluster multi-zones",
+            "Chiffrement AES-256 de bout en bout et gestion des clés via HSM",
+            "Supervision temps réel 24/7 avec observabilité OpenTelemetry"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "title": "Matrice de Conformité aux Exigences CCTP",
+      "notes": "Revue des critères clés d'éligibilité et de performance.",
+      "warnings": [],
+      "sources": {
+        "mermaid": "pie title Conformité CCTP\n  \"100% Conforme\" : 92\n  \"Dépassement\" : 8",
+        "drawio": ""
+      },
+      "blocks": [
+        {
+          "kind": "table",
+          "columns": ["Domaine CCTP", "Exigence Minimale", "Solution Proposée", "Statut"],
+          "rows": [
+            ["Sécurité & HDS", "Certification HDS Niveau 5 requise", "Infrastructures certifiées HDS et ISO 27001", "100% Conforme"],
+            ["Résilience", "RPO < 15 min, RTO < 1h", "RPO < 1 min synchrone, RTO < 15 min automatisé", "Dépassement"],
+            ["API Ouvertes", "Spécification OpenAPI 3.0", "APIs RESTful OpenAPI 3.0 avec portail Swagger", "100% Conforme"],
+            ["Support & Maintenance", "Prise en charge sous 2 heures", "GTI 15 min / GTR 2 heures 24/7", "100% Conforme"]
+          ]
+        },
+        {
+          "kind": "note",
+          "text": "Tous les engagements de service sont assortis de pénalités libératoires contractuelles."
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "title": "Équipe Dédiée & Gouvernance Projet",
+      "notes": "Présentation des 3 profils directeurs du groupement.",
+      "warnings": [],
+      "sources": {
+        "mermaid": "graph LR\n  Dir[Directeur de Projet] --> Arc[Lead Architecte]\n  Dir --> Sec[Expert SSI & DPO]\n  Arc --> Dev[Équipe Réalisation]",
+        "drawio": ""
+      },
+      "blocks": [
+        {
+          "kind": "cards",
+          "cards": [
+            {
+              "title": "Marc Delmas — Directeur Projet",
+              "text": "18 ans d'expérience dans la conduite de projets IT complexes pour le secteur public. Interlocuteur unique du comité de pilotage."
+            },
+            {
+              "title": "Sophie Laurent — Lead Architecte",
+              "text": "Certifiée Kubernetes CKA et Cloud Architect. Concepteur des architectures de 4 plateformes ministérielles souveraines."
+            },
+            {
+              "title": "Karim Benali — RSSI & Expert RGPD",
+              "text": "Auditeur certifié ISO 27001 Lead Implementer, garant de la stricte conformité réglementaire et de la sécurité opérationnelle."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

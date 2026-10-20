@@ -1,0 +1,9 @@
+# Each image is built from its own folder (apps/web, services/rag, services/proposal-studio, n8n), which has its own
+# .dockerignore. This one only applies to a build run from the repository root.
+.git
+.env
+.env.*
+**/node_modules
+**/.venv
+**/__pycache__
+**/*.log

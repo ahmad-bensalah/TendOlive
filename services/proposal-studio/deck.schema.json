@@ -1,0 +1,380 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RFPStudioDeckSpec",
+  "description": "Specification contract for generating RFP Slide Decks from structured agent blocks",
+  "type": "object",
+  "required": [
+    "name",
+    "slides"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "client": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "qr_url": {
+      "type": "string"
+    },
+    "theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "primary": {
+          "type": "string"
+        },
+        "secondary": {
+          "type": "string"
+        },
+        "background": {
+          "type": [
+            "string",
+            "object"
+          ]
+        },
+        "fontHeading": {
+          "type": "string"
+        },
+        "fontBody": {
+          "type": "string"
+        }
+      }
+    },
+    "slides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "title",
+          "blocks"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "content"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "requiresApproval": {
+            "type": "boolean"
+          },
+          "assumptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "catalogDate": {
+            "type": "string"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sources": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mermaid": {
+                "type": "string"
+              },
+              "drawio": {
+                "type": "string"
+              }
+            }
+          },
+          "blocks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "kind"
+              ],
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "text",
+                    "bullets",
+                    "table",
+                    "image",
+                    "cards",
+                    "note",
+                    "kpis"
+                  ]
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "text"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "text"
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "bullets"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "items"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "bullets"
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "bulletStyle": {
+                        "type": "string",
+                        "enum": [
+                          "disc",
+                          "number",
+                          "check"
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "table"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "columns",
+                      "rows"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "table"
+                      },
+                      "rowsPerSlide": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 10
+                      },
+                      "columns": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "rows": {
+                        "type": "array",
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "image"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "src"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "image"
+                      },
+                      "src": {
+                        "type": "string"
+                      },
+                      "caption": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "cards"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "cards"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "cards"
+                      },
+                      "cards": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "title",
+                            "text"
+                          ],
+                          "additionalProperties": false,
+                          "properties": {
+                            "title": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            },
+                            "image": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "note"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "text"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "note"
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "kpis"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "items"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "kpis"
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "label",
+                            "value"
+                          ],
+                          "additionalProperties": false,
+                          "properties": {
+                            "label": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "template": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-z0-9_-]{1,40}$",
+      "description": "Id of a design-only template from templates/library/ (optional)"
+    },
+    "agenda": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 80
+      },
+      "description": "Agenda (sommaire) entries for templates with an agenda page (optional)"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Talend_ADF_Migration",
+  "type": "past_project",
+  "title": "Talend ETL jobs and migration to Azure Data Factory",
+  "description": "Deployed 12 Talend ETL jobs processing more than 15 TB per month and migrated on-premise workflows to Azure Data Factory.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Deployed 12 Talend ETL jobs processing more than 15 TB per month and migrated on-premise workflows to Azure Data Factory.",
+  "scope": "Talend ETL, Azure Data Factory migration, CI/CD in Azure DevOps.",
+  "technologies": [
+    "talend",
+    "azure data factory",
+    "azure devops"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "Pipeline latency -30 %; 25 % cost reduction; release cycle from 2 weeks to 3 days.",
+  "team_cv_ids": [
+    "CV_19_Owen_Parker.pdf"
+  ],
+  "source": "CV_19_Owen_Parker.pdf: OliveSoft experience, Data Engineer, Jul 2023 - Present"
+}

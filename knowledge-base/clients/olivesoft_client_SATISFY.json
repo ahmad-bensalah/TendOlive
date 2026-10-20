@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_client_SATISFY",
+  "type": "client_portfolio",
+  "title": "SATISFY",
+  "description": "SATISFY: Sportswear fashion brand. Industry from public company information; the website lists the name only.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T13:00:00+00:00",
+  "linked_ids": [],
+  "sector": "retail",
+  "relationship": "OliveSoft client.",
+  "source": "https://www.olivesoft.fr/en"
+}

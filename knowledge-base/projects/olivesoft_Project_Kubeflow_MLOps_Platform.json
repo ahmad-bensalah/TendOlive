@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Kubeflow_MLOps_Platform",
+  "type": "past_project",
+  "title": "Kubeflow MLOps platform for the DES unit",
+  "description": "Built a Kubeflow-based MLOps platform and an architecture that lets the DES unit launch MLOps projects faster.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "OliveSoft DES unit (internal)",
+  "company_role": "Built a Kubeflow-based MLOps platform and an architecture that lets the DES unit launch MLOps projects faster.",
+  "scope": "Kubeflow platform, Azure ML vs Kubeflow evaluation on AKS, Triton Inference Server on Knative, model optimisation with TensorRT and ONNX.",
+  "technologies": [
+    "kubeflow",
+    "kubernetes",
+    "azure",
+    "mlops",
+    "onnx",
+    "tensorrt",
+    "triton"
+  ],
+  "delivery_status": "completed",
+  "year": 2025,
+  "outcomes": "GPU utilisation +35 % across 3 projects; MLOps project setup time halved.",
+  "team_cv_ids": [
+    "CV_03_Maya_Patel.pdf"
+  ],
+  "source": "CV_03_Maya_Patel.pdf: OliveSoft experience, MLOps Engineer, Sep 2025 - Dec 2025, and MLOps Engineering Intern, Feb 2025 - Jul 2025"
+}

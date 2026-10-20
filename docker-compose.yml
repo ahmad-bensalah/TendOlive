@@ -1,0 +1,163 @@
+# OliveSoft RFP Intelligence (CSTAM 3.0): the whole system.   cp .env.example .env (fill it in), then: docker compose up -d
+# Host ports (127.0.0.1 only): 5173 web app | 8001 RAG API | 8091 proposal studio | 5679 n8n | 8004 demo tenders
+# Inside the compose network the services call each other by name: rag:8001, proposal-studio:8091, n8n:5678, demo-tenders:8004.
+name: cstam-olivesoft
+
+x-llm: &llm
+  # ONE setting picks the LLM of the whole system (Main's model node + credential AND the deck agents): README "Change the LLM"
+  LLM_PROVIDER: ${LLM_PROVIDER:-groq}
+  LLM_MODEL: ${LLM_MODEL:-}
+  DECK_LLM_PROVIDER: ${DECK_LLM_PROVIDER:-}
+  DECK_LLM_MODEL: ${DECK_LLM_MODEL:-}
+
+services:
+  # ---------------------------------------------------------------- web app (React, nginx; /api, /retrieve, /health -> rag)
+  web:
+    build:
+      context: ./apps/web
+      args:
+        VITE_STUDIO_URL: http://localhost:8091    # called by the BROWSER: host ports
+        VITE_N8N_URL: http://localhost:5679
+    image: cstam-olivesoft/web:local
+    restart: unless-stopped
+    depends_on: [rag]
+    ports: ["127.0.0.1:5173:80"]                  # the origin must stay http://localhost:5173 (RAG CORS, Refine Slide webhook)
+
+  # ---------------------------------------------------------------- RAG service (FastAPI): matching, knowledge base, tender store
+  rag:
+    build: { context: ./services/rag }
+    image: cstam-olivesoft/rag:local
+    restart: unless-stopped
+    environment:
+      RAG_DATA_DIR: /app/data                    # = knowledge-base/ (bind mount below)
+      RAG_TENDERS_FILE: /state/tenders.json      # the tender store n8n fills (POST /retrieve/tender)
+      RAG_DB_DIR: /index/chroma_db               # the vector index: rebuilt at start when the knowledge base or the code changed
+      RAG_CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+      TZ: ${GENERIC_TIMEZONE:-Europe/Paris}
+    volumes:
+      - ./knowledge-base:/app/data               # records added in the web app are written here
+      - rag_state:/state
+      - rag_index:/index
+    ports: ["127.0.0.1:8001:8001"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8001/health', timeout=5).status == 200 else 1)"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 600s                          # the first start builds the index (CPU embeddings)
+
+  # ---------------------------------------------------------------- proposal studio (the teammate's code, unchanged)
+  proposal-studio:
+    build:
+      context: ./services/proposal-studio
+      additional_contexts:
+        n8n: ./n8n                                # n8n/llm.json: the model list follows LLM_PROVIDER
+    image: cstam-olivesoft/proposal-studio:local
+    restart: unless-stopped
+    environment:
+      <<: *llm                                    # only to fill GROQ_MODELS (its model list) with the agents' model
+      STUDIO_API_KEY: ${STUDIO_API_KEY:-}         # required (checked at start)
+      GENERATE_MODE: webhook                      # the deck agents run in n8n
+      GENERATE_WEBHOOK_URL: http://n8n:5678/webhook/rfp/generate
+      REGENERATE_WEBHOOK_URL: http://n8n:5678/webhook/rfp/regenerate
+      GENERATE_WEBHOOK_KEY: ${AGENTS_WEBHOOK_KEY:-}     # required (checked at start)
+      REGENERATE_WEBHOOK_KEY: ${AGENTS_WEBHOOK_KEY:-}
+      PUBLIC_EDITOR_URL: http://localhost:8091
+      MAX_CORRECTION_ROUNDS: "0"
+      TEMPLATES_AUTOIMPORT: "1"                   # templates/inbox (the 2 default templates) imported at start
+      PYTHONUTF8: "1"
+      TZ: ${GENERIC_TIMEZONE:-Europe/Paris}
+    volumes:
+      - studio_saves:/app/studio/saves
+      - studio_tenders:/app/studio/tenders
+      - studio_generations:/app/studio/generations
+      - studio_exports:/app/studio/exports
+      - studio_uploads:/app/studio/uploads
+      # the whole templates/ folder: library and trash (imported templates, previews) AND settings.json (default template,
+      # theme choices). Filled from the image on first use (inbox with the 2 default templates, schema, guide)
+      - studio_templates:/app/studio/templates
+    ports: ["127.0.0.1:8091:8091"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8091/api/config', timeout=5).status == 200 else 1)"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 120s                          # first start: template import + Chromium previews
+
+  # ---------------------------------------------------------------- n8n: our pipeline (RFP - Main ...) + the deck agents
+  n8n:
+    build: { context: ./n8n }
+    image: cstam-olivesoft/n8n:local
+    restart: unless-stopped
+    extra_hosts: ["host.docker.internal:host-gateway"]   # Linux: lets LLM_PROVIDER=ollama reach an Ollama on the host
+    environment:
+      <<: *llm
+      # keys: read by n8n/init/init.js into the n8n credentials and the agents' GROQ_* settings; never logged
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
+      FIRECRAWL_KEY: ${FIRECRAWL_KEY:-}
+      STUDIO_API_KEY: ${STUDIO_API_KEY:-}         # required (checked at start)
+      AGENTS_WEBHOOK_KEY: ${AGENTS_WEBHOOK_KEY:-} # required (checked at start)
+      # our pipeline (Main's Config, patched at import by init.js)
+      PIPELINE_DEMO_MODE: ${PIPELINE_DEMO_MODE:-false}
+      PIPELINE_URL_SOURCES: ${PIPELINE_URL_SOURCES:-auto}
+      PIPELINE_AUTO_DECK: ${PIPELINE_AUTO_DECK:-top1}
+      PIPELINE_LLM_DELAY_MS: ${PIPELINE_LLM_DELAY_MS:-}
+      PIPELINE_RAG_URL: http://rag:8001/retrieve/tender
+      PIPELINE_STUDIO_URL: http://proposal-studio:8091
+      PIPELINE_DEMO_TENDERS_URL: http://demo-tenders:8004/tenders
+      RFP_FORCE_IMPORT: ${RFP_FORCE_IMPORT:-0}
+      # the deck agents (their Code nodes read these with $env and require fs / path)
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"
+      NODE_FUNCTION_ALLOW_BUILTIN: fs,path,crypto
+      N8N_RUNNERS_TASK_TIMEOUT: "1200"
+      RFP_STUDIO_DIR: /data/rfp-studio
+      AGENTS_REGISTRY_DIR: /home/node/.n8n/rfp-registry
+      STUDIO_BASE_URL: http://proposal-studio:8091
+      PUBLIC_EDITOR_URL: http://localhost:8091
+      LLM_MODE: real
+      MAX_CORRECTION_ROUNDS: "0"
+      LLM_MAX_RATE_LIMIT_WAITS: "6"
+      # GROQ_BASE_URL / GROQ_API_KEY / GROQ_MODEL: computed from LLM_PROVIDER by n8n/init/entrypoint.sh
+      # n8n itself
+      N8N_SECURE_COOKIE: "false"
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+      N8N_EDITOR_BASE_URL: http://localhost:5679
+      WEBHOOK_URL: http://localhost:5679/
+      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE:-Europe/Paris}
+      TZ: ${GENERIC_TIMEZONE:-Europe/Paris}
+      # the agents' webhooks output the request headers (X-API-Key): successful runs are not kept (docs/integration-and-api.md)
+      EXECUTIONS_DATA_SAVE_ON_SUCCESS: ${EXECUTIONS_DATA_SAVE_ON_SUCCESS:-none}
+    volumes:
+      - n8n_data:/home/node/.n8n                  # database, encryption key, agents' registry (rfp-registry)
+      - ./services/proposal-studio:/data/rfp-studio:ro   # the agents' prompts, catalog, workflows
+    ports: ["127.0.0.1:5679:5678"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:5678/healthz/readiness').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 240s                          # first start: database, imports and 13 publishes before n8n listens
+
+  # ---------------------------------------------------------------- synthetic demo tenders (Main reads them when PIPELINE_DEMO_MODE=true)
+  demo-tenders:
+    image: node:20-alpine
+    restart: unless-stopped
+    command: ["node", "/demo/server.js", "8004"]
+    volumes:
+      - ./n8n/demo:/demo:ro
+    ports: ["127.0.0.1:8004:8004"]                # the notice links of demo tenders point at http://localhost:8004
+
+volumes:
+  rag_state:
+  rag_index:
+  studio_saves:
+  studio_tenders:
+  studio_generations:
+  studio_exports:
+  studio_uploads:
+  studio_templates:
+  n8n_data:

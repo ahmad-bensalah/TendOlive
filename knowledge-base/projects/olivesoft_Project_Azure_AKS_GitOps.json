@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Azure_AKS_GitOps",
+  "type": "past_project",
+  "title": "Multi-region Azure AKS platform with GitOps and DevSecOps",
+  "description": "Designed and deployed a multi-region Azure AKS architecture serving 150+ micro-services, with GitOps pipelines and DevSecOps scanning.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Designed and deployed a multi-region Azure AKS architecture serving 150+ micro-services, with GitOps pipelines and DevSecOps scanning.",
+  "scope": "AKS architecture, GitOps with Terraform and ArgoCD, security scanning with Trivy and Checkov.",
+  "technologies": [
+    "azure",
+    "kubernetes",
+    "aks",
+    "terraform",
+    "argocd",
+    "trivy",
+    "checkov",
+    "microservices"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "99.95 % uptime; provisioning time cut by 70 %; security vulnerabilities reduced by 45 %.",
+  "team_cv_ids": [
+    "CV_03_Maya_Patel.pdf"
+  ],
+  "source": "CV_03_Maya_Patel.pdf: OliveSoft experience, Cloud and DevOps Engineer, Jan 2026 - Present"
+}

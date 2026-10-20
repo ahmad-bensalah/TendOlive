@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_CMDB_ITSM",
+  "type": "past_project",
+  "title": "Configuration management database and ITSM workflow",
+  "description": "Developed a centralised CMDB and ITSM workflow on Microsoft 365 for 150+ IT assets.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Developed a centralised CMDB and ITSM workflow on Microsoft 365 for 150+ IT assets.",
+  "scope": "CMDB and ITSM workflow.",
+  "technologies": [
+    "microsoft 365",
+    "sharepoint"
+  ],
+  "delivery_status": "completed",
+  "year": 2023,
+  "outcomes": "Incident resolution time cut by 28 %.",
+  "team_cv_ids": [
+    "CV_08_Lucas_Reed.pdf"
+  ],
+  "source": "CV_08_Lucas_Reed.pdf: OliveSoft experience, Microsoft 365 / CMDB Developer, Jun 2023 - Aug 2023"
+}

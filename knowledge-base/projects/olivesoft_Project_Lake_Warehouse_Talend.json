@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Lake_Warehouse_Talend",
+  "type": "past_project",
+  "title": "Hybrid lake-warehouse with real-time Talend jobs",
+  "description": "Designed and implemented a hybrid lake-warehouse architecture and 12 real-time Talend jobs.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Designed and implemented a hybrid lake-warehouse architecture and 12 real-time Talend jobs.",
+  "scope": "Lake-warehouse architecture, real-time Talend jobs processing 200 k records per hour, integration blueprints.",
+  "technologies": [
+    "talend",
+    "data warehouse",
+    "data lake"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "Data duplication -20 %; storage costs -15 %; 99.5 % pipeline success.",
+  "team_cv_ids": [
+    "CV_13_Isabella_Ross.pdf"
+  ],
+  "source": "CV_13_Isabella_Ross.pdf: OliveSoft experience, Data Engineer, Jun 2024 - Present"
+}

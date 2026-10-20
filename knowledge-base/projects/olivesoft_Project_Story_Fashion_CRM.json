@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T14:00:00+00:00",
+  "linked_ids": [],
+  "id": "olivesoft_Project_Story_Fashion_CRM",
+  "type": "past_project",
+  "title": "Unified fashion CRM platform (website success story)",
+  "description": "Rebuilt a CRM platform for an omnichannel fashion business (stores and e-commerce): data cleansing, customer deduplication with a stable CRM ID, profile enrichment, address harmonisation, transparent metric recalculation and redesigned Power BI reports.",
+  "client": "Omnichannel fashion business (not named)",
+  "sector": "retail",
+  "company_role": "Data cleansing, deduplication, 360-degree customer view, metric recalculation (Global Lifetime Value), Power BI reporting.",
+  "scope": "Customer data platform on Google Cloud Platform, auditable history of data changes, Power BI dashboards.",
+  "technologies": [
+    "gcp",
+    "power bi",
+    "crm",
+    "customer data platform"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "More than 3 million addresses completed; nearly 1 million new prospects added; unified customer view.",
+  "source": "https://www.olivesoft.fr/en/article/turning-data-overload-clear-customer-insights-story-new-fashion-crm-platform (published 21 July 2025)"
+}

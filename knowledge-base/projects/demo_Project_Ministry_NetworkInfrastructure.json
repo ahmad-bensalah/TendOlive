@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "demo_Project_Ministry_NetworkInfrastructure",
+  "type": "past_project",
+  "title": "Ministry - Network Infrastructure Upgrade (2021)",
+  "description": "Supply and installation of network hardware in 9 lots for a ministry: switches, routers, Wi-Fi.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [],
+  "client": "ministry",
+  "sector": "public",
+  "scope": "acquisition of network and computer hardware split into 9 lots, installation, cabling, configuration.",
+  "company_role": "Supply and installation of network hardware in 9 lots for a ministry: switches, routers, Wi-Fi.",
+  "technologies": [
+    "network"
+  ],
+  "delivery_status": "completed",
+  "year": 2021,
+  "outcomes": ""
+}

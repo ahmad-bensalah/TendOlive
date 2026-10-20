@@ -1,0 +1,4780 @@
+[
+ {
+  "run": 0,
+  "error": null,
+  "items": [
+   [
+    {
+     "contract": "olivesoft.proposal-input.v2",
+     "tender_id": "T1vll2ea",
+     "language": "fr",
+     "rank": 1,
+     "run_id": "2026-10-20T05-19-35-615Z",
+     "generated_on": "2026-10-20",
+     "tender": {
+      "title": "Prestations de développement d'agents LLM et services associés",
+      "reference": "T1vll2ea",
+      "issuer": "City'up (972)",
+      "country": "France",
+      "country_code": "FR",
+      "publication_date": "2026-10-06",
+      "deadline": "2026-10-26",
+      "days_to_deadline": 6,
+      "estimated_value": "180000 euros",
+      "cpv": [
+       "72000000"
+      ],
+      "duration": "12 mois",
+      "source": "francemarches",
+      "source_url": "https://www.francemarches.com/appel-offre/3boamp2696703-2026-prestations-developpement-agents?q=Intelligence%20Artificielle",
+      "submission_url": null,
+      "documents_url": null,
+      "description": "Le présent marché a pour objet prestations de conseil, conception, développement, intégration, évolution, optimisation, sécurisation et industrialisation de solutions reposant sur l’intelligence artificielle générative, notamment des agents LLM et des chaînes de génération augmentée par recherche documentaire (RAG).",
+      "lots": [],
+      "award_criteria": []
+     },
+     "analysis": {
+      "relevance_score": 100,
+      "relevance_basis": "fit high (70) + 30 x RAG coverage 1",
+      "fit": "high",
+      "tender_type": "ai_data",
+      "matched_service_lines": [
+       "AI / LLM solutions (chatbots, RAG, document intelligence)"
+      ],
+      "reason": "The tender requests development of agents LLM and RAG chains, which are explicitly covered under AI/LLM solutions.",
+      "proof_quote": "Le présent marché a pour objet prestations de conseil, conception, développement, intégration, évolution, optimisation, sécurisation et industrialisation de solutions reposant sur l’intelligence artificielle générative, notamment des agents LLM et des chaînes de génération augmentée par recherche documentaire (RAG).",
+      "quote_verified": true,
+      "sector": "public sector",
+      "suggested_angle": null,
+      "risks": [
+       "Short deadline: 6 days left"
+      ],
+      "requirements": {
+       "technical": [
+        "LLM agents"
+       ],
+       "team": [],
+       "experience": [],
+       "timeline": "12 mois"
+      }
+     },
+     "buyer_profile": {
+      "name": "City'up (972)",
+      "legal_name": "CITY'UP (CFTU)",
+      "sector": "Public company",
+      "size": "small",
+      "organization_description": "It has published tenders for services including AI agent development and office amenities.",
+      "estimated_revenue": null,
+      "staff": "10-19 employees (registry, 2024)",
+      "website": "https://cityup.mq",
+      "contacts": {
+       "emails": [
+        "cu.commandepublique@cityup.mq"
+       ],
+       "phones": [],
+       "addresses": [
+        "Fort de France, 97200",
+        "19 RUE DE LA LIBERTE 97200 FORT DE FRANCE"
+       ]
+      },
+      "past_digital_projects": [
+       {
+        "title": "CONCEPTION, DEVELOPPEMENT ET MAINTENANCE DEVELOPPEMENT D’APPLICATIONS WEB ET MOBILES",
+        "date": "2026-01-31",
+        "source": "BOAMP"
+       },
+       {
+        "title": "ATTRIBUTION DE MARCHE - INFOGERANCE ET FOURNITURE DE MATERIELS INFORMATIQUES LOTS 2 ET 3",
+        "date": "2024-05-25",
+        "source": "BOAMP"
+       },
+       {
+        "title": "INFOGERANCE ET FOURNITURE DE MATERIELS INFORMATIQUES",
+        "date": "2024-03-16",
+        "source": "BOAMP"
+       }
+      ],
+      "past_winners": [],
+      "key_partners": [],
+      "domain_requirements": [],
+      "research_status": "researched",
+      "enrichment_status": "enriched"
+     },
+     "rag": {
+      "status": "FULL",
+      "data_mode": "company",
+      "coverage_basis": "Recorded capabilities; declarations are not verified document evidence.",
+      "suggested_assets": {
+       "projects": [
+        "olivesoft_Project_GenAI_Content_Agent"
+       ],
+       "team": [
+        "CV_12_Mateo_Silva.pdf"
+       ],
+       "stack": [],
+       "other": []
+      },
+      "assets": [
+       {
+        "asset_id": "olivesoft_Project_GenAI_Content_Agent",
+        "asset_type": "project",
+        "origin": "user_entered",
+        "demo": false,
+        "title": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+        "for": [
+         "R1"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_12_Mateo_Silva.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Product Owner specialized in AI and Generative AI with a proven track record of turning business ideas into scalable, highimpact solutions. Experienced in AI product strategy, Agile/Scrum leadership, ",
+        "for": [
+         "R1"
+        ],
+        "weak_for": []
+       }
+      ],
+      "team_proposal": null,
+      "knowledge_counts": {
+       "cv": 19,
+       "past_project": 37,
+       "tech_stack": 5,
+       "tool": 4,
+       "client_portfolio": 25,
+       "completed_projects": 31
+      }
+     },
+     "matrix": {
+      "status": "OK",
+      "rows": [
+       {
+        "requirement_id": "R1",
+        "category": "technical",
+        "requirement": "LLM agents",
+        "skill": "LLM agents",
+        "quote": "prestations de développement d'agents LLM et services associés",
+        "mandatory": false,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": 4.02,
+        "origin": "user_entered",
+        "justification_kind": "declaration",
+        "justification": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "olivesoft_Project_GenAI_Content_Agent",
+          "asset_type": "project",
+          "origin": "user_entered",
+          "evidence_kind": "declaration",
+          "title": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+          "snippet": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_12_Mateo_Silva.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Product Owner specialized in AI and Generative AI with a proven track record of turning business ideas into scalable, highimpact solutions. Experienced in AI product strategy, Agile/Scrum leadership, ",
+          "snippet": "% AI & Machine Learning: LLM fine-tuning, Retrieval-Augmented Generation, LangChain, Prompt Engineering",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       }
+      ],
+      "summary": {
+       "fit_score": 100,
+       "rag_overall": 50,
+       "by_category": {
+        "technical": 100,
+        "team": null,
+        "experience": null
+       },
+       "covered": 1,
+       "partial": 0,
+       "gaps": 0,
+       "gaps_list": [],
+       "mandatory_gaps": [],
+       "obligations_not_in_matrix": [],
+       "coverage": 1,
+       "blocking": [],
+       "demo_evidence": [],
+       "knowledge_gaps": [
+        {
+         "requirement_id": null,
+         "requirement": "Domain fit (public sector)",
+         "category": "domain",
+         "mandatory": false,
+         "kind": "project",
+         "gap": "No completed project in the public sector, so domain fit is 0.",
+         "suggestion": "Add a completed project record in Knowledge base > Projects. Set its sector to 'public'."
+        }
+       ],
+       "recommendation": "bid",
+       "recommendation_reason": "every requirement is covered by internal evidence"
+      }
+     },
+     "competition": {
+      "status": "NO_DATA",
+      "detail": "no_data",
+      "declared_value": "180000 euros",
+      "declared_value_amount": 180000,
+      "declared_value_range": null,
+      "budget_estimate": null,
+      "competitors": [],
+      "median_bids": null,
+      "positioning": null,
+      "budget_comment": null,
+      "comparables": []
+     },
+     "options": {
+      "template_id": "olivesoft_default",
+      "formats": [
+       "pptx",
+       "pdf"
+      ],
+      "sections": [
+       "context",
+       "understanding",
+       "solution",
+       "team",
+       "references",
+       "timeline",
+       "pricing",
+       "why_us"
+      ],
+      "overrides": {
+       "tone": "formal",
+       "max_slides": 15,
+       "gap_strategy": "mitigate"
+      }
+     },
+     "company": {
+      "name": "OliveSoft",
+      "services": [
+       "web and mobile applications, custom software and digital platforms",
+       "AI / LLM solutions (chatbots, RAG, document intelligence)",
+       "workflow automation and RPA",
+       "data platforms, integration and BI / analytics",
+       "CRM and enterprise software integration"
+      ],
+      "technologies": [
+       "Python",
+       "JavaScript/TypeScript",
+       "React",
+       "Node.js",
+       "PostgreSQL",
+       "cloud",
+       "LLM",
+       "RAG",
+       "machine learning",
+       "n8n",
+       "Power BI",
+       "Salesforce"
+      ]
+     }
+    },
+    {
+     "contract": "olivesoft.proposal-input.v2",
+     "tender_id": "T1w50xyr",
+     "language": "fr",
+     "rank": 2,
+     "run_id": "2026-10-20T05-19-35-615Z",
+     "generated_on": "2026-10-20",
+     "tender": {
+      "title": "Tableau de bord décisionnel des indicateurs de santé publique",
+      "reference": "DEMO-003",
+      "issuer": "Direction Régionale de la Santé de Sampleville (démo)",
+      "country": "France",
+      "country_code": "FR",
+      "publication_date": "2026-10-16",
+      "deadline": "2026-11-10",
+      "days_to_deadline": 21,
+      "estimated_value": "220 000 EUR",
+      "cpv": [
+       "72316000",
+       "48482000"
+      ],
+      "duration": "6 mois",
+      "source": "demo",
+      "source_url": "http://localhost:8004/tenders/DEMO-003",
+      "submission_url": null,
+      "documents_url": null,
+      "description": "La Direction Régionale de la Santé souhaite disposer d'un tableau de bord décisionnel consolidant les indicateurs des établissements de santé. Exigences techniques : les tableaux de bord doivent être réalisés sous Power BI. Les flux de données doivent être automatisés avec des pipelines Python. La solution doit être hébergée sur Azure. L'accès doit être géré par rôles. Équipe : le titulaire doit proposer 1 chef de projet et 2 ingénieurs data. Expérience : le titulaire doit justifier d'au moins 1 projet de tableau de bord dans le secteur de la santé. Durée : 6 mois. Critères d'attribution : valeur technique (60), prix (40).",
+      "lots": [],
+      "award_criteria": [
+       "Valeur technique (60)",
+       "Prix (40)"
+      ]
+     },
+     "analysis": {
+      "relevance_score": 100,
+      "relevance_basis": "fit high (70) + 30 x RAG coverage 1",
+      "fit": "high",
+      "tender_type": "ai_data",
+      "matched_service_lines": [
+       "data platforms, integration and BI / analytics"
+      ],
+      "reason": "The tender requires a dashboard built in Power BI with Python pipelines for data automation and hosted on Azure.",
+      "proof_quote": "Les tableaux de bord doivent être réalisés sous Power BI. Les flux de données doivent être automatisés avec des pipelines Python. La solution doit être hébergée sur Azure.",
+      "quote_verified": true,
+      "sector": "health",
+      "suggested_angle": null,
+      "risks": [
+       "Obligation(s) of the notice not in the requirements matrix (never checked against internal evidence): \"L'accès doit être géré par rôles.\"",
+       "Proof from FICTIONAL demo records (not company references): R6"
+      ],
+      "requirements": {
+       "technical": [
+        "Power BI",
+        "Python pipelines",
+        "Azure"
+       ],
+       "team": [
+        "1 project manager",
+        "2 data engineers"
+       ],
+       "experience": [
+        "1 health sector project"
+       ],
+       "timeline": "6 mois"
+      }
+     },
+     "buyer_profile": {
+      "name": "Direction Régionale de la Santé de Sampleville (démo)",
+      "legal_name": null,
+      "sector": null,
+      "size": null,
+      "organization_description": null,
+      "estimated_revenue": null,
+      "staff": null,
+      "website": null,
+      "contacts": {
+       "emails": [],
+       "phones": [],
+       "addresses": []
+      },
+      "past_digital_projects": [],
+      "past_winners": [],
+      "key_partners": [],
+      "domain_requirements": [
+       "Azure"
+      ],
+      "research_status": "skipped_demo",
+      "enrichment_status": "not_researched"
+     },
+     "rag": {
+      "status": "FULL",
+      "data_mode": "demo",
+      "coverage_basis": "Recorded capabilities; declarations are not verified document evidence.",
+      "suggested_assets": {
+       "projects": [
+        "demo_Project_HealthAnalytics_Dashboard",
+        "demo_Project_Manufacturer_ERP"
+       ],
+       "team": [
+        "CV_05_Sofia_Nguyen.pdf",
+        "CV_07_Olivia_Morris.pdf",
+        "CV_09_Emma_Foster.pdf",
+        "CV_03_Maya_Patel.pdf",
+        "CV_11_Chloe_Martin.pdf",
+        "CV_14_Henry_Price.pdf",
+        "CV_17_Julian_Hayes.pdf",
+        "CV_04_Noah_Bennett.pdf",
+        "CV_13_Isabella_Ross.pdf",
+        "CV_18_Leila_Morgan.pdf",
+        "CV_16_Nora_Ellis.pdf"
+       ],
+       "stack": [
+        "demo_Tool_PowerBI_Licences"
+       ],
+       "other": []
+      },
+      "assets": [
+       {
+        "asset_id": "CV_05_Sofia_Nguyen.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data-driven BI Consultant with 5+ years of experience designing end-to-end analytics solutions across finance, telecom, and payments. Proven ability to translate complex business requirements into int",
+        "for": [
+         "R1"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "demo_Tool_PowerBI_Licences",
+        "asset_type": "stack",
+        "origin": "demo",
+        "demo": true,
+        "title": "Fictional sample: a pool of Power BI Pro licences available for client reporting projects.",
+        "for": [
+         "R1"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "demo_Project_HealthAnalytics_Dashboard",
+        "asset_type": "project",
+        "origin": "demo",
+        "demo": true,
+        "title": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+        "for": [
+         "R1",
+         "R2",
+         "R6"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_07_Olivia_Morris.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Engineer with 2+ years of experience designing scalable data pipelines and data-warehousing solutions. Proven ability to improve data latency and quality through automation, and to collaborate ef",
+        "for": [
+         "R2"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_09_Emma_Foster.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Engineer with over 3 years of experience designing, implementing, and maintaining end-to-end data pipelines across the MENA region. Expert in building robust Apache Airflow DAGs, optimizing ETL w",
+        "for": [
+         "R2"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_03_Maya_Patel.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Cloud and DevOps Engineer with a Computer Science engineering background, specialized in designing, automating, and managing cloud-native infrastructures on Azure and Kubernetes. Proven ability to del",
+        "for": [
+         "R3"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_11_Chloe_Martin.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data-Engineering student with solid hands-on experience designing and benchmarking end-to-end streaming pipelines on both Google Cloud and Azure. Proven ability to translate business requirements into",
+        "for": [
+         "R3"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "demo_Project_Manufacturer_ERP",
+        "asset_type": "project",
+        "origin": "demo",
+        "demo": true,
+        "title": "ERP customisation and migration to Azure cloud for an industrial manufacturer.",
+        "for": [
+         "R3"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_14_Henry_Price.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering largescale web solutions, and driving DevOps transformations. Proven track record",
+        "for": [
+         "R4"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_17_Julian_Hayes.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Strategic Managing Partner with 15+ years of experience driving data-centric transformation, AI adoption, and enterprise architecture across telecom, retail, and energy sectors. Proven track record of",
+        "for": [
+         "R4"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_04_Noah_Bennett.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Product Owner (PSPO I) and Delivery Manager with over 3 years of experience driving digital transformation in luxury retail, e-commerce and CRM environments for marquee brands such as L VMH, Celine an",
+        "for": [
+         "R4"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_13_Isabella_Ross.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI solutions. Proven ability to increase data availability by 30 % and reduce ",
+        "for": [
+         "R5"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_18_Leila_Morgan.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data pipelines, workflow orchestration, and cloud-native architectures that enab",
+        "for": [
+         "R5"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_16_Nora_Ellis.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and optimizing end-to-end data pipelines for clients across finance, retail, and logist",
+        "for": [
+         "R5"
+        ],
+        "weak_for": []
+       }
+      ],
+      "team_proposal": {
+       "size": 3,
+       "places_filled": 3,
+       "places_needed": 3,
+       "members": [
+        {
+         "name": "Isabella Ross",
+         "asset_id": "CV_13_Isabella_Ross.pdf",
+         "title": "Isabella Ross - Data Engineer Consultant",
+         "seniority": "mid",
+         "years": 3,
+         "roles": [
+          "data engineer"
+         ],
+         "certifications": [
+          "Azure Data Engineer"
+         ],
+         "assigned_to": [
+          {
+           "requirement_id": "R5",
+           "requirement": "2 data engineers"
+          }
+         ]
+        },
+        {
+         "name": "Henry Price",
+         "asset_id": "CV_14_Henry_Price.pdf",
+         "title": "Henry Price - Technical Delivery Manager",
+         "seniority": "senior",
+         "years": 9,
+         "roles": [
+          "delivery manager",
+          "project manager"
+         ],
+         "certifications": [
+          "AWS Certified",
+          "AWS Solutions Architect",
+          "Scrum Master (PSM/CSM)"
+         ],
+         "assigned_to": [
+          {
+           "requirement_id": "R4",
+           "requirement": "1 project manager"
+          }
+         ]
+        },
+        {
+         "name": "Leila Morgan",
+         "asset_id": "CV_18_Leila_Morgan.pdf",
+         "title": "Leila Morgan - Data Engineer",
+         "seniority": "junior",
+         "years": 1,
+         "roles": [
+          "data engineer",
+          "ai engineer"
+         ],
+         "certifications": [],
+         "assigned_to": [
+          {
+           "requirement_id": "R5",
+           "requirement": "2 data engineers"
+          }
+         ]
+        }
+       ],
+       "unfilled": [],
+       "notes": [
+        "A person may fill several requirements when their CV qualifies for each. Check availability and workload."
+       ]
+      },
+      "knowledge_counts": {
+       "cv": 19,
+       "past_project": 10,
+       "tech_stack": 4,
+       "tool": 2,
+       "client_portfolio": 12,
+       "completed_projects": 10
+      }
+     },
+     "matrix": {
+      "status": "OK",
+      "rows": [
+       {
+        "requirement_id": "R1",
+        "category": "technical",
+        "requirement": "Power BI",
+        "skill": "Power BI",
+        "quote": "Les tableaux de bord doivent être réalisés sous Power BI. Les flux de données doivent être automatisés avec des pipelines Python.",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Proven ability to translate complex business requirements into interactive Power BI dashboards and scalable data…",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_05_Sofia_Nguyen.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data-driven BI Consultant with 5+ years of experience designing end-to-end analytics solutions across finance, telecom, and payments. Proven ability to translate complex business requirements into int",
+          "snippet": "Proven ability to translate complex business requirements into interactive Power BI dashboards and scalable data…",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_Tool_PowerBI_Licences",
+          "asset_type": "stack",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Fictional sample: a pool of Power BI Pro licences available for client reporting projects.",
+          "snippet": "Fictional sample: a pool of Power BI Pro licences available for client reporting projects.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_Project_HealthAnalytics_Dashboard",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+          "snippet": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R2",
+        "category": "technical",
+        "requirement": "Python pipelines",
+        "skill": "Python pipelines",
+        "quote": "Les tableaux de bord doivent être réalisés sous Power BI. Les flux de données doivent être automatisés avec des pipelines Python.",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Automated data ingestion from 5 external APIs using Python and Airflow, reducing manual data collection time by 80 %.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_07_Olivia_Morris.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Engineer with 2+ years of experience designing scalable data pipelines and data-warehousing solutions. Proven ability to improve data latency and quality through automation, and to collaborate ef",
+          "snippet": "Automated data ingestion from 5 external APIs using Python and Airflow, reducing manual data collection time by 80 %.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_09_Emma_Foster.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Engineer with over 3 years of experience designing, implementing, and maintaining end-to-end data pipelines across the MENA region. Expert in building robust Apache Airflow DAGs, optimizing ETL w",
+          "snippet": "Proficient in Python, SQL, and cloud-native data platforms, delivering…",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_Project_HealthAnalytics_Dashboard",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+          "snippet": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R3",
+        "category": "technical",
+        "requirement": "Solution must be hosted on Azure",
+        "skill": "Azure",
+        "quote": "La solution doit être hébergée sur Azure.",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Evaluated Azure ML and Kubeflow on AKS, delivering a comparative report that guided a EUR 200 k investment decision.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_03_Maya_Patel.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Cloud and DevOps Engineer with a Computer Science engineering background, specialized in designing, automating, and managing cloud-native infrastructures on Azure and Kubernetes. Proven ability to del",
+          "snippet": "Evaluated Azure ML and Kubeflow on AKS, delivering a comparative report that guided a EUR 200 k investment decision.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_11_Chloe_Martin.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data-Engineering student with solid hands-on experience designing and benchmarking end-to-end streaming pipelines on both Google Cloud and Azure. Proven ability to translate business requirements into",
+          "snippet": "Google Cloud and Azure. Proven ability to translate business requirements into scalable, cost-effective data solutions while",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_Project_Manufacturer_ERP",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "ERP customisation and migration to Azure cloud for an industrial manufacturer.",
+          "snippet": "ERP customisation and migration to Azure cloud for an industrial manufacturer.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R4",
+        "category": "team",
+        "requirement": "1 project manager",
+        "skill": "1 project manager",
+        "quote": "le titulaire doit proposer 1 chef de projet et 2 ingénieurs data.",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering large-",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_14_Henry_Price.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering largescale web solutions, and driving DevOps transformations. Proven track record",
+          "snippet": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering large-",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_17_Julian_Hayes.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Strategic Managing Partner with 15+ years of experience driving data-centric transformation, AI adoption, and enterprise architecture across telecom, retail, and energy sectors. Proven track record of",
+          "snippet": "Project Management Professional (PMP), PMI – 2022",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_04_Noah_Bennett.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Product Owner (PSPO I) and Delivery Manager with over 3 years of experience driving digital transformation in luxury retail, e-commerce and CRM environments for marquee brands such as L VMH, Celine an",
+          "snippet": "Product Owner (PSPO I) and Delivery Manager with over 3 years of experience driving digital transformation in luxury retail,",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R5",
+        "category": "team",
+        "requirement": "2 data engineers",
+        "skill": "2 data engineers",
+        "quote": "le titulaire doit proposer 1 chef de projet et 2 ingénieurs data.",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_13_Isabella_Ross.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI solutions. Proven ability to increase data availability by 30 % and reduce ",
+          "snippet": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_18_Leila_Morgan.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data pipelines, workflow orchestration, and cloud-native architectures that enab",
+          "snippet": "Data Engineer July 2026 – Present",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_16_Nora_Ellis.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and optimizing end-to-end data pipelines for clients across finance, retail, and logist",
+          "snippet": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R6",
+        "category": "experience",
+        "requirement": "Must have at least 1 project in the health sector",
+        "skill": "1 health sector project",
+        "quote": "le titulaire doit justifier d'au moins 1 projet de tableau de bord dans le secteur de la santé.",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "demo",
+        "justification_kind": "demo",
+        "justification": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "demo_Project_HealthAnalytics_Dashboard",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+          "snippet": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       }
+      ],
+      "summary": {
+       "fit_score": 100,
+       "rag_overall": 100,
+       "by_category": {
+        "technical": 100,
+        "team": 100,
+        "experience": 100
+       },
+       "covered": 6,
+       "partial": 0,
+       "gaps": 0,
+       "gaps_list": [],
+       "mandatory_gaps": [],
+       "obligations_not_in_matrix": [
+        "L'accès doit être géré par rôles."
+       ],
+       "coverage": 1,
+       "blocking": [],
+       "demo_evidence": [
+        "R6"
+       ],
+       "knowledge_gaps": [],
+       "recommendation": "review",
+       "recommendation_reason": "1 obligation sentence(s) of the notice are not in the matrix (\"L'accès doit être géré par rôles.\"): check them before deciding (the 6 requirement(s) of the matrix are covered by internal evidence); proof from fictional demo records only: R6"
+      }
+     },
+     "competition": {
+      "status": "NOT_STUDIED",
+      "detail": "not_studied",
+      "declared_value": "220 000 EUR",
+      "declared_value_amount": 220000,
+      "declared_value_range": null,
+      "budget_estimate": null,
+      "competitors": [],
+      "median_bids": null,
+      "positioning": null,
+      "budget_comment": null,
+      "comparables": []
+     },
+     "options": {
+      "template_id": "olivesoft_default",
+      "formats": [
+       "pptx",
+       "pdf"
+      ],
+      "sections": [
+       "context",
+       "understanding",
+       "solution",
+       "team",
+       "references",
+       "timeline",
+       "pricing",
+       "why_us"
+      ],
+      "overrides": {
+       "tone": "formal",
+       "max_slides": 15,
+       "gap_strategy": "mitigate"
+      }
+     },
+     "company": {
+      "name": "OliveSoft",
+      "services": [
+       "web and mobile applications, custom software and digital platforms",
+       "AI / LLM solutions (chatbots, RAG, document intelligence)",
+       "workflow automation and RPA",
+       "data platforms, integration and BI / analytics",
+       "CRM and enterprise software integration"
+      ],
+      "technologies": [
+       "Python",
+       "JavaScript/TypeScript",
+       "React",
+       "Node.js",
+       "PostgreSQL",
+       "cloud",
+       "LLM",
+       "RAG",
+       "machine learning",
+       "n8n",
+       "Power BI",
+       "Salesforce"
+      ]
+     }
+    },
+    {
+     "contract": "olivesoft.proposal-input.v2",
+     "tender_id": "T1xiyyfm",
+     "language": "fr",
+     "rank": 3,
+     "run_id": "2026-10-20T05-19-35-615Z",
+     "generated_on": "2026-10-20",
+     "tender": {
+      "title": "Application mobile de relation citoyen intégrée au CRM Salesforce",
+      "reference": "DEMO-004",
+      "issuer": "Communauté de Communes de Sampleville (démo)",
+      "country": "France",
+      "country_code": "FR",
+      "publication_date": "2026-10-15",
+      "deadline": "2026-11-07",
+      "days_to_deadline": 18,
+      "estimated_value": "310 000 EUR",
+      "cpv": [
+       "72212000"
+      ],
+      "duration": "8 mois",
+      "source": "demo",
+      "source_url": "http://localhost:8004/tenders/DEMO-004",
+      "submission_url": null,
+      "documents_url": null,
+      "description": "Objet : développement d'une application mobile permettant aux habitants de signaler des incidents et de suivre leurs demandes, intégrée au CRM de la collectivité. Exigences techniques : l'application mobile doit être développée en Flutter. L'application doit être intégrée au CRM Salesforce de la collectivité. Le déploiement doit être réalisé sur Kubernetes avec Terraform. Équipe : le titulaire doit mobiliser au minimum 5 développeurs seniors et 1 Scrum Master certifié PSM. Expérience : le titulaire doit justifier d'au moins 2 projets dans le secteur de la santé. Durée : 8 mois. Critères d'attribution : valeur technique (55), prix (45).",
+      "lots": [],
+      "award_criteria": [
+       "Valeur technique (55)",
+       "Prix (45)"
+      ]
+     },
+     "analysis": {
+      "relevance_score": 94,
+      "relevance_basis": "fit high (70) + 30 x RAG coverage 0.79",
+      "fit": "high",
+      "tender_type": "software_build",
+      "matched_service_lines": [
+       "web and mobile applications, custom software and digital platforms"
+      ],
+      "reason": "Application mobile de relation citoyen intégrée au CRM Salesforce",
+      "proof_quote": "développement d'une application mobile permettant aux habitants de signaler des incidents et de suivre leurs demandes",
+      "quote_verified": true,
+      "sector": "public sector",
+      "suggested_angle": null,
+      "risks": [
+       "No internal evidence for mandatory requirement(s): R5",
+       "Proof from FICTIONAL demo records (not company references): R1, R7",
+       "Certification asked but not named in the proof (an equivalent one?): R6 PSM",
+       "Team: Minimum 5 senior developers (0 of 5 available) cannot be staffed from the CV bank"
+      ],
+      "requirements": {
+       "technical": [
+        "Flutter",
+        "Salesforce integration",
+        "Kubernetes",
+        "Terraform"
+       ],
+       "team": [
+        "Minimum 5 senior developers",
+        "1 PSM certified Scrum Master"
+       ],
+       "experience": [
+        "2 health sector projects"
+       ],
+       "timeline": "8 mois"
+      }
+     },
+     "buyer_profile": {
+      "name": "Communauté de Communes de Sampleville (démo)",
+      "legal_name": null,
+      "sector": null,
+      "size": null,
+      "organization_description": null,
+      "estimated_revenue": null,
+      "staff": null,
+      "website": null,
+      "contacts": {
+       "emails": [],
+       "phones": [],
+       "addresses": []
+      },
+      "past_digital_projects": [],
+      "past_winners": [],
+      "key_partners": [],
+      "domain_requirements": [
+       "1 PSM certified Scrum Master"
+      ],
+      "research_status": "skipped_demo",
+      "enrichment_status": "not_researched"
+     },
+     "rag": {
+      "status": "PARTIAL",
+      "data_mode": "demo",
+      "coverage_basis": "Recorded capabilities; declarations are not verified document evidence.",
+      "suggested_assets": {
+       "projects": [
+        "demo_Project_HealthAnalytics_Dashboard"
+       ],
+       "team": [
+        "CV_08_Lucas_Reed.pdf",
+        "CV_04_Noah_Bennett.pdf",
+        "CV_01_Ava_Thompson.pdf",
+        "CV_03_Maya_Patel.pdf",
+        "CV_17_Julian_Hayes.pdf",
+        "CV_11_Chloe_Martin.pdf",
+        "CV_14_Henry_Price.pdf"
+       ],
+       "stack": [
+        "demo_TechStack_Mobile"
+       ],
+       "other": []
+      },
+      "assets": [
+       {
+        "asset_id": "demo_TechStack_Mobile",
+        "asset_type": "stack",
+        "origin": "demo",
+        "demo": true,
+        "title": "Mobile offering: Flutter and React Native with Firebase.",
+        "for": [
+         "R1"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_08_Lucas_Reed.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Salesforce Developer with 2 years of experience designing and delivering scalable CRM solutions and personalized digital experiences. Certified Platform Developer I, Marketing Cloud Email Specialist, ",
+        "for": [
+         "R2"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_04_Noah_Bennett.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Product Owner (PSPO I) and Delivery Manager with over 3 years of experience driving digital transformation in luxury retail, e-commerce and CRM environments for marquee brands such as L VMH, Celine an",
+        "for": [
+         "R2"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_01_Ava_Thompson.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Cloud Infrastructure Engineer with over three years of experience designing, automating, and operating scalable Kubernetesbased platforms for enterprise customers. Proven ability to cut deployment tim",
+        "for": [
+         "R3",
+         "R4"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_03_Maya_Patel.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Cloud and DevOps Engineer with a Computer Science engineering background, specialized in designing, automating, and managing cloud-native infrastructures on Azure and Kubernetes. Proven ability to del",
+        "for": [
+         "R3",
+         "R4"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_17_Julian_Hayes.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Strategic Managing Partner with 15+ years of experience driving data-centric transformation, AI adoption, and enterprise architecture across telecom, retail, and energy sectors. Proven track record of",
+        "for": [
+         "R3"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_11_Chloe_Martin.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data-Engineering student with solid hands-on experience designing and benchmarking end-to-end streaming pipelines on both Google Cloud and Azure. Proven ability to translate business requirements into",
+        "for": [
+         "R4"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_14_Henry_Price.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering largescale web solutions, and driving DevOps transformations. Proven track record",
+        "for": [
+         "R6"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "demo_Project_HealthAnalytics_Dashboard",
+        "asset_type": "project",
+        "origin": "demo",
+        "demo": true,
+        "title": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+        "for": [
+         "R7"
+        ],
+        "weak_for": []
+       }
+      ],
+      "team_proposal": {
+       "size": 1,
+       "places_filled": 1,
+       "places_needed": 6,
+       "members": [
+        {
+         "name": "Henry Price",
+         "asset_id": "CV_14_Henry_Price.pdf",
+         "title": "Henry Price - Technical Delivery Manager",
+         "seniority": "senior",
+         "years": 9,
+         "roles": [
+          "delivery manager",
+          "project manager"
+         ],
+         "certifications": [
+          "AWS Certified",
+          "AWS Solutions Architect",
+          "Scrum Master (PSM/CSM)"
+         ],
+         "assigned_to": [
+          {
+           "requirement_id": "R6",
+           "requirement": "1 PSM certified Scrum Master"
+          }
+         ]
+        }
+       ],
+       "unfilled": [
+        {
+         "requirement_id": "R5",
+         "requirement": "Minimum 5 senior developers",
+         "needed": 5,
+         "available": 0,
+         "mandatory": true
+        }
+       ],
+       "notes": [
+        "A person may fill several requirements when their CV qualifies for each. Check availability and workload.",
+        "Some requirements cannot be filled from the CV bank; see 'unfilled'."
+       ]
+      },
+      "knowledge_counts": {
+       "cv": 19,
+       "past_project": 10,
+       "tech_stack": 4,
+       "tool": 2,
+       "client_portfolio": 12,
+       "completed_projects": 10
+      }
+     },
+     "matrix": {
+      "status": "OK",
+      "rows": [
+       {
+        "requirement_id": "R1",
+        "category": "technical",
+        "requirement": "Flutter",
+        "skill": "Flutter",
+        "quote": "l'application mobile doit être développée en Flutter",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "demo",
+        "justification_kind": "demo",
+        "justification": "Mobile offering: Flutter and React Native with Firebase.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "demo_TechStack_Mobile",
+          "asset_type": "stack",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Mobile offering: Flutter and React Native with Firebase.",
+          "snippet": "Mobile offering: Flutter and React Native with Firebase.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R2",
+        "category": "technical",
+        "requirement": "Salesforce integration",
+        "skill": "Salesforce integration",
+        "quote": "l'application doit être intégrée au CRM Salesforce de la collectivité",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": 4.06,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "% Programming: Apex, LWC, JavaScript, SOQL, SOSL, HTML/CSS, SQL",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_08_Lucas_Reed.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Salesforce Developer with 2 years of experience designing and delivering scalable CRM solutions and personalized digital experiences. Certified Platform Developer I, Marketing Cloud Email Specialist, ",
+          "snippet": "% Programming: Apex, LWC, JavaScript, SOQL, SOSL, HTML/CSS, SQL",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_04_Noah_Bennett.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Product Owner (PSPO I) and Delivery Manager with over 3 years of experience driving digital transformation in luxury retail, e-commerce and CRM environments for marquee brands such as L VMH, Celine an",
+          "snippet": "complemented by hands-on expertise in Salesforce, OMS, Power BI and data-driven forecasting.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R3",
+        "category": "technical",
+        "requirement": "Kubernetes",
+        "skill": "Kubernetes",
+        "quote": "le déploiement doit être réalisé sur Kubernetes avec Terraform",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Containerization: Docker, Kubernetes, Helm",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_01_Ava_Thompson.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Cloud Infrastructure Engineer with over three years of experience designing, automating, and operating scalable Kubernetesbased platforms for enterprise customers. Proven ability to cut deployment tim",
+          "snippet": "Containerization: Docker, Kubernetes, Helm",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_03_Maya_Patel.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Cloud and DevOps Engineer with a Computer Science engineering background, specialized in designing, automating, and managing cloud-native infrastructures on Azure and Kubernetes. Proven ability to del",
+          "snippet": "Container Orchestration: Kubernetes, Docker, AKS, GKE",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_17_Julian_Hayes.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Strategic Managing Partner with 15+ years of experience driving data-centric transformation, AI adoption, and enterprise architecture across telecom, retail, and energy sectors. Proven track record of",
+          "snippet": "Deployed the solution on Kubernetes, achieving a 3$",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R4",
+        "category": "technical",
+        "requirement": "Terraform",
+        "skill": "Terraform",
+        "quote": "le déploiement doit être réalisé sur Kubernetes avec Terraform",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Provisioned Google Cloud resources with Terraform; reduced infrastructure-as-code deployment time by 40 %.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_11_Chloe_Martin.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data-Engineering student with solid hands-on experience designing and benchmarking end-to-end streaming pipelines on both Google Cloud and Azure. Proven ability to translate business requirements into",
+          "snippet": "Provisioned Google Cloud resources with Terraform; reduced infrastructure-as-code deployment time by 40 %.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_03_Maya_Patel.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Cloud and DevOps Engineer with a Computer Science engineering background, specialized in designing, automating, and managing cloud-native infrastructures on Azure and Kubernetes. Proven ability to del",
+          "snippet": "Implemented GitOps pipelines with Terraform and ArgoCD, cutting infrastructure provisioning time by 70 %.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_01_Ava_Thompson.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Cloud Infrastructure Engineer with over three years of experience designing, automating, and operating scalable Kubernetesbased platforms for enterprise customers. Proven ability to cut deployment tim",
+          "snippet": "Implemented Terraform-based IaC for AWS and Azure resources, cutting manual provisioning effort by 40 % and eliminating",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R5",
+        "category": "team",
+        "requirement": "Minimum 5 senior developers",
+        "skill": "Minimum 5 senior developers",
+        "quote": "le titulaire doit mobiliser au minimum 5 développeurs seniors et 1 Scrum Master certifié PSM",
+        "mandatory": true,
+        "coverage": "gap",
+        "coverage_score": 0,
+        "rerank_score": null,
+        "origin": null,
+        "justification_kind": null,
+        "justification": null,
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [],
+        "closest_asset": {
+         "asset_id": "CV_02_Liam_Carter.pdf",
+         "title": "Enthusiastic Software Developer with 3+ years of experience building responsive web applications using PHP, HTML, and JavaScript. Proven ability to improve performance and user experience through clea"
+        }
+       },
+       {
+        "requirement_id": "R6",
+        "category": "team",
+        "requirement": "1 PSM certified Scrum Master",
+        "skill": "1 PSM certified Scrum Master",
+        "quote": "le titulaire doit mobiliser au minimum 5 développeurs seniors et 1 Scrum Master certifié PSM",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Certified Scrum Master (CSM) – Scrum Alliance, 2022",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_14_Henry_Price.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering largescale web solutions, and driving DevOps transformations. Proven track record",
+          "snippet": "Certified Scrum Master (CSM) – Scrum Alliance, 2022",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R7",
+        "category": "experience",
+        "requirement": "2 health sector projects",
+        "skill": "2 health sector projects",
+        "quote": "le titulaire doit justifier d'au moins 2 projets dans le secteur de la santé",
+        "mandatory": true,
+        "coverage": "partial",
+        "coverage_score": 50,
+        "rerank_score": null,
+        "origin": "demo",
+        "justification_kind": "demo",
+        "justification": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "demo_Project_HealthAnalytics_Dashboard",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+          "snippet": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       }
+      ],
+      "summary": {
+       "fit_score": 67,
+       "rag_overall": 80,
+       "by_category": {
+        "technical": 100,
+        "team": 50,
+        "experience": 50
+       },
+       "covered": 5,
+       "partial": 1,
+       "gaps": 1,
+       "gaps_list": [
+        "R5"
+       ],
+       "mandatory_gaps": [
+        "R5"
+       ],
+       "obligations_not_in_matrix": [],
+       "coverage": 0.79,
+       "blocking": [
+        "R5: Minimum 5 senior developers"
+       ],
+       "demo_evidence": [
+        "R1",
+        "R7"
+       ],
+       "knowledge_gaps": [
+        {
+         "requirement_id": "R5",
+         "requirement": "Minimum 5 senior developers",
+         "category": "team",
+         "mandatory": true,
+         "kind": "people",
+         "gap": "2 CV(s) with the role 'developer', but only 0 senior developer(s); 5 needed.",
+         "suggestion": "Need 5 more senior developer(s). Add the CV of a qualified employee to the CV bank (data/cvs), or plan recruitment or a partner."
+        },
+        {
+         "requirement_id": "R7",
+         "requirement": "2 health sector projects",
+         "category": "experience",
+         "mandatory": true,
+         "kind": "project",
+         "gap": "1 completed project(s) in the health sector; 2 needed.",
+         "suggestion": "Add a completed project record in Knowledge base > Projects. Set its sector to 'health' and status to completed."
+        }
+       ],
+       "recommendation": "bid_with_partner",
+       "recommendation_reason": "technical requirements covered; gaps in team: R5; proof from fictional demo records only: R1, R7"
+      }
+     },
+     "competition": {
+      "status": "NOT_STUDIED",
+      "detail": "not_studied",
+      "declared_value": "310 000 EUR",
+      "declared_value_amount": 310000,
+      "declared_value_range": null,
+      "budget_estimate": null,
+      "competitors": [],
+      "median_bids": null,
+      "positioning": null,
+      "budget_comment": null,
+      "comparables": []
+     },
+     "options": {
+      "template_id": "olivesoft_default",
+      "formats": [
+       "pptx",
+       "pdf"
+      ],
+      "sections": [
+       "context",
+       "understanding",
+       "solution",
+       "team",
+       "references",
+       "timeline",
+       "pricing",
+       "why_us"
+      ],
+      "overrides": {
+       "tone": "formal",
+       "max_slides": 15,
+       "gap_strategy": "mitigate"
+      }
+     },
+     "company": {
+      "name": "OliveSoft",
+      "services": [
+       "web and mobile applications, custom software and digital platforms",
+       "AI / LLM solutions (chatbots, RAG, document intelligence)",
+       "workflow automation and RPA",
+       "data platforms, integration and BI / analytics",
+       "CRM and enterprise software integration"
+      ],
+      "technologies": [
+       "Python",
+       "JavaScript/TypeScript",
+       "React",
+       "Node.js",
+       "PostgreSQL",
+       "cloud",
+       "LLM",
+       "RAG",
+       "machine learning",
+       "n8n",
+       "Power BI",
+       "Salesforce"
+      ]
+     }
+    },
+    {
+     "contract": "olivesoft.proposal-input.v2",
+     "tender_id": "T1vv1c9s",
+     "language": "fr",
+     "rank": 4,
+     "run_id": "2026-10-20T05-19-35-615Z",
+     "generated_on": "2026-10-20",
+     "tender": {
+      "title": "Mise en place d'un assistant conversationnel IA (chatbot RAG) pour le service aux usagers",
+      "reference": "DEMO-002",
+      "issuer": "Agence Nationale des Services Numériques de Sampleville (démo)",
+      "country": "Tunisia",
+      "country_code": "TN",
+      "publication_date": "2026-10-18",
+      "deadline": "2026-11-19",
+      "days_to_deadline": 30,
+      "estimated_value": "350 000 TND",
+      "cpv": [
+       "72000000",
+       "48000000"
+      ],
+      "duration": "5 mois",
+      "source": "demo",
+      "source_url": "http://localhost:8004/tenders/DEMO-002",
+      "submission_url": null,
+      "documents_url": null,
+      "description": "Objet : conception et déploiement d'un assistant conversationnel basé sur l'intelligence artificielle générative pour répondre aux questions des usagers à partir de la documentation interne de l'agence. Exigences techniques : la solution doit utiliser un grand modèle de langage (LLM) avec une architecture RAG (génération augmentée par la recherche). L'assistant doit répondre en français et en arabe. La solution doit s'appuyer sur une base de données vectorielle. Le développement doit être réalisé en Python. Équipe : le soumissionnaire doit mobiliser au moins 1 ingénieur IA et 1 chef de projet. Expérience : le soumissionnaire doit présenter au moins 1 référence de chatbot ou d'assistant IA déjà déployé. Durée : 5 mois. Critères d'attribution : valeur technique (70), prix (30).",
+      "lots": [],
+      "award_criteria": [
+       "Valeur technique (70)",
+       "Prix (30)"
+      ]
+     },
+     "analysis": {
+      "relevance_score": 94,
+      "relevance_basis": "fit high (70) + 30 x RAG coverage 0.79",
+      "fit": "high",
+      "tender_type": "ai_data",
+      "matched_service_lines": [
+       "AI / LLM solutions (chatbots, RAG, document intelligence)"
+      ],
+      "reason": "Tender text: \"la solution doit utiliser un grand modèle de langage (LLM) avec une architecture RAG (génération augmentée par la recherche)\"",
+      "proof_quote": "la solution doit utiliser un grand modèle de langage (LLM) avec une architecture RAG (génération augmentée par la recherche)",
+      "quote_verified": true,
+      "sector": "public sector",
+      "suggested_angle": null,
+      "risks": [
+       "Proof from FICTIONAL demo records (not company references): R2, R7"
+      ],
+      "requirements": {
+       "technical": [
+        "LLM with RAG architecture",
+        "respond in French and Arabic",
+        "vector database",
+        "Python"
+       ],
+       "team": [
+        "1 AI engineer",
+        "1 project manager"
+       ],
+       "experience": [
+        "1 chatbot or AI assistant project reference"
+       ],
+       "timeline": "5 mois"
+      }
+     },
+     "buyer_profile": {
+      "name": "Agence Nationale des Services Numériques de Sampleville (démo)",
+      "legal_name": null,
+      "sector": null,
+      "size": null,
+      "organization_description": null,
+      "estimated_revenue": null,
+      "staff": null,
+      "website": null,
+      "contacts": {
+       "emails": [],
+       "phones": [],
+       "addresses": []
+      },
+      "past_digital_projects": [],
+      "past_winners": [],
+      "key_partners": [],
+      "domain_requirements": [],
+      "research_status": "skipped_demo",
+      "enrichment_status": "not_researched"
+     },
+     "rag": {
+      "status": "PARTIAL",
+      "data_mode": "demo",
+      "coverage_basis": "Recorded capabilities; declarations are not verified document evidence.",
+      "suggested_assets": {
+       "projects": [
+        "demo_Project_Telecom_RAGChatbot"
+       ],
+       "team": [
+        "CV_06_Ethan_Brooks.pdf",
+        "CV_12_Mateo_Silva.pdf",
+        "CV_13_Isabella_Ross.pdf",
+        "CV_07_Olivia_Morris.pdf",
+        "CV_18_Leila_Morgan.pdf",
+        "CV_14_Henry_Price.pdf",
+        "CV_17_Julian_Hayes.pdf",
+        "CV_04_Noah_Bennett.pdf"
+       ],
+       "stack": [
+        "demo_TechStack_Data_AI"
+       ],
+       "other": []
+      },
+      "assets": [
+       {
+        "asset_id": "CV_06_Ethan_Brooks.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Engineering student at Faculté des Sciences de Sfax with solid expertise in Big Data ecosystems, distributed processing, and scalable data architectures. Proven ability to design and optimise end",
+        "for": [
+         "R1"
+        ],
+        "weak_for": [
+         "R3"
+        ]
+       },
+       {
+        "asset_id": "CV_12_Mateo_Silva.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Product Owner specialized in AI and Generative AI with a proven track record of turning business ideas into scalable, highimpact solutions. Experienced in AI product strategy, Agile/Scrum leadership, ",
+        "for": [
+         "R1"
+        ],
+        "weak_for": [
+         "R2",
+         "R3"
+        ]
+       },
+       {
+        "asset_id": "demo_Project_Telecom_RAGChatbot",
+        "asset_type": "project",
+        "origin": "demo",
+        "demo": true,
+        "title": "Generative AI chatbot using RAG over product documents for a telecom operator, French and Arabic.",
+        "for": [
+         "R1"
+        ],
+        "weak_for": [
+         "R2",
+         "R7"
+        ]
+       },
+       {
+        "asset_id": "CV_16_Nora_Ellis.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and optimizing end-to-end data pipelines for clients across finance, retail, and logist",
+        "for": [],
+        "weak_for": [
+         "R2"
+        ]
+       },
+       {
+        "asset_id": "demo_TechStack_Data_AI",
+        "asset_type": "stack",
+        "origin": "demo",
+        "demo": true,
+        "title": "Data and AI offering: Python, Airflow, Power BI dashboards, LLMs, RAG and vector databases.",
+        "for": [
+         "R4"
+        ],
+        "weak_for": [
+         "R3"
+        ]
+       },
+       {
+        "asset_id": "CV_13_Isabella_Ross.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI solutions. Proven ability to increase data availability by 30 % and reduce ",
+        "for": [
+         "R4"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_07_Olivia_Morris.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Engineer with 2+ years of experience designing scalable data pipelines and data-warehousing solutions. Proven ability to improve data latency and quality through automation, and to collaborate ef",
+        "for": [
+         "R4"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_18_Leila_Morgan.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data pipelines, workflow orchestration, and cloud-native architectures that enab",
+        "for": [
+         "R5"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_14_Henry_Price.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering largescale web solutions, and driving DevOps transformations. Proven track record",
+        "for": [
+         "R6"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_17_Julian_Hayes.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Strategic Managing Partner with 15+ years of experience driving data-centric transformation, AI adoption, and enterprise architecture across telecom, retail, and energy sectors. Proven track record of",
+        "for": [
+         "R6"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_04_Noah_Bennett.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Product Owner (PSPO I) and Delivery Manager with over 3 years of experience driving digital transformation in luxury retail, e-commerce and CRM environments for marquee brands such as L VMH, Celine an",
+        "for": [
+         "R6"
+        ],
+        "weak_for": []
+       }
+      ],
+      "team_proposal": {
+       "size": 2,
+       "places_filled": 2,
+       "places_needed": 2,
+       "members": [
+        {
+         "name": "Leila Morgan",
+         "asset_id": "CV_18_Leila_Morgan.pdf",
+         "title": "Leila Morgan - Data Engineer",
+         "seniority": "junior",
+         "years": 1,
+         "roles": [
+          "data engineer",
+          "ai engineer"
+         ],
+         "certifications": [],
+         "assigned_to": [
+          {
+           "requirement_id": "R5",
+           "requirement": "1 AI engineer"
+          }
+         ]
+        },
+        {
+         "name": "Henry Price",
+         "asset_id": "CV_14_Henry_Price.pdf",
+         "title": "Henry Price - Technical Delivery Manager",
+         "seniority": "senior",
+         "years": 9,
+         "roles": [
+          "delivery manager",
+          "project manager"
+         ],
+         "certifications": [
+          "AWS Certified",
+          "AWS Solutions Architect",
+          "Scrum Master (PSM/CSM)"
+         ],
+         "assigned_to": [
+          {
+           "requirement_id": "R6",
+           "requirement": "1 project manager"
+          }
+         ]
+        }
+       ],
+       "unfilled": [],
+       "notes": [
+        "A person may fill several requirements when their CV qualifies for each. Check availability and workload."
+       ]
+      },
+      "knowledge_counts": {
+       "cv": 19,
+       "past_project": 10,
+       "tech_stack": 4,
+       "tool": 2,
+       "client_portfolio": 12,
+       "completed_projects": 10
+      }
+     },
+     "matrix": {
+      "status": "OK",
+      "rows": [
+       {
+        "requirement_id": "R1",
+        "category": "technical",
+        "requirement": "The solution must use a large language model (LLM) with an RAG architecture",
+        "skill": "LLM with RAG architecture",
+        "quote": "la solution doit utiliser un grand modèle de langage (LLM) avec une architecture RAG (génération augmentée par la recherche)",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": 1.1,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Machine Learning & NLP: Scikit-learn, TensorFlow, LangChain, Retrieval-Augmented Generation",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_06_Ethan_Brooks.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Engineering student at Faculté des Sciences de Sfax with solid expertise in Big Data ecosystems, distributed processing, and scalable data architectures. Proven ability to design and optimise end",
+          "snippet": "Machine Learning & NLP: Scikit-learn, TensorFlow, LangChain, Retrieval-Augmented Generation",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_12_Mateo_Silva.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Product Owner specialized in AI and Generative AI with a proven track record of turning business ideas into scalable, highimpact solutions. Experienced in AI product strategy, Agile/Scrum leadership, ",
+          "snippet": "% AI & Machine Learning: LLM fine-tuning, Retrieval-Augmented Generation, LangChain, Prompt Engineering",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_Project_Telecom_RAGChatbot",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Generative AI chatbot using RAG over product documents for a telecom operator, French and Arabic.",
+          "snippet": "Generative AI chatbot using RAG over product documents for a telecom operator, French and Arabic.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R2",
+        "category": "technical",
+        "requirement": "The assistant must respond in French and Arabic",
+        "skill": "respond in French and Arabic",
+        "quote": "L'assistant doit répondre en français et en arabe",
+        "mandatory": true,
+        "coverage": "partial",
+        "coverage_score": 50,
+        "rerank_score": -1.79,
+        "origin": "demo",
+        "justification_kind": "demo",
+        "justification": "Generative AI chatbot using RAG over product documents for a telecom operator, French and Arabic.",
+        "justification_weak": true,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "demo_Project_Telecom_RAGChatbot",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Generative AI chatbot using RAG over product documents for a telecom operator, French and Arabic.",
+          "snippet": "Generative AI chatbot using RAG over product documents for a telecom operator, French and Arabic.",
+          "metadata": null,
+          "proves": false
+         },
+         {
+          "asset_id": "CV_16_Nora_Ellis.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and optimizing end-to-end data pipelines for clients across finance, retail, and logist",
+          "snippet": "CELINE, Paris, France",
+          "metadata": null,
+          "proves": false
+         },
+         {
+          "asset_id": "CV_12_Mateo_Silva.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Product Owner specialized in AI and Generative AI with a proven track record of turning business ideas into scalable, highimpact solutions. Experienced in AI product strategy, Agile/Scrum leadership, ",
+          "snippet": "releases.",
+          "metadata": null,
+          "proves": false
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R3",
+        "category": "technical",
+        "requirement": "The solution must use a vector database",
+        "skill": "vector database",
+        "quote": "La solution doit s'appuyer sur une base de données vectorielle",
+        "mandatory": true,
+        "coverage": "partial",
+        "coverage_score": 50,
+        "rerank_score": -0.36,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "users by 35 % within six months.",
+        "justification_weak": true,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_12_Mateo_Silva.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Product Owner specialized in AI and Generative AI with a proven track record of turning business ideas into scalable, highimpact solutions. Experienced in AI product strategy, Agile/Scrum leadership, ",
+          "snippet": "users by 35 % within six months.",
+          "metadata": null,
+          "proves": false
+         },
+         {
+          "asset_id": "demo_TechStack_Data_AI",
+          "asset_type": "stack",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Data and AI offering: Python, Airflow, Power BI dashboards, LLMs, RAG and vector databases.",
+          "snippet": "Data and AI offering: Python, Airflow, Power BI dashboards, LLMs, RAG and vector databases.",
+          "metadata": null,
+          "proves": false
+         },
+         {
+          "asset_id": "CV_06_Ethan_Brooks.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Engineering student at Faculté des Sciences de Sfax with solid expertise in Big Data ecosystems, distributed processing, and scalable data architectures. Proven ability to design and optimise end",
+          "snippet": "Developed real-time vector indexing and source citation, reducing average response time from 4 s to 1.2 s (70% faster).",
+          "metadata": null,
+          "proves": false
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R4",
+        "category": "technical",
+        "requirement": "The development must be realized in Python",
+        "skill": "Python",
+        "quote": "Le développement doit être réalisé en Python",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Designed an automated ETL workflow (Python + Airflow) that reduced data refresh time from 48 h to 6 h.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_13_Isabella_Ross.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI solutions. Proven ability to increase data availability by 30 % and reduce ",
+          "snippet": "Designed an automated ETL workflow (Python + Airflow) that reduced data refresh time from 48 h to 6 h.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_07_Olivia_Morris.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Engineer with 2+ years of experience designing scalable data pipelines and data-warehousing solutions. Proven ability to improve data latency and quality through automation, and to collaborate ef",
+          "snippet": "Automated data ingestion from 5 external APIs using Python and Airflow, reducing manual data collection time by 80 %.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_TechStack_Data_AI",
+          "asset_type": "stack",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Data and AI offering: Python, Airflow, Power BI dashboards, LLMs, RAG and vector databases.",
+          "snippet": "Data and AI offering: Python, Airflow, Power BI dashboards, LLMs, RAG and vector databases.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R5",
+        "category": "team",
+        "requirement": "1 AI engineer",
+        "skill": "1 AI engineer",
+        "quote": "le soumissionnaire doit mobiliser au moins 1 ingénieur IA et 1 chef de projet",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_18_Leila_Morgan.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data pipelines, workflow orchestration, and cloud-native architectures that enab",
+          "snippet": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R6",
+        "category": "team",
+        "requirement": "1 project manager",
+        "skill": "1 project manager",
+        "quote": "le soumissionnaire doit mobiliser au moins 1 ingénieur IA et 1 chef de projet",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering large-",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_14_Henry_Price.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering largescale web solutions, and driving DevOps transformations. Proven track record",
+          "snippet": "Dynamic Technical Delivery Manager with over 9 years of experience leading cross-functional software teams, delivering large-",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_17_Julian_Hayes.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Strategic Managing Partner with 15+ years of experience driving data-centric transformation, AI adoption, and enterprise architecture across telecom, retail, and energy sectors. Proven track record of",
+          "snippet": "Project Management Professional (PMP), PMI – 2022",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_04_Noah_Bennett.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Product Owner (PSPO I) and Delivery Manager with over 3 years of experience driving digital transformation in luxury retail, e-commerce and CRM environments for marquee brands such as L VMH, Celine an",
+          "snippet": "Product Owner (PSPO I) and Delivery Manager with over 3 years of experience driving digital transformation in luxury retail,",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R7",
+        "category": "experience",
+        "requirement": "The bidder must present at least 1 reference of a chatbot or AI assistant already deployed",
+        "skill": "1 chatbot or AI assistant project reference",
+        "quote": "le soumissionnaire doit présenter au moins 1 référence de chatbot ou d'assistant IA déjà déployé",
+        "mandatory": true,
+        "coverage": "partial",
+        "coverage_score": 50,
+        "rerank_score": -1.42,
+        "origin": "demo",
+        "justification_kind": "demo",
+        "justification": "Generative AI chatbot using RAG over product documents for a telecom operator, French and Arabic.",
+        "justification_weak": true,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "demo_Project_Telecom_RAGChatbot",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Generative AI chatbot using RAG over product documents for a telecom operator, French and Arabic.",
+          "snippet": "Generative AI chatbot using RAG over product documents for a telecom operator, French and Arabic.",
+          "metadata": null,
+          "proves": false
+         }
+        ],
+        "closest_asset": null
+       }
+      ],
+      "summary": {
+       "fit_score": 92,
+       "rag_overall": 94,
+       "by_category": {
+        "technical": 93,
+        "team": 100,
+        "experience": 82
+       },
+       "covered": 4,
+       "partial": 3,
+       "gaps": 0,
+       "gaps_list": [],
+       "mandatory_gaps": [],
+       "obligations_not_in_matrix": [],
+       "coverage": 0.79,
+       "blocking": [],
+       "demo_evidence": [
+        "R2",
+        "R7"
+       ],
+       "knowledge_gaps": [
+        {
+         "requirement_id": "R2",
+         "requirement": "respond in French and Arabic",
+         "category": "technical",
+         "mandatory": true,
+         "kind": "evidence",
+         "gap": "Weak evidence only: the best match is not a clear fit.",
+         "suggestion": "Check the closest documents manually; add a record or CV that states this capability explicitly."
+        },
+        {
+         "requirement_id": "R3",
+         "requirement": "vector database",
+         "category": "technical",
+         "mandatory": true,
+         "kind": "evidence",
+         "gap": "Weak evidence only: the best match is not a clear fit.",
+         "suggestion": "Check the closest documents manually; add a record or CV that states this capability explicitly."
+        },
+        {
+         "requirement_id": "R7",
+         "requirement": "1 chatbot or AI assistant project reference",
+         "category": "experience",
+         "mandatory": true,
+         "kind": "evidence",
+         "gap": "Weak evidence only: the best match is not a clear fit.",
+         "suggestion": "Check the closest documents manually; add a record or CV that states this capability explicitly."
+        }
+       ],
+       "recommendation": "review",
+       "recommendation_reason": "partial or missing evidence: R2 partial, R3 partial, R7 partial: check them before deciding; proof from fictional demo records only: R2, R7"
+      }
+     },
+     "competition": {
+      "status": "NOT_STUDIED",
+      "detail": "not_studied",
+      "declared_value": "350 000 TND",
+      "declared_value_amount": 350000,
+      "declared_value_range": null,
+      "budget_estimate": null,
+      "competitors": [],
+      "median_bids": null,
+      "positioning": null,
+      "budget_comment": null,
+      "comparables": []
+     },
+     "options": {
+      "template_id": "olivesoft_default",
+      "formats": [
+       "pptx",
+       "pdf"
+      ],
+      "sections": [
+       "context",
+       "understanding",
+       "solution",
+       "team",
+       "references",
+       "timeline",
+       "pricing",
+       "why_us"
+      ],
+      "overrides": {
+       "tone": "formal",
+       "max_slides": 15,
+       "gap_strategy": "mitigate"
+      }
+     },
+     "company": {
+      "name": "OliveSoft",
+      "services": [
+       "web and mobile applications, custom software and digital platforms",
+       "AI / LLM solutions (chatbots, RAG, document intelligence)",
+       "workflow automation and RPA",
+       "data platforms, integration and BI / analytics",
+       "CRM and enterprise software integration"
+      ],
+      "technologies": [
+       "Python",
+       "JavaScript/TypeScript",
+       "React",
+       "Node.js",
+       "PostgreSQL",
+       "cloud",
+       "LLM",
+       "RAG",
+       "machine learning",
+       "n8n",
+       "Power BI",
+       "Salesforce"
+      ]
+     }
+    },
+    {
+     "contract": "olivesoft.proposal-input.v2",
+     "tender_id": "T1wp05cp",
+     "language": "fr",
+     "rank": 5,
+     "run_id": "2026-10-20T05-19-35-615Z",
+     "generated_on": "2026-10-20",
+     "tender": {
+      "title": "Développement d'une plateforme numérique de gestion des licences touristiques",
+      "reference": "DEMO-001",
+      "issuer": "Office du Tourisme de Sampleville (démo)",
+      "country": "Tunisia",
+      "country_code": "TN",
+      "publication_date": "2026-10-17",
+      "deadline": "2026-11-13",
+      "days_to_deadline": 24,
+      "estimated_value": "480 000 TND",
+      "cpv": [
+       "72212000",
+       "72262000"
+      ],
+      "duration": "6 mois",
+      "source": "demo",
+      "source_url": "http://localhost:8004/tenders/DEMO-001",
+      "submission_url": null,
+      "documents_url": null,
+      "description": "L'Office du Tourisme de Sampleville lance un appel d'offres pour le développement d'une plateforme web de gestion des licences des établissements touristiques (demandes en ligne, suivi, renouvellement, tableau de bord). Exigences techniques : le frontend doit être développé en React ou Angular. Le backend doit être réalisé en Node.js ou Java/Spring. La base de données doit être PostgreSQL. La plateforme doit exposer une API REST. L'hébergement doit être assuré sur un cloud AWS ou Azure. Équipe : le soumissionnaire doit proposer au minimum 3 développeurs seniors, 1 chef de projet certifié PMP et 1 designer UX/UI. Expérience : le soumissionnaire doit justifier d'au moins 2 projets numériques similaires dans le secteur public. Une certification ISO 27001 est souhaitée. Durée d'exécution : 6 mois. Critères d'attribution : valeur technique (60), prix (40).",
+      "lots": [],
+      "award_criteria": [
+       "Valeur technique (60)",
+       "Prix (40)"
+      ]
+     },
+     "analysis": {
+      "relevance_score": 91,
+      "relevance_basis": "fit high (70) + 30 x RAG coverage 0.7",
+      "fit": "high",
+      "tender_type": "software_build",
+      "matched_service_lines": [
+       "web and mobile applications, custom software and digital platforms"
+      ],
+      "reason": "The tender requests a web platform for managing tourist licenses with a frontend in React or Angular and a backend in Node.js or Java/Spring.",
+      "proof_quote": "Développement d'une plateforme web de gestion des licences des établissements touristiques",
+      "quote_verified": true,
+      "sector": "tourism",
+      "suggested_angle": null,
+      "risks": [
+       "No internal evidence for mandatory requirement(s): R6, R8",
+       "Proof from FICTIONAL demo records (not company references): R9",
+       "Team: Minimum 3 senior developers (0 of 3 available); 1 UX/UI designer (0 of 1 available) cannot be staffed from the CV bank"
+      ],
+      "requirements": {
+       "technical": [
+        "React or Angular",
+        "Node.js or Java/Spring",
+        "PostgreSQL",
+        "REST API",
+        "AWS or Azure",
+        "ISO 27001 certification"
+       ],
+       "team": [
+        "Minimum 3 senior developers",
+        "1 PMP certified",
+        "1 UX/UI designer"
+       ],
+       "experience": [
+        "2+ public sector digital projects"
+       ],
+       "timeline": "6 mois"
+      }
+     },
+     "buyer_profile": {
+      "name": "Office du Tourisme de Sampleville (démo)",
+      "legal_name": null,
+      "sector": null,
+      "size": null,
+      "organization_description": null,
+      "estimated_revenue": null,
+      "staff": null,
+      "website": null,
+      "contacts": {
+       "emails": [
+        "achats@tourisme-sampleville.demo"
+       ],
+       "phones": [],
+       "addresses": []
+      },
+      "past_digital_projects": [],
+      "past_winners": [],
+      "key_partners": [],
+      "domain_requirements": [
+       "AWS or Azure",
+       "1 PMP certified",
+       "ISO 27001 certification"
+      ],
+      "research_status": "skipped_demo",
+      "enrichment_status": "not_researched"
+     },
+     "rag": {
+      "status": "PARTIAL",
+      "data_mode": "demo",
+      "coverage_basis": "Recorded capabilities; declarations are not verified document evidence.",
+      "suggested_assets": {
+       "projects": [
+        "demo_Project_MinistryInterior_LicensingPortal",
+        "demo_Project_PublicAgency_SecuritySoftware",
+        "demo_Project_HealthAnalytics_Dashboard"
+       ],
+       "team": [
+        "CV_11_Chloe_Martin.pdf",
+        "CV_18_Leila_Morgan.pdf",
+        "CV_02_Liam_Carter.pdf",
+        "CV_16_Nora_Ellis.pdf",
+        "CV_17_Julian_Hayes.pdf",
+        "CV_01_Ava_Thompson.pdf"
+       ],
+       "stack": [
+        "demo_TechStack_PublicSector_Cloud",
+        "demo_TechStack_Data_AI"
+       ],
+       "other": []
+      },
+      "assets": [
+       {
+        "asset_id": "CV_11_Chloe_Martin.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data-Engineering student with solid hands-on experience designing and benchmarking end-to-end streaming pipelines on both Google Cloud and Azure. Proven ability to translate business requirements into",
+        "for": [
+         "R1",
+         "R2"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "demo_TechStack_PublicSector_Cloud",
+        "asset_type": "stack",
+        "origin": "demo",
+        "demo": true,
+        "title": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.",
+        "for": [
+         "R1",
+         "R2",
+         "R3",
+         "R5"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "demo_Project_MinistryInterior_LicensingPortal",
+        "asset_type": "project",
+        "origin": "demo",
+        "demo": true,
+        "title": "Digital licensing and compliance tracking platform delivered for a government ministry, React + Spring Boot + PostgreSQL, 5 month delivery.",
+        "for": [
+         "R1",
+         "R9"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_18_Leila_Morgan.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data pipelines, workflow orchestration, and cloud-native architectures that enab",
+        "for": [
+         "R2"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_02_Liam_Carter.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Enthusiastic Software Developer with 3+ years of experience building responsive web applications using PHP, HTML, and JavaScript. Proven ability to improve performance and user experience through clea",
+        "for": [
+         "R3",
+         "R4"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "demo_TechStack_Data_AI",
+        "asset_type": "stack",
+        "origin": "demo",
+        "demo": true,
+        "title": "Data and AI offering: Python, Airflow, Power BI dashboards, LLMs, RAG and vector databases.",
+        "for": [
+         "R3"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_16_Nora_Ellis.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and optimizing end-to-end data pipelines for clients across finance, retail, and logist",
+        "for": [
+         "R4"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_17_Julian_Hayes.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Strategic Managing Partner with 15+ years of experience driving data-centric transformation, AI adoption, and enterprise architecture across telecom, retail, and energy sectors. Proven track record of",
+        "for": [
+         "R4",
+         "R5",
+         "R7"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_01_Ava_Thompson.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Cloud Infrastructure Engineer with over three years of experience designing, automating, and operating scalable Kubernetesbased platforms for enterprise customers. Proven ability to cut deployment tim",
+        "for": [
+         "R5"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "demo_Project_PublicAgency_SecuritySoftware",
+        "asset_type": "project",
+        "origin": "demo",
+        "demo": true,
+        "title": "Supply and deployment of IT security software (antivirus, EDR, firewall management) for a public agency.",
+        "for": [
+         "R9"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "demo_Project_HealthAnalytics_Dashboard",
+        "asset_type": "project",
+        "origin": "demo",
+        "demo": true,
+        "title": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+        "for": [
+         "R9"
+        ],
+        "weak_for": []
+       }
+      ],
+      "team_proposal": {
+       "size": 1,
+       "places_filled": 1,
+       "places_needed": 5,
+       "members": [
+        {
+         "name": "Julian Hayes",
+         "asset_id": "CV_17_Julian_Hayes.pdf",
+         "title": "Julian Hayes - Strategic Managing Partner",
+         "seniority": "senior",
+         "years": 15,
+         "roles": [
+          "project manager"
+         ],
+         "certifications": [
+          "PMP",
+          "TOGAF"
+         ],
+         "assigned_to": [
+          {
+           "requirement_id": "R7",
+           "requirement": "1 PMP certified"
+          }
+         ]
+        }
+       ],
+       "unfilled": [
+        {
+         "requirement_id": "R6",
+         "requirement": "Minimum 3 senior developers",
+         "needed": 3,
+         "available": 0,
+         "mandatory": true
+        },
+        {
+         "requirement_id": "R8",
+         "requirement": "1 UX/UI designer",
+         "needed": 1,
+         "available": 0,
+         "mandatory": true
+        }
+       ],
+       "notes": [
+        "A person may fill several requirements when their CV qualifies for each. Check availability and workload.",
+        "Some requirements cannot be filled from the CV bank; see 'unfilled'."
+       ]
+      },
+      "knowledge_counts": {
+       "cv": 19,
+       "past_project": 10,
+       "tech_stack": 4,
+       "tool": 2,
+       "client_portfolio": 12,
+       "completed_projects": 10
+      }
+     },
+     "matrix": {
+      "status": "OK",
+      "rows": [
+       {
+        "requirement_id": "R1",
+        "category": "technical",
+        "requirement": "Frontend must be developed in React or Angular",
+        "skill": "React or Angular",
+        "quote": "le frontend doit être développé en React ou Angular",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Developed a responsive web portal using React, Node.js and PostgreSQL that served 1 200+ internal users.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_11_Chloe_Martin.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data-Engineering student with solid hands-on experience designing and benchmarking end-to-end streaming pipelines on both Google Cloud and Azure. Proven ability to translate business requirements into",
+          "snippet": "Developed a responsive web portal using React, Node.js and PostgreSQL that served 1 200+ internal users.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_TechStack_PublicSector_Cloud",
+          "asset_type": "stack",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.",
+          "snippet": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_Project_MinistryInterior_LicensingPortal",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Digital licensing and compliance tracking platform delivered for a government ministry, React + Spring Boot + PostgreSQL, 5 month delivery.",
+          "snippet": "Digital licensing and compliance tracking platform delivered for a government ministry, React + Spring Boot + PostgreSQL, 5 month delivery.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R2",
+        "category": "technical",
+        "requirement": "Backend must be realized in Node.js or Java/Spring",
+        "skill": "Node.js or Java/Spring",
+        "quote": "le backend doit être réalisé en Node.js ou Java/Spring",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Designed and deployed a secure multi-node Apache NiFi cluster using Ansible, increasing ingestion throughput by 60%.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_18_Leila_Morgan.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data pipelines, workflow orchestration, and cloud-native architectures that enab",
+          "snippet": "Designed and deployed a secure multi-node Apache NiFi cluster using Ansible, increasing ingestion throughput by 60%.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_11_Chloe_Martin.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data-Engineering student with solid hands-on experience designing and benchmarking end-to-end streaming pipelines on both Google Cloud and Azure. Proven ability to translate business requirements into",
+          "snippet": "Developed a responsive web portal using React, Node.js and PostgreSQL that served 1 200+ internal users.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_TechStack_PublicSector_Cloud",
+          "asset_type": "stack",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.",
+          "snippet": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R3",
+        "category": "technical",
+        "requirement": "Database must be PostgreSQL",
+        "skill": "PostgreSQL",
+        "quote": "la base de données doit être PostgreSQL",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Databases: MySQL, phpMyAdmin, PostgreSQL",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_02_Liam_Carter.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Enthusiastic Software Developer with 3+ years of experience building responsive web applications using PHP, HTML, and JavaScript. Proven ability to improve performance and user experience through clea",
+          "snippet": "Databases: MySQL, phpMyAdmin, PostgreSQL",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_TechStack_PublicSector_Cloud",
+          "asset_type": "stack",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.",
+          "snippet": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_TechStack_Data_AI",
+          "asset_type": "stack",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Data and AI offering: Python, Airflow, Power BI dashboards, LLMs, RAG and vector databases.",
+          "snippet": "Data and AI offering: Python, Airflow, Power BI dashboards, LLMs, RAG and vector databases.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R4",
+        "category": "technical",
+        "requirement": "The platform must expose a REST API",
+        "skill": "REST API",
+        "quote": "la plateforme doit exposer une API REST",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Integrated RESTful APIs for payment processing, achieving a 99.9% transaction success rate and handling over 5,000 daily",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_02_Liam_Carter.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Enthusiastic Software Developer with 3+ years of experience building responsive web applications using PHP, HTML, and JavaScript. Proven ability to improve performance and user experience through clea",
+          "snippet": "Integrated RESTful APIs for payment processing, achieving a 99.9% transaction success rate and handling over 5,000 daily",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_16_Nora_Ellis.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Platform Team Lead and Google Cloud Platform Data Engineer with 4+ years of experience designing, building, and optimizing end-to-end data pipelines for clients across finance, retail, and logist",
+          "snippet": "Integrated RESTful APIs and implemented OAuth2 authentication, enhancing security and reducing login issues by 90 %.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_17_Julian_Hayes.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Strategic Managing Partner with 15+ years of experience driving data-centric transformation, AI adoption, and enterprise architecture across telecom, retail, and energy sectors. Proven track record of",
+          "snippet": "Programming: Java, C, JavaScript, REST APIs",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R5",
+        "category": "technical",
+        "requirement": "Hosting must be assured on AWS or Azure",
+        "skill": "AWS or Azure",
+        "quote": "l'hébergement doit être assuré sur un cloud AWS ou Azure",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Implemented Terraform-based IaC for AWS and Azure resources, cutting manual provisioning effort by 40 % and eliminating",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_01_Ava_Thompson.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Cloud Infrastructure Engineer with over three years of experience designing, automating, and operating scalable Kubernetesbased platforms for enterprise customers. Proven ability to cut deployment tim",
+          "snippet": "Implemented Terraform-based IaC for AWS and Azure resources, cutting manual provisioning effort by 40 % and eliminating",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_17_Julian_Hayes.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Strategic Managing Partner with 15+ years of experience driving data-centric transformation, AI adoption, and enterprise architecture across telecom, retail, and energy sectors. Proven track record of",
+          "snippet": "Enterprise Architecture: TOGAF, ArchiMate, Micro-services, Cloud (AWS, Azure)",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_TechStack_PublicSector_Cloud",
+          "asset_type": "stack",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.",
+          "snippet": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R6",
+        "category": "team",
+        "requirement": "Minimum 3 senior developers",
+        "skill": "Minimum 3 senior developers",
+        "quote": "le soumissionnaire doit proposer au minimum 3 développeurs seniors, 1 chef de projet certifié PMP et 1 designer UX/UI",
+        "mandatory": true,
+        "coverage": "gap",
+        "coverage_score": 0,
+        "rerank_score": null,
+        "origin": null,
+        "justification_kind": null,
+        "justification": null,
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [],
+        "closest_asset": {
+         "asset_id": "CV_02_Liam_Carter.pdf",
+         "title": "Enthusiastic Software Developer with 3+ years of experience building responsive web applications using PHP, HTML, and JavaScript. Proven ability to improve performance and user experience through clea"
+        }
+       },
+       {
+        "requirement_id": "R7",
+        "category": "team",
+        "requirement": "1 PMP certified",
+        "skill": "1 PMP certified",
+        "quote": "le soumissionnaire doit proposer au minimum 3 développeurs seniors, 1 chef de projet certifié PMP et 1 designer UX/UI",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Project Management Professional (PMP), PMI – 2022",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_17_Julian_Hayes.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Strategic Managing Partner with 15+ years of experience driving data-centric transformation, AI adoption, and enterprise architecture across telecom, retail, and energy sectors. Proven track record of",
+          "snippet": "Project Management Professional (PMP), PMI – 2022",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R8",
+        "category": "team",
+        "requirement": "1 UX/UI designer",
+        "skill": "1 UX/UI designer",
+        "quote": "le soumissionnaire doit proposer au minimum 3 développeurs seniors, 1 chef de projet certifié PMP et 1 designer UX/UI",
+        "mandatory": true,
+        "coverage": "gap",
+        "coverage_score": 0,
+        "rerank_score": null,
+        "origin": null,
+        "justification_kind": null,
+        "justification": null,
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [],
+        "closest_asset": {
+         "asset_id": "CV_03_Maya_Patel.pdf",
+         "title": "Cloud and DevOps Engineer with a Computer Science engineering background, specialized in designing, automating, and managing cloud-native infrastructures on Azure and Kubernetes. Proven ability to del"
+        }
+       },
+       {
+        "requirement_id": "R9",
+        "category": "experience",
+        "requirement": "At least 2 similar public sector digital projects",
+        "skill": "2+ public sector digital projects",
+        "quote": "le soumissionnaire doit justifier d'au moins 2 projets numériques similaires dans le secteur public",
+        "mandatory": true,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": null,
+        "origin": "demo",
+        "justification_kind": "demo",
+        "justification": "Digital licensing and compliance tracking platform delivered for a government ministry, React + Spring Boot + PostgreSQL, 5 month delivery.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "demo_Project_MinistryInterior_LicensingPortal",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Digital licensing and compliance tracking platform delivered for a government ministry, React + Spring Boot + PostgreSQL, 5 month delivery.",
+          "snippet": "Digital licensing and compliance tracking platform delivered for a government ministry, React + Spring Boot + PostgreSQL, 5 month delivery.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_Project_PublicAgency_SecuritySoftware",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Supply and deployment of IT security software (antivirus, EDR, firewall management) for a public agency.",
+          "snippet": "Supply and deployment of IT security software (antivirus, EDR, firewall management) for a public agency.",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "demo_Project_HealthAnalytics_Dashboard",
+          "asset_type": "project",
+          "origin": "demo",
+          "evidence_kind": "demo",
+          "title": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+          "snippet": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.",
+          "metadata": null,
+          "proves": true
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R10",
+        "category": "technical",
+        "requirement": "ISO 27001 certification is desired",
+        "skill": "ISO 27001 certification",
+        "quote": "Une certification ISO 27001 est souhaitée",
+        "mandatory": false,
+        "coverage": "gap",
+        "coverage_score": 0,
+        "rerank_score": null,
+        "origin": null,
+        "justification_kind": null,
+        "justification": null,
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [],
+        "closest_asset": {
+         "asset_id": "demo_TechStack_Security_Infrastructure",
+         "title": "Security and infrastructure offering: ISO 27001 consulting, security software supply, network hardware."
+        }
+       }
+      ],
+      "summary": {
+       "fit_score": 72,
+       "rag_overall": 73,
+       "by_category": {
+        "technical": 83,
+        "team": 33,
+        "experience": 100
+       },
+       "covered": 7,
+       "partial": 0,
+       "gaps": 3,
+       "gaps_list": [
+        "R6",
+        "R8",
+        "R10"
+       ],
+       "mandatory_gaps": [
+        "R6",
+        "R8"
+       ],
+       "obligations_not_in_matrix": [],
+       "coverage": 0.7,
+       "blocking": [
+        "R6: Minimum 3 senior developers",
+        "R8: 1 UX/UI designer"
+       ],
+       "demo_evidence": [
+        "R9"
+       ],
+       "knowledge_gaps": [
+        {
+         "requirement_id": "R10",
+         "requirement": "ISO 27001 certification",
+         "category": "technical",
+         "mandatory": false,
+         "kind": "certification",
+         "gap": "No CV lists the ISO 27001 certification.",
+         "suggestion": "Add the CV of a qualified employee to the CV bank (data/cvs), or plan recruitment or a partner. Company certifications (such as ISO 27001) need their certificate holder's CV."
+        },
+        {
+         "requirement_id": "R6",
+         "requirement": "Minimum 3 senior developers",
+         "category": "team",
+         "mandatory": true,
+         "kind": "people",
+         "gap": "2 CV(s) with the role 'developer', but only 0 senior developer(s); 3 needed.",
+         "suggestion": "Need 3 more senior developer(s). Add the CV of a qualified employee to the CV bank (data/cvs), or plan recruitment or a partner."
+        },
+        {
+         "requirement_id": "R8",
+         "requirement": "1 UX/UI designer",
+         "category": "team",
+         "mandatory": true,
+         "kind": "people",
+         "gap": "No CV with the role 'designer'.",
+         "suggestion": "Add the CV of a qualified employee to the CV bank (data/cvs), or plan recruitment or a partner."
+        }
+       ],
+       "recommendation": "review",
+       "recommendation_reason": "partial or missing evidence: R6 gap, R8 gap, R10 gap: check them before deciding; proof from fictional demo records only: R9"
+      }
+     },
+     "competition": {
+      "status": "NOT_STUDIED",
+      "detail": "not_studied",
+      "declared_value": "480 000 TND",
+      "declared_value_amount": 480000,
+      "declared_value_range": null,
+      "budget_estimate": null,
+      "competitors": [],
+      "median_bids": null,
+      "positioning": null,
+      "budget_comment": null,
+      "comparables": []
+     },
+     "options": {
+      "template_id": "olivesoft_default",
+      "formats": [
+       "pptx",
+       "pdf"
+      ],
+      "sections": [
+       "context",
+       "understanding",
+       "solution",
+       "team",
+       "references",
+       "timeline",
+       "pricing",
+       "why_us"
+      ],
+      "overrides": {
+       "tone": "formal",
+       "max_slides": 15,
+       "gap_strategy": "mitigate"
+      }
+     },
+     "company": {
+      "name": "OliveSoft",
+      "services": [
+       "web and mobile applications, custom software and digital platforms",
+       "AI / LLM solutions (chatbots, RAG, document intelligence)",
+       "workflow automation and RPA",
+       "data platforms, integration and BI / analytics",
+       "CRM and enterprise software integration"
+      ],
+      "technologies": [
+       "Python",
+       "JavaScript/TypeScript",
+       "React",
+       "Node.js",
+       "PostgreSQL",
+       "cloud",
+       "LLM",
+       "RAG",
+       "machine learning",
+       "n8n",
+       "Power BI",
+       "Salesforce"
+      ]
+     }
+    },
+    {
+     "contract": "olivesoft.proposal-input.v2",
+     "tender_id": "T1ytbl1u",
+     "language": "fr",
+     "rank": 6,
+     "run_id": "2026-10-20T05-19-35-615Z",
+     "generated_on": "2026-10-20",
+     "tender": {
+      "title": "Prestation d’ingénierie en matière de traitements et d'analyse de données, d'études statistiques et de restitutions de données",
+      "reference": "26-101315",
+      "issuer": "ATIH.",
+      "country": "France",
+      "country_code": "FR",
+      "publication_date": "2026-10-20",
+      "deadline": "2026-11-20",
+      "days_to_deadline": 31,
+      "estimated_value": null,
+      "cpv": [
+       "79330000"
+      ],
+      "duration": "48 month",
+      "source": "boamp",
+      "source_url": "https://www.boamp.fr/pages/avis/?q=idweb:26-101315",
+      "submission_url": "https://www.marches-publics.gouv.fr/entreprise/consultation/3067944?orgAcronyme=h8j",
+      "documents_url": "https://www.marches-publics.gouv.fr/",
+      "description": "La présente consultation a pour objet la passation de marchés publics portant sur la réalisation de prestations d'ingénierie en matière de traitements de données, d'analyses, d'études statistiques et de restitutions, ainsi que de prestations de migration, d'amélioration, de mise à jour de code, d'optimisation, de recettage et de documentation de programmes, notamment dans le cadre de la migration de traitements existants et de l'amélioration des codes existants. Ces prestations ont notamment pour finalité de permettre à l’ATIH de mobiliser, en fonction de ses besoins, des compétences techniques et méthodologiques spécialisées afin de réaliser des traitements de données, des analyses et études statistiques, des restitutions ainsi que des prestations de migration, d’amélioration et de mise à jour de code. Elles pourront concerner l’ensemble des données collectées ou traitées par l’ATIH, notamment les données d’information médicale, financières, relatives aux coûts ou aux ressources humaines. Le détail des prestations à exécuter figure dans le cahier des clauses techniques particulières commun aux lots (CCTPC). Les prestations font l’objet d’un allotissement : lot n°1 : Prestation d’ingénierie en matière de traitements de données, d’analyses et études statistiques et de restitutions ; lot n°2 : Prestation de migration, d’amélioration et de mise à jour de code. Chaque lot donne lieu à la conclusion d’un marché public séparé. Chaque marché est conclu avec les quantités minimum et maximum suivantes exprimées en jours d’intervention pour leur durée totale, reconductions comprises : Lot 1 : minimum 100 jours et maximum 1 040 jours (hors pilotage et déplacement sur site) ; Lot 2 : minimum 30 jours et maximum 300 jours (hors pilotage et déplacement sur site).\n\nLe marché est conclu pour une durée initiale de douze (12) mois à compter du 1er janvier 2027, ou de sa date de notification si elle est postérieure. Il pourra être reconduit trois (3) fois pour une période de douze (12) mois, soit une durée maximum de quatre (4) ans.",
+      "lots": [
+       {
+        "title": "Prestation d’ingénierie en matière de traitements de données, d’analyses et études statistiques et de restitutions",
+        "description": "Le marché est conclu pour une durée initiale de douze (12) mois à compter du 1er janvier 2027, ou de sa date de notification si elle est postérieure. Il pourra être reconduit trois (3) fois pour une période de douze (12) mois, soit une durée maximum de quatre (4) ans.",
+        "estimated_value": null
+       },
+       {
+        "title": "Prestation de migration, d’amélioration et de mise à jour de code",
+        "description": "Le marché est conclu pour une durée initiale de douze (12) mois à compter du 1er janvier 2027, ou de sa date de notification si elle est postérieure. Il pourra être reconduit trois (3) fois pour une période de douze (12) mois, soit une durée maximum de quatre (4) ans.",
+        "estimated_value": null
+       }
+      ],
+      "award_criteria": [
+       "Le prix n’est pas le seul critère d’attribution et tous les critères sont énoncés uniquement dans le Règlement de la Consultation (RC)"
+      ]
+     },
+     "analysis": {
+      "relevance_score": 85,
+      "relevance_basis": "fit high (70) + 30 x RAG coverage 0.5",
+      "fit": "high",
+      "tender_type": "ai_data",
+      "matched_service_lines": [
+       "AI / LLM solutions (chatbots, RAG, document intelligence)"
+      ],
+      "reason": "Prestation d’ingénierie en matière de traitements de données, d'analyses, d'études statistiques et de restitutions",
+      "proof_quote": "Prestation d’ingénierie en matière de traitements de données, d'analyses et études statistiques et de restitutions",
+      "quote_verified": true,
+      "sector": "health",
+      "suggested_angle": null,
+      "risks": [],
+      "requirements": {
+       "technical": [
+        "data processing",
+        "data analysis",
+        "statistical studies",
+        "data restitutions"
+       ],
+       "team": [],
+       "experience": [],
+       "timeline": "douze (12) mois"
+      }
+     },
+     "buyer_profile": {
+      "name": "ATIH.",
+      "legal_name": "AGENCE DE TRADUCTION INTERPRETARIAT HASSIBI (ATIH) (ATIH)",
+      "sector": "Public agency",
+      "size": null,
+      "organization_description": null,
+      "estimated_revenue": null,
+      "staff": null,
+      "website": null,
+      "contacts": {
+       "emails": [
+        "marchespublics@atih.sante.fr"
+       ],
+       "phones": [
+        "04 37 91 33 10"
+       ],
+       "addresses": [
+        "69329 LYON",
+        "115 RUE DE L ABBE GROULT 75015 PARIS 15"
+       ]
+      },
+      "past_digital_projects": [
+       {
+        "title": "Mise à disposition de données de santé à caractère personnel pour l’ATIH",
+        "date": "2026-09-18",
+        "source": "BOAMP"
+       },
+       {
+        "title": "Marché complémentaire de prestations d’ingénierie en matière de traitements de données, d’analyses et études s",
+        "date": "2026-06-03",
+        "source": "BOAMP"
+       },
+       {
+        "title": "Prestation d'ingénierie en matière de traitements de données, d'analyses et études statistiques et de restitut",
+        "date": "2026-04-01",
+        "source": "BOAMP"
+       },
+       {
+        "title": "FOURNITURE DE PROGICIELS DE GESTION, D'ANALYSE DE DONNEES ET DE DIFFUSION DE RESULTATS, MAINTENANCE, SUPPORT,",
+        "date": "2023-12-06",
+        "source": "BOAMP"
+       }
+      ],
+      "past_winners": [
+       {
+        "name": "SYNERGIE",
+        "wins": 1
+       },
+       {
+        "name": "SOLADIS SAS",
+        "wins": 1
+       },
+       {
+        "name": "AESE - EXCO",
+        "wins": 1
+       },
+       {
+        "name": "KALITIS",
+        "wins": 1
+       },
+       {
+        "name": "YMAGO",
+        "wins": 1
+       },
+       {
+        "name": "KALITIS SAS",
+        "wins": 1
+       }
+      ],
+      "key_partners": [],
+      "domain_requirements": [],
+      "research_status": "researched",
+      "enrichment_status": "enriched"
+     },
+     "rag": {
+      "status": "PARTIAL",
+      "data_mode": "company",
+      "coverage_basis": "Recorded capabilities; declarations are not verified document evidence.",
+      "suggested_assets": {
+       "projects": [],
+       "team": [
+        "CV_10_Daniel_Kim.pdf"
+       ],
+       "stack": [],
+       "other": []
+      },
+      "assets": [
+       {
+        "asset_id": "CV_07_Olivia_Morris.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Engineer with 2+ years of experience designing scalable data pipelines and data-warehousing solutions. Proven ability to improve data latency and quality through automation, and to collaborate ef",
+        "for": [],
+        "weak_for": [
+         "R1"
+        ]
+       },
+       {
+        "asset_id": "CV_13_Isabella_Ross.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI solutions. Proven ability to increase data availability by 30 % and reduce ",
+        "for": [],
+        "weak_for": [
+         "R1",
+         "R3"
+        ]
+       },
+       {
+        "asset_id": "CV_19_Owen_Parker.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data Integration Engineer with 3+ years of experience designing, implementing, and optimizing end-to-end data pipelines using Talend and Azure technologies. Proven ability to reduce processing times b",
+        "for": [],
+        "weak_for": [
+         "R1"
+        ]
+       },
+       {
+        "asset_id": "CV_10_Daniel_Kim.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Business and Data Analyst with a strong track record of turning raw data into actionable insights. Experienced in building end-to-end Power BI solutions, automating reporting pipelines, and supporting",
+        "for": [
+         "R2"
+        ],
+        "weak_for": []
+       },
+       {
+        "asset_id": "CV_05_Sofia_Nguyen.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data-driven BI Consultant with 5+ years of experience designing end-to-end analytics solutions across finance, telecom, and payments. Proven ability to translate complex business requirements into int",
+        "for": [],
+        "weak_for": [
+         "R2"
+        ]
+       },
+       {
+        "asset_id": "CV_18_Leila_Morgan.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data pipelines, workflow orchestration, and cloud-native architectures that enab",
+        "for": [],
+        "weak_for": [
+         "R2"
+        ]
+       }
+      ],
+      "team_proposal": null,
+      "knowledge_counts": {
+       "cv": 19,
+       "past_project": 37,
+       "tech_stack": 5,
+       "tool": 4,
+       "client_portfolio": 25,
+       "completed_projects": 31
+      }
+     },
+     "matrix": {
+      "status": "OK",
+      "rows": [
+       {
+        "requirement_id": "R1",
+        "category": "technical",
+        "requirement": "data processing",
+        "skill": "data processing",
+        "quote": "traitements de données, d'analyses, d'études statistiques et de restitutions",
+        "mandatory": false,
+        "coverage": "partial",
+        "coverage_score": 50,
+        "rerank_score": -1.62,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Designed and deployed end-to-end ETL pipelines processing >10 million records daily, cutting data latency from 12 h to 4",
+        "justification_weak": true,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_07_Olivia_Morris.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Engineer with 2+ years of experience designing scalable data pipelines and data-warehousing solutions. Proven ability to improve data latency and quality through automation, and to collaborate ef",
+          "snippet": "Designed and deployed end-to-end ETL pipelines processing >10 million records daily, cutting data latency from 12 h to 4",
+          "metadata": null,
+          "proves": false
+         },
+         {
+          "asset_id": "CV_13_Isabella_Ross.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI solutions. Proven ability to increase data availability by 30 % and reduce ",
+          "snippet": "Created 12 real-time Talend jobs processing 200 k records/hour, achieving 99.5 % pipeline success rate.",
+          "metadata": null,
+          "proves": false
+         },
+         {
+          "asset_id": "CV_19_Owen_Parker.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Integration Engineer with 3+ years of experience designing, implementing, and optimizing end-to-end data pipelines using Talend and Azure technologies. Proven ability to reduce processing times b",
+          "snippet": "execution.",
+          "metadata": null,
+          "proves": false
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R2",
+        "category": "technical",
+        "requirement": "data analysis",
+        "skill": "data analysis",
+        "quote": "traitements de données, d'analyses, d'études statistiques et de restitutions",
+        "mandatory": false,
+        "coverage": "covered",
+        "coverage_score": 100,
+        "rerank_score": 0.01,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "Business and Data Analyst with a strong track record of turning raw data into actionable insights. Experienced in building",
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [
+         {
+          "asset_id": "CV_10_Daniel_Kim.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Business and Data Analyst with a strong track record of turning raw data into actionable insights. Experienced in building end-to-end Power BI solutions, automating reporting pipelines, and supporting",
+          "snippet": "Business and Data Analyst with a strong track record of turning raw data into actionable insights. Experienced in building",
+          "metadata": null,
+          "proves": true
+         },
+         {
+          "asset_id": "CV_05_Sofia_Nguyen.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data-driven BI Consultant with 5+ years of experience designing end-to-end analytics solutions across finance, telecom, and payments. Proven ability to translate complex business requirements into int",
+          "snippet": "Data-driven BI Consultant with 5+ years of experience designing end-to-end analytics solutions across finance, telecom, and",
+          "metadata": null,
+          "proves": false
+         },
+         {
+          "asset_id": "CV_18_Leila_Morgan.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data & AI Engineer with a strong passion for building scalable data and AI systems. Experienced in designing end-to-end data pipelines, workflow orchestration, and cloud-native architectures that enab",
+          "snippet": "Relevant coursework: Distributed Systems, Big Data Analytics, Machine Learning",
+          "metadata": null,
+          "proves": false
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R3",
+        "category": "technical",
+        "requirement": "statistical studies",
+        "skill": "statistical studies",
+        "quote": "traitements de données, d'analyses, d'études statistiques et de restitutions",
+        "mandatory": false,
+        "coverage": "partial",
+        "coverage_score": 50,
+        "rerank_score": -4.53,
+        "origin": "cv_document",
+        "justification_kind": "document_quote",
+        "justification": "implementation.",
+        "justification_weak": true,
+        "justification_is_header": true,
+        "evidence": [
+         {
+          "asset_id": "CV_13_Isabella_Ross.pdf",
+          "asset_type": "cv",
+          "origin": "cv_document",
+          "evidence_kind": "document_quote",
+          "title": "Data Engineer with 3+ years of experience designing and operating end-to-end data pipelines, lakehouse architectures, and BI solutions. Proven ability to increase data availability by 30 % and reduce ",
+          "snippet": "implementation.",
+          "metadata": null,
+          "proves": false
+         }
+        ],
+        "closest_asset": null
+       },
+       {
+        "requirement_id": "R4",
+        "category": "technical",
+        "requirement": "data restitutions",
+        "skill": "data restitutions",
+        "quote": "traitements de données, d'analyses, d'études statistiques et de restitutions",
+        "mandatory": false,
+        "coverage": "gap",
+        "coverage_score": 0,
+        "rerank_score": -7.05,
+        "origin": null,
+        "justification_kind": null,
+        "justification": null,
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [],
+        "closest_asset": {
+         "asset_id": "CV_19_Owen_Parker.pdf",
+         "title": "Data Integration Engineer with 3+ years of experience designing, implementing, and optimizing end-to-end data pipelines using Talend and Azure technologies. Proven ability to reduce processing times b"
+        }
+       }
+      ],
+      "summary": {
+       "fit_score": 56,
+       "rag_overall": 28,
+       "by_category": {
+        "technical": 56,
+        "team": null,
+        "experience": null
+       },
+       "covered": 1,
+       "partial": 2,
+       "gaps": 1,
+       "gaps_list": [
+        "R4"
+       ],
+       "mandatory_gaps": [],
+       "obligations_not_in_matrix": [],
+       "coverage": 0.5,
+       "blocking": [],
+       "demo_evidence": [],
+       "knowledge_gaps": [
+        {
+         "requirement_id": "R1",
+         "requirement": "data processing",
+         "category": "technical",
+         "mandatory": false,
+         "kind": "evidence",
+         "gap": "Weak evidence only: the best match is not a clear fit.",
+         "suggestion": "Check the closest documents manually; add a record or CV that states this capability explicitly."
+        },
+        {
+         "requirement_id": "R3",
+         "requirement": "statistical studies",
+         "category": "technical",
+         "mandatory": false,
+         "kind": "evidence",
+         "gap": "Weak evidence only: the best match is not a clear fit.",
+         "suggestion": "Check the closest documents manually; add a record or CV that states this capability explicitly."
+        },
+        {
+         "requirement_id": "R4",
+         "requirement": "data restitutions",
+         "category": "technical",
+         "mandatory": false,
+         "kind": "technology",
+         "gap": "Nothing in the knowledge base mentions: data, restitutions.",
+         "suggestion": "Add a technology stack or tool record that lists it, or the CV of someone who uses it. If OliveSoft has no such capability, consider a partner."
+        },
+        {
+         "requirement_id": null,
+         "requirement": "Domain fit (health sector)",
+         "category": "domain",
+         "mandatory": false,
+         "kind": "project",
+         "gap": "No completed project in the health sector, so domain fit is 0.",
+         "suggestion": "Add a completed project record in Knowledge base > Projects. Set its sector to 'health'."
+        }
+       ],
+       "recommendation": "review",
+       "recommendation_reason": "partial or missing evidence: R1 partial, R3 partial, R4 gap: check them before deciding"
+      }
+     },
+     "competition": {
+      "status": "OK",
+      "detail": "studied",
+      "declared_value": null,
+      "declared_value_amount": null,
+      "declared_value_range": null,
+      "budget_estimate": {
+       "low": 49250,
+       "mid": 49250,
+       "high": 49250,
+       "min": 49250,
+       "max": 49250,
+       "currency": "EUR",
+       "confidence": "very low",
+       "comparables": 1,
+       "spread": 1,
+       "outliers": [],
+       "basis": "amounts of 1 awarded contract(s) the agent judged comparable (3 framework agreement(s) left out: their amount is a ceiling)"
+      },
+      "competitors": [
+       {
+        "name": "AATIKO CONSEILS",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": 49250,
+        "last_win": "2025-06-26"
+       },
+       {
+        "name": "SOLADIS SAS",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": null,
+        "last_win": "2026-06-03"
+       },
+       {
+        "name": "SEANEO",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": null,
+        "last_win": "2024-12-09"
+       },
+       {
+        "name": "CENTRE D'ETUDES ET D'EXPERTISE SUR LES RISQUES L'ENVIRONNEMENT LA MOBILITE ET L'AMENAGEMENT",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": null,
+        "last_win": "2025-08-06"
+       },
+       {
+        "name": "UNIVERSITE GUSTAVE EIFFEL",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": null,
+        "last_win": "2025-08-06"
+       }
+      ],
+      "median_bids": 3,
+      "positioning": "In similar contracts, specialized engineering firms like AATIKO and SEANEO win, often with few bids. For this tender, expect 1 to 3 bids, with a competitive bid from a technical expert. ATIH has previously awarded such contracts to specialized firms with a focus on data analysis and statistical studies.",
+      "budget_comment": "The likely budget range is between 150,000 and 500,000 EUR, based on comparable contracts with similar deliverables and scope.",
+      "comparables": [
+       {
+        "id": "T380121-2026",
+        "date": "2026-06-03",
+        "amount": 240000,
+        "currency": "EUR",
+        "buyer": "ATIH.",
+        "winners": [
+         "SOLADIS SAS"
+        ],
+        "bids": 1,
+        "others": [],
+        "cpv": "79330000",
+        "framework": true,
+        "source": "TED",
+        "title": "Marché complémentaire de prestations d’ingénierie en matière de traitements de données, d’analyses et études s"
+       },
+       {
+        "id": "Dkpx6dm",
+        "date": "2024-12-09",
+        "amount": 500000,
+        "currency": "EUR",
+        "buyer": "REGION OCCITANIE",
+        "winners": [
+         "SEANEO"
+        ],
+        "bids": 4,
+        "others": [],
+        "cpv": "79330000",
+        "framework": true,
+        "source": "DECP",
+        "title": "Analyses des suivis ichtyologiques réalisés dans le cadre du projet d’extension portuaire de Port-La Nouvelle"
+       },
+       {
+        "id": "D1vrkv06",
+        "date": "2025-08-06",
+        "amount": 150000,
+        "currency": "EUR",
+        "buyer": "ILE-DE-FRANCE MOBILITES",
+        "winners": [
+         "CENTRE D'ETUDES ET D'EXPERTISE SUR LES RISQUES L'ENVIRONNEMENT LA MOBILITE ET L'AMENAGEMENT",
+         "UNIVERSITE GUSTAVE EIFFEL"
+        ],
+        "bids": 1,
+        "others": [],
+        "cpv": "79330000",
+        "framework": true,
+        "source": "DECP",
+        "title": "ASSISTANCE AUX METHODES STATISTIQUES POUR L’EGT ET LES ENQUETES S’Y RAPPORTANT A PARTIR DE SEPTEMBRE 2025"
+       },
+       {
+        "id": "Dfxct8b",
+        "date": "2025-06-26",
+        "amount": 49250,
+        "currency": "EUR",
+        "buyer": "CAISSE DE GARANTIE DU LOGEMENT LOCATIF SOCIAL",
+        "winners": [
+         "AATIKO CONSEILS"
+        ],
+        "bids": 6,
+        "others": [],
+        "cpv": "79330000",
+        "framework": false,
+        "source": "DECP",
+        "title": "La présente consultation a pour objet l’amélioration, l’actualisation et l’exploitation de l’Observatoire annu"
+       }
+      ]
+     },
+     "options": {
+      "template_id": "olivesoft_default",
+      "formats": [
+       "pptx",
+       "pdf"
+      ],
+      "sections": [
+       "context",
+       "understanding",
+       "solution",
+       "team",
+       "references",
+       "timeline",
+       "pricing",
+       "why_us"
+      ],
+      "overrides": {
+       "tone": "formal",
+       "max_slides": 15,
+       "gap_strategy": "mitigate"
+      }
+     },
+     "company": {
+      "name": "OliveSoft",
+      "services": [
+       "web and mobile applications, custom software and digital platforms",
+       "AI / LLM solutions (chatbots, RAG, document intelligence)",
+       "workflow automation and RPA",
+       "data platforms, integration and BI / analytics",
+       "CRM and enterprise software integration"
+      ],
+      "technologies": [
+       "Python",
+       "JavaScript/TypeScript",
+       "React",
+       "Node.js",
+       "PostgreSQL",
+       "cloud",
+       "LLM",
+       "RAG",
+       "machine learning",
+       "n8n",
+       "Power BI",
+       "Salesforce"
+      ]
+     }
+    },
+    {
+     "contract": "olivesoft.proposal-input.v2",
+     "tender_id": "Tdoatt8",
+     "language": "fr",
+     "rank": 7,
+     "run_id": "2026-10-20T05-19-35-615Z",
+     "generated_on": "2026-10-20",
+     "tender": {
+      "title": "RFI - SYSTEME DE VIDEOPROTECTION ET DE CAMERAS AEROPORTEES",
+      "reference": "Tdoatt8",
+      "issuer": "Ministère de l'Intérieur",
+      "country": "France",
+      "country_code": "FR",
+      "publication_date": "2026-10-07",
+      "deadline": "2026-11-09",
+      "days_to_deadline": 20,
+      "estimated_value": null,
+      "cpv": [],
+      "duration": null,
+      "source": "francemarches",
+      "source_url": "https://www.francemarches.com/appel-offre/37ec0710260911202667-2026-systeme-videoprotection-cameras?q=Intelligence%20Artificielle",
+      "submission_url": null,
+      "documents_url": null,
+      "description": "La consultation est un appel à compétences relatif à l'expérimentation à des fins de sécurité , de traitement algorithmiques comportant un système d'intelligence artificielle permettant l'analyse d'images issues de systèmes de vidéoprotection et de camera aéroportées ;",
+      "lots": [],
+      "award_criteria": []
+     },
+     "analysis": {
+      "relevance_score": 70,
+      "relevance_basis": "fit high (70) + 30 x RAG coverage 0",
+      "fit": "high",
+      "tender_type": "ai_data",
+      "matched_service_lines": [
+       "AI / LLM solutions (chatbots, RAG, document intelligence)"
+      ],
+      "reason": "La consultation est un appel à compétences relatif à l'expérimentation à des fins de sécurité , de traitement algorithmiques comportant un système d'intelligence artificielle permettant l'analyse d'images",
+      "proof_quote": "traitement algorithmiques comportant un système d'intelligence artificielle permettant l'analyse d'images",
+      "quote_verified": true,
+      "sector": "public sector",
+      "suggested_angle": null,
+      "risks": [],
+      "requirements": {
+       "technical": [
+        "Le système doit permettre l'analyse d'images issues de systèmes de vidéoprotection et de caméras aéroportées"
+       ],
+       "team": [],
+       "experience": [],
+       "timeline": null
+      }
+     },
+     "buyer_profile": {
+      "name": "Ministère de l'Intérieur",
+      "legal_name": "MINISTERE DE L'INTERIEUR",
+      "sector": "State administration",
+      "size": "large",
+      "organization_description": "It has published numerous tenders in the last three years, including those for training, waste management, and security equipment.",
+      "estimated_revenue": null,
+      "staff": "2000-4999 employees (registry, 2024)",
+      "website": null,
+      "contacts": {
+       "emails": [],
+       "phones": [],
+       "addresses": [
+        "HOTEL DE BEAUVAU PLACE BEAUVAU 75008 PARIS 08"
+       ]
+      },
+      "past_digital_projects": [
+       {
+        "title": "AOO AMOA SI",
+        "date": "2026-10-16",
+        "source": "BOAMP"
+       },
+       {
+        "title": "DEMATERIALISATION DES COUPONS REPAS UTILISES PAR LES SGCD DANS LE CADRE DE CONVENTIONNEMENT AVEC LES RESTAURAT",
+        "date": "2026-09-06",
+        "source": "BOAMP"
+       }
+      ],
+      "past_winners": [
+       {
+        "name": "BEARING POINT",
+        "wins": 1
+       },
+       {
+        "name": "MC2i",
+        "wins": 1
+       },
+       {
+        "name": "CGI France",
+        "wins": 1
+       },
+       {
+        "name": "Eurogroup Consulting",
+        "wins": 1
+       },
+       {
+        "name": "SIA Partners",
+        "wins": 1
+       },
+       {
+        "name": "TASMANE",
+        "wins": 1
+       },
+       {
+        "name": "DERICHEBOURG ENERGIE",
+        "wins": 1
+       },
+       {
+        "name": "ATALIAN PROPRETE",
+        "wins": 1
+       }
+      ],
+      "key_partners": [],
+      "domain_requirements": [],
+      "research_status": "researched",
+      "enrichment_status": "enriched"
+     },
+     "rag": {
+      "status": "NONE",
+      "data_mode": "company",
+      "coverage_basis": "Recorded capabilities; declarations are not verified document evidence.",
+      "suggested_assets": {
+       "projects": [],
+       "team": [],
+       "stack": [],
+       "other": []
+      },
+      "assets": [],
+      "team_proposal": null,
+      "knowledge_counts": {
+       "cv": 19,
+       "past_project": 37,
+       "tech_stack": 5,
+       "tool": 4,
+       "client_portfolio": 25,
+       "completed_projects": 31
+      }
+     },
+     "matrix": {
+      "status": "OK",
+      "rows": [
+       {
+        "requirement_id": "R1",
+        "category": "technical",
+        "requirement": "Le système doit permettre l'analyse d'images issues de systèmes de vidéoprotection et de caméras aéroportées",
+        "skill": "Le système doit permettre l'analyse d'images issues de systèmes de vidéoprotection et de caméras aéroportées",
+        "quote": "traitement algorithmiques comportant un système d'intelligence artificielle permettant l'analyse d'images",
+        "mandatory": false,
+        "coverage": "gap",
+        "coverage_score": 0,
+        "rerank_score": -6.23,
+        "origin": null,
+        "justification_kind": null,
+        "justification": null,
+        "justification_weak": false,
+        "justification_is_header": false,
+        "evidence": [],
+        "closest_asset": {
+         "asset_id": "CV_03_Maya_Patel.pdf",
+         "title": "Cloud and DevOps Engineer with a Computer Science engineering background, specialized in designing, automating, and managing cloud-native infrastructures on Azure and Kubernetes. Proven ability to del"
+        }
+       }
+      ],
+      "summary": {
+       "fit_score": 0,
+       "rag_overall": 0,
+       "by_category": {
+        "technical": 0,
+        "team": null,
+        "experience": null
+       },
+       "covered": 0,
+       "partial": 0,
+       "gaps": 1,
+       "gaps_list": [
+        "R1"
+       ],
+       "mandatory_gaps": [],
+       "obligations_not_in_matrix": [],
+       "coverage": 0,
+       "blocking": [],
+       "demo_evidence": [],
+       "knowledge_gaps": [
+        {
+         "requirement_id": "R1",
+         "requirement": "Le système doit permettre l'analyse d'images issues de systèmes de vidéoprotection et de caméras aéroportées",
+         "category": "technical",
+         "mandatory": false,
+         "kind": "technology",
+         "gap": "Nothing in the knowledge base mentions: doit, permettre, analyse, images, issues, videoprotection, cameras, aeroportees.",
+         "suggestion": "Add a technology stack or tool record that lists it, or the CV of someone who uses it. If OliveSoft has no such capability, consider a partner."
+        },
+        {
+         "requirement_id": null,
+         "requirement": "Domain fit (public sector)",
+         "category": "domain",
+         "mandatory": false,
+         "kind": "project",
+         "gap": "No completed project in the public sector, so domain fit is 0.",
+         "suggestion": "Add a completed project record in Knowledge base > Projects. Set its sector to 'public'."
+        }
+       ],
+       "recommendation": "review",
+       "recommendation_reason": "partial or missing evidence: R1 gap: check them before deciding"
+      }
+     },
+     "competition": {
+      "status": "OK",
+      "detail": "studied",
+      "declared_value": null,
+      "declared_value_amount": null,
+      "declared_value_range": null,
+      "budget_estimate": {
+       "low": 2822000000,
+       "mid": 2822000000,
+       "high": 2822000000,
+       "min": 2822000000,
+       "max": 2822000000,
+       "currency": "EUR",
+       "confidence": "very low",
+       "comparables": 1,
+       "spread": 1,
+       "outliers": [
+        {
+         "id": "T527735-2026",
+         "amount": 206619,
+         "title": "Extension et maintenance d'un système de vidéoprotection sur la Ville de Falaise"
+        }
+       ],
+       "basis": "amounts of 1 awarded contract(s) the agent judged comparable (3 framework agreement(s) left out: their amount is a ceiling) (1 outlier(s) beyond 10x the median left out)"
+      },
+      "competitors": [
+       {
+        "name": "E-CONEX",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": 2822000000,
+        "last_win": "2026-09-21"
+       },
+       {
+        "name": "TPF INGENIERIE",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": 2822000000,
+        "last_win": "2026-09-21"
+       },
+       {
+        "name": "ERYMA SAS",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": 2822000000,
+        "last_win": "2026-09-21"
+       },
+       {
+        "name": "INTEGRAL EXPERT SURETE",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": null,
+        "last_win": "2026-09-28"
+       },
+       {
+        "name": "GARCZYNSKI TRAPLOIR",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": null,
+        "last_win": "2026-09-28"
+       },
+       {
+        "name": "SGS TELESURVEILLANCE",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": null,
+        "last_win": "2026-09-28"
+       },
+       {
+        "name": "SERFIM T.I.C",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": null,
+        "last_win": "2026-08-11"
+       },
+       {
+        "name": "EIFFAGE ENERGIE SYSTEMES - NORMANDIE",
+        "past_wins": 1,
+        "past_losses": null,
+        "avg_amount": null,
+        "last_win": "2026-07-30"
+       }
+      ],
+      "median_bids": 4,
+      "positioning": "In similar contracts, large players like E-CONEX and INTEGRAL EXPERT SURETE win, often with 5 to 8 bids. The tender likely involves a complex system with AI analysis, so competition is high and technical expertise is key.",
+      "budget_comment": null,
+      "comparables": [
+       {
+        "id": "T648561-2026",
+        "date": "2026-09-21",
+        "amount": 2822000000,
+        "currency": "EUR",
+        "buyer": "CANUT",
+        "winners": [
+         "E-CONEX",
+         "TPF INGENIERIE",
+         "ERYMA SAS"
+        ],
+        "bids": 8,
+        "others": [],
+        "cpv": "32323500,32333200,35125300",
+        "framework": false,
+        "source": "TED",
+        "title": "FOURNITURE, INSTALLATION, MAINTENANCE ET PRESTATIONS DE CONSEIL AUTOUR DES SYSTEMES DE VIDEOPROTECTION ET VIDE"
+       },
+       {
+        "id": "T667197-2026",
+        "date": "2026-09-28",
+        "amount": 1000000,
+        "currency": "EUR",
+        "buyer": "CENOVIA",
+        "winners": [
+         "INTEGRAL EXPERT SURETE",
+         "GARCZYNSKI TRAPLOIR",
+         "SGS TELESURVEILLANCE"
+        ],
+        "bids": 5,
+        "others": [],
+        "cpv": "32323500",
+        "framework": true,
+        "source": "TED",
+        "title": "ACCORD-CADRE MULTI-ATTRIBUTAIRES DE FOURNITURES DE SYSTEMES DE VIDEOPROTECTION, DE COMPTAGE ET DE GUIDAGE, AVE"
+       },
+       {
+        "id": "T555454-2026",
+        "date": "2026-08-11",
+        "amount": 2400000,
+        "currency": "EUR",
+        "buyer": "Ville de Vénissieux",
+        "winners": [
+         "SERFIM T.I.C"
+        ],
+        "bids": 1,
+        "others": [],
+        "cpv": "32323500",
+        "framework": true,
+        "source": "TED",
+        "title": "FOURNITURE, INSTALLATION, MISE EN SERVICE ET MAINTENANCE DU SYSTÈME DE VIDÉOPROTECTION"
+       },
+       {
+        "id": "T527735-2026",
+        "date": "2026-07-30",
+        "amount": 206619,
+        "currency": "EUR",
+        "buyer": "Ville de Falaise",
+        "winners": [
+         "EIFFAGE ENERGIE SYSTEMES - NORMANDIE",
+         "C'Chartres Innovations Numériques........"
+        ],
+        "bids": 4,
+        "others": [],
+        "cpv": "32323500,50324100,32562200",
+        "framework": false,
+        "source": "TED",
+        "title": "Extension et maintenance d'un système de vidéoprotection sur la Ville de Falaise"
+       },
+       {
+        "id": "T699509-2026",
+        "date": "2026-10-09",
+        "amount": 16000000,
+        "currency": "EUR",
+        "buyer": "Ministère de l'Intérieur - Direction de l'évaluation de la performance, de l'achat, des fi",
+        "winners": [
+         "DERICHEBOURG ENERGIE",
+         "ATALIAN PROPRETE"
+        ],
+        "bids": 2,
+        "others": [],
+        "cpv": "79993000",
+        "framework": true,
+        "source": "TED",
+        "title": "Prestations multiservices et multitechniques pour le site de l’administration centrale du Ministère de l’intér"
+       }
+      ]
+     },
+     "options": {
+      "template_id": "olivesoft_default",
+      "formats": [
+       "pptx",
+       "pdf"
+      ],
+      "sections": [
+       "context",
+       "understanding",
+       "solution",
+       "team",
+       "references",
+       "timeline",
+       "pricing",
+       "why_us"
+      ],
+      "overrides": {
+       "tone": "formal",
+       "max_slides": 15,
+       "gap_strategy": "mitigate"
+      }
+     },
+     "company": {
+      "name": "OliveSoft",
+      "services": [
+       "web and mobile applications, custom software and digital platforms",
+       "AI / LLM solutions (chatbots, RAG, document intelligence)",
+       "workflow automation and RPA",
+       "data platforms, integration and BI / analytics",
+       "CRM and enterprise software integration"
+      ],
+      "technologies": [
+       "Python",
+       "JavaScript/TypeScript",
+       "React",
+       "Node.js",
+       "PostgreSQL",
+       "cloud",
+       "LLM",
+       "RAG",
+       "machine learning",
+       "n8n",
+       "Power BI",
+       "Salesforce"
+      ]
+     }
+    },
+    {
+     "contract": "olivesoft.proposal-input.v2",
+     "tender_id": "Tx12mku",
+     "language": "fr",
+     "rank": 8,
+     "run_id": "2026-10-20T05-19-35-615Z",
+     "generated_on": "2026-10-20",
+     "tender": {
+      "title": "Suivi des données de vente des produits de prévention en santé sexuelle disponibles en France",
+      "reference": "26-101203",
+      "issuer": "Santé publique France",
+      "country": "France",
+      "country_code": "FR",
+      "publication_date": "2026-10-19",
+      "deadline": "2026-11-23",
+      "days_to_deadline": 34,
+      "estimated_value": null,
+      "cpv": [],
+      "duration": null,
+      "source": "boamp",
+      "source_url": "https://www.boamp.fr/pages/avis/?q=idweb:26-101203",
+      "submission_url": null,
+      "documents_url": "https://www.marches-publics.gouv.fr/?page=Entreprise.EntrepriseAdvancedSearch&AllCons&id=3085374&orgAcronyme=h8",
+      "description": "Le marché a pour objet le suivi des données de vente des produits de prévention en santé sexuelle disponibles en France. Il est décomposé en trois lots de la manière suivante : -lot 1 : Suivi des données de vente des produits de prévention en santé sexuelle disponibles en France et diffusés dans le secteur de la grande distribution. -lot 2 : Suivi des données de vente des produits de prévention en santé sexuelle disponibles en France et diffusés dans le secteur des officines et parapharmacies. -lot 3 : Suivi des données de vente en ligne de produits de prévention en santé sexuelle disponibles en France.",
+      "lots": [
+       {
+        "title": null,
+        "description": "Suivi des données de vente des produits de prévention en santé sexuelle disponibles en France et diffusés dans le secteur de la grande distribution.",
+        "estimated_value": null
+       },
+       {
+        "title": null,
+        "description": "Suivi des données de vente des produits de prévention en santé sexuelle disponibles en France et diffusés dans le secteur des officines et parapharmacies.",
+        "estimated_value": null
+       },
+       {
+        "title": null,
+        "description": "Suivi des données de vente en ligne de produits de prévention en santé sexuelle disponibles en France.",
+        "estimated_value": null
+       }
+      ],
+      "award_criteria": []
+     },
+     "analysis": {
+      "relevance_score": 70,
+      "relevance_basis": "fit high (70) (no RAG coverage)",
+      "fit": "high",
+      "tender_type": "software_build",
+      "matched_service_lines": [
+       "web and mobile applications, custom software and digital platforms"
+      ],
+      "reason": "Suivi des données de vente des produits de prévention en santé sexuelle disponibles en France",
+      "proof_quote": "Suivi des données de vente des produits de prévention en santé sexuelle disponibles en France",
+      "quote_verified": true,
+      "sector": "health",
+      "suggested_angle": null,
+      "risks": [
+       "No requirements matrix (skipped_no_requirements)"
+      ],
+      "requirements": {
+       "technical": [],
+       "team": [],
+       "experience": [],
+       "timeline": null
+      }
+     },
+     "buyer_profile": {
+      "name": "Santé publique France",
+      "legal_name": null,
+      "sector": null,
+      "size": null,
+      "organization_description": null,
+      "estimated_revenue": null,
+      "staff": null,
+      "website": null,
+      "contacts": {
+       "emails": [],
+       "phones": [],
+       "addresses": []
+      },
+      "past_digital_projects": [],
+      "past_winners": [],
+      "key_partners": [],
+      "domain_requirements": [],
+      "research_status": "not_researched_budget",
+      "enrichment_status": "not_researched"
+     },
+     "rag": {
+      "status": "SKIPPED",
+      "data_mode": null,
+      "coverage_basis": null,
+      "suggested_assets": {
+       "projects": [],
+       "team": [],
+       "stack": [],
+       "other": []
+      },
+      "assets": [],
+      "team_proposal": null,
+      "knowledge_counts": null
+     },
+     "matrix": {
+      "status": "SKIPPED",
+      "rows": [],
+      "summary": {
+       "fit_score": null,
+       "rag_overall": null,
+       "by_category": {
+        "technical": null,
+        "team": null,
+        "experience": null
+       },
+       "covered": 0,
+       "partial": 0,
+       "gaps": 0,
+       "gaps_list": [],
+       "mandatory_gaps": [],
+       "obligations_not_in_matrix": [],
+       "coverage": null,
+       "blocking": [],
+       "demo_evidence": [],
+       "knowledge_gaps": [],
+       "recommendation": "review",
+       "recommendation_reason": "no requirements matrix (skipped_no_requirements): the requirements are in the tender documents, download them at https://www.marches-publics.gouv.fr/?page=Entreprise.EntrepriseAdvancedSearch&AllCons&id=3085374&orgAcronyme=h8"
+      }
+     },
+     "competition": {
+      "status": "NOT_STUDIED",
+      "detail": "not_studied",
+      "declared_value": null,
+      "declared_value_amount": null,
+      "declared_value_range": null,
+      "budget_estimate": null,
+      "competitors": [],
+      "median_bids": null,
+      "positioning": null,
+      "budget_comment": null,
+      "comparables": []
+     },
+     "options": {
+      "template_id": "olivesoft_default",
+      "formats": [
+       "pptx",
+       "pdf"
+      ],
+      "sections": [
+       "context",
+       "understanding",
+       "solution",
+       "team",
+       "references",
+       "timeline",
+       "pricing",
+       "why_us"
+      ],
+      "overrides": {
+       "tone": "formal",
+       "max_slides": 15,
+       "gap_strategy": "mitigate"
+      }
+     },
+     "company": {
+      "name": "OliveSoft",
+      "services": [
+       "web and mobile applications, custom software and digital platforms",
+       "AI / LLM solutions (chatbots, RAG, document intelligence)",
+       "workflow automation and RPA",
+       "data platforms, integration and BI / analytics",
+       "CRM and enterprise software integration"
+      ],
+      "technologies": [
+       "Python",
+       "JavaScript/TypeScript",
+       "React",
+       "Node.js",
+       "PostgreSQL",
+       "cloud",
+       "LLM",
+       "RAG",
+       "machine learning",
+       "n8n",
+       "Power BI",
+       "Salesforce"
+      ]
+     }
+    },
+    {
+     "contract": "olivesoft.proposal-input.v2",
+     "tender_id": "Tz18to2",
+     "language": "fr",
+     "rank": 9,
+     "run_id": "2026-10-20T05-19-35-615Z",
+     "generated_on": "2026-10-20",
+     "tender": {
+      "title": "Prestations associées aux projets du GIP RECIA basés sur des logiciels libres (développements, intégrations, adaptations)",
+      "reference": "26-101364",
+      "issuer": "GIP RECIA",
+      "country": "France",
+      "country_code": "FR",
+      "publication_date": "2026-10-20",
+      "deadline": "2026-11-27",
+      "days_to_deadline": 38,
+      "estimated_value": null,
+      "cpv": [
+       "72000000"
+      ],
+      "duration": "36 month",
+      "source": "boamp",
+      "source_url": "https://www.boamp.fr/pages/avis/?q=idweb:26-101364",
+      "submission_url": "https://webmarche.solaere.recia.fr/entreprise/consultation/4396?orgAcronyme=a1t",
+      "documents_url": "https://webmarche.solaere.recia.fr/entreprise/consultation/4396?orgAcronyme=a1t",
+      "description": "Prestations associées aux projets du GIP RECIA basés sur des logiciels libres (développements, intégrations, adaptations)",
+      "lots": [
+       {
+        "title": "Prestations associées aux projets du GIP RECIA basés sur des logiciels libres (développements, intégrations, adaptations)",
+        "description": "Prestations associées aux projets du GIP RECIA basés sur des logiciels libres (développements, intégrations, adaptations)",
+        "estimated_value": null
+       }
+      ],
+      "award_criteria": []
+     },
+     "analysis": {
+      "relevance_score": 70,
+      "relevance_basis": "fit high (70) (no RAG coverage)",
+      "fit": "high",
+      "tender_type": "software_build",
+      "matched_service_lines": [
+       "web and mobile applications, custom software and digital platforms"
+      ],
+      "reason": "The tender requests developments, integrations, and adaptations of software based on free software.",
+      "proof_quote": "Prestations associées aux projets du GIP RECIA basés sur des logiciels libres (développements, intégrations, adaptations)",
+      "quote_verified": true,
+      "sector": "public sector",
+      "suggested_angle": null,
+      "risks": [
+       "No requirements matrix (skipped_no_requirements)",
+       "The notice gives little detail: read the full tender documents (RC / CCTP)"
+      ],
+      "requirements": {
+       "technical": [],
+       "team": [],
+       "experience": [],
+       "timeline": null
+      }
+     },
+     "buyer_profile": {
+      "name": "GIP RECIA",
+      "legal_name": null,
+      "sector": null,
+      "size": null,
+      "organization_description": null,
+      "estimated_revenue": null,
+      "staff": null,
+      "website": "https://www.recia.fr/",
+      "contacts": {
+       "emails": [
+        "sg@recia.fr"
+       ],
+       "phones": [
+        "+33 238427960"
+       ],
+       "addresses": [
+        "3 avenue Claude Guillemin - Bâtiment F1 - BP 36009 45060 Orléans"
+       ]
+      },
+      "past_digital_projects": [],
+      "past_winners": [],
+      "key_partners": [],
+      "domain_requirements": [],
+      "research_status": "not_researched_budget",
+      "enrichment_status": "not_researched"
+     },
+     "rag": {
+      "status": "SKIPPED",
+      "data_mode": null,
+      "coverage_basis": null,
+      "suggested_assets": {
+       "projects": [],
+       "team": [],
+       "stack": [],
+       "other": []
+      },
+      "assets": [],
+      "team_proposal": null,
+      "knowledge_counts": null
+     },
+     "matrix": {
+      "status": "SKIPPED",
+      "rows": [],
+      "summary": {
+       "fit_score": null,
+       "rag_overall": null,
+       "by_category": {
+        "technical": null,
+        "team": null,
+        "experience": null
+       },
+       "covered": 0,
+       "partial": 0,
+       "gaps": 0,
+       "gaps_list": [],
+       "mandatory_gaps": [],
+       "obligations_not_in_matrix": [],
+       "coverage": null,
+       "blocking": [],
+       "demo_evidence": [],
+       "knowledge_gaps": [],
+       "recommendation": "review",
+       "recommendation_reason": "no requirements matrix (skipped_no_requirements): the requirements are in the tender documents, download them at https://webmarche.solaere.recia.fr/entreprise/consultation/4396?orgAcronyme=a1t"
+      }
+     },
+     "competition": {
+      "status": "NOT_STUDIED",
+      "detail": "not_studied",
+      "declared_value": null,
+      "declared_value_amount": null,
+      "declared_value_range": null,
+      "budget_estimate": null,
+      "competitors": [],
+      "median_bids": null,
+      "positioning": null,
+      "budget_comment": null,
+      "comparables": []
+     },
+     "options": {
+      "template_id": "olivesoft_default",
+      "formats": [
+       "pptx",
+       "pdf"
+      ],
+      "sections": [
+       "context",
+       "understanding",
+       "solution",
+       "team",
+       "references",
+       "timeline",
+       "pricing",
+       "why_us"
+      ],
+      "overrides": {
+       "tone": "formal",
+       "max_slides": 15,
+       "gap_strategy": "mitigate"
+      }
+     },
+     "company": {
+      "name": "OliveSoft",
+      "services": [
+       "web and mobile applications, custom software and digital platforms",
+       "AI / LLM solutions (chatbots, RAG, document intelligence)",
+       "workflow automation and RPA",
+       "data platforms, integration and BI / analytics",
+       "CRM and enterprise software integration"
+      ],
+      "technologies": [
+       "Python",
+       "JavaScript/TypeScript",
+       "React",
+       "Node.js",
+       "PostgreSQL",
+       "cloud",
+       "LLM",
+       "RAG",
+       "machine learning",
+       "n8n",
+       "Power BI",
+       "Salesforce"
+      ]
+     }
+    },
+    {
+     "contract": "olivesoft.proposal-input.v2",
+     "tender_id": "T1t4j37b",
+     "language": "fr",
+     "rank": 10,
+     "run_id": "2026-10-20T05-19-35-615Z",
+     "generated_on": "2026-10-20",
+     "tender": {
+      "title": "Exploitation et valorisation des données issues du système de comptages automatiques des voyageurs embarqué dans les TER du réseau BreizhGo",
+      "reference": "26-101190",
+      "issuer": "Région Bretagne",
+      "country": "France",
+      "country_code": "FR",
+      "publication_date": "2026-10-20",
+      "deadline": "2026-11-30",
+      "days_to_deadline": 41,
+      "estimated_value": null,
+      "cpv": [
+       "71300000"
+      ],
+      "duration": "48 month",
+      "source": "boamp",
+      "source_url": "https://www.boamp.fr/pages/avis/?q=idweb:26-101190",
+      "submission_url": "https://marches.megalis.bretagne.bzh/entreprise/consultation/242740?orgAcronyme=a1j",
+      "documents_url": "https://marches.megalis.bretagne.bzh/entreprise/consultation/242740?orgAcronyme=a1j",
+      "description": "Exploitation et valorisation des données issues du système de comptages automatiques des voyageurs embarqué dans les TER du réseau BreizhGo",
+      "lots": [
+       {
+        "title": "Exploitation et valorisation des données issues du système de comptages automatiques des voyageurs embarqué dans les TER du réseau BreizhGo",
+        "description": "Exploitation et valorisation des données issues du système de comptages automatiques des voyageurs embarqué dans les TER du réseau BreizhGo",
+        "estimated_value": null
+       }
+      ],
+      "award_criteria": []
+     },
+     "analysis": {
+      "relevance_score": 70,
+      "relevance_basis": "fit high (70) (no RAG coverage)",
+      "fit": "high",
+      "tender_type": "ai_data",
+      "matched_service_lines": [
+       "AI / LLM solutions (chatbots, RAG, document intelligence)"
+      ],
+      "reason": "Exploitation et valorisation des données issues du système de comptages automatiques des voyageurs embarqué dans les TER du réseau BreizhGo",
+      "proof_quote": "Exploitation et valorisation des données issues du système de comptages automatiques des voyageurs embarqué dans les TER du réseau BreizhGo",
+      "quote_verified": true,
+      "sector": "public sector",
+      "suggested_angle": null,
+      "risks": [
+       "No requirements matrix (skipped_no_requirements)",
+       "The notice gives little detail: read the full tender documents (RC / CCTP)"
+      ],
+      "requirements": {
+       "technical": [],
+       "team": [],
+       "experience": [],
+       "timeline": null
+      }
+     },
+     "buyer_profile": {
+      "name": "Région Bretagne",
+      "legal_name": null,
+      "sector": null,
+      "size": null,
+      "organization_description": null,
+      "estimated_revenue": null,
+      "staff": null,
+      "website": "https://www.bretagne.bzh",
+      "contacts": {
+       "emails": [
+        "saisine-juridique-achats-responsables@bretagne.bzh"
+       ],
+       "phones": [
+        "+33 223206000"
+       ],
+       "addresses": [
+        "283, avenue du Général Patton - CS21101 35711 Rennes Cedex 7"
+       ]
+      },
+      "past_digital_projects": [],
+      "past_winners": [],
+      "key_partners": [],
+      "domain_requirements": [],
+      "research_status": "not_researched_budget",
+      "enrichment_status": "not_researched"
+     },
+     "rag": {
+      "status": "SKIPPED",
+      "data_mode": null,
+      "coverage_basis": null,
+      "suggested_assets": {
+       "projects": [],
+       "team": [],
+       "stack": [],
+       "other": []
+      },
+      "assets": [],
+      "team_proposal": null,
+      "knowledge_counts": null
+     },
+     "matrix": {
+      "status": "SKIPPED",
+      "rows": [],
+      "summary": {
+       "fit_score": null,
+       "rag_overall": null,
+       "by_category": {
+        "technical": null,
+        "team": null,
+        "experience": null
+       },
+       "covered": 0,
+       "partial": 0,
+       "gaps": 0,
+       "gaps_list": [],
+       "mandatory_gaps": [],
+       "obligations_not_in_matrix": [],
+       "coverage": null,
+       "blocking": [],
+       "demo_evidence": [],
+       "knowledge_gaps": [],
+       "recommendation": "review",
+       "recommendation_reason": "no requirements matrix (skipped_no_requirements): the requirements are in the tender documents, download them at https://marches.megalis.bretagne.bzh/entreprise/consultation/242740?orgAcronyme=a1j"
+      }
+     },
+     "competition": {
+      "status": "NOT_STUDIED",
+      "detail": "not_studied",
+      "declared_value": null,
+      "declared_value_amount": null,
+      "declared_value_range": null,
+      "budget_estimate": null,
+      "competitors": [],
+      "median_bids": null,
+      "positioning": null,
+      "budget_comment": null,
+      "comparables": []
+     },
+     "options": {
+      "template_id": "olivesoft_default",
+      "formats": [
+       "pptx",
+       "pdf"
+      ],
+      "sections": [
+       "context",
+       "understanding",
+       "solution",
+       "team",
+       "references",
+       "timeline",
+       "pricing",
+       "why_us"
+      ],
+      "overrides": {
+       "tone": "formal",
+       "max_slides": 15,
+       "gap_strategy": "mitigate"
+      }
+     },
+     "company": {
+      "name": "OliveSoft",
+      "services": [
+       "web and mobile applications, custom software and digital platforms",
+       "AI / LLM solutions (chatbots, RAG, document intelligence)",
+       "workflow automation and RPA",
+       "data platforms, integration and BI / analytics",
+       "CRM and enterprise software integration"
+      ],
+      "technologies": [
+       "Python",
+       "JavaScript/TypeScript",
+       "React",
+       "Node.js",
+       "PostgreSQL",
+       "cloud",
+       "LLM",
+       "RAG",
+       "machine learning",
+       "n8n",
+       "Power BI",
+       "Salesforce"
+      ]
+     }
+    }
+   ]
+  ]
+ }
+]

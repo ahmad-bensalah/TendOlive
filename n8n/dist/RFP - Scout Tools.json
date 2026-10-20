@@ -1,0 +1,182 @@
+{
+  "name": "RFP - Scout Tools",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "tool"
+            },
+            {
+              "name": "firecrawl_base"
+            },
+            {
+              "name": "url_sources"
+            },
+            {
+              "name": "max_links"
+            },
+            {
+              "name": "url"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        300
+      ],
+      "id": "76b34e42-95e0-4917-a250-c630552a9978",
+      "name": "Tool Input"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Resolve Source (Scout Tools). Which URL source of Config does the requested page belong to (by host)? -> the hosts its links\n// may be on, and Firecrawl's main-content mode. Read from Config (url_sources), never from the agent's item, so every source\n// gets its own settings whichever source the agent is working on.\n// ---- shared helpers ----\n// the Code-node sandbox has no URL class: minimal parser + resolver for absolute and relative links\nconst parseUrl = (u, base) => {\n  u = String(u || '').trim();\n  if (!/^[a-z][a-z0-9+.-]*:/i.test(u)) {\n    if (!base) return null;\n    const b = parseUrl(base); if (!b || !b.host) return null;\n    if (u.startsWith('//')) u = `${b.protocol}${u}`;\n    else if (u.startsWith('/')) u = `${b.protocol}//${b.host}${u}`;\n    else if (u.startsWith('?')) u = `${b.protocol}//${b.host}${b.pathname}${u}`;\n    else if (u.startsWith('#') || u === '') u = `${b.protocol}//${b.host}${b.pathname}${b.search}${u}`;\n    else u = `${b.protocol}//${b.host}${b.pathname.replace(/[^/]*$/, '')}${u}`;\n  }\n  const m = /^([a-z][a-z0-9+.-]*:)(?:\\/\\/([^/?#]*))?([^?#]*)(\\?[^#]*)?(#.*)?$/i.exec(u);\n  if (!m) return null;\n  const protocol = m[1].toLowerCase(), host = (m[2] || '').replace(/^[^@]*@/, '').toLowerCase().replace(/:(80|443)$/, '');\n  const segs = []; for (const s of (m[3] || '/').split('/')) { if (s === '..') segs.pop(); else if (s !== '.') segs.push(s); }\n  let pathname = segs.join('/'); if (!pathname.startsWith('/')) pathname = '/' + pathname;\n  if (/^https?:$/.test(protocol) && !host) return null;\n  const search = m[4] && m[4] !== '?' ? m[4] : '', hash = m[5] || '';\n  return { protocol, host, pathname, search, hash, noHash: `${protocol}//${host}${pathname}${search}` };\n};\n// no value is no host: undefined / null used to become \"https://undefined\" (host \"undefined\", a Wikidata row without website=)\nconst hostOfUrl = u => { const s = String(u ?? '').trim(); if (!s) return ''; const x = parseUrl(/^[a-z][a-z0-9+.-]*:/i.test(s) ? s : `https://${s}`); return x ? x.host.replace(/^www\\./, '') : ''; };\n// ONE rule for \"the same page\" and \"the same list\" in a URL, used by open_page's NEXT PAGE detector (Page Links) and by scoutRun, so\n// the two never drift. One page whatever its parameter order, space encoding or \"www.\": the link \"?cat=19&lang=fr&paged=2\" IS the\n// opened \"?cat=19&paged=2&lang=fr\", \"q=a%20b\" is \"q=a+b\". A page parameter counts only with a number (\"?page=avis-12\" is a notice);\n// \"p\" is not one: WordPress notices are \"?p=16872\". A \"/page/N\" path end is a page number too\nconst PAGE_PARAM = /^(page|paged|pg|pagenum|pageno|page_no|pagenumber|pageindex|currentpage|pagina|seite|start|offset|skip|debut\\w*)$/, SORT_PARAM = /^(ordre|order|orderby|sort|sortby|tri)$/;\n// u -> {path: protocol + host (no \"www.\") + path (no trailing slash), view: that path without its \"/page/N\" end, params: sorted\n// [{kv, page, sort}] (\"+\" written \"%20\"), n: its page number (null: none)}; null when u is no URL\nconst urlParts = u => {\n  const x = parseUrl(/^[a-z][a-z0-9+.-]*:/i.test(String(u || '')) ? u : `https://${u}`); if (!x) return null;\n  let n = null; const num = v => { n = Math.max(n ?? 0, +v); };\n  const params = x.search.slice(1).replace(/\\+/g, '%20').split('&').filter(Boolean).sort().map(kv => {\n    let [k, v = ''] = kv.split('='); try { k = decodeURIComponent(k); } catch {} k = (k.toLowerCase().match(/[a-z0-9_]+/g) || ['']).pop();\n    const page = PAGE_PARAM.test(k) && /^\\d*$/.test(v); if (page && v) num(v);\n    return { kv, page, sort: SORT_PARAM.test(k) };\n  });\n  const path = `${x.protocol}//${x.host.replace(/^www\\./, '')}${x.pathname.replace(/\\/$/, '')}`, m = path.match(/\\/page\\/(\\d+)$/i); if (m) num(m[1]);\n  return { path, view: m ? path.slice(0, m.index) : path, params, n };\n};\n// the key of a page; with `drop` (which params to leave out) the key of its view: urlKey(u, p => p.page) = its list, any page number\nconst urlKey = (u, drop) => { const p = urlParts(u); if (!p) return String(u || ''); const q = p.params.filter(x => !(drop && drop(x))).map(x => x.kv); return (drop ? p.view : p.path) + (q.length ? '?' + q.join('&') : ''); };\n// ---- end helpers ----\nconst T = $input.first().json;\nlet sources = []; try { sources = JSON.parse(T.url_sources || '[]'); } catch {}\nconst h = hostOfUrl(T.url), on = k => !!k && (h === k || h.endsWith('.' + k));\nconst all = sources.map(s => ({ ...s, hosts: [s.url, ...(s.allowedHosts || [])].map(hostOfUrl).filter(Boolean) }));\nconst src = all.find(s => s.hosts.some(on));\n// a host of no configured source is a URL the model typed wrong (\"www.franc-than.com\" for www.francemarches.com): refused, and\n// Page Links tells the agent so. The \"Known source?\" IF sends a refused item straight to Page Links, so Firecrawl is never\n// called (no credit, no rate budget). No source list at all (older Main): nothing is refused.\n// A site that moved to another domain needs that domain in the source's allowedHosts (the message ends in Run Summary too)\n// The refusal names the URL to open instead, so the agent can recover: told \"open the START URL exactly as written\", the real\n// agent re-read page 2 and never read page 1. Which source: the one whose START URL the asked URL IS on another host (the model\n// kept \"/recherche?q=Intelligence+Artificielle&etat=en-cours\" and mistyped only the host), else whose list it is (\"&page=2\": that\n// page on the source's host), else the only source. Two sources that fit equally well: none named (the old advice).\n// Never by host name alone when there are several sources: Resolve Source cannot know which source the calling agent works on,\n// and a name score cannot tell a typo from another portal (\"marchespublics.gov.tn\", the real Tunisian portal, is closer to\n// \"francemarches\" than the real typo \"franc-than\" is): a domainetat-tn scout told to open francemarches' list would file French\n// tenders under TN (URL3 tags every pick with its task's source) and leave its own site. The path + query are proof enough.\n// \"{page}\" in a source url is page 1 there, as URL1 writes the START URL. A bare home page \"/\" proves no source: every site has\n// one, so a source whose url is a home page would be named for any mistyped home page\nconst startOf = s => String(s.url || '').split('{page}').join('1');\nconst asked = parseUrl(/^[a-z][a-z0-9+.-]*:/i.test(String(T.url || '').trim()) ? T.url : `https://${T.url}`), listOf = u => urlKey(u, p => p.page);\nconst specific = !!asked && (asked.pathname.replace(/\\/+$/, '') !== '' || !!asked.search);\nconst onHost = s => { const b = parseUrl(startOf(s)); return specific && b && b.host ? `${b.protocol}//${b.host}${asked.pathname}${asked.search}` : ''; };\nlet hint = 'open the START URL exactly as written, or a URL from an earlier open_page result';\nif (!src && all.length) {\n  const [a, b] = all.map(s => { const st = startOf(s), u = onHost(s);\n    return { s, st, u, tier: u && urlKey(u) === urlKey(st) ? 2 : u && listOf(u) === listOf(st) ? 1 : 0 }; }).sort((x, y) => y.tier - x.tier);\n  const best = !b || a.tier > b.tier ? a : null;\n  if (best) hint = best.tier === 2 ? `open ${best.st} instead: the START URL of ${best.s.name}, copied exactly`\n    : best.tier === 1 ? `open ${best.u} instead: that page on the site of ${best.s.name}`\n    : `the START URL of ${best.s.name} is ${best.st}: open it, or a URL from an earlier open_page result, copied exactly`;\n}\nconst refused = !src && sources.length ? `refused, no page read: ${h || 'no host'} is not a site of the configured sources (${hint}; other hosts go in Config allowedHosts)` : '';\nreturn [{ json: { ...T, source: src ? src.name : null, allowed_hosts: src ? src.hosts.join(',') : '', only_main: src ? src.only_main !== false : true,\n  ...(refused ? { refused } : {}) } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ],
+      "id": "c268649c-8a40-4b80-aa50-6821a35f8021",
+      "name": "Resolve Source"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b2d19ea4-1fe7-48e4-a19d-a847cd8e3816",
+              "leftValue": "={{ !$json.refused }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        300
+      ],
+      "id": "0eef823f-d524-4c7d-a641-3300d181ba1e",
+      "name": "Known source?"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($json.firecrawl_base || 'https://api.firecrawl.dev') + '/v2/scrape' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ url: $json.url, formats: ['markdown'], onlyMainContent: $json.only_main !== false, timeout: 45000 }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        660,
+        220
+      ],
+      "id": "776cf68c-70e5-4f52-a217-5f9c51be472e",
+      "name": "Firecrawl Scrape",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "CfeiKFMFWXxIkMe6",
+          "name": "Header Auth account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// open_page (Scout Tools). ONE page read by Firecrawl -> short text for the Tender Scout Agent: the page id, its text,\n// and its same-site links, each with a short id. The agent answers with ids; URL3 maps them back to the URLs written here,\n// so a model can never corrupt a tender URL. Nothing here knows a website: hosts come from the page and the source,\n// card labels repeated on the page (\"read more\") are learned per page.\n//   PAGE [id] | url | title          (or: PAGE ERROR | url | reason)\n//   TEXT: start of the page\n//   REPEATED LABELS: label | label\n//   NEXT PAGE: [id] | url        (the link to the next page of this list, found by code; or: NEXT PAGE: none)\n//   NOTE: redirected to host ... (only when Firecrawl landed on a host of no source: open_page refuses its links)\n//   LINKS (same site, k of n):\n//   [id] link text — context | url\n// ---- shared helpers ----\nconst fnv = s => { let h = 0x811c9dc5; for (const c of String(s)) { h ^= c.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };\n// the Code-node sandbox has no URL class: minimal parser + resolver for absolute and relative links\nconst parseUrl = (u, base) => {\n  u = String(u || '').trim();\n  if (!/^[a-z][a-z0-9+.-]*:/i.test(u)) {\n    if (!base) return null;\n    const b = parseUrl(base); if (!b || !b.host) return null;\n    if (u.startsWith('//')) u = `${b.protocol}${u}`;\n    else if (u.startsWith('/')) u = `${b.protocol}//${b.host}${u}`;\n    else if (u.startsWith('?')) u = `${b.protocol}//${b.host}${b.pathname}${u}`;\n    else if (u.startsWith('#') || u === '') u = `${b.protocol}//${b.host}${b.pathname}${b.search}${u}`;\n    else u = `${b.protocol}//${b.host}${b.pathname.replace(/[^/]*$/, '')}${u}`;\n  }\n  const m = /^([a-z][a-z0-9+.-]*:)(?:\\/\\/([^/?#]*))?([^?#]*)(\\?[^#]*)?(#.*)?$/i.exec(u);\n  if (!m) return null;\n  const protocol = m[1].toLowerCase(), host = (m[2] || '').replace(/^[^@]*@/, '').toLowerCase().replace(/:(80|443)$/, '');\n  const segs = []; for (const s of (m[3] || '/').split('/')) { if (s === '..') segs.pop(); else if (s !== '.') segs.push(s); }\n  let pathname = segs.join('/'); if (!pathname.startsWith('/')) pathname = '/' + pathname;\n  if (/^https?:$/.test(protocol) && !host) return null;\n  const search = m[4] && m[4] !== '?' ? m[4] : '', hash = m[5] || '';\n  return { protocol, host, pathname, search, hash, noHash: `${protocol}//${host}${pathname}${search}` };\n};\n// no value is no host: undefined / null used to become \"https://undefined\" (host \"undefined\", a Wikidata row without website=)\nconst hostOfUrl = u => { const s = String(u ?? '').trim(); if (!s) return ''; const x = parseUrl(/^[a-z][a-z0-9+.-]*:/i.test(s) ? s : `https://${s}`); return x ? x.host.replace(/^www\\./, '') : ''; };\n// canonical form of a page URL (no #fragment, no trailing slash) used for ids and \"already seen\" checks\nconst normUrl = u => { const x = parseUrl(/^https?:/i.test(String(u || '')) ? u : `https://${u}`); return x ? x.noHash.replace(/\\/$/, '') : String(u || ''); };\nconst INVIS = /[\\u200B-\\u200F\\u202A-\\u202E\\u2060-\\u2064\\u061C\\uFEFF\\u00AD]/g;\n// images are removed (their alt text may itself contain \"[...]\"), links keep their visible text, markdown line-break\n// backslashes go (Firecrawl writes card line breaks as a backslash + newline)\nconst stripMd = t => String(t || '').replace(/!\\[(?:[^[\\]]|\\[[^\\]]*\\])*\\]\\([^)]*\\)/g, ' ').replace(/\\[([^\\]]*)\\]\\([^)]*\\)/g, '$1')\n  .split(String.fromCharCode(92)).join(' ')\n  .replace(/[*_`#>|]+/g, ' ').replace(INVIS, '').replace(/[\\u00A0\\u202F]/g, ' ').replace(/\\s+/g, ' ').trim();\n// Firecrawl answer -> '' when the page is usable, else the reason (also rejects error pages served with HTTP 200).\n// An HTTP error item (On Error: continue) gives its status and Firecrawl's own reason: for a 429 n8n's error.message is only its\n// hint \"Try spacing your requests out using the batching settings\", the cause (\"Rate limit exceeded. Consumed (req/min): 11\")\n// is in details.body.error / details.description\nconst pageError = r => {\n  if (!r) return 'no response';\n  if (r.error) {\n    const d = r.details || {}, st = r.error.status || d.httpCode, body = d.body && typeof d.body.error === 'string' ? d.body.error : '';\n    return `firecrawl${st ? ` HTTP ${st}` : ''}: ` + String(body || d.description || r.error.description || r.error.message || r.error).slice(0, 160);\n  }\n  if (r.success === false) return 'firecrawl: ' + String(r.error || r.message || 'success=false').slice(0, 160);\n  const d = r.data || {}, md = String(d.markdown || ''), st = Number((d.metadata && d.metadata.statusCode) || 200);\n  if (st >= 400) return `page status ${st}`;\n  if (md.length < 80) return `empty page (${md.length} chars)`;\n  // a bare \"404\" is not enough (notice numbers, amounts): it must sit next to error / page words\n  if (md.length < 1500 && /\\b404\\b.{0,40}\\b(not found|introuvable|error|erreur|page)|\\b(page|error|erreur)\\b.{0,40}\\b404\\b|\\bnot found\\b|page (introuvable|non trouv\\w*)|الصفحة غير موجودة/i.test(md.slice(0, 600))) return 'page not found';\n  return '';\n};\n// ONE rule for \"the same page\" and \"the same list\" in a URL, used by open_page's NEXT PAGE detector (Page Links) and by scoutRun, so\n// the two never drift. One page whatever its parameter order, space encoding or \"www.\": the link \"?cat=19&lang=fr&paged=2\" IS the\n// opened \"?cat=19&paged=2&lang=fr\", \"q=a%20b\" is \"q=a+b\". A page parameter counts only with a number (\"?page=avis-12\" is a notice);\n// \"p\" is not one: WordPress notices are \"?p=16872\". A \"/page/N\" path end is a page number too\nconst PAGE_PARAM = /^(page|paged|pg|pagenum|pageno|page_no|pagenumber|pageindex|currentpage|pagina|seite|start|offset|skip|debut\\w*)$/, SORT_PARAM = /^(ordre|order|orderby|sort|sortby|tri)$/;\n// u -> {path: protocol + host (no \"www.\") + path (no trailing slash), view: that path without its \"/page/N\" end, params: sorted\n// [{kv, page, sort}] (\"+\" written \"%20\"), n: its page number (null: none)}; null when u is no URL\nconst urlParts = u => {\n  const x = parseUrl(/^[a-z][a-z0-9+.-]*:/i.test(String(u || '')) ? u : `https://${u}`); if (!x) return null;\n  let n = null; const num = v => { n = Math.max(n ?? 0, +v); };\n  const params = x.search.slice(1).replace(/\\+/g, '%20').split('&').filter(Boolean).sort().map(kv => {\n    let [k, v = ''] = kv.split('='); try { k = decodeURIComponent(k); } catch {} k = (k.toLowerCase().match(/[a-z0-9_]+/g) || ['']).pop();\n    const page = PAGE_PARAM.test(k) && /^\\d*$/.test(v); if (page && v) num(v);\n    return { kv, page, sort: SORT_PARAM.test(k) };\n  });\n  const path = `${x.protocol}//${x.host.replace(/^www\\./, '')}${x.pathname.replace(/\\/$/, '')}`, m = path.match(/\\/page\\/(\\d+)$/i); if (m) num(m[1]);\n  return { path, view: m ? path.slice(0, m.index) : path, params, n };\n};\n// the key of a page; with `drop` (which params to leave out) the key of its view: urlKey(u, p => p.page) = its list, any page number\nconst urlKey = (u, drop) => { const p = urlParts(u); if (!p) return String(u || ''); const q = p.params.filter(x => !(drop && drop(x))).map(x => x.kv); return (drop ? p.view : p.path) + (q.length ? '?' + q.join('&') : ''); };\n// ---- end helpers ----\nconst T = $('Resolve Source').first().json;          // the requested url + the hosts and main-content mode of its source\nconst r = $input.first().json || {};\nconst MAX = Number(T.max_links) || 100;\nconst IMG = /\\.(png|jpe?g|gif|svg|webp|ico|bmp)(\\?|#|$)/i, FILE = /\\.(css|js|xml|rss|zip|json)(\\?|#|$)/i;\n// generic \"read more\" button words (glued to the title on many sites: \"Continuer la lectureAppel d'offres ...\")\nconst READ_MORE = /^\\s*(continuer la lecture|lire la suite|lire plus|en savoir plus|voir plus|voir le d[ée]tail|read more|learn more|view details|إقرأ المزيد|اقرأ المزيد|المزيد)\\s*[:»>.-]*\\s*|\\s*[«<.-]*\\s*(continuer la lecture|lire la suite|lire plus|en savoir plus|voir plus|read more|إقرأ المزيد|اقرأ المزيد)\\s*$/i;\n\n// bracket-aware markdown link scanner: [![alt](img) text](url), \"]\" inside alt text, (url \"title\")\nfunction scanLinks(s) {\n  const found = [];\n  for (let i = s.indexOf(']('); i >= 0; i = s.indexOf('](', i + 2)) {\n    let depth = 0, a = -1;\n    for (let k = i; k >= 0 && i - k < 600; k--) { if (s[k] === ']') depth++; else if (s[k] === '[') { depth--; if (depth === 0) { a = k; break; } } }\n    if (a < 0) continue;\n    let p = 0, b = -1;\n    for (let k = i + 1; k < s.length && k - i < 2000; k++) { if (s[k] === '(') p++; else if (s[k] === ')') { p--; if (p === 0) { b = k; break; } } else if (s[k] === '\\n') break; }\n    if (b < 0) continue;\n    const isImage = a > 0 && s[a - 1] === '!';\n    found.push({ start: isImage ? a - 1 : a, end: b + 1, label: s.slice(a + 1, i), target: s.slice(i + 2, b).trim().replace(/\\s+\"[^\"]*\"$/, '').replace(/^<|>$/g, ''), isImage });\n  }\n  return found;\n}\n\nconst err = T.refused || pageError(r);         // refused by Resolve Source (host of no source): whatever Firecrawl Scrape answered\nif (err) return [{ json: { result: `PAGE ERROR | ${T.url} | ${err}` } }];\nconst d = r.data, md = String(d.markdown), meta = d.metadata || {};\nconst pageUrl = meta.url || meta.sourceURL || T.url;\nconst srcHosts = String(T.allowed_hosts || '').split(',').map(h => h.trim().replace(/^www\\./, '').toLowerCase()).filter(Boolean);\nconst allowed = new Set([hostOfUrl(T.url), hostOfUrl(pageUrl), ...srcHosts]);\nconst idOf = u => fnv(normUrl(u));\nconst lines = md.split('\\n');\nconst starts = []; { let pos = 0; for (const l of lines) { starts.push(pos); pos += l.length + 1; } }\nconst lineOf = off => { let lo = 0, hi = starts.length - 1; while (lo < hi) { const m = (lo + hi + 1) >> 1; if (starts[m] <= off) lo = m; else hi = m - 1; } return lo; };\n\nconst raw = scanLinks(md).filter(l => !l.isImage);\nconst links = raw.filter(l => !raw.some(o => o !== l && o.start <= l.start && o.end >= l.end));   // outermost link only (a card)\nconst self = parseUrl(pageUrl) && parseUrl(pageUrl).noHash.replace(/\\s/g, '%20');\nconst byUrl = new Map();\nfor (const l of links) {\n  const u = parseUrl(l.target, pageUrl);\n  if (!u || !/^https?:$/.test(u.protocol) || IMG.test(u.pathname) || FILE.test(u.pathname)) continue;\n  const url = u.noHash.replace(/\\s/g, '%20');         // a raw space would break the \"| url\" line format\n  if (!allowed.has(hostOfUrl(url)) || url === self) continue;\n  const text = stripMd(l.label).replace(READ_MORE, ' ').trim();\n  const ln = lineOf(l.start);\n  const context = stripMd(lines.slice(Math.max(0, ln - 1), ln + 2).join(' ')).slice(0, 200);\n  if (!text && !context) continue;\n  const prev = byUrl.get(url);\n  if (!prev) byUrl.set(url, { url, text, context, pos: l.start });\n  else if (text.length > prev.text.length) prev.text = text;\n}\n// a label on 3+ links that go to DIFFERENT pages (\"read more\" on every card, any language) carries no meaning: learned\n// from this page, not from a list. A label that always goes to the SAME page (a category tag \"Appel d'offre\" on every card)\n// is kept: it is often the way to the tender list.\nconst count = {};\nfor (const l of links) {\n  const t = stripMd(l.label).toLowerCase(), u = parseUrl(l.target, pageUrl);\n  if (t && t.length < 40) { const c = (count[t] ||= { n: 0, urls: new Set() }); c.n++; if (u) c.urls.add(u.noHash); }\n}\nconst repeated = Object.entries(count).filter(([, c]) => c.n >= 3 && c.urls.size >= 2).map(([t]) => t);\nlet cands = [...byUrl.values()].sort((a, b) => a.pos - b.pos);\nfor (const c of cands) if (repeated.includes(c.text.toLowerCase())) c.text = '';\ncands = cands.filter(c => c.text || c.context).slice(0, MAX);\n\nlet list = '', shown = 0;                   // ~8000 chars of links (small local models have an 8k-token context): ~45 links\nfor (const c of cands) {\n  const rest = c.text && c.context.startsWith(c.text) ? c.context.slice(c.text.length).trim() : c.context;   // context minus the link text\n  // a long link text says enough: the surrounding text is shown only for short labels (\"Lire la suite\", \"Appel d'offre\")\n  const t = c.text.slice(0, 120), ctx = rest && c.text.length < 40 ? ` — ${rest.slice(0, 70)}` : '';\n  const line = `[${idOf(c.url)}] ${t || '(no text)'}${ctx} | ${c.url}\\n`;\n  if (list.length + line.length > 8000) break;\n  list += line; shown++;\n}\nconst excerpt = stripMd(md).slice(0, 700);\n// next page of a list: \"Suivant\", \"Next\", \"»\", \"التالي\"... (a small model easily misses it among the links). The word can also sit\n// INSIDE a short label (\"Aller à la page suivante\", \"20 avis de marchés publics suivants\", \"Older posts\"): then the link must be a\n// LATER page of THIS list: same host, path and other parameters (sort ones too), and a higher page number (\"paged=2\", \"page=3\",\n// \"start=40\", \"/page/2\"). So a short tender title \"Acquisition des équipements suivants\" and a sort link \"Les plus anciens\"\n// (\"&ordre=date-asc\", no page number) are never taken for it. Page parameters and URL keys: urlParts / urlKey (lib.js), scoutRun's rule\nconst NEXT = /^(suivant|suivante|page suivante|next|next page|plus anciens|older|التالي|الصفحة التالية|الموالي)(\\s|[»›>]|$)|^[»›]$|^>>?$/i;\nconst NEXT_IN = /(^|[\\s(«])(suivante?s?|next|older|plus anciens|التالية?|الموالية?)(?=$|[\\s»›>).:])/i;\n// {view: the URL without its page number (sort parameters kept: another order is another list here), n: that number (null: none)}\nconst pageOf = u => { const p = urlParts(u); return p && { view: urlKey(u, x => x.page), n: p.n }; };\nconst here = pageOf(pageUrl), later = u => { const o = pageOf(u); return !!(o && here && o.n !== null && o.view === here.view && o.n > (here.n ?? 0)); };\nconst next = cands.find(c => NEXT.test(c.text.trim())) || cands.find(c => c.text.length <= 60 && NEXT_IN.test(c.text) && later(c.url));\n// Firecrawl followed a redirect to a host of no source (\"site.fr\" for the configured \"site.com\"): its links are listed and can be\n// picked (Firecrawl Detail reads them), but open_page refuses to open them (Resolve Source). Said to the agent, and kept in\n// scoutRun's notes for Run Summary, so the operator adds that host to the source's allowedHosts\nconst landed = hostOfUrl(pageUrl);\nconst moved = T.source && landed && !srcHosts.some(k => landed === k || landed.endsWith('.' + k))\n  ? `NOTE: redirected to ${landed}, which is not in the allowedHosts of source \"${T.source}\": its links can be picked, open_page will refuse them` : '';\nreturn [{ json: { result: [\n  `PAGE [${idOf(pageUrl)}] | ${pageUrl} | ${String(meta.title || '').replace(/\\|/g, '/').slice(0, 150)}`,\n  `TEXT: ${excerpt}`,\n  `REPEATED LABELS: ${repeated.slice(0, 10).join(' | ') || 'none'}`,\n  `NEXT PAGE: ${next ? `[${idOf(next.url)}] | ${next.url}` : 'none'}`,\n  ...(moved ? [moved] : []),\n  `LINKS (same site, ${shown} of ${byUrl.size}):`,\n  list.trim() || '(none)'].join('\\n') } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        300
+      ],
+      "id": "de2ed474-c0c9-4f96-a176-a98d8b55e749",
+      "name": "Page Links"
+    }
+  ],
+  "connections": {
+    "Tool Input": {
+      "main": [
+        [
+          {
+            "node": "Resolve Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resolve Source": {
+      "main": [
+        [
+          {
+            "node": "Known source?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Known source?": {
+      "main": [
+        [
+          {
+            "node": "Firecrawl Scrape",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Page Links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Firecrawl Scrape": {
+      "main": [
+        [
+          {
+            "node": "Page Links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

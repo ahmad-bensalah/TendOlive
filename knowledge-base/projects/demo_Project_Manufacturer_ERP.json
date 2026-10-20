@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "demo_Project_Manufacturer_ERP",
+  "type": "past_project",
+  "title": "Manufacturer - ERP Migration to Azure (2022)",
+  "description": "ERP customisation and migration to Azure cloud for an industrial manufacturer.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [],
+  "client": "industrial manufacturer",
+  "sector": "industry",
+  "scope": "Odoo ERP customisation, data migration, hosting on Azure.",
+  "company_role": "ERP customisation and migration to Azure cloud for an industrial manufacturer.",
+  "technologies": [
+    "azure",
+    "erp",
+    "odoo"
+  ],
+  "delivery_status": "completed",
+  "year": 2022,
+  "outcomes": ""
+}

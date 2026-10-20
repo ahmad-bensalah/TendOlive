@@ -1,0 +1,81 @@
+{
+  "tender": {
+    "id": "T-2026-041",
+    "title": "Conception et déploiement du portail citoyen dématérialisé",
+    "client": "Ministère Fictif du Numérique et des Territoires",
+    "language": "fr",
+    "deadline": "2026-12-15",
+    "project_type": "software",
+    "requirements": [
+      "Authentification unifiée sécurisée conforme au référentiel d'identité national",
+      "Accessibilité numérique niveau RGAA double-A sur l'ensemble des parcours",
+      "Architecture distribuée conteneurisée à haute disponibilité (99.9%)",
+      "Tableau de bord citoyen temps réel avec suivi de l'avancement des dossiers",
+      "Interopérabilité par API REST/JSON documentées OpenAPI 3.0 avec les SI partenaires",
+      "Hébergement souverain qualifié SecNumCloud et chiffrement des données de bout en bout"
+    ],
+    "raw_text_excerpt": "Le Ministère Fictif du Numérique souhaite moderniser ses démarches usagers en déployant un guichet numérique souverain, modulaire et hautement disponible, capable d'absorber les pics de charge des campagnes fiscales et sociales."
+  },
+  "match": {
+    "score": 0.91,
+    "similar_projects": [
+      {
+        "name": "Portail Démarches Région Démo",
+        "client": "Conseil Régional Imaginaire",
+        "year": 2025,
+        "result": "Déploiement en 7 mois de 40 démarches numériques pour 1.2 million d'usagers",
+        "stack": ["Python", "FastAPI", "React", "PostgreSQL", "Docker", "Kubernetes"],
+        "duration_months": 7,
+        "team_size": 6
+      },
+      {
+        "name": "Guichet Unique Associatif Virtuel",
+        "client": "Métropole Fictive du Sud",
+        "year": 2024,
+        "result": "Réduction de 45% des délais de traitement des subventions et conformité RGAA 100%",
+        "stack": ["Python", "Django", "Vue.js", "Redis", "PostgreSQL"],
+        "duration_months": 5,
+        "team_size": 5
+      },
+      {
+        "name": "Plateforme d'Identité Citoyenne Pilote",
+        "client": "Agence Fictive de Transformation Publique",
+        "year": 2024,
+        "result": "Interopérabilité réussie avec 15 téléservices de l'État sans incident de sécurité",
+        "stack": ["Go", "OpenID Connect", "OAuth2", "Docker", "PostgreSQL"],
+        "duration_months": 9,
+        "team_size": 7
+      }
+    ],
+    "why_us": [
+      "Expertise avérée sur les portails publics à fort trafic et conformité RGAA",
+      "Accélérateurs logiciels pré-intégrés conformes aux normes d'authentification nationales",
+      "Équipe certifiée sur les architectures cloud souverain et la conteneurisation",
+      "Méthodologie agile éprouvée garantissant une première version livrée en 3 mois"
+    ],
+    "certifications": {
+      "matching": 3,
+      "list": [
+        "ISO 27001",
+        "SecNumCloud",
+        "Qualiopi"
+      ]
+    },
+    "engineers": {
+      "specialized": 12,
+      "profiles": [
+        { "role": "Backend", "count": 4 },
+        { "role": "Frontend", "count": 3 },
+        { "role": "DevOps", "count": 2 },
+        { "role": "PM", "count": 2 },
+        { "role": "QA", "count": 1 }
+      ]
+    }
+  },
+  "theme": {
+    "primary": "#1d4ed8",
+    "secondary": "#3b82f6",
+    "fontHeading": "Plus Jakarta Sans",
+    "fontBody": "Inter"
+  }
+}

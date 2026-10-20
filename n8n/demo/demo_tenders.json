@@ -1,0 +1,127 @@
+{
+  "_note": "SYNTHETIC DEMO TENDERS. Written by the team to show the pipeline end to end; not real notices. Buyers are fictional (marked 'démo'). Dates are relative to today: pub_days_ago / deadline_in_days. Edit freely.",
+  "tenders": [
+    {
+      "id": "DEMO-001",
+      "title": "Développement d'une plateforme numérique de gestion des licences touristiques",
+      "buyer": "Office du Tourisme de Sampleville (démo)",
+      "country": "TN",
+      "language": "fr",
+      "currency": "TND",
+      "pub_days_ago": 3,
+      "deadline_in_days": 24,
+      "cpv": [
+        "72212000",
+        "72262000"
+      ],
+      "estimated_value": "480 000 TND",
+      "email": "achats@tourisme-sampleville.demo",
+      "description": "L'Office du Tourisme de Sampleville lance un appel d'offres pour le développement d'une plateforme web de gestion des licences des établissements touristiques (demandes en ligne, suivi, renouvellement, tableau de bord).\n\nExigences techniques : le frontend doit être développé en React ou Angular. Le backend doit être réalisé en Node.js ou Java/Spring. La base de données doit être PostgreSQL. La plateforme doit exposer une API REST. L'hébergement doit être assuré sur un cloud AWS ou Azure.\n\nÉquipe : le soumissionnaire doit proposer au minimum 3 développeurs seniors, 1 chef de projet certifié PMP et 1 designer UX/UI.\n\nExpérience : le soumissionnaire doit justifier d'au moins 2 projets numériques similaires dans le secteur public. Une certification ISO 27001 est souhaitée.\n\nDurée d'exécution : 6 mois.\n\nCritères d'attribution : valeur technique (60), prix (40).",
+      "duration": "6 mois",
+      "award_criteria": [
+        "Valeur technique (60)",
+        "Prix (40)"
+      ]
+    },
+    {
+      "id": "DEMO-002",
+      "title": "Mise en place d'un assistant conversationnel IA (chatbot RAG) pour le service aux usagers",
+      "buyer": "Agence Nationale des Services Numériques de Sampleville (démo)",
+      "country": "TN",
+      "language": "fr",
+      "currency": "TND",
+      "pub_days_ago": 2,
+      "deadline_in_days": 30,
+      "cpv": [
+        "72000000",
+        "48000000"
+      ],
+      "estimated_value": "350 000 TND",
+      "description": "Objet : conception et déploiement d'un assistant conversationnel basé sur l'intelligence artificielle générative pour répondre aux questions des usagers à partir de la documentation interne de l'agence.\n\nExigences techniques : la solution doit utiliser un grand modèle de langage (LLM) avec une architecture RAG (génération augmentée par la recherche). L'assistant doit répondre en français et en arabe. La solution doit s'appuyer sur une base de données vectorielle. Le développement doit être réalisé en Python.\n\nÉquipe : le soumissionnaire doit mobiliser au moins 1 ingénieur IA et 1 chef de projet.\n\nExpérience : le soumissionnaire doit présenter au moins 1 référence de chatbot ou d'assistant IA déjà déployé.\n\nDurée : 5 mois.\n\nCritères d'attribution : valeur technique (70), prix (30).",
+      "duration": "5 mois",
+      "award_criteria": [
+        "Valeur technique (70)",
+        "Prix (30)"
+      ]
+    },
+    {
+      "id": "DEMO-003",
+      "title": "Tableau de bord décisionnel des indicateurs de santé publique",
+      "buyer": "Direction Régionale de la Santé de Sampleville (démo)",
+      "country": "FR",
+      "language": "fr",
+      "currency": "EUR",
+      "pub_days_ago": 4,
+      "deadline_in_days": 21,
+      "cpv": [
+        "72316000",
+        "48482000"
+      ],
+      "estimated_value": "220 000 EUR",
+      "description": "La Direction Régionale de la Santé souhaite disposer d'un tableau de bord décisionnel consolidant les indicateurs des établissements de santé.\n\nExigences techniques : les tableaux de bord doivent être réalisés sous Power BI. Les flux de données doivent être automatisés avec des pipelines Python. La solution doit être hébergée sur Azure. L'accès doit être géré par rôles.\n\nÉquipe : le titulaire doit proposer 1 chef de projet et 2 ingénieurs data.\n\nExpérience : le titulaire doit justifier d'au moins 1 projet de tableau de bord dans le secteur de la santé.\n\nDurée : 6 mois.\n\nCritères d'attribution : valeur technique (60), prix (40).",
+      "duration": "6 mois",
+      "award_criteria": [
+        "Valeur technique (60)",
+        "Prix (40)"
+      ]
+    },
+    {
+      "id": "DEMO-004",
+      "title": "Application mobile de relation citoyen intégrée au CRM Salesforce",
+      "buyer": "Communauté de Communes de Sampleville (démo)",
+      "country": "FR",
+      "language": "fr",
+      "currency": "EUR",
+      "pub_days_ago": 5,
+      "deadline_in_days": 18,
+      "cpv": [
+        "72212000"
+      ],
+      "estimated_value": "310 000 EUR",
+      "description": "Objet : développement d'une application mobile permettant aux habitants de signaler des incidents et de suivre leurs demandes, intégrée au CRM de la collectivité.\n\nExigences techniques : l'application mobile doit être développée en Flutter. L'application doit être intégrée au CRM Salesforce de la collectivité. Le déploiement doit être réalisé sur Kubernetes avec Terraform.\n\nÉquipe : le titulaire doit mobiliser au minimum 5 développeurs seniors et 1 Scrum Master certifié PSM.\n\nExpérience : le titulaire doit justifier d'au moins 2 projets dans le secteur de la santé.\n\nDurée : 8 mois.\n\nCritères d'attribution : valeur technique (55), prix (45).",
+      "duration": "8 mois",
+      "award_criteria": [
+        "Valeur technique (55)",
+        "Prix (45)"
+      ]
+    },
+    {
+      "id": "DEMO-005",
+      "title": "بوابة الخدمات الإلكترونية للمواطنين",
+      "buyer": "بلدية سامبلفيل (démo)",
+      "country": "TN",
+      "language": "ar",
+      "currency": "TND",
+      "pub_days_ago": 1,
+      "deadline_in_days": 27,
+      "cpv": [
+        "72413000"
+      ],
+      "estimated_value": "400 000 TND",
+      "description": "موضوع طلب العروض: تطوير بوابة إلكترونية تمكن المواطنين من تقديم مطالبهم الإدارية عبر الإنترنت ومتابعتها والدفع الإلكتروني.\n\nالمتطلبات التقنية: يجب تطوير الواجهة باستعمال Angular. يجب تطوير الخادم باستعمال Node.js. يجب استعمال قاعدة بيانات PostgreSQL. يجب استضافة البوابة على AWS.\n\nالفريق: يجب على العارض توفير مدير مشروع و3 مطورين على الأقل.\n\nالخبرة: يجب على العارض تقديم مرجع واحد على الأقل لبوابة خدمات إلكترونية لفائدة بلدية أو هيكل عمومي.\n\nمدة الإنجاز: 7 أشهر.\n\nمعايير التقييم: العرض الفني (70)، العرض المالي (30).",
+      "duration": "7 أشهر",
+      "award_criteria": [
+        "العرض الفني (70)",
+        "العرض المالي (30)"
+      ]
+    },
+    {
+      "id": "DEMO-006",
+      "title": "Fourniture et livraison de mobilier de bureau pour les services administratifs",
+      "buyer": "Mairie de Sampleville (démo)",
+      "country": "FR",
+      "language": "fr",
+      "currency": "EUR",
+      "pub_days_ago": 2,
+      "deadline_in_days": 15,
+      "cpv": [
+        "39130000"
+      ],
+      "estimated_value": "60 000 EUR",
+      "description": "Le présent marché a pour objet la fourniture et la livraison de bureaux, chaises, armoires et caissons pour les services administratifs de la mairie. Le titulaire doit assurer le montage sur site.\n\nCritères d'attribution : prix (100).",
+      "award_criteria": [
+        "Prix (100)"
+      ]
+    }
+  ]
+}

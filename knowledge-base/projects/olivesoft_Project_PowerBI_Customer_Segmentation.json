@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_PowerBI_Customer_Segmentation",
+  "type": "past_project",
+  "title": "Power BI dashboards and customer segmentation",
+  "description": "Deployed 8 advanced Power BI dashboards, BigQuery data pipelines and machine-learning clustering of 25 000+ customers.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Deployed 8 advanced Power BI dashboards, BigQuery data pipelines and machine-learning clustering of 25 000+ customers.",
+  "scope": "Power BI dashboards (DAX, Power Query), BigQuery pipelines, UAT/QA for 12 data-migration projects, customer clustering.",
+  "technologies": [
+    "power bi",
+    "bigquery",
+    "machine learning"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "Reporting latency -45 %; 99.2 % data accuracy; cross-sell revenue +18 %.",
+  "team_cv_ids": [
+    "CV_10_Daniel_Kim.pdf"
+  ],
+  "source": "CV_10_Daniel_Kim.pdf: OliveSoft experience, Business Analyst, Sep 2025 - Present"
+}

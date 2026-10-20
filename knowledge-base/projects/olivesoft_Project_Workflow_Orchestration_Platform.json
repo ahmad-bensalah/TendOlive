@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Workflow_Orchestration_Platform",
+  "type": "past_project",
+  "title": "Central workflow-orchestration platform",
+  "description": "Designed and implemented a central workflow-orchestration platform with reusable Airflow DAGs for 12 business units.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Designed and implemented a central workflow-orchestration platform with reusable Airflow DAGs for 12 business units.",
+  "scope": "Airflow DAGs integrated with n8n, Talend, Azure Blob Storage, GCP, GitHub, SFTP, Power BI and Cegid Y2; GitOps CI/CD; Docker on Azure VMs; Datadog; RBAC.",
+  "technologies": [
+    "airflow",
+    "n8n",
+    "talend",
+    "azure",
+    "gcp",
+    "docker",
+    "datadog",
+    "power bi"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "Pipeline setup time -45 %; deployment errors -30 %; 99.8 % uptime.",
+  "team_cv_ids": [
+    "CV_18_Leila_Morgan.pdf"
+  ],
+  "source": "CV_18_Leila_Morgan.pdf: OliveSoft experience, Data Engineer, Jul 2026 - Present"
+}

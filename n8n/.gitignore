@@ -1,0 +1,7 @@
+# local secrets for the test runner (never commit)
+test/.firecrawl_key
+test/.firecrawl_key.txt
+# large raw executions
+test/out/execution.json
+test/.gemini_key
+test/.gemini_key.txt

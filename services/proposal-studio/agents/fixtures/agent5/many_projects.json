@@ -1,0 +1,106 @@
+{
+  "agent": "credibility",
+  "ok": true,
+  "slides": [
+    {
+      "id": "s4",
+      "type": "content",
+      "title": "Nos atouts",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "8 projets similaires livrés avec succès",
+            "Expertise avérée en portails publics et identité numérique",
+            "Stack technique moderne et éprouvée"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "Differentiators based on project count",
+      "warnings": []
+    },
+    {
+      "id": "s6",
+      "type": "content",
+      "title": "Équipe et gouvernance",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Chef de projet dédié et comité de pilotage",
+            "Points hebdomadaires et revues mensuelles",
+            "Livraison incrémentale avec validation client"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "Generic governance, no team data in input",
+      "warnings": ["No team composition data available"],
+      "assumptions": ["Governance: weekly meetings, monthly reviews, incremental delivery"]
+    },
+    {
+      "id": "s7",
+      "type": "content",
+      "title": "Références pertinentes",
+      "blocks": [
+        {
+          "kind": "cards",
+          "cards": [
+            {
+              "title": "Plateforme d'Identité Citoyenne Pilote",
+              "text": "Client: Agence Fictive de Transformation Publique. Technologies: Go, OpenID Connect, OAuth2, Docker, PostgreSQL. 2024."
+            },
+            {
+              "title": "Guichet Unique Associatif Virtuel",
+              "text": "Client: Métropole Fictive du Sud. Technologies: Python, Django, Vue.js, Redis, PostgreSQL. 2024."
+            },
+            {
+              "title": "Portail Démarches Région Démo",
+              "text": "Client: Conseil Régional Imaginaire. Technologies: Python, FastAPI, React, PostgreSQL, Docker, Kubernetes. 2025."
+            }
+          ]
+        }
+      ],
+      "notes": "Top 3 projects from ranking algorithm: recent software projects",
+      "warnings": []
+    },
+    {
+      "id": "s8",
+      "type": "content",
+      "title": "Support et SLA",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Support technique [TO FILL: response times]",
+            "Maintenance [TO FILL: SLA levels]",
+            "[TO FILL: security and compliance certifications]"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "No certification or SLA data in input",
+      "warnings": ["No certification or SLA data available"]
+    }
+  ],
+  "data": {
+    "evidence": [
+      { "claim": "8 projets similaires", "source": "match.similar_projects.length" }
+    ]
+  },
+  "assumptions": [
+    "Governance: weekly meetings, monthly reviews, incremental delivery"
+  ],
+  "warnings": [
+    "No team composition data available",
+    "No certification or SLA data available"
+  ],
+  "usage": {
+    "model": "mock",
+    "promptTokens": 2800,
+    "completionTokens": 800,
+    "ms": 160,
+    "attempts": 1
+  }
+}

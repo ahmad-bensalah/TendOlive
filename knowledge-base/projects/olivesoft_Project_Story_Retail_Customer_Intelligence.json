@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T14:00:00+00:00",
+  "linked_ids": [],
+  "id": "olivesoft_Project_Story_Retail_Customer_Intelligence",
+  "type": "past_project",
+  "title": "Unified customer intelligence for a retail and e-commerce brand (website success story)",
+  "description": "Centralised CRM as a single source of truth for an established retail and e-commerce company, fed by daily pipelines from the ERP, e-commerce, marketing and support tools, with customer segmentation and Power BI dashboards.",
+  "client": "Established retail and e-commerce company (not named)",
+  "sector": "retail",
+  "company_role": "Automated daily data pipelines, data cleaning and deduplication, value/engagement/frequency segmentation, marketing and sales dashboards.",
+  "scope": "Google Cloud Platform and BigQuery; Cegid ERP as a source; Power BI dashboards.",
+  "technologies": [
+    "gcp",
+    "bigquery",
+    "cegid",
+    "power bi",
+    "crm"
+  ],
+  "delivery_status": "completed",
+  "source": "https://www.olivesoft.fr/en/article/fragmented-data-growth-empowering-sales-data (published 19 June 2025)"
+}

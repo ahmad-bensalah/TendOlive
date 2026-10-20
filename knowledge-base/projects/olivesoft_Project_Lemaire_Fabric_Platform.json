@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Lemaire_Fabric_Platform",
+  "type": "past_project",
+  "title": "Microsoft Fabric data platform for Lemaire",
+  "description": "Leads the design and deployment of a Microsoft Fabric data platform serving 200+ users, with ingestion pipelines and Power BI dashboards.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [
+    "olivesoft_client_Lemaire"
+  ],
+  "client": "Lemaire",
+  "sector": "retail",
+  "company_role": "Leads the design and deployment of a Microsoft Fabric data platform serving 200+ users, with ingestion pipelines and Power BI dashboards.",
+  "scope": "Microsoft Fabric lakehouse, 30+ ingestion pipelines (Talend, Azure Data Factory), Power BI dashboards for supply chain, sales and customers.",
+  "technologies": [
+    "microsoft fabric",
+    "talend",
+    "azure data factory",
+    "power bi"
+  ],
+  "delivery_status": "ongoing",
+  "outcomes": "Report generation from 12 to 3 min; 99.8 % data freshness; self-service analytics adoption +40 %.",
+  "team_cv_ids": [
+    "CV_13_Isabella_Ross.pdf"
+  ],
+  "source": "CV_13_Isabella_Ross.pdf: experience entry 'Data Engineer Consultant, LEMAIRE, Jan 2026 - Present' under the client name; Lemaire is listed as an OliveSoft client on https://www.olivesoft.fr/en."
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T14:00:00+00:00",
+  "updated_at": "2026-10-18T14:00:00+00:00",
+  "linked_ids": [],
+  "id": "olivesoft_Project_Story_IP_Registration_AI",
+  "type": "past_project",
+  "title": "AI chatbot for intellectual-property registration (website case study)",
+  "description": "Modernised intellectual-property registration with an AI-powered chatbot and a database crawler.",
+  "client": "Client not named on the website",
+  "company_role": "AI chatbot and database crawler.",
+  "scope": "As published on the services page; details are not given.",
+  "technologies": [
+    "artificial intelligence",
+    "chatbot"
+  ],
+  "delivery_status": "completed",
+  "source": "https://www.olivesoft.fr/en/services (case study 'Modernizing Intellectual Property Registration with AI')"
+}

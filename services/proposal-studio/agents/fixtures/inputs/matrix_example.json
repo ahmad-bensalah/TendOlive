@@ -1,0 +1,159 @@
+{
+  "tender_id": "T-9f3a1c20b7e44d10",
+  "language": "fr",
+  "tender": {
+    "title": "Développement d'une application mobile citoyenne",
+    "reference": "boamp-26-104512",
+    "issuer": "Ville de Lyon",
+    "country": "France",
+    "deadline": "2026-11-20",
+    "days_to_deadline": 34,
+    "estimated_value": "150000 EUR",
+    "cpv": "72212000 - Services de programmation de logiciels d'application",
+    "duration": "24 mois",
+    "source_url": "https://www.boamp.fr/pages/avis/?q=idweb:26-104512"
+  },
+  "analysis": {
+    "relevance_score": 78,
+    "matched_service_lines": ["Mobile development", "AI/LLM"],
+    "suggested_angle": "Lead with the public-sector mobile reference and a RGAA-compliant design.",
+    "risks": ["Short deadline", "Sovereign hosting required"],
+    "requirements": {
+      "technical": ["Application iOS et Android", "Hébergement conforme RGPD"],
+      "team": ["1 chef de projet certifié PMP"],
+      "experience": ["3 références secteur public"],
+      "timeline": "6 mois"
+    }
+  },
+  "buyer_profile": {
+    "legal_name": "COMMUNE DE LYON",
+    "sector": "Public administration (local government)",
+    "organization_description": "Large French municipality serving about 520k inhabitants.",
+    "estimated_revenue": "Revenue 2024: 780 M EUR (registry)",
+    "past_digital_projects": ["Portail citoyen 2022", "Open data platform"],
+    "key_partners": ["Métropole de Lyon"],
+    "domain_requirements": ["Accessibilité RGAA", "Hébergement souverain"]
+  },
+  "rag": {
+    "status": "PARTIAL",
+    "suggested_assets": {
+      "projects": ["proj_014", "proj_022"],
+      "team": ["cv_007", "cv_011"],
+      "stack": ["React Native", "FastAPI"]
+    }
+  },
+  "matrix": {
+    "status": "OK",
+    "rows": [
+      {
+        "requirement_id": "R1",
+        "category": "technical",
+        "requirement": "Application iOS et Android",
+        "coverage": "covered",
+        "coverage_score": 90,
+        "justification": "Projet mobile similaire livré en 2024 + lead mobile disponible",
+        "evidence": [
+          {
+            "asset_id": "proj_014",
+            "asset_type": "project",
+            "title": "Application mobile Banque X",
+            "snippet": "App React Native, 200k utilisateurs",
+            "metadata": { "year": 2024, "client_sector": "Banking", "stack": ["React Native", "FastAPI"], "duration_months": 6, "team_size": 5 }
+          },
+          {
+            "asset_id": "cv_007",
+            "asset_type": "cv",
+            "title": "Sami B. – Lead Mobile",
+            "snippet": "6 ans React Native / Flutter",
+            "metadata": { "role": "Frontend", "years_experience": 6 }
+          }
+        ]
+      },
+      {
+        "requirement_id": "R2",
+        "category": "technical",
+        "requirement": "Hébergement conforme RGPD",
+        "coverage": "covered",
+        "coverage_score": 85,
+        "justification": "Infrastructure cloud souverain déjà utilisée sur 3 projets",
+        "evidence": [
+          {
+            "asset_id": "proj_022",
+            "asset_type": "project",
+            "title": "Portail citoyen région",
+            "snippet": "Hébergement SecNumCloud, conformité RGPD validée",
+            "metadata": { "year": 2025, "client": "Conseil Régional", "stack": ["Python", "React", "PostgreSQL"], "duration_months": 7, "team_size": 6 }
+          }
+        ]
+      },
+      {
+        "requirement_id": "R3",
+        "category": "team",
+        "requirement": "1 chef de projet certifié PMP",
+        "coverage": "covered",
+        "coverage_score": 100,
+        "justification": "PM senior certifié PMP disponible",
+        "evidence": [
+          {
+            "asset_id": "cv_011",
+            "asset_type": "cv",
+            "title": "Marie L. – PM Senior",
+            "snippet": "PMP, 8 ans gestion projets publics",
+            "metadata": { "role": "PM", "years_experience": 8, "certifications": ["PMP", "Scrum Master"] }
+          }
+        ]
+      },
+      {
+        "requirement_id": "R4",
+        "category": "experience",
+        "requirement": "3 références secteur public",
+        "coverage": "gap",
+        "coverage_score": 20,
+        "justification": "Une seule référence secteur public trouvée",
+        "evidence": [
+          {
+            "asset_id": "proj_022",
+            "asset_type": "project",
+            "title": "Portail citoyen région",
+            "snippet": "Projet secteur public régional",
+            "metadata": { "year": 2025, "client_sector": "Public", "client": "Conseil Régional" }
+          }
+        ]
+      }
+    ],
+    "summary": {
+      "fit_score": 72,
+      "by_category": { "technical": 85, "team": 70, "experience": 45 },
+      "covered": 5,
+      "partial": 2,
+      "gaps": 1,
+      "gaps_list": ["R4"],
+      "recommendation": "bid_with_partner"
+    }
+  },
+  "competition": {
+    "status": "OK",
+    "budget_estimate": {
+      "low": 90000,
+      "mid": 130000,
+      "high": 170000,
+      "currency": "EUR",
+      "confidence": "medium"
+    },
+    "competitors": [
+      { "name": "Sopra Steria", "past_wins": 3, "avg_amount": 210000 },
+      { "name": "Cap Gemini", "past_wins": 2, "avg_amount": 180000 }
+    ],
+    "positioning": "Differentiate on agility, mobile expertise and a lower price point."
+  },
+  "options": {
+    "template_id": "olivesoft_default",
+    "formats": ["pptx", "pdf"],
+    "sections": ["context", "understanding", "solution", "team", "references", "timeline", "pricing", "why_us"],
+    "overrides": {
+      "tone": "formal",
+      "max_slides": 15,
+      "gap_strategy": "mitigate"
+    }
+  }
+}

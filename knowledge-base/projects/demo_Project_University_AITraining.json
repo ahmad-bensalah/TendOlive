@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "demo_Project_University_AITraining",
+  "type": "past_project",
+  "title": "Universite - Programme de formation en Intelligence Artificielle (2025)",
+  "description": "Sessions de formation sur les fondamentaux de l'intelligence artificielle pour le personnel d'une universite publique.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [],
+  "client": "universite publique",
+  "sector": "public / education",
+  "scope": "12 sessions de formation sur les fondamentaux de l'IA et du machine learning, supports pedagogiques, evaluation des participants, 240 participants.",
+  "company_role": "Sessions de formation sur les fondamentaux de l'intelligence artificielle pour le personnel d'une universite publique.",
+  "technologies": [
+    "artificial intelligence",
+    "machine learning",
+    "training"
+  ],
+  "delivery_status": "completed",
+  "year": 2025,
+  "outcomes": ""
+}

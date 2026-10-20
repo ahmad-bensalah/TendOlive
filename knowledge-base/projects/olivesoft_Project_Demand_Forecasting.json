@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Demand_Forecasting",
+  "type": "past_project",
+  "title": "Demand-forecasting models with Power BI",
+  "description": "Led a 6-person AI/Data/Power BI team to build demand-forecasting models, and set up a hyper-care process.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Led a 6-person AI/Data/Power BI team to build demand-forecasting models, and set up a hyper-care process.",
+  "scope": "Demand forecasting for logistics and purchasing teams; hyper-care incident process.",
+  "technologies": [
+    "machine learning",
+    "power bi"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "90 % forecast accuracy; stock-outs reduced by 15 %; 90 % of incidents resolved within 24 h.",
+  "team_cv_ids": [
+    "CV_04_Noah_Bennett.pdf"
+  ],
+  "source": "CV_04_Noah_Bennett.pdf: OliveSoft experience, Product Owner / Delivery Manager, Jul 2023 - Present"
+}

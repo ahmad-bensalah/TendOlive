@@ -1,0 +1,112 @@
+{
+  "agent": "budget",
+  "ok": true,
+  "slides": [
+    {
+      "id": "s9",
+      "type": "content",
+      "title": "Offre financière",
+      "blocks": [
+        {
+          "kind": "table",
+          "columns": [
+            "Poste",
+            "Quantité",
+            "Prix unitaire",
+            "Total"
+          ],
+          "rows": [
+            [
+              "Développement (Backend)",
+              "160 j/h",
+              "[TO FILL: tarif Backend]",
+              "[TO FILL: total]"
+            ],
+            [
+              "Développement (Frontend)",
+              "120 j/h",
+              "[TO FILL: tarif Frontend]",
+              "[TO FILL: total]"
+            ],
+            [
+              "DevOps et infrastructure",
+              "80 j/h",
+              "[TO FILL: tarif DevOps]",
+              "[TO FILL: total]"
+            ],
+            [
+              "Gestion de projet",
+              "80 j/h",
+              "[TO FILL: tarif PM]",
+              "[TO FILL: total]"
+            ],
+            [
+              "Tests et qualité",
+              "40 j/h",
+              "[TO FILL: tarif QA]",
+              "[TO FILL: total]"
+            ],
+            [
+              "",
+              "",
+              "Total Build",
+              "[TO FILL: total]"
+            ]
+          ]
+        },
+        {
+          "kind": "note",
+          "text": "Montant one-time : [TO FILL: total]. Coûts récurrents : [TO FILL: total]/mois."
+        }
+      ],
+      "requiresApproval": true,
+      "assumptions": [
+        "Catalogue de prix du 2026-01-01",
+        "Jours ouvrés par semaine : 5",
+        "Estimations basées sur le plan de mise en oeuvre"
+      ],
+      "catalogDate": "2026-01-01"
+    }
+  ],
+  "data": {
+    "people": [
+      {
+        "role": "backend",
+        "days": 160
+      },
+      {
+        "role": "frontend",
+        "days": 120
+      },
+      {
+        "role": "devops",
+        "days": 80
+      },
+      {
+        "role": "pm",
+        "days": 80
+      },
+      {
+        "role": "qa",
+        "days": 40
+      }
+    ],
+    "infrastructure": [],
+    "api_usage": [],
+    "licenses": []
+  },
+  "assumptions": [
+    "Catalogue de prix du 2026-01-01",
+    "Jours ouvrés par semaine : 5"
+  ],
+  "warnings": [
+    "Catalog prices not yet loaded - all prices shown as [TO FILL]"
+  ],
+  "usage": {
+    "model": "mock-model",
+    "promptTokens": 600,
+    "completionTokens": 300,
+    "ms": 100,
+    "attempts": 1
+  }
+}

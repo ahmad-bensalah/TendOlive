@@ -1,0 +1,19 @@
+{
+  "tender": {
+    "id": "T-2026-002",
+    "title": "Mission d'assistance ponctuelle",
+    "client": "Syndicat Fictif du Littoral",
+    "language": "fr",
+    "project_type": "other",
+    "requirements": [
+      "Intervention sous 48 heures ouvrées sur site",
+      "Remise d'un rapport de synthèse hebdomadaire"
+    ]
+  },
+  "match": {
+    "score": 0.54
+  },
+  "theme": {
+    "primary": "#1F4E79"
+  }
+}

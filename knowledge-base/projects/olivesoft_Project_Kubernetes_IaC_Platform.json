@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Kubernetes_IaC_Platform",
+  "type": "past_project",
+  "title": "Production Kubernetes platform with Terraform IaC",
+  "description": "Designed and deployed three production-grade Kubernetes clusters serving 12 micro-services, with Terraform IaC for AWS and Azure and GitLab CI/CD pipelines.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Designed and deployed three production-grade Kubernetes clusters serving 12 micro-services, with Terraform IaC for AWS and Azure and GitLab CI/CD pipelines.",
+  "scope": "Kubernetes clusters, Terraform infrastructure as code for AWS and Azure, GitLab CI/CD with automated testing and blue-green deployments.",
+  "technologies": [
+    "kubernetes",
+    "terraform",
+    "aws",
+    "azure",
+    "gitlab ci",
+    "microservices"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "Deployment time from 45 to 30 min; manual provisioning effort cut by 40 %; 99.8 % release success over 18 releases.",
+  "team_cv_ids": [
+    "CV_01_Ava_Thompson.pdf"
+  ],
+  "source": "CV_01_Ava_Thompson.pdf: OliveSoft experience, Cloud Infrastructure Engineer, Sep 2024 - Present"
+}

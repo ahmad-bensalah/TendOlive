@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T14:00:00+00:00",
+  "updated_at": "2026-10-18T14:00:00+00:00",
+  "linked_ids": [],
+  "id": "olivesoft_Stack_BI_Dashboarding",
+  "type": "tech_stack",
+  "title": "OliveSoft BI & Dashboarding stack",
+  "description": "BI & Dashboarding service: data modelling, KPI definition, interactive dashboards and semantic layers for business departments.",
+  "technologies": [
+    "power bi",
+    "tableau",
+    "qlik sense",
+    "looker studio"
+  ],
+  "use_cases": "Reporting and dashboards over ERP, CRM, cloud and database sources. Partner: Qlik. Case studies: fashion CRM and retail customer-intelligence Power BI dashboards.",
+  "source": "https://www.olivesoft.fr/en/services; partners and technologies from https://www.olivesoft.fr/en/olivesoft-ethos"
+}

@@ -1,0 +1,421 @@
+// olivesoft.proposal-input.v2: what n8n POSTs to the proposal service, ONE tender per request. Real output of the pipeline (live run of 2026-10-20) for a REAL tender found on francemarches.com: City'up, LLM agents and RAG chains. Matched by the team RAG v2 in company mode (the real CVs and company records of OliveSoft only), buyer researched. Its market study found no comparable awarded contract, so competition shows the honest NO_DATA form (status, null budget, no competitors): see INTEGRATION.md section 2 for the filled shape of budget_estimate / competitors / comparables. null / [] = not known: say "not known", never invent it.
+// Contract and rules: rfp-pipeline/INTEGRATION.md section 2. Plain JSON (same content, no comments): proposal_input_example.json
+// The proposal studio receives a copy of it made by "Adapt for Studio" (no demo record or weak proof shown as proof): INTEGRATION.md section 2.
+{
+  // Format name + version. Check it: a breaking change will bump it (v3).
+  "contract": "olivesoft.proposal-input.v2",
+  // Our stable id: the same tender keeps it across runs. Use it as the key to store the deck.
+  "tender_id": "T1vll2ea",
+  // Language of the tender (fr / en / ar): write the proposal in it.
+  "language": "fr",
+  // 1 = best tender of this run (fit, then RAG coverage, then deadline).
+  "rank": 1,
+  // The n8n run that produced it.
+  "run_id": "2026-10-20T05-19-35-615Z",
+  // Date of that run.
+  "generated_on": "2026-10-20",
+  // THE NOTICE as published by the buyer. Every value comes from the source, never from an LLM.
+  "tender": {
+    // Official title (original language): cover slide.
+    "title": "Prestations de développement d'agents LLM et services associés",
+    // The source's own reference: cite it on the cover and in the cover letter.
+    "reference": "T1vll2ea",
+    // The buyer (contracting authority).
+    "issuer": "City'up (972)",
+    // Country name (from country_code).
+    "country": "France",
+    // ISO 3166 code.
+    "country_code": "FR",
+    // YYYY-MM-DD.
+    "publication_date": "2026-10-06",
+    // Bid deadline, YYYY-MM-DD (a rectified deadline when there was one): cover + timeline slide.
+    "deadline": "2026-10-26",
+    // Days left on generated_on.
+    "days_to_deadline": 6,
+    // Budget AS WRITTEN in the notice (currency kept); its number is competition.declared_value_amount. null = not published.
+    "estimated_value": "180000 euros",
+    // EU procurement codes = what is bought (72xxxxxx = IT services, 48xxxxxx = software).
+    "cpv": [
+      "72000000"
+    ],
+    // Contract duration from the notice (else the one the analysis read in the text).
+    "duration": "12 mois",
+    // Where it was found (boamp, ted, a portal name...). 'demo' = synthetic demo tender.
+    "source": "francemarches",
+    // Link to the notice.
+    "source_url": "https://www.francemarches.com/appel-offre/3boamp2696703-2026-prestations-developpement-agents?q=Intelligence%20Artificielle",
+    // Where to submit the bid; null = not given in the notice.
+    "submission_url": null,
+    // Consultation page on the buyer's platform where the tender documents (DCE) are. Short notices keep their requirements there: a person downloads them. null here: a portal notice; BOAMP notices usually carry it.
+    "documents_url": null,
+    // Notice text (max 4000 chars): material for the 'context' and 'understanding' slides.
+    "description": "Le présent marché a pour objet prestations de conseil, conception, développement, intégration, évolution, optimisation, sécurisation et industrialisation de solutions reposant sur l’intelligence artificielle générative, notamment des agents LLM et des chaînes de génération augmentée par recherche documentaire (RAG).",
+    // [{title, description}] when the tender is split into lots; [] = one lot.
+    "lots": [],
+    // How the buyer scores the bids, with weights: argue on the heaviest. [] here: this notice gives none (they are in its tender documents).
+    "award_criteria": []
+  },
+  // OUR READING OF THE TENDER: one LLM call, every claim checked by code.
+  "analysis": {
+    // 0-100, a rule: 70 for fit high (50 for medium) + 30 x RAG coverage.
+    "relevance_score": 100,
+    // That calculation written out.
+    "relevance_basis": "fit high (70) + 30 x RAG coverage 1",
+    // high = the main deliverable is one of OliveSoft's services; medium = an important part is. Only high / medium tenders are sent.
+    "fit": "high",
+    // software_build | ai_data | integration_saas | consulting | maintenance_support | other.
+    "tender_type": "ai_data",
+    // OliveSoft's services the tender needs (from company.services): the 'solution' slide.
+    "matched_service_lines": [
+      "AI / LLM solutions (chatbots, RAG, document intelligence)"
+    ],
+    // One sentence: why it fits (LLM).
+    "reason": "The tender requests development of agents LLM and RAG chains, which are explicitly covered under AI/LLM solutions.",
+    // Words copied from the tender that support the fit.
+    "proof_quote": "Le présent marché a pour objet prestations de conseil, conception, développement, intégration, évolution, optimisation, sécurisation et industrialisation de solutions reposant sur l’intelligence artificielle générative, notamment des agents LLM et des chaînes de génération augmentée par recherche documentaire (RAG).",
+    // true = code found proof_quote in the tender text (false = the fit was lowered one level).
+    "quote_verified": true,
+    // Buyer's sector, one of: public sector, health, education, telecom, finance, retail, tourism.
+    "sector": "public sector",
+    // Always null: the proposal service writes the angle.
+    "suggested_angle": null,
+    // Facts only (deadline close, mandatory gap, dominant competitor, value far from the market). [] = none found.
+    "risks": [
+      "Short deadline: 6 days left"
+    ],
+    // The requirements as short English skill lines, per category (the lines the RAG matched). Full detail per line: matrix.rows.
+    "requirements": {
+      "technical": [
+        "LLM agents"
+      ],
+      "team": [],
+      "experience": [],
+      // Execution period written in the tender.
+      "timeline": "12 mois"
+    }
+  },
+  // WHO BUYS: from the buyer research agent (company registry, Wikidata, BOAMP history, web). Researched here: registry legal name, size, website, contacts, past digital contracts.
+  "buyer_profile": {
+    // Buyer name as published.
+    "name": "City'up (972)",
+    // Official name in the registry.
+    "legal_name": "CITY'UP (CFTU)",
+    // Activity of the buyer (registry).
+    "sector": "Public company",
+    // small / medium / large (from the staff band).
+    "size": "small",
+    // Two or three sentences on the buyer; every name and number in them was checked against the sources.
+    "organization_description": "It has published tenders for services including AI agent development and office amenities.",
+    // Revenue or budget when a source gives it.
+    "estimated_revenue": null,
+    // Headcount band from the registry.
+    "staff": "10-19 employees (registry, 2024)",
+    // Official website (never the tender platform).
+    "website": "https://cityup.mq",
+    // Researched contacts, else the ones written in the notice.
+    "contacts": {
+      "emails": [
+        "cu.commandepublique@cityup.mq"
+      ],
+      "phones": [],
+      "addresses": [
+        "Fort de France, 97200",
+        "19 RUE DE LA LIBERTE 97200 FORT DE FRANCE"
+      ]
+    },
+    // [{title, date, source}] digital contracts this buyer awarded before: show you understand their history.
+    "past_digital_projects": [
+      {
+        "title": "CONCEPTION, DEVELOPPEMENT ET MAINTENANCE DEVELOPPEMENT D’APPLICATIONS WEB ET MOBILES",
+        "date": "2026-01-31",
+        "source": "BOAMP"
+      },
+      {
+        "title": "ATTRIBUTION DE MARCHE - INFOGERANCE ET FOURNITURE DE MATERIELS INFORMATIQUES LOTS 2 ET 3",
+        "date": "2024-05-25",
+        "source": "BOAMP"
+      },
+      {
+        "title": "INFOGERANCE ET FOURNITURE DE MATERIELS INFORMATIQUES",
+        "date": "2024-03-16",
+        "source": "BOAMP"
+      }
+    ],
+    // [{name, wins}] companies that won this buyer's past contracts.
+    "past_winners": [],
+    // Not researched yet: always [].
+    "key_partners": [],
+    // Requirements about hosting, certifications, security or regulation (subset of the requirements).
+    "domain_requirements": [],
+    // ok | partial | not_found | not_researched_budget (outside the research budget of the run).
+    "research_status": "researched",
+    // Same idea for the web enrichment step.
+    "enrichment_status": "enriched"
+  },
+  // OUR PROOF: OliveSoft documents (CVs, past projects, tech stacks) your teammate's RAG matched to the requirements.
+  "rag": {
+    // FULL (every requirement covered) | PARTIAL | NONE | SKIPPED (no requirement to match) | ERROR.
+    "status": "FULL",
+    // company = OliveSoft's real knowledge base only (real tenders). demo = also the RAG's FICTIONAL demo records (demo tenders): every proof they give is marked origin "demo" and must never be shown as a company reference.
+    "data_mode": "company",
+    // The RAG's own note on what its coverage means.
+    "coverage_basis": "Recorded capabilities; declarations are not verified document evidence.",
+    // Document ids grouped for the deck: projects -> 'references' slide, team (CVs) -> 'team' slide, stack -> 'solution' slide.
+    "suggested_assets": {
+      "projects": [
+        "olivesoft_Project_GenAI_Content_Agent"
+      ],
+      "team": [
+        "CV_12_Mateo_Silva.pdf"
+      ],
+      "stack": [],
+      "other": []
+    },
+    // Each document once.
+    "assets": [
+      {
+        // File name in the RAG knowledge base.
+        "asset_id": "olivesoft_Project_GenAI_Content_Agent",
+        // cv | project | stack | document.
+        "asset_type": "project",
+        // cv_document (a CV) | user_entered (a company record) | demo (a fictional record).
+        "origin": "user_entered",
+        // true = fictional demo record: never cite it as a reference.
+        "demo": false,
+        // Summary of the document.
+        "title": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+        // The requirement ids (matrix.rows) it proves.
+        "for": [
+          "R1"
+        ],
+        // Rows this document is related to without proving them.
+        "weak_for": []
+      },
+      {
+        "asset_id": "CV_12_Mateo_Silva.pdf",
+        "asset_type": "cv",
+        "origin": "cv_document",
+        "demo": false,
+        "title": "Product Owner specialized in AI and Generative AI with a proven track record of turning business ideas into scalable, highimpact solutions. Experienced in AI product strategy, Agile/Scrum leadership, ",
+        "for": [
+          "R1"
+        ],
+        "weak_for": []
+      }
+    ],
+    // The team the RAG can staff from the CV bank: the TEAM slide. null = no team requirement.
+    "team_proposal": null,
+    // Size of the knowledge base the RAG searched (CVs, projects, stacks...).
+    "knowledge_counts": {
+      "cv": 19,
+      "past_project": 37,
+      "tech_stack": 5,
+      "tool": 4,
+      "client_portfolio": 25,
+      "completed_projects": 31
+    }
+  },
+  // THE COMPLIANCE MATRIX: one row per requirement of the tender.
+  "matrix": {
+    // OK | SKIPPED | ERROR.
+    "status": "OK",
+    "rows": [
+      {
+        // R1, R2... (rag.assets[].for points here).
+        "requirement_id": "R1",
+        // technical | team | experience.
+        "category": "technical",
+        // The requirement in English.
+        "requirement": "LLM agents",
+        // The short line sent to the RAG.
+        "skill": "LLM agents",
+        // The tender's own words (original language), checked to be in the notice: cite it in the compliance table.
+        "quote": "prestations de développement d'agents LLM et services associés",
+        // true only when the tender's words say so (doit, obligatoire, must, يجب...). "souhaitée" (preferred) = false.
+        "mandatory": false,
+        // covered | partial | gap | unknown (RAG not called).
+        "coverage": "covered",
+        // 100 / 50 / 0 for covered / partial / gap.
+        "coverage_score": 100,
+        // RAG reranker raw score; null when the RAG's rules decided (exact skill / role / certification match).
+        "rerank_score": 4.02,
+        // Where the proof comes from: cv_document | user_entered (company record) | demo (FICTIONAL) | null (no proof).
+        "origin": "user_entered",
+        // document_quote = a line copied from a CV (quote it) | declaration = a company record (write "OliveSoft states...", never as a quote) | demo = fictional (never present it as real).
+        "justification_kind": "declaration",
+        // The best evidence: a CV line, or the description of the company / demo record (see justification_kind).
+        "justification": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+        "justification_weak": false,
+        "justification_is_header": false,
+        // Up to 2 documents that prove it.
+        "evidence": [
+          {
+            // Document file name.
+            "asset_id": "olivesoft_Project_GenAI_Content_Agent",
+            // cv | project | stack | document.
+            "asset_type": "project",
+            // cv_document | user_entered | demo.
+            "origin": "user_entered",
+            // document_quote | declaration | demo (same meaning as justification_kind).
+            "evidence_kind": "declaration",
+            // Document summary.
+            "title": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+            // The proving text: the exact CV line, or the record's description.
+            "snippet": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+            // Year, sector, stack... when the RAG gives them (null here).
+            "metadata": null,
+            // true = this document really proves the row (a rule hit or a strong reranker score); false = only related, shown for context.
+            "proves": true
+          },
+          {
+            "asset_id": "CV_12_Mateo_Silva.pdf",
+            "asset_type": "cv",
+            "origin": "cv_document",
+            "evidence_kind": "document_quote",
+            "title": "Product Owner specialized in AI and Generative AI with a proven track record of turning business ideas into scalable, highimpact solutions. Experienced in AI product strategy, Agile/Scrum leadership, ",
+            "snippet": "% AI & Machine Learning: LLM fine-tuning, Retrieval-Augmented Generation, LangChain, Prompt Engineering",
+            "metadata": null,
+            "proves": true
+          }
+        ],
+        // For a gap or partial: the nearest document (how far the proof is). null when covered.
+        "closest_asset": null
+      }
+    ],
+    // Totals and the decision.
+    "summary": {
+      // Average of technical / team / experience (0-100).
+      "fit_score": 100,
+      // The RAG's own overall score.
+      "rag_overall": 50,
+      // Coverage per category, 0-100.
+      "by_category": {
+        "technical": 100,
+        "team": null,
+        "experience": null
+      },
+      // Count of covered rows.
+      "covered": 1,
+      // Count of partial rows.
+      "partial": 0,
+      // Count of rows without proof.
+      "gaps": 0,
+      // Their ids and texts.
+      "gaps_list": [],
+      // Mandatory rows without proof.
+      "mandatory_gaps": [],
+      // Obligation / wish sentences of the notice that no matrix row covers (the analysis missed them): never checked against internal evidence. While not empty the recommendation is never bid.
+      "obligations_not_in_matrix": [],
+      // 0-1: (covered + 0.5 x partial) / rows.
+      "coverage": 1,
+      // Mandatory requirements without proof: a no-go unless a partner or a plan covers them.
+      "blocking": [],
+      // Rows proved only by FICTIONAL demo records (demo tenders only); also listed in analysis.risks.
+      "demo_evidence": [],
+      // What the knowledge base lacks, per requirement, with a suggestion (add a CV, a project, hire, partner): the gap plan of the deck.
+      "knowledge_gaps": [
+        {
+          // Our requirement id.
+          "requirement_id": null,
+          // The requirement line.
+          "requirement": "Domain fit (public sector)",
+          // technical | team | experience.
+          "category": "domain",
+          // From the tender's own words (not the RAG's default).
+          "mandatory": false,
+          // technology | people | project | certification...
+          "kind": "project",
+          // What is missing, in words.
+          "gap": "No completed project in the public sector, so domain fit is 0.",
+          // How to close it.
+          "suggestion": "Add a completed project record in Knowledge base > Projects. Set its sector to 'public'."
+        }
+      ],
+      // bid | bid_with_partner | review | no_bid: a rule in code on the matrix, not an LLM opinion.
+      "recommendation": "bid",
+      // The rule that fired, in words.
+      "recommendation_reason": "every requirement is covered by internal evidence"
+    }
+  },
+  // THE MARKET: awarded public contracts similar to this one (TUNEPS for Tunisia; TED + French DECP for Europe), chosen by the market agent, every number computed by code.
+  "competition": {
+    // OK | NO_COMPARABLE | NO_DATA | FAILED | NOT_STUDIED (outside the study budget of the run).
+    "status": "NO_DATA",
+    // Short status detail.
+    "detail": "no_data",
+    // The notice's budget as written.
+    "declared_value": "180000 euros",
+    // Its number.
+    "declared_value_amount": 180000,
+    "declared_value_range": null,
+    // What comparable contracts were really awarded for (framework agreements left out: their amount is a ceiling). Compare with declared_value_amount; confidence "very low" = a single comparable.
+    "budget_estimate": null,
+    // Companies that bid on the comparable contracts, most wins first.
+    "competitors": [],
+    // Typical number of bidders on such a contract.
+    "median_bids": null,
+    // The market agent's advice (its names and numbers were checked against the data).
+    "positioning": null,
+    // The market agent's budget sentence (checked the same way).
+    "budget_comment": null,
+    // The awarded contracts behind the estimate.
+    "comparables": []
+  },
+  // DECK OPTIONS from n8n Config (proposal.options); a UI may change them per tender.
+  "options": {
+    // Which deck template to use (null = the proposal studio's default template).
+    "template_id": null,
+    // Files to produce.
+    "formats": [
+      "pptx",
+      "pdf"
+    ],
+    // Deck sections, in order.
+    "sections": [
+      "context",
+      "understanding",
+      "solution",
+      "team",
+      "references",
+      "timeline",
+      "pricing",
+      "why_us"
+    ],
+    "overrides": {
+      // formal | neutral...
+      "tone": "formal",
+      // Slide budget.
+      "max_slides": 15,
+      // mitigate = show each gap with a plan (partner, hiring, training); other values are up to the service.
+      "gap_strategy": "mitigate"
+    }
+  },
+  // OUR COMPANY, from n8n Config.
+  "company": {
+    // Bidder name.
+    "name": "OliveSoft",
+    // Service lines (analysis.matched_service_lines picks from these).
+    "services": [
+      "web and mobile applications, custom software and digital platforms",
+      "AI / LLM solutions (chatbots, RAG, document intelligence)",
+      "workflow automation and RPA",
+      "data platforms, integration and BI / analytics",
+      "CRM and enterprise software integration"
+    ],
+    // Main technologies.
+    "technologies": [
+      "Python",
+      "JavaScript/TypeScript",
+      "React",
+      "Node.js",
+      "PostgreSQL",
+      "cloud",
+      "LLM",
+      "RAG",
+      "machine learning",
+      "n8n",
+      "Power BI",
+      "Salesforce"
+    ]
+  }
+}

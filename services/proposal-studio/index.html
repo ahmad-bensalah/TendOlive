@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RFP Slide Deck Studio — Création de Présentation</title>
+  <meta name="description" content="Plateforme de création de slide decks RFP — Créez, personnalisez et exportez vos présentations commerciales.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/app.css">
+  <style>
+    html, body {
+      height: auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: var(--bg-app);
+    }
+
+    .creation-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      position: relative;
+    }
+
+    .creation-container {
+      width: 100%;
+      max-width: 840px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .creation-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .creation-header .logo-mark {
+      width: 60px; height: 60px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-cyan));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.35);
+      color: white;
+    }
+
+    .creation-header h1 {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .creation-header p {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    /* Primary Start Options */
+    .start-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .start-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 16px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      position: relative;
+    }
+
+    .start-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--text-muted);
+      transform: translateY(-2px);
+    }
+
+    .start-card.active {
+      border-color: var(--accent-indigo);
+      background: rgba(99, 102, 241, 0.08);
+      box-shadow: 0 0 0 1px var(--accent-indigo);
+    }
+
+    .start-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .start-card.active .start-card-icon {
+      background: var(--accent-indigo);
+      color: white;
+    }
+
+    .start-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .start-card-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .creation-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .form-field {
+      margin-bottom: 24px;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .form-field input[type="text"] {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: all var(--transition-fast);
+    }
+
+    .form-field input[type="text"]:focus {
+      border-color: var(--accent-indigo);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    /* Upload Zone */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 20px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(0,0,0,0.15);
+      transition: all var(--transition-fast);
+      margin-bottom: 16px;
+    }
+
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--accent-indigo);
+      background: rgba(99, 102, 241, 0.05);
+    }
+
+    .upload-zone-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-top: 10px;
+    }
+
+    .upload-zone-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .extracted-info-box {
+      display: none;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .extracted-info-box.visible { display: block; }
+
+    .extracted-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-green);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .extracted-palette {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .extracted-swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-xs);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Recent Saves */
+    .saved-section {
+      margin-top: 48px;
+    }
+
+    .saved-section-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .saved-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .saved-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 90px;
+    }
+
+    .saved-card:hover {
+      border-color: var(--accent-indigo);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .saved-card-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .saved-card-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .saved-card-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+    .saved-delete-btn {
+      padding: 4px 7px;
+      color: #fca5a5;
+      background: transparent;
+      border: 1px solid rgba(239, 68, 68, 0.32);
+      border-radius: 5px;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .saved-delete-btn:hover { background: rgba(239, 68, 68, 0.13); color: #fff; }
+
+    @media (max-width: 768px) {
+      .start-cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <style>
+    /* Main screen v1.1: tenders, recents, templates */
+    .creation-screen { align-items: flex-start; }
+    .creation-container { max-width: 1140px; }
+    .home-section { margin-top: 36px; }
+    .home-section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+    .home-section-head h2 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+    .home-section-head .tools { display: flex; gap: 8px; align-items: center; }
+    .home-search { background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); padding: 7px 10px; font-size: 13px; width: 240px; }
+    .home-empty { color: var(--text-secondary); font-size: 13px; padding: 18px; border: 1px dashed var(--border); border-radius: var(--radius-md); text-align: center; }
+    .home-errors { color: var(--accent-amber); font-size: 12px; margin-top: 8px; }
+    .tender-list { display: grid; gap: 12px; }
+    .tender-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; display: grid; grid-template-columns: 1fr auto; gap: 10px 18px; }
+    .tender-title { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--text-primary); }
+    .tender-meta { font-size: 12px; color: var(--text-secondary); display: flex; gap: 14px; flex-wrap: wrap; margin-top: 4px; }
+    .tender-counts { font-size: 12px; color: var(--text-muted); display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+    .tender-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; border: 1px solid var(--border); color: var(--text-secondary); }
+    .badge.match { color: #a7f3d0; border-color: rgba(16,185,129,.4); background: rgba(16,185,129,.12); }
+    .badge.run { color: #bfdbfe; border-color: rgba(99,102,241,.5); background: rgba(99,102,241,.15); cursor: pointer; }
+    .badge.ok { color: #a7f3d0; border-color: rgba(16,185,129,.5); cursor: pointer; }
+    .badge.fail { color: #fecdd3; border-color: rgba(244,63,94,.5); cursor: pointer; }
+    .badge.default { color: #fde68a; border-color: rgba(245,158,11,.5); }
+    .template-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+    .template-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .template-preview { aspect-ratio: 16 / 9; background: var(--bg-input); display: block; width: 100%; object-fit: cover; }
+    .template-swatch { aspect-ratio: 16 / 9; display: flex; }
+    .template-swatch span { flex: 1; }
+    .template-body { padding: 10px 12px; }
+    .template-name { font-weight: 600; font-size: 13px; color: var(--text-primary); word-break: break-word; }
+    .template-sub { font-size: 11px; color: var(--text-muted); margin: 4px 0 8px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .template-actions { display: flex; gap: 6px; }
+    .home-modal-backdrop { position: fixed; inset: 0; background: rgba(2,6,23,.7); display: none; align-items: center; justify-content: center; z-index: 50; padding: 20px; }
+    .home-modal-backdrop.open { display: flex; }
+    .home-modal { background: var(--bg-drawer); border: 1px solid var(--border); border-radius: var(--radius-lg); width: min(640px, 100%); max-height: 88vh; overflow: auto; padding: 22px; box-shadow: var(--shadow-lg); }
+    .home-modal.wide { width: min(860px, 100%); }
+    .home-modal h3 { font-family: var(--font-display); font-size: 17px; color: var(--text-primary); margin-bottom: 4px; }
+    .home-modal .sub { font-size: 12px; color: var(--text-secondary); margin-bottom: 16px; }
+    .home-modal h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); margin: 16px 0 6px; }
+    .home-modal ul { padding-left: 18px; color: var(--text-secondary); font-size: 13px; display: grid; gap: 4px; }
+    .home-field { display: grid; gap: 6px; margin-bottom: 12px; font-size: 13px; color: var(--text-secondary); }
+    .home-field input[type=text], .home-field select { background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); padding: 8px 10px; font-size: 13px; }
+    .home-modal .row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; flex-wrap: wrap; }
+    .progress-steps { display: grid; gap: 8px; margin: 12px 0; }
+    .progress-step { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+    .progress-step.running { border-color: var(--accent-indigo); color: var(--text-primary); }
+    .progress-step.done { color: #a7f3d0; }
+    .progress-step.degraded { color: #fde68a; }
+    .progress-step.failed { color: #fecdd3; }
+    .progress-note { font-size: 12px; color: var(--accent-amber); min-height: 16px; }
+    .progress-result { font-size: 13px; color: var(--text-secondary); margin-top: 8px; }
+  </style>
+
+</head>
+<body>
+  <div class="creation-screen">
+    <div class="creation-container">
+
+      <!-- Header -->
+      <header class="creation-header">
+        <div class="logo-mark">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+        </div>
+        <h1>RFP Slide Deck Studio</h1>
+        <p>Choisissez un appel d'offres sélectionné : les agents rédigent le deck, vous le relisez et l'exportez.</p>
+      </header>
+
+      <!-- 1. Selected tenders (mock JSON in tenders/inbox now, the RAG step later) -->
+      <section class="home-section" id="tenders-section">
+        <div class="home-section-head">
+          <h2>Appels d'offres sélectionnés</h2>
+          <div class="tools">
+            <input type="search" class="home-search" id="tender-search" placeholder="Rechercher (titre, client)" aria-label="Rechercher un appel d'offres">
+            <button class="btn btn-outline btn-sm" id="btn-tenders-rescan" type="button">Recharger</button>
+          </div>
+        </div>
+        <div class="tender-list" id="tender-list"></div>
+        <div class="home-empty" id="tender-empty" style="display:none;">Aucun appel d'offres. Déposez vos fichiers JSON dans tenders/inbox/.</div>
+        <div class="home-errors" id="tender-errors"></div>
+      </section>
+
+      <!-- 2. Recent Projects (unchanged) -->
+      <section class="saved-section" id="saved-section" style="display:none;">
+        <h2 class="saved-section-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span>Projets récents sur le serveur</span>
+        </h2>
+        <div class="saved-grid" id="saved-list"></div>
+      </section>
+
+      <!-- 3. Templates (persistent, design only) -->
+      <section class="home-section" id="templates-section">
+        <div class="home-section-head">
+          <h2>Modèles</h2>
+          <div class="tools">
+            <input type="file" id="template-file" accept=".pptx,.pdf" style="display:none;">
+            <button class="btn btn-primary btn-sm" id="btn-template-add" type="button">Ajouter un modèle</button>
+            <button class="btn btn-outline btn-sm" id="btn-templates-rescan" type="button">Recharger</button>
+          </div>
+        </div>
+        <div class="home-errors" id="template-status"></div>
+        <div class="template-grid" id="template-grid"></div>
+        <div class="home-empty" id="template-empty" style="display:none;">Ajoutez votre modèle OliveSoft (.pptx) ou déposez-le dans templates/inbox/.</div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Inspect a tender (read-only) -->
+  <div class="home-modal-backdrop" id="inspect-modal" role="dialog" aria-modal="true" aria-labelledby="inspect-title">
+    <div class="home-modal wide">
+      <h3 id="inspect-title"></h3>
+      <div class="sub" id="inspect-sub"></div>
+      <div id="inspect-body"></div>
+      <div class="row"><button class="btn btn-outline btn-sm" type="button" data-close>Fermer</button></div>
+    </div>
+  </div>
+
+  <!-- Generation parameters -->
+  <div class="home-modal-backdrop" id="generate-modal" role="dialog" aria-modal="true" aria-labelledby="generate-title">
+    <div class="home-modal">
+      <h3 id="generate-title">Générer le deck</h3>
+      <div class="sub" id="generate-sub"></div>
+      <label class="home-field">Modèle
+        <select id="gen-template"></select>
+      </label>
+      <label class="home-field">Langue
+        <select id="gen-language"><option value="auto">Auto</option><option value="fr">Français</option><option value="en">English</option></select>
+      </label>
+      <label class="home-field">Type de projet
+        <select id="gen-type"><option value="auto">Auto</option><option value="software">Logiciel</option><option value="saas">SaaS</option><option value="other">Autre</option></select>
+      </label>
+      <label class="home-field">Nom du deck
+        <input type="text" id="gen-name" maxlength="80">
+      </label>
+      <label class="home-field">Modèle d'IA (Groq)
+        <select id="gen-model"></select>
+      </label>
+      <label class="home-field">Lien du QR code (optionnel)
+        <input type="text" id="gen-qr" placeholder="https://...">
+      </label>
+      <div class="progress-note" id="gen-error"></div>
+      <div class="row">
+        <button class="btn btn-outline btn-sm" type="button" data-close>Annuler</button>
+        <button class="btn btn-primary btn-sm" type="button" id="btn-gen-start">Générer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="home-modal-backdrop" id="progress-modal" role="dialog" aria-modal="true" aria-labelledby="progress-title">
+    <div class="home-modal">
+      <h3 id="progress-title">Génération en cours</h3>
+      <div class="sub" id="progress-sub"></div>
+      <div class="progress-steps" id="progress-steps"></div>
+      <div class="progress-note" id="progress-note"></div>
+      <div class="progress-result" id="progress-result"></div>
+      <div class="row">
+        <button class="btn btn-outline btn-sm" type="button" data-close>Fermer</button>
+        <button class="btn btn-outline btn-sm" type="button" id="btn-progress-retry" style="display:none;">Réessayer</button>
+        <a class="btn btn-primary btn-sm" id="btn-progress-open" style="display:none;">Ouvrir le deck</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── helpers ──────────────────────────────────────────────────────────
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const $ = (id) => document.getElementById(id);
+    async function api(method, url, body) {
+      const res = await fetch(url, { method, headers: body !== undefined && !(body instanceof FormData) ? { 'Content-Type': 'application/json' } : {},
+                                     body: body === undefined ? undefined : (body instanceof FormData ? body : JSON.stringify(body)) });
+      let data = {};
+      try { data = await res.json(); } catch (e) { /* empty body */ }
+      return { ok: res.ok, status: res.status, data };
+    }
+    document.querySelectorAll('.home-modal-backdrop').forEach(m => {
+      m.addEventListener('click', (e) => { if (e.target === m || e.target.hasAttribute('data-close')) m.classList.remove('open'); });
+    });
+    const STEP_LABELS = { agent1: 'Exigences', agent5: 'Atouts', diagrams: 'Diagrammes', agent4: 'Budget', agent6: 'Revue', publish: 'Assemblage' };
+    const STATUS_LABELS = { pending: 'en attente', running: 'en cours…', done: 'terminé', degraded: 'terminé avec avertissements', failed: 'échec' };
+
+    // ── tenders ──────────────────────────────────────────────────────────
+    let tenders = [];
+    let generationEnabled = false, llmModels = [];
+    async function loadTenders() {
+      const { data } = await api('GET', '/api/tenders');
+      tenders = data.tenders || [];
+      generationEnabled = !!data.generationEnabled; llmModels = data.llmModels || [];
+      $('tender-errors').textContent = (data.errors || []).map(e => `${e.file} : ${e.message}`).join(' · ');
+      renderTenders();
+    }
+    function genBadge(g) {
+      if (!g) return '<span class="badge">Aucun deck</span>';
+      if (g.status === 'done') return `<span class="badge ok" data-run="${esc(g.runId)}">Deck prêt</span>`;
+      if (g.status === 'failed') return `<span class="badge fail" data-run="${esc(g.runId)}">Échec</span>`;
+      return `<span class="badge run" data-run="${esc(g.runId)}">En cours</span>`;
+    }
+    function renderTenders() {
+      const q = $('tender-search').value.trim().toLowerCase();
+      const list = $('tender-list');
+      const shown = tenders.filter(t => !q || `${t.title} ${t.client}`.toLowerCase().includes(q));
+      $('tender-empty').style.display = tenders.length ? 'none' : 'block';
+      list.innerHTML = shown.map(t => `
+        <div class="tender-card" data-id="${esc(t.id)}">
+          <div>
+            <div class="tender-title">${esc(t.title)}</div>
+            <div class="tender-meta">
+              <span>${esc(t.client)}</span>
+              ${t.deadline ? `<span>Échéance : ${esc(t.deadline)}</span>` : ''}
+              <span>${esc({ software: 'Logiciel', saas: 'SaaS', other: 'Autre' }[t.project_type] || t.project_type || '')}</span>
+              ${t.estimatedValue ? `<span>Valeur estimée : ${esc(t.estimatedValue)}</span>` : ''}
+            </div>
+            <div class="tender-counts">
+              <span>${esc(t.counts.requirements ?? '—')} exigences</span>
+              <span>${esc(t.counts.similarProjects ?? '—')} projets similaires</span>
+              ${t.counts.certifications != null ? `<span>${esc(t.counts.certifications)} certifications</span>` : ''}
+              <span>${esc(t.counts.engineers ?? '—')} ingénieurs</span>
+            </div>
+          </div>
+          <div class="tender-actions">
+            ${t.matchScore != null ? `<span class="badge match">Match ${esc(t.matchScore)} %</span>` : ''}
+            ${genBadge(t.generation)}
+            ${t.generation && t.generation.status === 'done' && t.generation.url ? `<a class="btn btn-ghost btn-sm" href="${esc(t.generation.url)}">Dernier deck</a>` : ''}
+            <button class="btn btn-outline btn-sm" type="button" data-inspect="${esc(t.id)}">Inspecter</button>
+            <button class="btn btn-primary btn-sm" type="button" data-generate="${esc(t.id)}" ${generationEnabled ? '' : 'disabled title="Génération non configurée (GENERATE_WEBHOOK_URL)"'}>Générer le deck</button>
+          </div>
+        </div>`).join('');
+    }
+    $('tender-search').addEventListener('input', renderTenders);
+    $('btn-tenders-rescan').addEventListener('click', async () => { await api('POST', '/api/tenders/rescan'); loadTenders(); });
+    $('tender-list').addEventListener('click', (e) => {
+      const ins = e.target.closest('[data-inspect]'); if (ins) return openInspect(ins.dataset.inspect);
+      const gen = e.target.closest('[data-generate]'); if (gen) return openGenerate(gen.dataset.generate);
+      const run = e.target.closest('[data-run]'); if (run) return openProgress(run.dataset.run);
+    });
+
+    // ── inspect ─────────────────────────────────────────────────────────
+    function listOrNone(items) {
+      return items && items.length ? `<ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>` : '<div class="home-empty">Non fourni</div>';
+    }
+    async function openInspect(id) {
+      const t = tenders.find(x => x.id === id);
+      const { data: raw } = await api('GET', `/api/tenders/${encodeURIComponent(id)}`);
+      $('inspect-title').textContent = t ? t.title : id;
+      $('inspect-sub').textContent = t ? `${t.client}${t.deadline ? ' — échéance ' + t.deadline : ''}` : '';
+      let html = '';
+      if (raw.matrix) {   // v2 contract (RAG output)
+        const rows = raw.matrix.rows || [];
+        html += '<h4>Exigences et couverture</h4>' + listOrNone(rows.map(r => `${esc(r.requirement)} — <em>${esc(r.coverage || '')}</em>`));
+        const assets = (raw.rag && raw.rag.assets) || [];
+        html += '<h4>Projets similaires</h4>' + listOrNone(assets.filter(a => a.asset_type === 'project').map(a => esc(a.title)));
+        html += '<h4>Équipe (CV)</h4>' + listOrNone(assets.filter(a => a.asset_type === 'cv').map(a => esc(a.title)));
+        html += '<h4>Pile technique</h4>' + listOrNone(assets.filter(a => a.asset_type === 'stack').map(a => esc(a.title)));
+        const c = raw.competition || {};
+        if (c.status === 'OK') {
+          html += '<h4>Concurrence et budget</h4>' + listOrNone([
+            c.budget_comment ? esc(c.budget_comment) : null, c.positioning ? esc(c.positioning) : null,
+            ...(c.competitors || []).slice(0, 6).map(x => `${esc(x.name)} — ${esc(x.past_wins)} marché(s) remporté(s)`)].filter(Boolean));
+        }
+      } else {
+        const m = raw.match || {}, td = raw.tender || {};
+        html += '<h4>Exigences</h4>' + listOrNone((td.requirements || []).map(esc));
+        html += '<h4>Projets similaires</h4>' + listOrNone((m.similar_projects || []).map(p => `${esc(p.name)} — ${esc(p.client)} (${esc(p.year)}) : ${esc(p.result)} <em>${esc((p.stack || []).join(', '))}</em>`));
+        html += '<h4>Pourquoi nous</h4>' + listOrNone((m.why_us || []).map(esc));
+        html += '<h4>Certifications</h4>' + listOrNone(((m.certifications || {}).list || []).map(esc));
+        html += '<h4>Ingénieurs par rôle</h4>' + listOrNone(((m.engineers || {}).profiles || []).map(p => `${esc(p.role)} : ${esc(p.count)}`));
+        if (raw.research && raw.research.summary) html += '<h4>Recherche prospect</h4><p class="sub">' + esc(raw.research.summary) + '</p>';
+      }
+      $('inspect-body').innerHTML = html;
+      $('inspect-modal').classList.add('open');
+    }
+
+    // ── generate ────────────────────────────────────────────────────────
+    let genTender = null;
+    async function openGenerate(id) {
+      genTender = tenders.find(x => x.id === id);
+      const { data } = await api('GET', '/api/templates');
+      const sel = $('gen-template');
+      sel.innerHTML = (data.templates || []).map(t => `<option value="${esc(t.id)}" ${t.isDefault ? 'selected' : ''}>${esc(t.name)}</option>`).join('')
+        + `<option value="" ${data.default ? '' : 'selected'}>Sans modèle (thème de l'appel d'offres)</option>`;
+      $('generate-sub').textContent = genTender.title;
+      $('gen-name').value = `RFP : ${genTender.title}`.slice(0, 80);
+      $('gen-language').value = 'auto'; $('gen-type').value = 'auto'; $('gen-qr').value = ''; $('gen-error').textContent = '';
+      $('gen-model').innerHTML = '<option value="">Par défaut (configuré dans n8n)</option>'
+        + llmModels.map(m => `<option value="${esc(m)}">${esc(m)}</option>`).join('');
+      $('generate-modal').classList.add('open');
+    }
+    async function startGeneration() {
+      const params = { language: $('gen-language').value, project_type: $('gen-type').value, deckName: $('gen-name').value.trim() };
+      if ($('gen-model').value) params.model = $('gen-model').value;
+      if ($('gen-qr').value.trim()) params.qr_url = $('gen-qr').value.trim();
+      $('btn-gen-start').disabled = true;
+      const { status, data } = await api('POST', '/api/generations', { tenderId: genTender.id, templateId: $('gen-template').value, params });
+      $('btn-gen-start').disabled = false;
+      if (status !== 202) { $('gen-error').textContent = data.message || `Erreur ${status}`; return; }
+      $('generate-modal').classList.remove('open');
+      openProgress(data.runId);
+      loadTenders();
+    }
+    $('btn-gen-start').addEventListener('click', startGeneration);
+
+    // ── progress ────────────────────────────────────────────────────────
+    let pollTimer = null, pollRun = null, pollStart = 0;
+    function renderProgress(rec) {
+      const t = tenders.find(x => x.id === rec.tenderId);
+      $('progress-sub').textContent = t ? t.title : rec.tenderId;
+      $('progress-title').textContent = rec.status === 'done' ? 'Deck prêt' : (rec.status === 'failed' ? 'La génération a échoué' : 'Génération en cours');
+      $('progress-steps').innerHTML = (rec.steps || []).map(s => `
+        <div class="progress-step ${esc(s.status)}"><span>${esc(STEP_LABELS[s.agent] || s.agent)}</span>
+        <span>${esc(STATUS_LABELS[s.status] || s.status)}${s.ms ? ` · ${Math.round(s.ms / 1000)} s` : ''}</span></div>`).join('');
+      const elapsed = Math.round((Date.now() - new Date(rec.createdAt).getTime()) / 1000);
+      $('progress-note').textContent = rec.status === 'running' || rec.status === 'queued'
+        ? `${elapsed} s écoulées. ${rec.waitingRateLimit ? 'Attente de la limite du fournisseur IA…' : 'Les agents travaillent (la limite gratuite du fournisseur IA peut ralentir).'}`
+        : (rec.stale ? 'Statut non actualisé (service des agents injoignable).' : '');
+      const open = $('btn-progress-open'), retry = $('btn-progress-retry');
+      open.style.display = rec.status === 'done' && rec.url ? 'inline-flex' : 'none';
+      if (rec.url) open.href = rec.url;
+      retry.style.display = rec.status === 'failed' ? 'inline-flex' : 'none';
+      retry.onclick = () => { $('progress-modal').classList.remove('open'); openGenerate(rec.tenderId); };
+      $('progress-result').textContent = rec.status === 'done'
+        ? `${rec.placeholders ?? 0} élément(s) à compléter ([TO FILL]), ${(rec.warnings || []).length} avertissement(s).`
+        : (rec.status === 'failed' ? `Erreur : ${rec.error || 'inconnue'}` : '');
+    }
+    async function poll() {
+      if (!pollRun) return;
+      const { ok, data } = await api('GET', `/api/generations/${pollRun}`);
+      if (ok) renderProgress(data);
+      if (!ok || data.status === 'done' || data.status === 'failed') {
+        pollRun = null;
+        loadTenders();
+        if (ok && data.status === 'done') refreshRecents();
+        return;
+      }
+      pollTimer = setTimeout(poll, Date.now() - pollStart > 60000 ? 5000 : 2000);
+    }
+    function openProgress(runId) {
+      clearTimeout(pollTimer);
+      pollRun = runId; pollStart = Date.now();
+      $('progress-steps').innerHTML = ''; $('progress-result').textContent = ''; $('progress-note').textContent = '';
+      $('progress-modal').classList.add('open');
+      poll();
+    }
+    function refreshRecents() {
+      const list = $('saved-list');
+      list.innerHTML = '';
+      loadRecent();
+    }
+
+    // ── templates ───────────────────────────────────────────────────────
+    async function loadTemplates() {
+      const { data } = await api('GET', '/api/templates');
+      const items = data.templates || [];
+      $('template-empty').style.display = items.length ? 'none' : 'block';
+      $('template-grid').innerHTML = items.map(t => `
+        <div class="template-card" data-id="${esc(t.id)}">
+          ${t.previews && t.previews.content
+            ? `<img class="template-preview" src="${esc(t.previews.content)}" alt="">`
+            : `<div class="template-swatch"><span style="background:${esc(t.theme.bg)}"></span><span style="background:${esc(t.theme.primary)}"></span><span style="background:${esc(t.theme.secondary)}"></span></div>`}
+          <div class="template-body">
+            <div class="template-name">${esc(t.name)}</div>
+            <div class="template-sub" title="${esc((t.warnings || []).join('\n'))}">
+              ${t.isDefault ? '<span class="badge default">Par défaut</span>' : ''}
+              ${t.approximate ? '<span class="badge">Approximatif</span>' : ''}
+              <span>${t.importedAt ? esc(new Date(t.importedAt).toLocaleDateString('fr-FR')) : ''}</span>
+              ${(t.warnings || []).length ? `<span>⚠ ${t.warnings.length}</span>` : ''}
+            </div>
+            <div class="template-actions">
+              ${t.isDefault ? '' : `<button class="btn btn-outline btn-xs" type="button" data-default="${esc(t.id)}">Définir par défaut</button>`}
+              <button class="btn btn-ghost btn-xs danger" type="button" data-delete="${esc(t.id)}">Supprimer</button>
+            </div>
+          </div>
+        </div>`).join('');
+      if ((data.errors || []).length) $('template-status').textContent = data.errors.map(e => `${e.file} : ${e.message}`).join(' · ');
+    }
+    $('template-grid').addEventListener('click', async (e) => {
+      const d = e.target.closest('[data-default]');
+      if (d) { await api('PUT', '/api/templates/default', { id: d.dataset.default }); return loadTemplates(); }
+      const del = e.target.closest('[data-delete]');
+      if (del && confirm('Supprimer ce modèle ? Il est déplacé dans templates/trash/ et peut être récupéré.')) {
+        await api('DELETE', `/api/templates/${encodeURIComponent(del.dataset.delete)}`);
+        loadTemplates();
+      }
+    });
+    $('btn-template-add').addEventListener('click', () => $('template-file').click());
+    $('template-file').addEventListener('change', async () => {
+      const f = $('template-file').files[0];
+      if (!f) return;
+      $('template-status').textContent = `Import de « ${f.name} » (texte supprimé, design conservé)…`;
+      const fd = new FormData(); fd.append('file', f);
+      const { ok, data } = await api('POST', '/api/templates', fd);
+      $('template-file').value = '';
+      $('template-status').textContent = ok ? `Modèle « ${data.template.name} » ajouté.` : (data.message || 'Import impossible');
+      loadTemplates();
+    });
+    $('btn-templates-rescan').addEventListener('click', async () => {
+      $('template-status').textContent = 'Recherche de nouveaux modèles dans templates/inbox/…';
+      const { data } = await api('POST', '/api/templates/rescan');
+      $('template-status').textContent = data.imported && data.imported.length ? `Importé(s) : ${data.imported.join(', ')}` : 'Aucun nouveau modèle.';
+      loadTemplates();
+    });
+
+    // ── page load: restore running and finished runs ─────────────────────
+    (async () => {
+      await loadTenders();
+      loadTemplates();
+      const { data } = await api('GET', '/api/generations');
+      const running = (data.generations || []).find(g => g.status === 'queued' || g.status === 'running');
+      if (running) openProgress(running.runId);
+    })();
+
+    // Recent Projects Loader
+    async function loadRecent() {
+      try {
+        const res = await fetch('/api/saves');
+        const saves = await res.json();
+        if (Array.isArray(saves) && saves.length > 0) {
+          document.getElementById('saved-section').style.display = 'block';
+          const list = document.getElementById('saved-list');
+          saves.forEach(s => {
+            const card = document.createElement('div');
+            card.className = 'saved-card';
+            const date = new Date(s.modified);
+            card.innerHTML = `
+              <div class="saved-card-name">${s.name}</div>
+              <div class="saved-card-meta">
+                <span>${s.slideCount || 1} slide(s)</span>
+                <span>${date.toLocaleDateString('fr-FR')}</span>
+              </div>
+              <div class="saved-card-actions">
+                <button class="saved-delete-btn" type="button" title="Supprimer définitivement ce projet">Supprimer</button>
+              </div>
+            `;
+            const deleteBtn = card.querySelector('.saved-delete-btn');
+            deleteBtn.addEventListener('click', async (event) => {
+              event.stopPropagation();
+              if (!confirm(`Supprimer définitivement « ${s.name} » ? Cette action ne peut pas être annulée.`)) return;
+              deleteBtn.disabled = true;
+              try {
+                const response = await fetch(`/api/save/${encodeURIComponent(s.id)}`, { method: 'DELETE' });
+                const result = await response.json();
+                if (!response.ok || result.status !== 'ok') throw new Error(result.message || 'Suppression impossible');
+                card.remove();
+                if (!list.children.length) document.getElementById('saved-section').style.display = 'none';
+              } catch (error) {
+                deleteBtn.disabled = false;
+                alert(error.message || 'Impossible de supprimer ce projet.');
+              }
+            });
+            card.addEventListener('click', () => {
+              sessionStorage.setItem('rfp_load_id', s.id);
+              window.location.href = '/editor.html';
+            });
+            list.appendChild(card);
+          });
+        }
+      } catch (e) {}
+    }
+    loadRecent();
+  </script>
+</body>
+</html>

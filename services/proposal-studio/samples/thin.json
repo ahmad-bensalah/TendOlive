@@ -1,0 +1,45 @@
+{
+  "name": "Audit de Conformité Réglementaire [TO FILL: Nom du Projet]",
+  "client": "[TO FILL: Raison Sociale Client]",
+  "date": "Date [TO FILL: Date de remise]",
+  "language": "fr",
+  "qr_url": "[TO FILL: URL du dossier en ligne]",
+  "theme": {
+    "primary": "#6366f1",
+    "secondary": "#f59e0b",
+    "background": "#0f172a",
+    "fontHeading": "'Plus Jakarta Sans', sans-serif",
+    "fontBody": "'Inter', sans-serif"
+  },
+  "slides": [
+    {
+      "type": "content",
+      "title": "Périmètre de la Mission [TO FILL: Domaine d'audit]",
+      "notes": "[TO FILL: Notes internes pour l'orateur]",
+      "warnings": ["[TO FILL: Attention donnée client manquante sur les filiales]"],
+      "sources": { "mermaid": "", "drawio": "" },
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "[TO FILL: Description concise de la démarche d'audit et des attendus du commanditaire]."
+        },
+        {
+          "kind": "kpis",
+          "items": [
+            { "label": "Sites audités", "value": "[TO FILL: Nombre]" },
+            { "label": "Délai de remise", "value": "[TO FILL: Semaines]" }
+          ]
+        },
+        {
+          "kind": "bullets",
+          "bulletStyle": "disc",
+          "items": [
+            "[TO FILL: Point d'attention réglementaire 1]",
+            "[TO FILL: Point d'attention réglementaire 2]",
+            "[TO FILL: Recommandation préliminaire]"
+          ]
+        }
+      ]
+    }
+  ]
+}

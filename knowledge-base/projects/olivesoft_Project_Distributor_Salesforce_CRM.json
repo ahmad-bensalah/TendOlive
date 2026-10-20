@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Distributor_Salesforce_CRM",
+  "type": "past_project",
+  "title": "Salesforce CRM for a regional distributor",
+  "description": "Delivered a full-stack Salesforce CRM covering leads, contacts, accounts and opportunities for a regional distributor.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Regional distributor (not named in the CV)",
+  "company_role": "Delivered a full-stack Salesforce CRM covering leads, contacts, accounts and opportunities for a regional distributor.",
+  "scope": "CRM set-up, data onboarding of 3 000+ records, Flow Builder automation, permission sets and SSO (SAML).",
+  "technologies": [
+    "salesforce",
+    "git"
+  ],
+  "delivery_status": "completed",
+  "year": 2025,
+  "outcomes": "Sales follow-up compliance from 58 % to 94 %; user onboarding from 2 days to 4 hours.",
+  "team_cv_ids": [
+    "CV_08_Lucas_Reed.pdf"
+  ],
+  "source": "CV_08_Lucas_Reed.pdf: OliveSoft experience, Salesforce Developer - CRM Implementation, Oct 2024 - Apr 2025"
+}

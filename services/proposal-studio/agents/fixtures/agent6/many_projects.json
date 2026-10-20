@@ -1,0 +1,18 @@
+{
+  "agent": "reviewer",
+  "ok": true,
+  "slides": [],
+  "data": {
+    "status": "ok",
+    "problems": []
+  },
+  "assumptions": [],
+  "warnings": [],
+  "usage": {
+    "model": "mock-model",
+    "promptTokens": 500,
+    "completionTokens": 100,
+    "ms": 80,
+    "attempts": 1
+  }
+}

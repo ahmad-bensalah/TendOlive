@@ -1,0 +1,136 @@
+{
+  "contract": "olivesoft.proposal-input.v2",
+  "tender_id": "T1wp05cp",
+  "language": "fr",
+  "rank": 1,
+  "run_id": "2026-10-19T17-11-42-080Z",
+  "generated_on": "2026-10-19",
+  "tender": {
+    "title": "Développement d'une plateforme numérique de gestion des licences touristiques",
+    "reference": "DEMO-001",
+    "issuer": "Office du Tourisme de Sampleville (démo)",
+    "country": "Tunisia",
+    "country_code": "TN",
+    "publication_date": "2026-10-16",
+    "deadline": "2026-11-12",
+    "days_to_deadline": 24,
+    "estimated_value": "480 000 TND",
+    "cpv": ["72212000", "72262000"],
+    "duration": "6 mois",
+    "source": "demo",
+    "source_url": "http://localhost:8004/tenders/DEMO-001",
+    "submission_url": null,
+    "description": "L'Office du Tourisme de Sampleville lance un appel d'offres pour le développement d'une plateforme web de gestion des licences des établissements touristiques (demandes en ligne, suivi, renouvellement, tableau de bord). Exigences techniques : le frontend doit être développé en React ou Angular. Le backend doit être réalisé en Node.js ou Java/Spring. La base de données doit être PostgreSQL. La plateforme doit exposer une API REST. L'hébergement doit être assuré sur un cloud AWS ou Azure. Équipe : le soumissionnaire doit proposer au minimum 3 développeurs seniors, 1 chef de projet certifié PMP et 1 designer UX/UI. Expérience : le soumissionnaire doit justifier d'au moins 2 projets numériques similaires dans le secteur public. Une certification ISO 27001 est souhaitée. Durée d'exécution : 6 mois. Critères d'attribution : valeur technique (60), prix (40).",
+    "lots": [],
+    "award_criteria": ["Valeur technique (60)", "Prix (40)"]
+  },
+  "analysis": {
+    "relevance_score": 100,
+    "relevance_basis": "fit high (70) + 30 x RAG coverage 1",
+    "fit": "high",
+    "tender_type": "software_build",
+    "matched_service_lines": ["web and mobile applications, custom software and digital platforms"],
+    "reason": "The tender requires a web platform for managing tourism licenses, which falls under web application development.",
+    "proof_quote": "Développement d'une plateforme numérique de gestion des licences touristiques",
+    "quote_verified": true,
+    "sector": "tourism",
+    "suggested_angle": null,
+    "risks": [],
+    "requirements": {
+      "technical": ["React or Angular frontend", "Node.js or Java/Spring backend", "PostgreSQL", "REST API", "AWS or Azure hosting", "ISO 27001 certification"],
+      "team": ["Minimum 3 senior developers", "1 PMP certified project manager", "1 UX/UI designer"],
+      "experience": ["2+ public sector digital projects"],
+      "timeline": "6 mois"
+    }
+  },
+  "buyer_profile": {
+    "name": "Office du Tourisme de Sampleville (démo)",
+    "legal_name": null, "sector": null, "size": null, "organization_description": null,
+    "estimated_revenue": null, "staff": null, "website": null,
+    "contacts": { "emails": ["achats@tourisme-sampleville.demo"], "phones": [], "addresses": [] },
+    "past_digital_projects": [], "past_winners": [], "key_partners": [],
+    "domain_requirements": ["AWS or Azure hosting", "1 PMP certified project manager", "ISO 27001 certification"],
+    "research_status": "not_researched_budget",
+    "enrichment_status": "not_researched"
+  },
+  "rag": {
+    "status": "FULL",
+    "suggested_assets": {
+      "projects": ["Project_MinistryInterior_LicensingPortal.md", "Project_HealthAnalytics_Dashboard.md", "Project_Insurance_ISO27001.md"],
+      "team": ["CV_Ahmed_Bouazizi.md", "CV_Karim_Jlassi.md", "CV_Youssef_Gharbi.md", "CV_Nour_BenSalah.md", "CV_Sami_Trabelsi.md", "CV_Leila_Hammami.md", "CV_Mehdi_Karray.md"],
+      "stack": ["TechStack_PublicSector_Cloud.md"],
+      "other": []
+    },
+    "assets": [
+      { "asset_id": "TechStack_PublicSector_Cloud.md", "asset_type": "stack", "title": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.", "for": ["R1", "R3", "R5"] },
+      { "asset_id": "CV_Ahmed_Bouazizi.md", "asset_type": "cv", "title": "Senior React / Node.js developer, 6 years, worked on 3 public-sector portals including a licensing platform for the Ministry of Interior.", "for": ["R1", "R2", "R4", "R6"] },
+      { "asset_id": "CV_Karim_Jlassi.md", "asset_type": "cv", "title": "Senior backend engineer, 8 years, Java 17, Spring Boot microservices and PostgreSQL for ministries and banks.", "for": ["R2", "R3", "R4"] },
+      { "asset_id": "CV_Youssef_Gharbi.md", "asset_type": "cv", "title": "DevOps engineer, AWS Solutions Architect certified, Kubernetes, Terraform and CI/CD for public cloud hosting.", "for": ["R5"] },
+      { "asset_id": "CV_Nour_BenSalah.md", "asset_type": "cv", "title": "Senior Angular developer, 5 years, enterprise front ends for banking and municipal e-services.", "for": ["R6"] },
+      { "asset_id": "CV_Sami_Trabelsi.md", "asset_type": "cv", "title": "PMP-certified project manager, 10 years, delivered 6 government digital projects; manages budgets up to 1M TND.", "for": ["R7"] },
+      { "asset_id": "CV_Leila_Hammami.md", "asset_type": "cv", "title": "Senior UX/UI designer, 7 years, Figma design systems and accessible government portals.", "for": ["R8"] },
+      { "asset_id": "Project_MinistryInterior_LicensingPortal.md", "asset_type": "project", "title": "Digital licensing and compliance tracking platform delivered for a government ministry, React + Spring Boot + PostgreSQL, 5 month delivery.", "for": ["R9"] },
+      { "asset_id": "Project_HealthAnalytics_Dashboard.md", "asset_type": "project", "title": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.", "for": ["R9"] },
+      { "asset_id": "Project_Insurance_ISO27001.md", "asset_type": "project", "title": "ISO 27001 ISMS implementation and certification for an insurance company.", "for": ["R10"] },
+      { "asset_id": "CV_Mehdi_Karray.md", "asset_type": "cv", "title": "Security consultant, ISO 27001 Lead Auditor, led the ISO 27001 program at an insurance company; pentesting and security software.", "for": ["R10"] }
+    ]
+  },
+  "matrix": {
+    "status": "OK",
+    "rows": [
+      { "requirement_id": "R1", "category": "technical", "requirement": "React or Angular frontend", "mandatory": true, "coverage": "covered", "coverage_score": 100, "justification": "Front end: React (or Angular when the client requires it)",
+        "evidence": [ { "asset_id": "TechStack_PublicSector_Cloud.md", "asset_type": "stack", "title": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.", "snippet": "Front end: React (or Angular when the client requires it)", "metadata": null },
+                      { "asset_id": "CV_Ahmed_Bouazizi.md", "asset_type": "cv", "title": "Senior React / Node.js developer, 6 years, worked on 3 public-sector portals including a licensing platform for the Ministry of Interior.", "snippet": "Role: Senior Full-Stack Developer (React, Node.js)", "metadata": null } ] },
+      { "requirement_id": "R2", "category": "technical", "requirement": "Node.js or Java/Spring backend", "mandatory": true, "coverage": "covered", "coverage_score": 100, "justification": "Skills: Java 17, Spring Boot, Spring Security, microservices, PostgreSQL, Oracle, Kafka, REST API design, OpenAPI, JUnit",
+        "evidence": [ { "asset_id": "CV_Karim_Jlassi.md", "asset_type": "cv", "title": "Senior backend engineer, 8 years, Java 17, Spring Boot microservices and PostgreSQL for ministries and banks.", "snippet": "Skills: Java 17, Spring Boot, Spring Security, microservices, PostgreSQL, Oracle, Kafka, REST API design, OpenAPI, JUnit", "metadata": null } ] },
+      { "requirement_id": "R3", "category": "technical", "requirement": "PostgreSQL", "mandatory": true, "coverage": "covered", "coverage_score": 100, "justification": "Database: PostgreSQL",
+        "evidence": [ { "asset_id": "TechStack_PublicSector_Cloud.md", "asset_type": "stack", "title": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.", "snippet": "Database: PostgreSQL", "metadata": null } ] },
+      { "requirement_id": "R4", "category": "technical", "requirement": "REST API", "mandatory": true, "coverage": "covered", "coverage_score": 100, "justification": "Skills: React, TypeScript, Redux, Node.js, Express, NestJS, REST APIs, PostgreSQL, Docker, AWS (EC2, RDS, S3)",
+        "evidence": [ { "asset_id": "CV_Ahmed_Bouazizi.md", "asset_type": "cv", "title": "Senior React / Node.js developer, 6 years, worked on 3 public-sector portals including a licensing platform for the Ministry of Interior.", "snippet": "Skills: React, TypeScript, Redux, Node.js, Express, NestJS, REST APIs, PostgreSQL, Docker, AWS (EC2, RDS, S3)", "metadata": null } ] },
+      { "requirement_id": "R5", "category": "technical", "requirement": "AWS or Azure hosting", "mandatory": true, "coverage": "covered", "coverage_score": 100, "justification": "Certifications: AWS Certified Solutions Architect - Associate, CKA (Kubernetes)",
+        "evidence": [ { "asset_id": "CV_Youssef_Gharbi.md", "asset_type": "cv", "title": "DevOps engineer, AWS Solutions Architect certified, Kubernetes, Terraform and CI/CD for public cloud hosting.", "snippet": "Certifications: AWS Certified Solutions Architect - Associate, CKA (Kubernetes)", "metadata": null },
+                      { "asset_id": "TechStack_PublicSector_Cloud.md", "asset_type": "stack", "title": "OliveSoft's standard public-sector stack: React, Spring Boot, PostgreSQL, AWS, ISO 27001-aligned delivery process.", "snippet": "Hosting: AWS or Azure, Docker and Kubernetes, CI/CD", "metadata": null } ] },
+      { "requirement_id": "R6", "category": "team", "requirement": "Minimum 3 senior developers", "mandatory": true, "coverage": "covered", "coverage_score": 100, "justification": "Role: Senior Front-End Developer (Angular)",
+        "evidence": [ { "asset_id": "CV_Nour_BenSalah.md", "asset_type": "cv", "title": "Senior Angular developer, 5 years, enterprise front ends for banking and municipal e-services.", "snippet": "Role: Senior Front-End Developer (Angular)", "metadata": null },
+                      { "asset_id": "CV_Ahmed_Bouazizi.md", "asset_type": "cv", "title": "Senior React / Node.js developer, 6 years, worked on 3 public-sector portals including a licensing platform for the Ministry of Interior.", "snippet": "Role: Senior Full-Stack Developer (React, Node.js)", "metadata": null } ] },
+      { "requirement_id": "R7", "category": "team", "requirement": "1 PMP certified project manager", "mandatory": true, "coverage": "covered", "coverage_score": 100, "justification": "Certifications: PMP (Project Management Professional, PMI), PRINCE2 Foundation",
+        "evidence": [ { "asset_id": "CV_Sami_Trabelsi.md", "asset_type": "cv", "title": "PMP-certified project manager, 10 years, delivered 6 government digital projects; manages budgets up to 1M TND.", "snippet": "Certifications: PMP (Project Management Professional, PMI), PRINCE2 Foundation", "metadata": null } ] },
+      { "requirement_id": "R8", "category": "team", "requirement": "1 UX/UI designer", "mandatory": true, "coverage": "covered", "coverage_score": 100, "justification": "Role: Lead UX/UI Designer",
+        "evidence": [ { "asset_id": "CV_Leila_Hammami.md", "asset_type": "cv", "title": "Senior UX/UI designer, 7 years, Figma design systems and accessible government portals.", "snippet": "Role: Lead UX/UI Designer", "metadata": null } ] },
+      { "requirement_id": "R9", "category": "experience", "requirement": "le soumissionnaire doit justifier d'au moins 2 projets numériques similaires dans le secteur public.", "mandatory": true, "coverage": "covered", "coverage_score": 100, "justification": "Client: Ministry of Interior (public sector, government)",
+        "evidence": [ { "asset_id": "Project_MinistryInterior_LicensingPortal.md", "asset_type": "project", "title": "Digital licensing and compliance tracking platform delivered for a government ministry, React + Spring Boot + PostgreSQL, 5 month delivery.", "snippet": "Client: Ministry of Interior (public sector, government)", "metadata": null },
+                      { "asset_id": "Project_HealthAnalytics_Dashboard.md", "asset_type": "project", "title": "Public health KPI dashboard for a national agency, Power BI and Airflow pipelines on Azure.", "snippet": "Client: National public health agency (public sector)", "metadata": null } ] },
+      { "requirement_id": "R10", "category": "technical", "requirement": "Une certification ISO 27001 est souhaitée.", "mandatory": false, "coverage": "covered", "coverage_score": 100, "justification": "Scope: gap analysis, risk assessment, security policies, ISMS implementation, internal audit, successful ISO/IEC 27001 certification.",
+        "evidence": [ { "asset_id": "Project_Insurance_ISO27001.md", "asset_type": "project", "title": "ISO 27001 ISMS implementation and certification for an insurance company.", "snippet": "Scope: gap analysis, risk assessment, security policies, ISMS implementation, internal audit, successful ISO/IEC 27001 certification.", "metadata": null },
+                      { "asset_id": "CV_Mehdi_Karray.md", "asset_type": "cv", "title": "Security consultant, ISO 27001 Lead Auditor, led the ISO 27001 program at an insurance company; pentesting and security software.", "snippet": "Certifications: ISO/IEC 27001 Lead Auditor, CEH, Fortinet NSE 4", "metadata": null } ] }
+    ],
+    "summary": { "fit_score": 100, "rag_overall": 100, "by_category": { "technical": 100, "team": 100, "experience": 100 },
+                 "covered": 10, "partial": 0, "gaps": 0, "gaps_list": [], "mandatory_gaps": [], "coverage": 1, "blocking": [],
+                 "recommendation": "bid", "recommendation_reason": "every requirement is covered by internal evidence" }
+  },
+  "competition": {
+    "status": "OK", "detail": "studied", "declared_value": "480 000 TND", "declared_value_amount": 480000,
+    "budget_estimate": { "low": 150103, "mid": 165735, "high": 181368, "min": 134470, "max": 197000, "currency": "TND", "confidence": "low",
+                         "comparables": 2, "spread": 1.2, "outliers": [], "basis": "amounts of 2 awarded contract(s) the agent judged comparable" },
+    "competitors": [
+      { "name": "DATAERA", "past_wins": 1, "past_losses": 0, "avg_amount": 197000, "last_win": "2026-02-10" },
+      { "name": "STE NACHD IT", "past_wins": 1, "past_losses": 0, "avg_amount": 134470, "last_win": "2026-10-14" },
+      { "name": "AMA BUSINESS", "past_wins": 0, "past_losses": 1, "avg_amount": null, "last_win": null },
+      { "name": "TAC-TIC", "past_wins": 0, "past_losses": 1, "avg_amount": null, "last_win": null }
+    ],
+    "median_bids": 4,
+    "positioning": "Companies like STE NACHD IT and DATAERA have won similar digital platform contracts in Tunisia, typically with 3 to 5 bids. The bid should emphasize full-stack experience and proven delivery of tourism-related digital solutions.",
+    "budget_comment": "The likely budget range is between 134,000 and 197,000 TND, based on comparable contracts for digital tourism platforms."
+  },
+  "options": {
+    "template_id": "olivesoft_default",
+    "formats": ["pptx", "pdf"],
+    "sections": ["context", "understanding", "solution", "team", "references", "timeline", "pricing", "why_us"],
+    "overrides": { "tone": "formal", "max_slides": 15, "gap_strategy": "mitigate" }
+  },
+  "company": {
+    "name": "OliveSoft",
+    "services": ["web and mobile applications, custom software and digital platforms", "AI / LLM solutions (chatbots, RAG, document intelligence)", "workflow automation and RPA", "data platforms, integration and BI / analytics", "CRM and enterprise software integration"],
+    "technologies": ["Python", "JavaScript/TypeScript", "React", "Node.js", "PostgreSQL", "cloud", "LLM", "RAG", "machine learning", "n8n", "Power BI", "Salesforce"]
+  }
+}

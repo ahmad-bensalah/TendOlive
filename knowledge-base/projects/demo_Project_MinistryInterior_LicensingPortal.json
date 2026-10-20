@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "demo_Project_MinistryInterior_LicensingPortal",
+  "type": "past_project",
+  "title": "Ministry of Interior - Digital Licensing Portal (2023)",
+  "description": "Digital licensing and compliance tracking platform delivered for a government ministry, React + Spring Boot + PostgreSQL, 5 month delivery.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [],
+  "client": "Ministry of Interior",
+  "sector": "public",
+  "scope": "online licence requests, licence tracking and renewal, compliance follow-up, analytics dashboard for managers, REST API integration with the national ID system.",
+  "company_role": "Digital licensing and compliance tracking platform delivered for a government ministry, React + Spring Boot + PostgreSQL, 5 month delivery.",
+  "technologies": [
+    "aws",
+    "postgresql",
+    "react",
+    "spring"
+  ],
+  "delivery_status": "completed",
+  "year": 2023,
+  "outcomes": "40,000 licences processed in the first year."
+}

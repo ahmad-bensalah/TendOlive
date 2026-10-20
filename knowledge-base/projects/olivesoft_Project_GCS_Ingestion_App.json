@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_GCS_Ingestion_App",
+  "type": "past_project",
+  "title": "Serverless CSV ingestion application and Talend on Kubernetes",
+  "description": "Developed a Flask application ingesting CSV files from GCS into the data warehouse, deployed serverless with CI/CD, and moved Talend jobs onto Kubernetes.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Developed a Flask application ingesting CSV files from GCS into the data warehouse, deployed serverless with CI/CD, and moved Talend jobs onto Kubernetes.",
+  "scope": "Flask ingestion app, serverless deployment, CI/CD, containerised Talend jobs on Kubernetes.",
+  "technologies": [
+    "python",
+    "flask",
+    "gcp",
+    "ci/cd",
+    "talend",
+    "kubernetes"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "Zero-downtime releases; Talend job execution time -30 %.",
+  "team_cv_ids": [
+    "CV_15_Zoe_Walker.pdf"
+  ],
+  "source": "CV_15_Zoe_Walker.pdf: OliveSoft experience, Data Engineer, Sep 2024 - Present"
+}

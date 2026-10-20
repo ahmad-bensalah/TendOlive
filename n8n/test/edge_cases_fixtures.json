@@ -1,0 +1,534 @@
+{
+ "_info": "Real inputs recorded in the n8n run of 2026-10-19 (test/out/execution_ollama_full.json, qwen3:4b-instruct, saved pages of test/fixtures.json), trimmed. Used by test/edge_cases.js.",
+ "pages": {
+  "chatbot_en": {
+   "base": {
+    "source": "fixture-en",
+    "url": "https://fixture.test/en/notice/ai-chatbot",
+    "anchor_text": "RFP – AI chatbot for citizen services",
+    "listing_snippet": "Home Procurement News Request for Proposals: AI chatbot for citizen services Issued by: Ministry of Example Affairs Publication date: October 14, 2026 Closing date for proposals: November 9, 2026 The Ministry invites qualified firms to design, build and operate an AI-powered chatbot answering citize",
+    "page": 1,
+    "self_page": true,
+    "onlyMainContent": true,
+    "repeated_labels": [],
+    "page_title": "RFP – AI chatbot for citizen services",
+    "text": "Home Procurement News\n\n# Request for Proposals: AI chatbot for citizen services\n\nIssued by: Ministry of Example Affairs\nPublication date: October 14, 2026\nClosing date for proposals: November 9, 2026\n\nThe Ministry invites qualified firms to design, build and operate an AI-powered chatbot answering citizen questions in Arabic, French and English, integrated with the ministry website and its document base.\nThe solution must be hosted in-country. Bidders shall provide two references of conversational AI projects.\nQuestions: procurement@ministry-example.tn\n\n## Related notices\nSupply of office furniture Cleaning services"
+   },
+   "answer": {
+    "text": "{\n  \"title\": \"Request for Proposals: AI chatbot for citizen services\",\n  \"buyer\": \"Ministry of Example Affairs\",\n  \"description\": \"The Ministry invites qualified firms to design, build and operate an AI-powered chatbot answering citizen questions in Arabic, French and English, integrated with the ministry website and its document base. The solution must be hosted in-country. Bidders shall provide two references of conversational AI projects.\",\n  \"publication_date\": \"October 14, 2026\",\n  \"deadline\": \"November 9, \",\n  \"rectified_deadline\": null,\n  \"place\": null,\n  \"cpv\": [],\n  \"estimated_value\": null,\n  \"contacts\": {\n    \"email\": \"procurement@ministry-example.tn\",\n    \"phone\": null,\n    \"website\": null,\n    \"address\": null\n  },\n  \"notice_type\": \"open\",\n  \"language\": \"en\",\n  \"country\": null\n}"
+   }
+  },
+  "olive_ar": {
+   "base": {
+    "source": "fixture-ar",
+    "url": "https://fixture.test/ar/tender/2003",
+    "anchor_text": "بيع صابة الزيتون لموسم 2026",
+    "listing_snippet": "بلدية النموذج — آخر أجل: ٢٦ أكتوبر ٢٠٢٦",
+    "page": 1,
+    "onlyMainContent": true,
+    "repeated_labels": [
+     "إقرأ المزيد"
+    ],
+    "page_title": "بيع صابة الزيتون",
+    "text": "# بيع صابة الزيتون لموسم 2026\n\nتعلن بلدية النموذج عن بيع صابة الزيتون بالمزاد. آخر أجل: ٢٦ أكتوبر ٢٠٢٦"
+   },
+   "answer": {
+    "text": "{\n  \"title\": \"بيع صابة الزيتون لموسم 2026\",\n  \"buyer\": \"بلدية النموذج\",\n  \"description\": \"تُعلن بلدية النموذج عن بيع صابة الزيتون بالمزاد. آخر أجل: ٢٦ أكتوبر ٢٠٢٦\",\n  \"publication_date\": null,\n  \"deadline\": \"٢٦ أكتوبر ٢\",\n  \"rectified_deadline\": null,\n  \"place\": null,\n  \"cpv\": [],\n  \"estimated_value\": null,\n  \"contacts\": {\n    \"email\": null,\n    \"phone\": null,\n    \"website\": null,\n    \"address\": null\n  },\n  \"notice_type\": \"open\",\n  \"language\": \"ar\",\n  \"country\": null\n}"
+   }
+  },
+  "rectif_fr": {
+   "base": {
+    "source": "fixture-fr",
+    "url": "https://fixture.test/fr/avis/1003",
+    "anchor_text": "Plateforme de gestion des données patients – AVIS RECTIFICATIF",
+    "listing_snippet": "",
+    "page": 3,
+    "onlyMainContent": true,
+    "repeated_labels": [
+     "lire la suite"
+    ],
+    "page_title": "Avis rectificatif – Plateforme de gestion des données patients",
+    "text": "# AVIS RECTIFICATIF – Plateforme de gestion des données patients\n\n**Acheteur :** Centre Hospitalier Test\n**Publié le :** 18/10/2026\n\nLe présent avis rectifie l’avis initial publié le 19/09/2026.\nAncienne date limite de remise des offres : 18/10/2026\nNouvelle date limite de remise des offres : 29/10/2026\n\nObjet du marché : mise en place d’une plateforme logicielle de gestion et d’analyse des données patients, interfacée avec le dossier patient informatisé existant."
+   },
+   "answer": {
+    "text": "{\n  \"title\": \"AVIS RECTIFICATIF – Plateforme de gestion des données patients\",\n  \"buyer\": \"Centre Hospitalier Test\",\n  \"description\": \"Objet du marché : mise en place d’une plateforme logicielle de gestion et d’analyse des données patients, interfacée avec le dossier patient informatisé existant.\",\n  \"publication_date\": \"18/10/2026\",\n  \"deadline\": \"18/10/2026\",\n  \"rectified_deadline\": \"29/10/2026\",\n  \"place\": null,\n  \"cpv\": [],\n  \"estimated_value\": null,\n  \"contacts\": {\n    \"email\": null,\n    \"phone\": null,\n    \"website\": null,\n    \"address\": null\n  },\n  \"notice_type\": \"rectification\",\n  \"language\": \"fr\",\n  \"country\": null\n}"
+   }
+  },
+  "sampleville_fr": {
+   "base": {
+    "source": "fixture-fr",
+    "url": "https://fixture.test/fr/avis/1001",
+    "anchor_text": "Développement d'une application mobile de signalement citoyen",
+    "listing_snippet": "",
+    "page": 3,
+    "onlyMainContent": true,
+    "repeated_labels": [
+     "lire la suite"
+    ],
+    "page_title": "Développement d’une application mobile de signalement citoyen",
+    "text": "Accueil > Appels d'offres\n\n# Développement d'une application mobile de signalement citoyen\n\n**Acheteur :** Ville de Sampleville\n**Publié le :** 17/10/2026\n**Date limite de remise des offres :** 13 novembre 2026 à 12h00\n**Lieu d'exécution :** Sampleville (France)\n**Code CPV :** 72212000\n\n## Objet\nLa Ville de Sampleville souhaite disposer d’une application mobile permettant aux habitants de signaler des incidents sur l’espace public (voirie, propreté, éclairage) et d’en suivre le traitement. Le marché comprend la conception, le développement, l’hébergement et la maintenance de l’application et de son back-office.\n\n## Exigences\nL’application devra être disponible sur iOS et Android.\nLes données devront être hébergées en France.\nLe candidat devra présenter au moins deux références de projets similaires réalisés pour des collectivités.\nLa durée du marché est de 24 mois à compter de la notification.\n\n## Contact\nService de la commande publique – marches@sampleville.fr – 01 23 45 67 89\n\nPartager sur Facebook Retour à la liste"
+   },
+   "answer": {
+    "text": "{\n  \"title\": \"Développement d'une application mobile de signalement citoyen\",\n  \"buyer\": \"Ville de Sampleville\",\n  \"description\": \"La Ville de Sampleville souhaite disposer d'une application mobile permettant aux habitants de signaler des incidents sur l'espace public (voirie, propreté, éclairage) et d'en suivre le traitement. Le marché comprend la conception, le développement, l'hébergement et la maintenance de l'application et de son back-office. L'application devra être disponible sur iOS et Android. Les données devront être hébergées en France. Le candidat devra présenter au moins deux références de projets similaires réalisés pour des collectivités. La durée du marché est de 24 mois à compter de la notification.\",\n  \"publication_date\": \"17/10/2026\",\n  \"deadline\": \"13 novembre 2026 à 12h00\",\n  \"rectified_deadline\": null,\n  \"place\": \"Sampleville (France)\",\n  \"cpv\": [\"72212000\"],\n  \"estimated_value\": null,\n  \"contacts\": {\n    \"email\": \"marches@sampleville.fr\",\n    \"phone\": \"01 23 45 67 89\",\n    \"website\": null,\n    \"address\": null\n  },\n  \"notice_type\": \"open\",\n  \"language\": \"fr\",\n  \"country\": \"FR\"\n}"
+   }
+  }
+ },
+ "analysis_olive": {
+  "tender_title": "بيع صابة الزيتون لموسم 2026",
+  "answer": {
+   "text": "{\"tender_type\":\"none\",\"fit\":\"none\",\"reason\":\"The tender is about selling olives, not any IT service.\",\"services\":[],\"quote\":\"بيع صابة الزيتون لموسم 2026\",\"sector\":null,\"requirements\":[],\"timeline\":null}"
+  }
+ },
+ "scout_fr": {
+  "task": {
+   "source": "fixture-fr",
+   "url": "https://fixture.test/",
+   "other_pages": [],
+   "country": "FR",
+   "language": "fr",
+   "max_pages": 2,
+   "max_calls": 4,
+   "allowed_hosts": [
+    "fixture.test"
+   ],
+   "onlyMainContent": true
+  },
+  "agent": {
+   "output": "{\"tender_links\":[\"16zzmh1\",\"1660te4\",\"16g0f33\"],\"list_url\":\"https://fixture.test/fr/appels-offres\"}",
+   "intermediateSteps": [
+    {
+     "action": {
+      "tool": "open_page",
+      "toolInput": {
+       "url": "https://fixture.test/"
+      }
+     },
+     "observation": "[\n  {\n    \"result\": \"PAGE [3vmyur] | https://fixture.test/ | Portail Test – Accueil\\nTEXT: Accueil Actualités Marchés publics Annuaire Contact Connexion Bienvenue sur le Portail Test Le portail des collectivités et établissements publics de la région Test : actualités, démarches et commande publique. À la une Inauguration de la nouvelle médiathèque de Sampleville Publié le 12 octobre — La ville a ouvert ses portes au public samedi. Résultats du budget participatif 2026 Publié le 3 octobre — 14 projets retenus par les habitants. Accès rapides Démarches en ligne Offres d'emploi Plan du site Mentions légales Facebook\\nREPEATED LABELS: none\\nLINKS (same site, 11 of 11):\\n[1wd8cxz] Actualités — Accueil Actualités Marchés publics Annuaire Contact Connexion | https://fixture.test/actualites\\n[5zeexs] Marchés publics — Accueil Actualités Marchés publics Annuaire Contact Connexion | https://fixture.test/fr/marches\\n[2j179] Annuaire — Accueil Actualités Marchés publics Annuaire Contact Connexion | https://fixture.test/annuaire\\n[hkmw14] Contact — Accueil Actualités Marchés publics Annuaire Contact Connexion | https://fixture.test/contact\\n[11ut7ah] Connexion — Accueil Actualités Marchés publics Annuaire Contact Connexion | https://fixture.test/login\\n[lckul4] Inauguration de la nouvelle médiathèque de Sampleville | https://fixture.test/actualites/mediatheque\\n[jhrvau] Résultats du budget participatif 2026 — Publié le 3 octobre — 14 projets retenus par les habitants. | https://fixture.test/actualites/budget-participatif\\n[hbuyc6] Démarches en ligne — Offres d'emploi Plan du site | https://fixture.test/demarches\\n[1wepjt2] Offres d'emploi — Démarches en ligne Offres d'emploi Plan du site | https://fixture.test/emploi\\n[1exgvfr] Plan du site — Démarches en ligne Offres d'emploi Plan du site | https://fixture.test/plan\\n[142z3r] Mentions légales — Facebook | https://fixture.test/mentions\"\n  }\n]"
+    },
+    {
+     "action": {
+      "tool": "open_page",
+      "toolInput": {
+       "url": "https://fixture.test/fr/marches"
+      }
+     },
+     "observation": "[\n  {\n    \"result\": \"PAGE [5zeexs] | https://fixture.test/fr/marches | Marchés publics – Portail Test\\nTEXT: Accueil Actualités Marchés publics Contact Marchés publics Retrouvez ici toute la commande publique des acheteurs de la région : consultations ouvertes, résultats et documentation. - Appels d'offres en cours - Avis d'attribution - Archives des consultations - Guide du soumissionnaire - S'inscrire aux alertes Mentions légales\\nREPEATED LABELS: none\\nLINKS (same site, 9 of 9):\\n[3vmyur] Accueil — Actualités Marchés publics Contact | https://fixture.test/\\n[1wd8cxz] Actualités — Accueil Actualités Marchés publics Contact | https://fixture.test/actualites\\n[hkmw14] Contact — Accueil Actualités Marchés publics Contact | https://fixture.test/contact\\n[11a4708] Appels d'offres en cours — - Appels d'offres en cours - Avis d'attribution | https://fixture.test/fr/appels-offres\\n[rf10hf] Avis d'attribution — - Appels d'offres en cours - Avis d'attribution - Archives des consult | https://fixture.test/fr/attributions\\n[wmml3a] Archives des consultations — - Avis d'attribution - Archives des consultations - Guide du soumissio | https://fixture.test/fr/archives\\n[1p1e5w7] Guide du soumissionnaire — - Archives des consultations - Guide du soumissionnaire - S'inscrire a | https://fixture.test/fr/guide\\n[cn6fb5] S'inscrire aux alertes — - Guide du soumissionnaire - S'inscrire aux alertes | https://fixture.test/fr/alertes\\n[142z3r] Mentions légales | https://fixture.test/mentions\"\n  }\n]"
+    },
+    {
+     "action": {
+      "tool": "open_page",
+      "toolInput": {
+       "url": "https://fixture.test/fr/appels-offres"
+      }
+     },
+     "observation": "[\n  {\n    \"result\": \"PAGE [11a4708] | https://fixture.test/fr/appels-offres | Appels d’offres – Portail Test\\nTEXT: Accueil Appels d'offres Contact Connexion Appels d’offres en cours Développement d'une application mobile de signalement citoyen Ville de Sampleville — Date limite : 13/11/2026 Lire la suite Fourniture de 200 ordinateurs portables Lycée Pierre Test — Date limite : 03/11/2026 Lire la suite Plateforme de gestion des données patients – AVIS RECTIFICATIF Centre Hospitalier Test — Date limite reportée Lire la suite Filtrer : Informatique Travaux Trier par date 1 2 Suivant » Mentions légales Facebook\\nREPEATED LABELS: lire la suite\\nLINKS (same site, 11 of 11):\\n[3vmyur] Accueil — Appels d'offres Contact Connexion | https://fixture.test/\\n[hkmw14] Contact — Accueil Appels d'offres Contact Connexion | https://fixture.test/contact\\n[11ut7ah] Connexion — Accueil Appels d'offres Contact Connexion | https://fixture.test/login\\n[16zzmh1] Développement d'une application mobile de signalement citoyen | https://fixture.test/fr/avis/1001\\n[1660te4] Fourniture de 200 ordinateurs portables | https://fixture.test/fr/avis/1002\\n[16g0f33] Plateforme de gestion des données patients – AVIS RECTIFICATIF | https://fixture.test/fr/avis/1003\\n[jx22tt] Informatique — Filtrer : Informatique Travaux Trier par date | https://fixture.test/fr/categorie/informatique\\n[1bw52h2] Travaux — Filtrer : Informatique Travaux Trier par date | https://fixture.test/fr/categorie/travaux\\n[ulpq4g] Trier par date — Filtrer : Informatique Travaux Trier par date | https://fixture.test/fr/appels-offres?sort=date\\n[cxpwrd] Suivant » — 1 2 Suivant » | https://fixture.test/fr/appels-offres?page=2\\n[142z3r] Mentions légales — Facebook | https://fixture.test/mentions\"\n  }\n]"
+    }
+   ]
+  }
+ },
+ "research": [
+  {
+   "buyer": {
+    "_type": "buyer",
+    "_run": true,
+    "research_status": "researched",
+    "buyer_key": "epa shom",
+    "buyer_id": "B1u2ghzi",
+    "name": "EPA-SHOM",
+    "country": "FR",
+    "country_name": "France",
+    "language": "fr",
+    "known_website": "",
+    "tender_titles": [
+     "Maintien en condition opérationnelle et de sécurité du Digital Workplace Odyssée du Shom"
+    ],
+    "tenders": [
+     {
+      "tender_id": "T1rliq4i",
+      "external_id": "649312-2026",
+      "title": "Maintien en condition opérationnelle et de sécurité du Digital Workplace Odyssée du Shom"
+     }
+    ],
+    "notice_contacts": {
+     "emails": [],
+     "phones": [],
+     "websites": [],
+     "addresses": []
+    },
+    "exclude_hosts": [
+     "boamp-datadila.opendatasoft.com",
+     "api.ted.europa.eu",
+     "fixture.test",
+     "ted.europa.eu"
+    ]
+   },
+   "agent": {
+    "output": "{\"buyer_type\":\"public_agency\",\"size_hint\":\"medium\",\"summary\":\"EPA-SHOM is a public agency in Rennes, France, involved in oceanographic and digital workplace operations. It has published tenders for maintaining digital systems and equipment, including the Digital Workplace Odyssée du Shom. It has awarded contracts to various companies for technical and operational services.\",\"official_website\":\"https://www.epa-shom.fr\"}",
+    "intermediateSteps": [
+     {
+      "action": {
+       "tool": "wikidata_lookup",
+       "toolInput": {
+        "q": "EPA-SHOM"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"NO RESULTS\"\n  }\n]"
+     },
+     {
+      "action": {
+       "tool": "registry_search",
+       "toolInput": {
+        "q": "EPA-SHOM"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"REG | PAYE SANS ORDONNANCEMENT ESI RENNES | siren=101000008 | siret=10100000800017 | addr=[NON-DIFFUSIBLE] | city=RENNES | nature=7111 | public=no | staff=NN | staff_year=\"\n  }\n]"
+     },
+     {
+      "action": {
+       "tool": "boamp_history",
+       "toolInput": {
+        "buyer_name": "EPA-SHOM"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"TOTAL 86\\nBOAMP | 26-94850 | 2026-10-02 | ATTRIBUTION | Traitement de données Lidar topographiques et bathymétriques en Nouvelle-Calédonie | buyer=EPA Shom | winners=\\nBOAMP | 26-90413 | 2026-09-20 | APPEL_OFFRE | Maintien en condition opérationnelle et de sécurité du Digital Workplace Odyssée du Shom | buyer=EPA / SHOM | winners=\\nBOAMP | 26-88675 | 2026-09-15 | APPEL_OFFRE | Fourniture de courantomètres acoustiques, de pièces détachées et de prestations associées. | buyer=EPA Shom | winners=\\nBOAMP | 26-87714 | 2026-09-11 | APPEL_OFFRE | Prestation de mesures magnétiques aéroportées | buyer=EPA / SHOM | winners=\\nBOAMP | 26-66497 | 2026-07-05 | ATTRIBUTION | Maintenance des installations de chauffage, de production d'eau chaude, de production d'eau glacée, de ventila | buyer=EPA-SHOM | winners=IDEX ENERGIES\\nBOAMP | 26-66503 | 2026-07-05 | ATTRIBUTION | Réalisation d'un modèle géoacoustique 3D par fusion de multicapteurs | buyer=EPA Shom | winners=EPSYL\\nBOAMP | 26-63628 | 2026-06-28 | ATTRIBUTION | Construction d’un laboratoire de métrologie et de chimie océanographique sur le site du Shom à Brest | buyer=EPA / SHOM | winners=Groupement Grignou Stephan\\nBOAMP | 26-62482 | 2026-06-25 | APPEL_OFFRE | Fourniture d’un profileur hydrologique dynamique et de ses prestations associées | buyer=EPA Shom | winners=\\nBOAMP | 26-62437 | 2026-06-25 | APPEL_OFFRE | Shom_26AC09 REPRISE, MAINTENANCE ET DEVELOPPEMENT DE L’APPLICATION NAV&CO | buyer=EPA / SHOM | winners=\\nBOAMP | 26-59860 | 2026-06-18 | APPEL_OFFRE | Traitement de données Lidar topographiques et bathymétriques en Nouvelle-Calédonie | buyer=EPA Shom | winners=\\nBOAMP | 26-57640 | 2026-06-12 | ATTRIBUTION | Reprise, maintenance, hébergement et évolution du système d’information (SI) de diffusion du Shom. | buyer=EPA Shom | winners=WORLDLINE France\\nBOAMP | 26-56627 | 2026-06-10 | APPEL_OFFRE | Prise en main de l’outil existant, développement de l’application autonome de prédictions de marée et de son i | buyer=EPA Shom | winners=\\nBOAMP | 26-56288 | 2026-06-08 | APPEL_OFFRE | Prestations de formations spécialisées relatives à la conversion S-57 / S-101 et à la production de données S- | buyer=EPA SHOM | winners=\\nBOAMP | 26-52584 | 2026-05-30 | ATTRIBUTION | Développement d’un système de production S-100 pour les produits de hauteurs d’eau et de courants de surface. | buyer=EPA Shom | winners=IIC Technologies\\nBOAMP | 26-46760 | 2026-05-12 | APPEL_OFFRE | Maintien en condition opérationnelle et de sécurité du Digital Workplace Odyssée du Shom | buyer=EPA-SHOM | winners=\\nBOAMP | 26-41838 | 2026-04-24 | APPEL_OFFRE | Mission d’assistance à maîtrise d'ouvrage pour l'opération de refonte de la sous station principale et des rés | buyer=EPA Shom | winners=\\nBOAMP | 26-37221 | 2026-04-14 | ATTRIBUTION | Reprise, Maintenance et Développement des sites internet du Shom | buyer=EPA-SHOM | winners=BLUEDROP.FR\\nBOAMP | 26-34217 | 2026-04-04 | APPEL_OFFRE | Maintenance des installations de chauffage, de production d'eau chaude, de production d'eau glacée, de ventila | buyer=EPA-SHOM | winners=\\nBOAMP | 26-30975 | 2026-03-26 | ATTRIBUTION | Acquisition d’un granulomètre par diffraction laser | buyer=EPA Shom | winners=Malvern Panalytical\\nBOAMP | 26-27418 | 2026-03-18 | ATTRIBUTION | Accompagnement, mise en oeuvre, TMA et MCO du datawarehouse (DWH) administratif du Shom et ses datamarts affér | buyer=EPA-SHOM | winners=OMICRONE\"\n  }\n]"
+     }
+    ]
+   }
+  },
+  {
+   "buyer": {
+    "_type": "buyer",
+    "_run": true,
+    "research_status": "researched",
+    "buyer_key": "resah",
+    "buyer_id": "Bop3hc0",
+    "name": "RESAH",
+    "country": "FR",
+    "country_name": "France",
+    "language": "fr",
+    "known_website": "",
+    "tender_titles": [
+     "SOLUTIONS D’EXTERNALISATION DES EXAMENS DE BIOLOGIE MEDICALE",
+     "AUTOMATES D AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES"
+    ],
+    "tenders": [
+     {
+      "tender_id": "T1h89via",
+      "external_id": "650530-2026",
+      "title": "SOLUTIONS D’EXTERNALISATION DES EXAMENS DE BIOLOGIE MEDICALE"
+     },
+     {
+      "tender_id": "Tfqvw7l",
+      "external_id": "651369-2026",
+      "title": "AUTOMATES D AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES"
+     }
+    ],
+    "notice_contacts": {
+     "emails": [],
+     "phones": [],
+     "websites": [],
+     "addresses": []
+    },
+    "exclude_hosts": [
+     "boamp-datadila.opendatasoft.com",
+     "api.ted.europa.eu",
+     "fixture.test",
+     "ted.europa.eu"
+    ]
+   },
+   "agent": {
+    "output": "{\"buyer_type\":\"public_agency\",\"size_hint\":\"medium\",\"summary\":\"RESAH, or Réseau des Acheteurs Hospitaliers, is a public agency based in Paris, France. It has awarded multiple tenders in medical equipment, diagnostics, and services, including externalization of biology exams and automated allergy testing. The agency operates with a staff of 22 as of 2024 and has an official website at https://www.resah.fr.\",\"official_website\":\"https://www.resah.fr\"}",
+    "intermediateSteps": [
+     {
+      "action": {
+       "tool": "wikidata_lookup",
+       "toolInput": {
+        "q": "RESAH"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"WD | Réseau des Acheteurs Hospitaliers | nonprofit organization in Paris, France | id=Q104481023 | match=alias:RESAH | website=https://www.resah.fr\\nWD | Amomum dealbatum | species of plant | id=Q12524883 | match=label:Resah\"\n  }\n]"
+     },
+     {
+      "action": {
+       "tool": "registry_search",
+       "toolInput": {
+        "q": "RESAH"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"REG | RESEAU DES ACHETEURS HOSPITALIERS (RESAH) | siren=130005010 | siret=13000501000033 | addr=9 RUE BRAHMS 75012 PARIS | city=PARIS | nature=7410 | public=no | staff=22 | staff_year=2024\\nREG | GCS RESEAU DES ACHETEURS HOSPITALIERS DU LANGUEDOC-ROUSSILLON (RESAH-LR) | siren=130021512 | siret=13002151200012 | addr=CHRU DE MONTPELLIER 191 AVENUE DU DOYEN GASTON GIRAUD 34295 MONTPELLIER | city=MONTPELLIER | nature=7470 | public=no | staff=NN | staff_year=\"\n  }\n]"
+     },
+     {
+      "action": {
+       "tool": "boamp_history",
+       "toolInput": {
+        "buyer_name": "RESAH"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"TOTAL 637\\nBOAMP | 26-101115 | 2026-10-18 | APPEL_OFFRE | FOURNITURES D'ATELIERS | buyer=RESAH | winners=\\nBOAMP | 26-98345 | 2026-10-13 | APPEL_OFFRE | UNITE MOBILE MEDICALE D'URGENCE ET D'IMAGERIE | buyer=RESAH | winners=\\nBOAMP | 26-98198 | 2026-10-11 | APPEL_OFFRE | Prestations de communication et services associés | buyer=Resah - GIP Réseau des acheteurs hospitaliers | winners=\\nBOAMP | 26-97793 | 2026-10-11 | ATTRIBUTION | EQUIPEMENTS DE MESURE, DE CONTROLE ET D'ESSAIS ET GESTION DE MAINTENANCE ASSISTEE PAR ORDINATEUR | buyer=GIP_RESEAU DES ACHETEURS HOSPITALIERS (RESAH) | winners=MORGATE BIOMEDICAL; GAMIDA; DIMOMAINT; ISILOG; ISILOG; SIGSCAN; SUPERWYZE\\nBOAMP | 26-96833 | 2026-10-08 | APPEL_OFFRE | MAINTENANCE MULTIMARQUE DES SYSTEMES DE FERMETURE AUTOMATIQUE ET PRESTATIONS CONNEXES | buyer=RESAH | winners=\\nBOAMP | 26-96889 | 2026-10-08 | APPEL_OFFRE | SAD - Maintenance multimarque des appareils elevateurs, escaliers mecaniques et prestations associees | buyer=RESAH | winners=\\nBOAMP | 26-94112 | 2026-10-01 | APPEL_OFFRE | ACHAT, LOCATION-MAINTENANCE, GESTION DE PARC DE MATERIELS D'INSTRUMENTATION CHIRURGICALE, DE MOTEURS CHIRURGIC | buyer=RESAH | winners=\\nBOAMP | 26-94217 | 2026-10-01 | ATTRIBUTION | PRODUITS DIETETIQUES - AJOUTS | buyer=GIP Resah | winners=NUTRISENS FRANCE; LACTALIS NUTRITION SANTE; FRANCE CULINAIRE DEVELOPPEMENT SAS\\nBOAMP | 26-93165 | 2026-09-29 | ATTRIBUTION | Fourniture de dispositifs médicaux non implantables de Dialyse, Cathétérisme central et périphérique (MIDLINE) | buyer=GIP RESAH | winners=MERIT; ABBOTT MEDICAL RUNGIS (Vascular); BIOTRONIK; BOSTON SCIENTIFIC; ABBOTT MEDICAL ISSY; MICROPORT CRM; ABBOTT MEDICA\\nBOAMP | 26-91279 | 2026-09-23 | ATTRIBUTION | Acquisition et maintenance de DAV pliés - plusieurs vêtements par case avec distribution automatique du vêteme | buyer=GIP RESAH | winners=POLYTEX TECHNOLOGIES\\nBOAMP | 26-91496 | 2026-09-23 | APPEL_OFFRE | FOURNITURE DE PLATEFORME DE TELERADIOLOGIE ET PRESTATIONS MEDICALES D'INTERPRETATIONS | buyer=RESAH | winners=\\nBOAMP | 26-90840 | 2026-09-21 | APPEL_OFFRE | SOLUTIONS D’EXTERNALISATION DES EXAMENS DE BIOLOGIE MEDICALE | buyer=RESAH | winners=\\nBOAMP | 26-90803 | 2026-09-20 | APPEL_OFFRE | AUTOMATES D AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES | buyer=RESAH | winners=\\nBOAMP | 26-90228 | 2026-09-19 | ATTRIBUTION | Fourniture de masques et équipements de protection individuelle à usage unique | buyer=RESAH | winners=MEDICOM SAS; MEDICOM SAS; LCH MEDICAL PRODUCTS; Medline International France S.A.S.; PAREDES; ABENA FRANTEX; C.E.E. - CO\\nBOAMP | 26-90315 | 2026-09-19 | APPEL_OFFRE | Maintenance des équipements des domaines de l'imagerie, de l'échographie, de l'endoscopie, de la médecine nucl | buyer=RESAH | winners=\\nBOAMP | 26-89816 | 2026-09-18 | APPEL_OFFRE | SOLUTION GLOBALE DE TRANSPORT DE CHARGE PAR VEHICULE ROBOTISÉ ET PRESTATIONS ASSOCIÉES | buyer=RESAH | winners=\\nBOAMP | 26-89837 | 2026-09-18 | APPEL_OFFRE | ROBOTS CHIRURGICAUX | buyer=RESAH | winners=\\nBOAMP | 26-89819 | 2026-09-18 | APPEL_OFFRE | SOLUTIONS D’EXTERNALISATION DES EXAMENS DE BIOLOGIE MEDICALE | buyer=RESAH | winners=\\nBOAMP | 26-89671 | 2026-09-17 | APPEL_OFFRE | FOURNITURE DE SOLUTIONS DE VOTE ELECTRONIQUE A DISTANCE ET EN SEANCE ET PRESTATIONS ASSOCIES | buyer=RESAH | winners=\\nBOAMP | 26-87830 | 2026-09-11 | ATTRIBUTION | Acquisition d’une plateforme innovante de services d’intelligence artificielle générative multi-modèles | buyer=GIP RESAH | winners=Orange Business Services; COM NETWORK\"\n  }\n]"
+     }
+    ]
+   }
+  },
+  {
+   "buyer": {
+    "_type": "buyer",
+    "_run": true,
+    "research_status": "researched",
+    "buyer_key": "centre hospitalier test",
+    "buyer_id": "Bjoqbpw",
+    "name": "Centre Hospitalier Test",
+    "country": "FR",
+    "country_name": "France",
+    "language": "fr",
+    "known_website": "",
+    "tender_titles": [
+     "AVIS RECTIFICATIF – Plateforme de gestion des données patients"
+    ],
+    "tenders": [
+     {
+      "tender_id": "T17xihi4",
+      "external_id": null,
+      "title": "AVIS RECTIFICATIF – Plateforme de gestion des données patients"
+     }
+    ],
+    "notice_contacts": {
+     "emails": [],
+     "phones": [],
+     "websites": [],
+     "addresses": []
+    },
+    "exclude_hosts": [
+     "boamp-datadila.opendatasoft.com",
+     "api.ted.europa.eu",
+     "fixture.test"
+    ]
+   },
+   "agent": {
+    "output": "{\"buyer_type\":\"health\",\"size_hint\":\"unknown\",\"summary\":\"No results found in Wikidata, registry, or public tender notices for Centre Hospitalier Test in France. Web search also returned no results. No official website or contact details available.\",\"official_website\":null}",
+    "intermediateSteps": [
+     {
+      "action": {
+       "tool": "wikidata_lookup",
+       "toolInput": {
+        "q": "Centre Hospitalier Test"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"NO RESULTS\"\n  }\n]"
+     },
+     {
+      "action": {
+       "tool": "registry_search",
+       "toolInput": {
+        "q": "Centre Hospitalier Test"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"NO RESULTS\"\n  }\n]"
+     },
+     {
+      "action": {
+       "tool": "boamp_history",
+       "toolInput": {
+        "buyer_name": "Centre Hospitalier Test"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"NO RESULTS\"\n  }\n]"
+     },
+     {
+      "action": {
+       "tool": "web_search",
+       "toolInput": {
+        "query": "Centre Hospitalier Test France"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"NO RESULTS\"\n  }\n]"
+     }
+    ]
+   }
+  }
+ ],
+ "market": [
+  {
+   "item": {
+    "tender_id": "Tfqvw7l",
+    "title": "AUTOMATES D AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES",
+    "estimated_value": null,
+    "buyer": {
+     "name": "RESAH",
+     "country": "FR",
+     "contacts": {
+      "email": null,
+      "phone": null,
+      "website": null,
+      "address": null
+     }
+    },
+    "survivor": true,
+    "_market": true,
+    "market_task": {
+     "title": "AUTOMATES D AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES",
+     "buyer": "RESAH",
+     "buyer_official_name": "RESEAU DES ACHETEURS HOSPITALIERS (RESAH)",
+     "buyer_siren": "130005010",
+     "country": "FR",
+     "country_name": "France",
+     "language": "fr",
+     "cpv": [
+      "38000000",
+      "33696500"
+     ],
+     "declared_value": null,
+     "tender_type": "software_build",
+     "summary": "Automate d'auto-immunité en « random access » multiplex de cadence >= 50 tests/heure, Automate d’auto-immunité en « random access » multiplex de cadence >= 100 tests/heure, Automate d’auto-immunité par chimiluminescence de cadence >= 100 tests/heure, Automate d'auto-immunité en microarray, Automate d'allergie en microarray",
+     "requirements": [
+      "Automate d'auto-immunité en « random access » multiplex de cadence >= 50 tests/heure",
+      "Automate d’auto-immunité en « random access » multiplex de cadence >= 100 tests/atre",
+      "Automate d'auto-immunité par chimiluminescence de cadence >= 100 tests/heure",
+      "Automate d'auto-immunité en microarray",
+      "Automate d'allergie en microarray"
+     ]
+    }
+   },
+   "agent": {
+    "output": "{\"comparable_ids\":[\"Dlacizg\",\"D14hsejn\",\"D19jdlvh\",\"D16reync\",\"D89xn3o\",\"D1c97j0d\",\"D1n1g1db\",\"D16wak56\",\"Dfq40jl\",\"Dgjvzyb\",\"D1evovmt\",\"Datou8a\",\"D1ay80rp\",\"D1uja68x\",\"D1ilaqk4\",\"D1ybwikv\",\"Dz12etm\",\"Dsld3yg\",\"D2tye6l\"],\"positioning\":\"Large hospital networks in France typically award contracts to established medical equipment and diagnostics suppliers. Bids are often limited to one or two, with major players like Biomérieux, Roche, and Abbott winning consistently. The competition is usually high for large-scale, specialized equipment, especially in diagnostics and lab automation. For this tender, a bid from a well-known diagnostics or lab equipment provider with a strong track record in hospital settings is likely to succeed.\",\"budget_comment\":\"The budget ranges from €500,000 to €30 million, with most contracts in the €1M to €10M range, indicating a likely budget of €1M to €5M for this tender.\"}",
+    "intermediateSteps": [
+     {
+      "action": {
+       "tool": "similar_awards",
+       "toolInput": {
+        "cpv": "38000000,33696500",
+        "query": "automate auto-immunité, microarray, allergie",
+        "country": "FR"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"TOTAL DECP 452 found (CPV 38*), DECP 411 found (CPV 33696*), TED 1 found (showing 31)\\nAWARD | D19jdlvh | 2026-10-13 | amount=697500 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=LEICA MICROSYSTEMES | bids=1 | cpv=38000000 | fw=no | src=DECP | title=MS2025-R076-009-001_ CHRU NANCY Lot 09_Achat et la location maintenance sans option d’achat d’automates de pat\\nAWARD | D19ah5vy | 2026-10-08 | amount=232950 | cur=EUR | buyer=CENTRE HOSPITALIER TARBES-LOURDES (CENTRE HOSPITALIER DE LA GESPE) | winners=LAUNCH DIAGNOSTICS FRANCE SAS | bids= | cpv=38950000 | fw=no | src=DECP | title=MISE A DISPOSITION AUTOMATES DE PCR\\nAWARD | Dmccm90 | 2026-09-25 | amount=7000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=LAUNCH DIAGNOSTICS FRANCE SAS | bids=1 | cpv=38000000 | fw=no | src=DECP | title=AUTOMATES D’AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES - Automate d’auto-immunité et allergie par chimil\\nAWARD | D1kjhpd4 | 2026-09-23 | amount=14000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners= | bids=4 | cpv=38000000 | fw=no | src=DECP | title=AUTOMATES D’AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES - Automate d’auto-immunité par IFI, avec préparat\\nAWARD | Dmd3bpa | 2026-09-23 | amount=3000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=SEBIA | bids=4 | cpv=38000000 | fw=no | src=DECP | title=AUTOMATES D’AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES - Automate d’auto-immunité par IFI, avec préparat\\nAWARD | D8op12l | 2026-09-23 | amount=14000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=THERMO FISHER DIAGNOSTICS | bids=1 | cpv=38000000 | fw=no | src=DECP | title=AUTOMATES D’AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES - Automate d’auto-immunité et allergie par FEIA\\nAWARD | D9u7a5u | 2026-09-23 | amount=4000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=EUROIMMUN FRANCE | bids=2 | cpv=38000000 | fw=no | src=DECP | title=AUTOMATES D’AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES - Automate d’auto-immunité en phase solide de cad\\nAWARD | Dl0wodd | 2026-09-23 | amount=8000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=EUROIMMUN FRANCE | bids=2 | cpv=38000000 | fw=no | src=DECP | title=AUTOMATES D’AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES - Automate d’auto-immunité par immunodot\\nAWARD | D1e45orc | 2026-09-23 | amount=8000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=EUROIMMUN FRANCE | bids=3 | cpv=38000000 | fw=no | src=DECP | title=AUTOMATES D’AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES - Automate d’auto-immunité en phase solide de cad\\nAWARD | D1jgshl7 | 2026-09-23 | amount=8000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=EUROIMMUN FRANCE | bids=2 | cpv=38000000 | fw=no | src=DECP | title=AUTOMATES D’AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES - Automate d’auto-immunité par IFI et ELISA, avec\\nAWARD | D3typ1j | 2026-09-23 | amount=5000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=SIEMENS HEALTHCARE SAS | bids=2 | cpv=38000000 | fw=no | src=DECP | title=AUTOMATES D’AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES - 4 Automate d’allergie par chimiluminescence\\nAWARD | D8838x | 2026-09-23 | amount=4000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners= | bids=6 | cpv=38000000 | fw=no | src=DECP | title=AUTOMATES D’AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES - Automate d’auto-immunité par IFI, avec préparat\\nAWARD | D19ps48e | 2026-09-23 | amount=6000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=SEBIA | bids=5 | cpv=38000000 | fw=no | src=DECP | title=AUTOMATES D’AUTO-IMMUNITE, ALLERGIE ET PRESTATIONS ASSOCIEES - Lames pour auto-immunité par IFI\\nAWARD | Dwykeyz | 2026-09-11 | amount=42667 | cur=EUR | buyer=DEPARTEMENT DE LA CHARENTE | winners=THERMO ELECTRON SAS | bids=3 | cpv=38432000 | fw=no | src=DECP | title=ACQUISITION D¿UN AUTOMATE D¿EXTRACTION EN PHASE SOLIDE (SPE)\\nAWARD | Dc7et66 | 2026-09-08 | amount=50000 | cur=EUR | buyer=CTRE HOSPITALIER VILLEFRANCHE S SAONE | winners=WERFEN | bids= | cpv=38000000 | fw=no | src=DECP | title=RESAH AUTOMATE HEMOCHRON\\nAWARD | Dtvmacw | 2026-10-08 | amount=3859552 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=RADIOMETER SAS | bids=1 | cpv=33696500 | fw=no | src=DECP | title=MS 2023-R038-010-033_Lot 10 - Solutions de gaz du sang avec gamme d’automates adaptée à l’activité de laborato\\nAWARD | Dbkmrhs | 2026-09-28 | amount=1635000 | cur=EUR | buyer=GROUPE HOSPITALIER DE LA REGION DE MULHOUSE ET SUD ALSACE (HOPITAL DU HASENRAIN) | winners=SIEMENS HEALTHCARE SAS | bids= | cpv=33696500 | fw=no | src=DECP | title=FOURNITURE DE REACTIFS ET CONSOMMABLES POUR AUTOMATES DE BIOCHIMIE ( TARIFICATION PATIENT RENDU)\\nAWARD | Deycgu8 | 2026-09-22 | amount=875000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=RADIOMETER SAS | bids=1 | cpv=33696500 | fw=no | src=DECP | title=MS 2023-R038-010-032_Lot 10 - Solutions de gaz du sang avec gamme d’automates adaptée à l’activité de laborato\\nAWARD | Dxxhxv4 | 2026-09-22 | amount=519086 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=RADIOMETER SAS | bids=1 | cpv=33696500 | fw=no | src=DECP | title=MS 2023-R038-010-031_Lot 10 - Solutions de gaz du sang avec gamme d’automates adaptée à l’activité de laborato\\nAWARD | D1qyefm9 | 2026-09-17 | amount=350000 | cur=EUR | buyer=CENTRE HOSPITALIER UNIVERSITAIRE REIMS | winners=ROCHE DIAGNOSTICS FRANCE | bids= | cpv=33696500 | fw=no | src=DECP | title=FOURNITURE DE CONSOMMABLES, REACTIFS ET SERVICES POUR AUTOMATES ROCHE DIAGNOSTICS\\nAWARD | D1uqji18 | 2026-09-17 | amount=200000 | cur=EUR | buyer=GROUPEMENT COOPERATION SANITAIRE - UNION DES HOPITAUX POUR LES ACHATS | winners=ROCHE DIAGNOSTICS FRANCE | bids= | cpv=33696500 | fw=no | src=DECP | title=Fourn réactifs, conso et maint automate EPLEX\\nAWARD | Dfo2wdh | 2026-09-11 | amount=780000 | cur=EUR | buyer=CENTRE HOSPITALIER UNIVERSITAIRE GRENOBLE ALPES (HOPITAL NORD) | winners=DIASORIN | bids=1 | cpv=33696500 | fw=no | src=DECP | title=Fourniture de réactifs, consommables et maintenance pour automate Liaison XL pour de la sérologie infectieuse\\nAWARD | Ddqh28x | 2026-09-04 | amount=97288 | cur=EUR | buyer=GROUPEMENT COOPERATION SANITAIRE - UNION DES HOPITAUX POUR LES ACHATS | winners=HOLOGIC FRANCE SARL | bids= | cpv=33696500 | fw=no | src=DECP | title=FOURNITURE DE REACTIFS ET CONSOMMABLES POUR AUTOMATES HOLOGIC\\nAWARD | D1ggfrf | 2026-09-04 | amount=1000000 | cur=EUR | buyer=CENTRE HOSPITAL REGION METZ THIONVILLE | winners=HOLOGIC FRANCE SARL | bids= | cpv=33696500 | fw=no | src=DECP | title=FOURNITURE DE REACTIFS CONSOMMABLES ET MAINTENANCES POUR AUTOMATES HOLOGIC\\nAWARD | Dkgmfpd | 2026-09-04 | amount=46000 | cur=EUR | buyer=CENTRE HOSPITALIER UNIVERSITAIRE REIMS | winners=HOLOGIC FRANCE SARL | bids= | cpv=33696500 | fw=no | src=DECP | title=FOURNITURE DE REACTIFS, CONSOMMABLES ET MAINTENANCES POUR AUTOMATES HOLOGIC\\nAWARD | D102jizj | 2026-09-04 | amount=288000 | cur=EUR | buyer=GROUPE HOSPITALIER DE LA REGION DE MULHOUSE ET SUD ALSACE (HOPITAL DU HASENRAIN) | winners=HOLOGIC FRANCE SARL | bids= | cpv=33696500 | fw=no | src=DECP | title=FOURNITURE DE REACTIFS, CONSOMMABLES ET MAINTENANCES POUR AUTOMATES HOLOGIC\\nAWARD | D18lacyk | 2026-09-04 | amount=672000 | cur=EUR | buyer=CENTRE HOSPITAL REGION METZ THIONVILLE | winners=QIAGEN FRANCE SAS | bids= | cpv=33696000 | fw=no | src=DECP | title=FOURNITURE DE REACTIFS ET CONSOMMABLES DE LABORATOIRE POUR L’AUTOMATE LIAISON XL AUPRES DE LA SOCIETE QIAGEN A\\nAWARD | Dd1exsl | 2026-08-28 | amount=85625 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=SYSMEX FRANCE | bids=1 | cpv=33696500 | fw=no | src=DECP | title=ACHAT, LOCATION-MAINTENANCE SANS OPTION D’ACHAT ET MISE A DISPOSITION D’AUTOMATES DE BIOLOGIE ET PRESTATIONS A\\nAWARD | D1vg9po5 | 2026-08-28 | amount=991069 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=SYSMEX FRANCE | bids=1 | cpv=33696500 | fw=no | src=DECP | title=ACHAT, LOCATION-MAINTENANCE SANS OPTION D’ACHAT ET MISE A DISPOSITION D’AUTOMATES DE BIOLOGIE ET PRESTATIONS A\\nAWARD | Dcpnkz6 | 2026-08-28 | amount=902823 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=SYSMEX FRANCE | bids=1 | cpv=33696500 | fw=no | src=DECP | title=ACHAT, LOCATION-MAINTENANCE SANS OPTION D’ACHAT ET MISE A DISPOSITION D’AUTOMATES DE BIOLOGIE ET PRESTATIONS A\\nAWARD | T237346-2025 | 2025-04-11 | amount=3370941 | cur=EUR | buyer=Centre Hospitalier de Cayenne \\\"Andrée ROSEMON\\\" | winners=DIATEC | bids=1 | cpv=38434540,33696200,50324200 | fw=yes | src=TED | title=FOURNITURE DE REACTIFS, CONSOMMABLES ET MAINTENANCE POUR AUTOMATE IMMUNO ET ALLERGIE DE MODELE PHADIA 250\"\n  }\n]"
+     },
+     {
+      "action": {
+       "tool": "buyer_awards",
+       "toolInput": {
+        "buyer_name": "RESAH",
+        "siren": "130005010",
+        "cpv": "38000000,33696500",
+        "country": "FR"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"TOTAL DECP 629 found, TED 22 found (showing 35)\\nAWARD | Dvp6rq2 | 2026-10-16 | amount=112500 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=ROCHE DIAGNOSTICS FRANCE | bids=1 | cpv=38000000 | fw=no | src=DECP | title=MS 2025-R080-043-003 CHU de Reims lot 43\\nAWARD | Dlacizg | 2026-10-15 | amount=53135 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=LAUNCH DIAGNOSTICS FRANCE SAS | bids=1 | cpv=38000000 | fw=no | src=DECP | title=MS 2025-R080-007-005 CH de Nice, CH d’Antibes et CH de Cannes lot 7\\nAWARD | D14hsejn | 2026-10-13 | amount=925915 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=BIOMERIEUX SA | bids=1 | cpv=38000000 | fw=no | src=DECP | title=MS 2025-R080-009-013 CH de Valence et CH Ardèche Méridionale LOT 9\\nAWARD | D19jdlvh | 2026-10-13 | amount=697500 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=LEICA MICROSYSTEMES | bids=1 | cpv=38000000 | fw=no | src=DECP | title=MS2025-R076-009-001_ CHRU NANCY Lot 09_Achat et la location maintenance sans option d’achat d’automates de pat\\nAWARD | D16reync | 2026-10-08 | amount=275480 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=BECTON DICKINSON FRANCE | bids=2 | cpv=38000000 | fw=no | src=DECP | title=MS 2025-R080-015-003 CH Jacques Monod (CH de Flers) LOT 15\\nAWARD | D89xn3o | 2026-10-06 | amount=1375000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=BIOMERIEUX SA | bids=1 | cpv=38000000 | fw=no | src=DECP | title=MS 2025-R080-009-008 CHU Bordeaux lot 9\\nAWARD | D1c97j0d | 2026-10-05 | amount=4952843 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=RDP CONCEPT; ABBOTT FRANCE | bids= | cpv=38000000 | fw=no | src=DECP | title=biochimie liquide-immunologie\\nAWARD | D1n1g1db | 2026-10-05 | amount=100795 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=BIOMERIEUX SA | bids=1 | cpv=38000000 | fw=no | src=DECP | title=MS 2025-R080-020-005 CH DE VERSAILLES LOT 20\\nAWARD | D16wak56 | 2026-10-02 | amount=900000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=INSTITUT GUSTAVE ROUSSY | bids=1 | cpv=38000000 | fw=no | src=DECP | title=MS 2025-R080-044-002 Hôpitaux Universitaires de Strasbourg LOT 44\\nAWARD | Dfq40jl | 2026-10-02 | amount=1824607 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=ABBOTT FRANCE | bids=1 | cpv=38000000 | fw=no | src=DECP | title=MS 2025-R080-002-001 CH Sud Francilien LOT 2\\nAWARD | Dgjvzyb | 2026-10-01 | amount=575000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=BIOMERIEUX SA | bids=1 | cpv=38000000 | fw=no | src=DECP | title=MS 2025-R080-009-009 CH de Dieppe LOT 9\\nAWARD | D1evovmt | 2026-09-29 | amount=18000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=SODEXO SANTE MEDICO SOCIAL | bids= | cpv=38343000 | fw=no | src=DECP | title=MS008 Restauration concédée 2025-R029 _RDS_Lot 1 Etablissements sanitaires ainsi qu’aux selfs du personnel de \\nAWARD | Datou8a | 2026-09-29 | amount=5000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners= | bids=1 | cpv=38900000 | fw=no | src=DECP | title=Dispositifs de contrôle, de désinfection et de décontamination pour un environnement sécurisé - Lot 7 : Soluti\\nAWARD | D1ay80rp | 2026-09-25 | amount=1125000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=BIOMERIEUX SA | bids=1 | cpv=38000000 | fw=no | src=DECP | title=MS 2025-R080-009-010 GCS HOSPILAB 47 LOT 9\\nAWARD | D1uja68x | 2026-09-25 | amount=30000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=BECTON DICKINSON FRANCE | bids=3 | cpv=38434510 | fw=no | src=DECP | title=FOURNITURES D’EQUIPEMENTS, REACTIFS ET CONSOMMABLES DE CYTOMETRIE EN FLUX - Lot 1 : Solution de cytométrie ava\\nAWARD | D1ilaqk4 | 2026-09-25 | amount=30000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=SYSMEX FRANCE | bids=3 | cpv=38434510 | fw=no | src=DECP | title=FOURNITURES D’EQUIPEMENTS, REACTIFS ET CONSOMMABLES DE CYTOMETRIE EN FLUX - Lot 2 : Solution de cytométrie sta\\nAWARD | D1ybwikv | 2026-09-25 | amount=30000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=BECKMAN COULTER FRANCE | bids=3 | cpv=38434510 | fw=no | src=DECP | title=FOURNITURES D’EQUIPEMENTS, REACTIFS ET CONSOMMABLES DE CYTOMETRIE EN FLUX - Lot 3 : Solution de cytométrie bas\\nAWARD | Dz12etm | 2026-09-25 | amount=30000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners=BECTON DICKINSON FRANCE | bids=3 | cpv=38434510 | fw=no | src=DECP | title=FOURNITURES D’EQUIPEMENTS, REACTIFS ET CONSOMMABLES DE CYTOMETRIE EN FLUX - Lot 4: Solution de cytométrie pour\\nAWARD | Dsld3yg | 2026-09-25 | amount=15000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners= | bids=1 | cpv=38434510 | fw=no | src=DECP | title=FOURNITURES D’EQUIPEMENTS, REACTIFS ET CONSOMMABLES DE CYTOMETRIE EN FLUX - Lot 10 : Trieur Spectral\\nAWARD | D2tye6l | 2026-09-25 | amount=15000000 | cur=EUR | buyer=RESEAU DES ACHETEURS HOSPITALIERS | winners= | bids=6 | cpv=38434510 | fw=no | src=DECP | title=FOURNITURES D’EQUIPEMENTS, REACTIFS ET CONSOMMABLES DE CYTOMETRIE EN FLUX - Lot 13 : Anticorps pour la recherc\\nAWARD | T703576-2026 | 2026-10-12 | amount=12000000 | cur=EUR | buyer=GIP_RESEAU DES ACHETEURS HOSPITALIERS (RESAH) | winners=MORGATE BIOMEDICAL; GAMIDA; DIMOMAINT | bids=6 | cpv=38900000,48180000 | fw=yes | src=TED | title=EQUIPEMENTS DE MESURE, DE CONTROLE ET D'ESSAIS ET GESTION DE MAINTENANCE ASSISTEE PAR ORDINATEUR\\nAWARD | T475428-2026 | 2026-07-09 | amount=41485218 | cur=EUR | buyer=GIP Resah | winners=TECHNOLOGIE MEDICALE; SOL FRANCE; CRYOPAL | bids=4 | cpv=38420000,38421000,38434540 | fw=yes | src=TED | title=FOURNITURE D’EQUIPEMENTS DESTINES A L’UTILISATION DES FLUIDES MEDICAUX ET PRESTATIONS ASSOCIEES A L’UTILISATIO\\nAWARD | T422670-2026 | 2026-06-19 | amount=2500000 | cur=EUR | buyer=RESAH | winners=MAST DIAGNOSTICS | bids=2 | cpv=33696500 | fw=yes | src=TED | title=FOURNITURE DE REACTIFS DE BACTERIOLOGIE Relance (ex lot 71) : « Antisérum »\\nAWARD | T333469-2026 | 2026-05-15 | amount=20000000 | cur=EUR | buyer=GIP RESAH | winners=ROCHE DIAGNOSTICS FRANCE | bids=1 | cpv=38000000,33696500 | fw=yes | src=TED | title=ACQUISITION D’UNE SOLUTION COMPLETE ET AUTOMATISEE DE SPECTROMETRIE DE MASSE COUPLEE A DE LA CHROMATOGRAPHIE L\\nAWARD | T329363-2026 | 2026-05-13 | amount=424800000 | cur=EUR | buyer=RESAH | winners=MM France; DIAPATH FRANCE; Leica Microsystèmes SAS | bids=6 | cpv=38000000,33696500,48814000 | fw=yes | src=TED | title=ACHAT ET LOCATION-MAINTENANCE SANS OPTION D'ACHAT D'AUTOMATES DE PATHOLOGIE ET PRESTATIONS ASSOCIEES\\nAWARD | T244349-2026 | 2026-04-10 | amount=16800000 | cur=EUR | buyer=GIP RESAH | winners=MEDSQUARE; SIEMENS HEALTHCARE SAS; CEA – Commissariat à l’Energie Atomique et aux énergies alternatives | bids=6 | cpv=38341300 | fw=yes | src=TED | title=FOURNITURE, INSTALLATION, MISE EN SERVICE ET MAINTENANCE DE SOLUTIONS GLOBALES DE GESTION DE LA DOSIMETRIE ET \\nAWARD | T222549-2026 | 2026-04-01 | amount=2000000 | cur=EUR | buyer=GIP RESAH | winners=HemoCue France; NOVA BIOMEDICAL France | bids=2 | cpv=71900000,48329000,33954000 | fw=yes | src=TED | title=FOURNITURES DE TESTS RAPIDES DE DIAGNOSTIC ET EXAMENS DE BIOLOGIE MEDICALE DELOCALISEE (AUTOMATES, REACTIFS ET\\nAWARD | T212468-2026 | 2026-03-27 | amount=46000000 | cur=EUR | buyer=GIP RESAH | winners=TRIONYX SA; TECHINTERLAB; ADGENIX SARL | bids=8 | cpv=38000000,33157400,33100000 | fw=yes | src=TED | title=FOURNITURE D'EQUIPEMENTS DE LABORATOIRE ET PRESTATIONS ASSOCIEES\\nAWARD | T526297-2025 | 2025-08-12 | amount=160000000 | cur=EUR | buyer=GIP RESAH | winners=Siemens Healthcare S.A.S. | bids=1 | cpv=33110000,48814000,38520000 | fw=yes | src=TED | title=La présente consultation, lancée par le Resah agissant en tant que centrale d?achat a pour objet l?achat, la l\\nAWARD | T171591-2025 | 2025-03-17 | amount=42000000 | cur=EUR | buyer=GIP RESAH | winners=REVVITY SAS; HAMILTON FRANCE; EVOSCIENCES SAS | bids=3 | cpv=38000000,33696500 | fw=yes | src=TED | title=ACQUISITION D'EQUIPEMENTS ET REACTIFS ASSOCIES POUR LE DEPISTAGE NEONATAL DES DEFICITS IMMUNITAIRES COMBINES S\\nAWARD | T164628-2025 | 2025-03-13 | amount=88000000 | cur=EUR | buyer=GIP RESAH | winners=PHC Europe BV; SOREMA; FRESENIUS VIAL SAS | bids=6 | cpv=33100000,38436000,42513000 | fw=yes | src=TED | title=Fourniture d'équipements de froid médical, d'agitateurs de plaquettes et les prestations associées\\nAWARD | T161408-2025 | 2025-03-12 | amount=2000000 | cur=EUR | buyer=GIP RESAH | winners=DIAPATH FRANCE | bids=1 | cpv=38000000 | fw=yes | src=TED | title=Fourniture de systèmes de numérisation et d'analyse d'images en anatomo-pathologie, scanners de lames et prest\\nAWARD | T81198-2025 | 2025-02-06 | amount=40000000 | cur=EUR | buyer=GIP RESAH | winners=BIOMERIEUX S.A | bids=1 | cpv=38000000 | fw=yes | src=TED | title=Relance lot 1 : Solution globale de microbiologie pour équipements (identification microbienne et antibiogramm\\nAWARD | T744494-2024 | 2024-12-05 | amount=315000000 | cur=EUR | buyer=GIP RESAH | winners=DIAPATH FRANCE; Evident Europe GmbH; HAMAMATSU PHOTONICS FRANCE | bids=7 | cpv=38510000,38511000 | fw=yes | src=TED | title=Fourniture de systèmes de numérisation et d'analyse d'images en anatomo-pathologie, scanners de lames et prest\\nAWARD | T717737-2024 | 2024-11-25 | amount=40000000 | cur=EUR | buyer=GIP RESAH | winners=WATERS; SHIMADZU FRANCE; THERMO ELECTRON SAS | bids=3 | cpv=38433100,38432200 | fw=yes | src=TED | title=ACQUISITION, LOCATIONMAINTENANCE SANS OPTION D'ACHAT D'EQUIPEMENTS DE SPECTROMETRIE DE MASSE ET PRESTATIONS AS\"\n  }\n]"
+     }
+    ]
+   }
+  },
+  {
+   "item": {
+    "tender_id": "Tb8w4w1",
+    "title": "طلب عروض لرقمنة خدمات الحالة المدنية وتطوير منصة إلكترونية",
+    "estimated_value": null,
+    "buyer": {
+     "name": "بلدية النموذج",
+     "country": "TN",
+     "contacts": {
+      "email": "marches@commune-namudhaj.tn",
+      "phone": "71 000 111",
+      "website": null,
+      "address": null
+     }
+    },
+    "survivor": true,
+    "_market": true,
+    "market_task": {
+     "title": "طلب عروض لرقمنة خدمات الحالة المدنية وتطوير منصة إلكترونية",
+     "buyer": "بلدية النموذج",
+     "buyer_official_name": "",
+     "buyer_siren": "",
+     "country": "TN",
+     "country_name": "Tunisia",
+     "language": "ar",
+     "cpv": [],
+     "declared_value": null,
+     "tender_type": "software_build",
+     "summary": "تعلن بلدية النموذج عن طلب عروض لرقمنة خدمات الحالة المدنية وتطوير منصة إلكترونية تمكن المواطنين من طلب المضامين عن بعد. يشمل المشروع تطوير المنصة وربطها بقاعدة البيانات الحالية وتكوين الأعوان. يجب أن تكون المنصة باللغتين العربية والفرنسية.",
+     "requirements": [
+      "المنصة يجب أن تكون باللغتين العربية والفرنسية"
+     ]
+    }
+   },
+   "agent": {
+    "output": "{\"comparable_ids\":[],\"positioning\":\"No comparable contracts found in Tunisia for the specified keywords. Therefore, no positioning or budget can be derived from available data.\",\"budget_comment\":\"No budget data available due to lack of comparable awards.\"}",
+    "intermediateSteps": [
+     {
+      "action": {
+       "tool": "similar_awards",
+       "toolInput": {
+        "cpv": "",
+        "query": "رقمنة خدمات الحالة المدنية, تطوير منصة إلكترونية",
+        "country": "TN"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"NOTE: Tunisia = TUNEPS awards (amounts in TND, one row per lot); no CPV there\\nTOTAL TUNEPS 0 tenders for \\\"رقمنة خدمات الحالة المدنية\\\", TUNEPS 0 tenders for \\\"تطوير منصة إلكترونية\\\", TED 0 found (showing 0)\\nNO RESULTS\"\n  }\n]"
+     }
+    ]
+   }
+  },
+  {
+   "item": {
+    "tender_id": "T1rliq4i",
+    "title": "Maintien en condition opérationnelle et de sécurité du Digital Workplace Odyssée du Shom",
+    "estimated_value": null,
+    "buyer": {
+     "name": "EPA-SHOM",
+     "country": "FR",
+     "contacts": {
+      "email": null,
+      "phone": null,
+      "website": null,
+      "address": null
+     }
+    },
+    "survivor": true,
+    "_market": true,
+    "market_task": {
+     "title": "Maintien en condition opérationnelle et de sécurité du Digital Workplace Odyssée du Shom",
+     "buyer": "EPA-SHOM",
+     "buyer_official_name": "",
+     "buyer_siren": "",
+     "country": "FR",
+     "country_name": "France",
+     "language": "fr",
+     "cpv": [
+      "72267000"
+     ],
+     "declared_value": null,
+     "tender_type": "maintenance_support",
+     "summary": "Maintien en conditions opérationnelles et de sécurité du Digital Workplace Odyssée du Shom",
+     "requirements": []
+    }
+   },
+   "agent": {
+    "output": "{\"comparable_ids\":[\"Do2sfgp\",\"D15gbo26\",\"D1hyulwk\",\"T253087-2026\",\"T796710-2025\",\"T792543-2025\",\"T478871-2025\"],\"positioning\":\"Winners are typically specialized IT service providers, with a range of bids from 1 to 10, indicating a competitive market. Bids are often for maintenance of specific digital platforms, with a focus on operational and security support. The winning companies are usually those with proven experience in similar digital workplace maintenance contracts.\",\"budget_comment\":\"The likely budget range is between 30,000 and 400,000 EUR, based on the awarded contracts with similar scope and CPV codes.\"}",
+    "intermediateSteps": [
+     {
+      "action": {
+       "tool": "similar_awards",
+       "toolInput": {
+        "cpv": "72267000",
+        "query": "maintenance support, digital workplace",
+        "country": "FR"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"TOTAL DECP 3716 found (CPV 72267*), TED 5 found (showing 20)\\nAWARD | D4pc8u6 | 2026-10-16 | amount=19250 | cur=EUR | buyer=ECOLE NATIONALE DE L'AVIATION CIVILE | winners=KELEO SOLUTIONS | bids=1 | cpv=72267100 | fw=no | src=DECP | title=Maintenance, développements spécifiques et autres prestations de l’application Web de sélection psychotechniqu\\nAWARD | Dz6lj9p | 2026-10-15 | amount=800000 | cur=EUR | buyer=DEPARTEMENT DE L'INDRE | winners=LIBRICIEL | bids=1 | cpv=72267100 | fw=no | src=DECP | title=Maintenance et évolution des applications libres métiers de Libriciel SCOP pour le Département de l’Indre\\nAWARD | D18532qp | 2026-10-09 | amount=210000 | cur=EUR | buyer=DEPARTEMENT DE SEINE ET MARNE | winners=MEZZOTEAM | bids=1 | cpv=72267100 | fw=no | src=DECP | title=Prestations de maintenance, d’hébergement et prestations complémentaires du logiciel de Gestion des Situations\\nAWARD | Dunu7p3 | 2026-10-08 | amount=51362 | cur=EUR | buyer=COMMUNE DE MARSEILLE (DIRECTION RESSOURCES HUMAINES) | winners=QUASAR SOLUTIONS | bids=1 | cpv=72267100 | fw=no | src=DECP | title=Prestations de maintenance, de support et d’évolution du progiciel GEMEAUX\\nAWARD | D16pdncr | 2026-10-08 | amount=240000 | cur=EUR | buyer=DEPARTEMENT DE LA HAUTE SAVOIE | winners=PRYNTEC | bids=1 | cpv=72267100 | fw=no | src=DECP | title=Maintenance des systèmes PRYNTEC de la RD3508 Nord et prestations associées.\\nAWARD | Do2sfgp | 2026-10-06 | amount= | cur=EUR | buyer=METROPOLE DE LYON | winners=AS-TECH SOLUTIONS | bids=1 | cpv=72267000 | fw=no | src=DECP | title=MAINTENANCE DU LOGICIEL AS-TECH, NOTAMMENT DES MODULES DE GESTION DU PARC AUTO, DES STOCKS-ACHATS, DE L’HABILL\\nAWARD | D7twq1h | 2026-10-06 | amount=40000 | cur=EUR | buyer=COMMUNE DE MEYZIEU (MAIRIE) | winners=DI'X | bids=1 | cpv=72267000 | fw=no | src=DECP | title=Maintenance et prestations associées du progiciel AVENIO de la ville de Meyzieu\\nAWARD | D5j4u7d | 2026-10-06 | amount= | cur=EUR | buyer=DEPARTEMENT DE LA MOSELLE | winners=ANTEMETA | bids=1 | cpv=72267100 | fw=no | src=DECP | title=2026-SA0054 - Maintenance des infrastructures de stockage du Département de la Moselle et des serveurs associé\\nAWARD | D10x1ohu | 2026-10-05 | amount=400000 | cur=EUR | buyer=METROPOLE NICE COTE D AZUR | winners=AVANTI TECHNOLOGIES | bids=1 | cpv=72267100 | fw=no | src=DECP | title=FF - MAINTENANCE ET EVOLUTION DU LOGICIEL AGORABOX DE GESTION DES CONGRES ET EVENEMENTS - RELANCE DU 25N0134\\nAWARD | D15gbo26 | 2026-10-05 | amount=180000 | cur=EUR | buyer=METROPOLE DE LYON | winners=PTV FRANCE | bids=1 | cpv=72267000 | fw=no | src=DECP | title=Maintenance du logiciel VISUM, acquisition de licences et prestations associées\\nAWARD | D5gvqth | 2026-10-02 | amount=80000 | cur=EUR | buyer=DEPARTEMENT DE LA LOIRE-ATLANTIQUE | winners=A.J.L.S.M. | bids=2 | cpv=72267100 | fw=no | src=DECP | title=Hébergement, maintenance, évolution et support de la solution de recherche documentaire pour les Archives dépa\\nAWARD | D4m95pb | 2026-10-02 | amount=4000000 | cur=EUR | buyer=METROPOLE NICE COTE D AZUR | winners=SPIE CITYNETWORKS | bids=1 | cpv=72267000 | fw=no | src=DECP | title=FF - MAINTENANCE ET EVOLUTION DE L’HYPERVISEUR DU CENTRE MULTIMODAL DES DEPLACEMENTS METROPOLITAINS\\nAWARD | Ds1wo54 | 2026-10-01 | amount=300000 | cur=EUR | buyer=CHU NANTES (DIRECTION GENERALE) | winners=SOPRA STERIA GROUP | bids=1 | cpv=72267000 | fw=no | src=DECP | title=Maintenance logiciel ACTIVE 3D (gestion patrimoine immobilier)\\nAWARD | D1hyulwk | 2026-10-01 | amount=94180 | cur=EUR | buyer=DEPARTEMENT DE L EURE | winners= | bids=1 | cpv=72267100 | fw=no | src=DECP | title=Le présent accord-cadre a pour objet la maintenance corrective, adaptative, évolutive du logiciel INSER, ainsi\\nAWARD | D1feiays | 2026-10-01 | amount=618688 | cur=EUR | buyer=CENTRE HOSPITALIER UNIVERSITAIRE DE CAEN NORMANDIE | winners=CODOC | bids=1 | cpv=72267100 | fw=no | src=DECP | title=Maintenance évolutive et corrective de la suite Codoc, et prestations associées\\nAWARD | T327357-2026 | 2026-05-13 | amount=1132000 | cur=EUR | buyer=Numih France -GIP Mipih | winners=LIBRICIEL SCOP | bids=1 | cpv=72267100 | fw=yes | src=TED | title=Maintenance, support, mise en œuvre et prestations associées pour la suite Libriciel\\nAWARD | T599482-2025 | 2025-09-15 | amount=18000000 | cur=EUR | buyer=CHU de Montpellier | winners=DEDALUS HEALTHCARE FRANCE | bids=1 | cpv=72267100 | fw=yes | src=TED | title=lRéalisation de prestations de migration du DPI de GHT DX Care vers la solution Care4U et prestations de maint\\nAWARD | T216781-2025 | 2025-04-03 | amount=200000 | cur=EUR | buyer=Communauté urbaine du Grand Reims | winners=DECIVISION | bids=2 | cpv=72267000,72261000,48000000 | fw=yes | src=TED | title=Maintenance, support, acquisition de licences de produits SAP BUSINESS OBJECTS et prestations associées\\nAWARD | T100123-2025 | 2025-02-14 | amount=1500000 | cur=EUR | buyer=GIE iMSA | winners=COMPART FRANCE | bids=1 | cpv=72267000,72268000 | fw=yes | src=TED | title=Maintenance, support, acquisitions de produits Docbridge et services associés\\nAWARD | T268393-2024 | 2024-05-07 | amount=416807.75 | cur=EUR | buyer=DEPARTEMENT CHARENTE-MARITIME | winners=NEOLINK | bids= | cpv=72267100 | fw=yes | src=TED | title=Accord-cadre composite relatif à la maintenance, support, assistance technique et fonctionnelle de la platefor\"\n  }\n]"
+     },
+     {
+      "action": {
+       "tool": "buyer_awards",
+       "toolInput": {
+        "buyer_name": "EPA-SHOM",
+        "cpv": "72267000",
+        "country": "FR"
+       }
+      },
+      "observation": "[\n  {\n    \"result\": \"TOTAL TED 5 found (showing 5)\\nAWARD | T253087-2026 | 2026-04-14 | amount=350000 | cur=EUR | buyer=EPA-SHOM | winners=BLUEDROP.FR | bids=10 | cpv=72000000,72267000 | fw=yes | src=TED | title=Reprise, Maintenance et Développement des sites internet du Shom\\nAWARD | T796710-2025 | 2025-12-02 | amount=149595 | cur=EUR | buyer=Epa Shom | winners=NORGAY | bids=3 | cpv=72267000 | fw=yes | src=TED | title=Shom-25AC11\\nAWARD | T792543-2025 | 2025-11-28 | amount=627007.74 | cur=EUR | buyer=EPA SHOM | winners=WORLDLINE FRANCE SAS | bids=5 | cpv=72267100 | fw=yes | src=TED | title=Maintenance et évolutions applicatives de la plateforme nationale de l'information nautique PING\\nAWARD | T478871-2025 | 2025-07-22 | amount=760000 | cur=EUR | buyer=EPA-SHOM | winners=OPEN | bids=10 | cpv=72267000 | fw=yes | src=TED | title=L'accord-cadre a pour objet la Tierce Maintenance Applicative (TMA) du SI SEARCH du Shom\\nAWARD | T7021-2025 | 2025-01-07 | amount=300000 | cur=EUR | buyer=EPA-SHOM | winners=COEXYA | bids=1 | cpv=72267000 | fw=yes | src=TED | title=Tierce maintenance applicative des systèmes de généralisation cartographique, de production de S-102 et d'iden\"\n  }\n]"
+     }
+    ]
+   }
+  }
+ ]
+}

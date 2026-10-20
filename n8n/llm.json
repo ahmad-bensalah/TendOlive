@@ -1,0 +1,27 @@
+{
+  "_comment": "One table for LLM_PROVIDER, read by n8n/init/init.js (Main's model node + credential, the deck agents' GROQ_* settings) and services/proposal-studio/docker-entrypoint.sh (the studio's GROQ_MODELS). defaultModel must equal the model of Main's 'Model - <X>' node in n8n/build.js: the n8n image build checks it.",
+  "groq": {
+    "node": "Model - Groq",
+    "keyEnv": "GROQ_API_KEY",
+    "agentsBaseUrl": "https://api.groq.com/openai/v1",
+    "defaultModel": "openai/gpt-oss-120b"
+  },
+  "gemini": {
+    "node": "Model - Gemini",
+    "keyEnv": "GEMINI_API_KEY",
+    "agentsBaseUrl": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "defaultModel": "models/gemini-3.1-flash-lite"
+  },
+  "openai": {
+    "node": "Model - OpenAI",
+    "keyEnv": "OPENAI_API_KEY",
+    "agentsBaseUrl": "https://api.openai.com/v1",
+    "defaultModel": "gpt-4.1-mini"
+  },
+  "ollama": {
+    "node": "Model - Ollama",
+    "keyEnv": null,
+    "agentsBaseUrl": null,
+    "defaultModel": "qwen3:4b-instruct"
+  }
+}

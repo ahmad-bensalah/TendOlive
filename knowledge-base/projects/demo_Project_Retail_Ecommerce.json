@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "demo_Project_Retail_Ecommerce",
+  "type": "past_project",
+  "title": "Retailer - E-commerce Website (2024)",
+  "description": "E-commerce website for a clothing retailer, Laravel + Vue.js.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [],
+  "client": "clothing retailer",
+  "sector": "retail",
+  "scope": "E-commerce website for a clothing retailer, Laravel + Vue.js.",
+  "company_role": "E-commerce website for a clothing retailer, Laravel + Vue.js.",
+  "technologies": [
+    "javascript",
+    "laravel",
+    "mysql",
+    "vue"
+  ],
+  "delivery_status": "completed",
+  "year": 2024,
+  "outcomes": ""
+}

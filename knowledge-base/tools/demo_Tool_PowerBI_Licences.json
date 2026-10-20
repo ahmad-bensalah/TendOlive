@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "demo_Tool_PowerBI_Licences",
+  "type": "tool",
+  "title": "Power BI Pro licences (fictional)",
+  "description": "Fictional sample: a pool of Power BI Pro licences available for client reporting projects.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "tool_kind": "licence",
+  "technologies": [
+    "power bi"
+  ],
+  "use_cases": "Client dashboards and reporting.",
+  "licence_details": "Fictional: 25 seats, renewal 2027",
+  "source": "Fictional sample for Demo mode"
+}

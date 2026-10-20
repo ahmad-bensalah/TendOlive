@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_ServiceCloud_Portal",
+  "type": "past_project",
+  "title": "Salesforce Service Cloud and Experience Cloud client portal",
+  "description": "Designed and implemented a Service Cloud and Experience Cloud client-facing portal with Einstein case features.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Designed and implemented a Service Cloud and Experience Cloud client-facing portal with Einstein case features.",
+  "scope": "Portal for more than 10 000 monthly cases, Einstein Case Classification and Article Recommendation, LWC and Apex.",
+  "technologies": [
+    "salesforce",
+    "lightning web components",
+    "apex",
+    "jira",
+    "agile"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "Case resolution time cut by 35 %; ticket deflection +22 %; 99.9 % uptime during rollout.",
+  "team_cv_ids": [
+    "CV_08_Lucas_Reed.pdf"
+  ],
+  "source": "CV_08_Lucas_Reed.pdf: OliveSoft experience, Salesforce Developer, Aug 2026 - Present"
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Contacts_Mobile_App",
+  "type": "past_project",
+  "title": "Mobile app for professional contacts with Salesforce sync",
+  "description": "Created a mobile app for managing and classifying professional contacts, synchronised with Salesforce APIs.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Created a mobile app for managing and classifying professional contacts, synchronised with Salesforce APIs.",
+  "scope": "Power Platform mobile app, real-time bi-directional Salesforce sync, calls, SMS and email features.",
+  "technologies": [
+    "power platform",
+    "salesforce",
+    "mobile app"
+  ],
+  "delivery_status": "completed",
+  "year": 2024,
+  "outcomes": "User engagement +40 %.",
+  "team_cv_ids": [
+    "CV_08_Lucas_Reed.pdf"
+  ],
+  "source": "CV_08_Lucas_Reed.pdf: OliveSoft experience, Power Platform Developer, Feb 2024 - May 2024"
+}

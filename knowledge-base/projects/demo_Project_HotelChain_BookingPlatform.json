@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "demo_Project_HotelChain_BookingPlatform",
+  "type": "past_project",
+  "title": "Hotel Chain - Tourism Booking Platform (2023)",
+  "description": "Online booking and hotel management platform for a private tourism company, React + Node.js.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [],
+  "client": "private hotel chain",
+  "sector": "tourism",
+  "scope": "room booking, hotel management back-office, guest reviews, payment gateway, occupancy dashboard.",
+  "company_role": "Online booking and hotel management platform for a private tourism company, React + Node.js.",
+  "technologies": [
+    "javascript",
+    "mongodb",
+    "node.js",
+    "react"
+  ],
+  "delivery_status": "completed",
+  "year": 2023,
+  "outcomes": ""
+}

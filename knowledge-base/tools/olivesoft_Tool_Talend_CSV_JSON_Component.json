@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Tool_Talend_CSV_JSON_Component",
+  "type": "tool",
+  "title": "Reusable Talend CSV-to-JSON component",
+  "description": "A reusable Talend component that converts CSV to JSON.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "tool_kind": "internal_accelerator",
+  "technologies": [
+    "talend",
+    "etl"
+  ],
+  "use_cases": "Data integration jobs; reused in 4 subsequent projects.",
+  "source": "CV_19_Owen_Parker.pdf: OliveSoft experience, Remote Integration Intern, Jun 2022 - Aug 2022"
+}

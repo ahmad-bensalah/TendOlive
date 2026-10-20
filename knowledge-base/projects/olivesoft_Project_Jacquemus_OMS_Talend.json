@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Jacquemus_OMS_Talend",
+  "type": "past_project",
+  "title": "Talend order-management integration for Jacquemus",
+  "description": "Developed and monitored batch and streaming Talend jobs for the Order Management System, with integration blueprints across ERP, CRM and OMS.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [
+    "olivesoft_client_Jacquemus"
+  ],
+  "client": "Jacquemus",
+  "sector": "retail",
+  "company_role": "Developed and monitored batch and streaming Talend jobs for the Order Management System, with integration blueprints across ERP, CRM and OMS.",
+  "scope": "Talend batch and streaming jobs for 1 M transactions per month, monitoring alerts, ERP/CRM/OMS interoperability specifications.",
+  "technologies": [
+    "talend",
+    "etl"
+  ],
+  "delivery_status": "completed",
+  "year": 2025,
+  "outcomes": "Incident resolution time from 4 h to 45 min.",
+  "team_cv_ids": [
+    "CV_13_Isabella_Ross.pdf"
+  ],
+  "source": "CV_13_Isabella_Ross.pdf: experience entry 'Consultant Data Engineer, JACQUEMUS, Jun 2024 - Dec 2025' under the client name; Jacquemus is listed as an OliveSoft client on https://www.olivesoft.fr/en."
+}

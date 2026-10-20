@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Tool_Airflow_DAG_Library",
+  "type": "tool",
+  "title": "Reusable Airflow DAG library",
+  "description": "Reusable Apache Airflow DAGs integrated with n8n, Talend, Azure Blob Storage, GCP, SFTP and Power BI.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "tool_kind": "internal_accelerator",
+  "technologies": [
+    "airflow",
+    "n8n",
+    "talend"
+  ],
+  "use_cases": "Workflow orchestration for business units; GitOps-validated DAG versions.",
+  "source": "CV_18_Leila_Morgan.pdf: OliveSoft experience, Data Engineer, Jul 2026 - Present"
+}

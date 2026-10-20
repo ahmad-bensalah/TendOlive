@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Tool_MLOps_Project_Starter",
+  "type": "tool",
+  "title": "MLOps project starter architecture",
+  "description": "An architecture that lets the DES unit launch MLOps projects, built on the Kubeflow platform.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "tool_kind": "internal_accelerator",
+  "technologies": [
+    "kubeflow",
+    "mlops",
+    "kubernetes"
+  ],
+  "use_cases": "Starting new MLOps projects with a 50 % shorter set-up time.",
+  "source": "CV_03_Maya_Patel.pdf: OliveSoft experience, MLOps Engineer, Sep 2025 - Dec 2025"
+}

@@ -1,0 +1,9 @@
+node_modules
+dist
+test/out
+**/*key*
+!**/*key*.js
+*.log
+.env
+Dockerfile
+.dockerignore

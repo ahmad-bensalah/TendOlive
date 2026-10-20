@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Soeur_OneStock_OMS",
+  "type": "past_project",
+  "title": "OneStock OMS integration for SOEUR",
+  "description": "Directed the integration of OneStock OMS into the retailer's ecosystem, synchronising data across 5 systems (OMS, ERP, POS, e-commerce, logistics).",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [
+    "olivesoft_client_SOEUR"
+  ],
+  "client": "SOEUR",
+  "sector": "retail",
+  "company_role": "Directed the integration of OneStock OMS into the retailer's ecosystem, synchronising data across 5 systems (OMS, ERP, POS, e-commerce, logistics).",
+  "scope": "Functional specifications for order-to-cash flows, stakeholder alignment, MVP sign-off.",
+  "technologies": [
+    "onestock",
+    "erp"
+  ],
+  "delivery_status": "completed",
+  "year": 2026,
+  "outcomes": "Order-processing time -20 %; MVP sign-off within 2 weeks.",
+  "team_cv_ids": [
+    "CV_04_Noah_Bennett.pdf"
+  ],
+  "source": "CV_04_Noah_Bennett.pdf: experience entry 'Product Owner, SOEUR, Sep 2025 - Feb 2026' under the client name; SOEUR is listed as an OliveSoft client on https://www.olivesoft.fr/en."
+}

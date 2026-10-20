@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Azure_Data_Lake_ETL",
+  "type": "past_project",
+  "title": "ETL pipelines, data quality and Azure Data Lake migration",
+  "description": "Deployed ETL pipelines processing more than 10 million records daily, a data-quality framework, and migrated on-premise stores to Azure Data Lake.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Deployed ETL pipelines processing more than 10 million records daily, a data-quality framework, and migrated on-premise stores to Azure Data Lake.",
+  "scope": "End-to-end ETL, data-quality framework, migration to Azure Data Lake.",
+  "technologies": [
+    "etl",
+    "azure",
+    "data lake",
+    "python",
+    "airflow",
+    "sql"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "Data latency from 12 h to 4 h; 30 % storage cost saving; manual QA effort down 40 %.",
+  "team_cv_ids": [
+    "CV_07_Olivia_Morris.pdf"
+  ],
+  "source": "CV_07_Olivia_Morris.pdf: OliveSoft experience, Data Engineer, Aug 2024 - Present"
+}

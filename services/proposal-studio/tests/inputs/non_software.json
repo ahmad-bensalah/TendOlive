@@ -1,0 +1,67 @@
+{
+  "tender": {
+    "id": "T-2026-088",
+    "title": "Fourniture de services de restauration responsable et durable",
+    "client": "Collectivité Territoriale Fictive de l'Érable",
+    "language": "fr",
+    "deadline": "2026-11-30",
+    "project_type": "other",
+    "requirements": [
+      "Approvisionnement à 70% en produits locaux et circuits courts de moins de 100km",
+      "Garantie d'au moins 40% de produits issus de l'agriculture biologique certifiée",
+      "Plan zéro plastique à usage unique et contenants 100% réutilisables ou compostables",
+      "Traçabilité rigoureuse et affichage de l'empreinte carbone sur chaque menu servi",
+      "Formation continue du personnel aux règles d'hygiène HACCP et à la lutte anti-gaspillage"
+    ],
+    "raw_text_excerpt": "La Collectivité Territoriale Fictive recherche un prestataire pour gérer la restauration scolaire et administrative avec une exigence stricte de transition écologique, de produits de saison et de valorisation des surplus alimentaires."
+  },
+  "match": {
+    "score": 0.88,
+    "similar_projects": [
+      {
+        "name": "Restauration Éco-Responsable Campus Fictif",
+        "client": "Université Démo des Sciences",
+        "year": 2025,
+        "result": "5 000 repas quotidiens avec 75% d'approvisionnement local et zéro plastique",
+        "stack": ["Bio", "Circuits Courts", "Gestion Déchets", "HACCP"],
+        "duration_months": 12,
+        "team_size": 15
+      },
+      {
+        "name": "Cantines Durables du Bocage Virtuel",
+        "client": "Syndicat Mixte Imaginaire",
+        "year": 2024,
+        "result": "Transition bio réussie pour 12 établissements scolaires et baisse de 30% du gaspillage",
+        "stack": ["Agriculture Bio", "Compostage", "Logistique Verte"],
+        "duration_months": 8,
+        "team_size": 10
+      }
+    ],
+    "why_us": [
+      "Réseau établi de plus de 80 producteurs régionaux partenaires sous contrat éthique",
+      "Laboratoire certifié HACCP et audits indépendants d'hygiène et de sécurité alimentaire",
+      "Programme primé de valorisation des biodéchets et méthanisation locale"
+    ],
+    "certifications": {
+      "matching": 2,
+      "list": [
+        "ISO 22000",
+        "Label Ecocert En Cuisine"
+      ]
+    },
+    "engineers": {
+      "specialized": 5,
+      "profiles": [
+        { "role": "PM", "count": 2 },
+        { "role": "QA", "count": 2 },
+        { "role": "DevOps", "count": 1 }
+      ]
+    }
+  },
+  "theme": {
+    "primary": "#15803d",
+    "secondary": "#22c55e",
+    "fontHeading": "Plus Jakarta Sans",
+    "fontBody": "Inter"
+  }
+}

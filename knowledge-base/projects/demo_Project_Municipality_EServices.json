@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "demo_Project_Municipality_EServices",
+  "type": "past_project",
+  "title": "Municipality of Sfax - Citizen E-Services Portal (2022)",
+  "description": "Public-sector citizen portal with online requests and payments, Angular + Node.js on AWS.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [],
+  "client": "Municipality of Sfax",
+  "sector": "public",
+  "scope": "citizen accounts, online administrative requests, e-payment, request tracking, back-office for agents.",
+  "company_role": "Public-sector citizen portal with online requests and payments, Angular + Node.js on AWS.",
+  "technologies": [
+    "angular",
+    "aws",
+    "javascript",
+    "node.js",
+    "postgresql"
+  ],
+  "delivery_status": "completed",
+  "year": 2022,
+  "outcomes": ""
+}

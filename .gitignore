@@ -1,0 +1,46 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*key*
+!**/*key*.js
+!**/*key*.py
+!**/*key*.md
+
+# Dependencies and caches
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.cache/
+*.log
+.DS_Store
+
+# Runtime data (Docker volumes in compose; these paths only fill when a part runs outside Docker)
+services/rag/chroma_db/
+services/rag/tenders.json
+services/rag/tenders.tmp
+services/rag/benchmark/.index/
+knowledge-base/uploads/
+output/
+apps/web/dist/
+apps/web/tsconfig.tsbuildinfo
+n8n/test/out/*
+!n8n/test/out/execution_ragv2_run3_nodes/
+n8n/test/out/execution_ragv2_run3_nodes/*
+# the recorded run 3 proposal inputs: a fixture of test/edge_cases.js and test/studio_adapter.test.js
+!n8n/test/out/execution_ragv2_run3_nodes/Build_Proposal_Input.json
+services/proposal-studio/saves/
+services/proposal-studio/generations/
+services/proposal-studio/exports/
+services/proposal-studio/uploads/
+services/proposal-studio/screenshots/
+services/proposal-studio/templates/library/
+services/proposal-studio/templates/trash/
+services/proposal-studio/templates/settings.json
+services/proposal-studio/tenders/*
+!services/proposal-studio/tenders/README.md
+services/proposal-studio/agents/registry/
+services/proposal-studio/agents/.cache/

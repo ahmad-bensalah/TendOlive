@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RFP Slide Deck Studio — Éditeur Pro</title>
+  <meta name="description" content="Éditeur interactif de slide decks RFP — Studio de présentation visuel haute précision.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/app.css">
+  <style>
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- TOP APPLICATION BAR                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <header class="app-topbar" role="banner">
+    <div class="topbar-left">
+      <a href="/" class="app-brand" title="Retour aux projets RFP">
+        <div class="brand-badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+        </div>
+        <span class="brand-title">RFP Studio</span>
+      </a>
+
+      <div class="topbar-divider"></div>
+
+      <!-- Editable Project Title -->
+      <div class="project-title-wrapper" title="Cliquer pour renommer le projet">
+        <input type="text" id="project-name-input" class="project-name-input" value="Mon RFP" spellcheck="false" aria-label="Nom du projet">
+        <span class="edit-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+        </span>
+      </div>
+
+      <!-- Save Status Pill -->
+      <div class="save-status-pill" id="save-status-pill" title="Statut de persistance">
+        <span class="status-indicator-dot" id="save-dot"></span>
+        <span class="status-label" id="save-text">Prêt</span>
+      </div>
+    </div>
+
+    <div class="topbar-center">
+      <!-- Undo / Redo -->
+      <div class="btn-group">
+        <button class="btn btn-ghost btn-icon" id="btn-undo" title="Annuler (Ctrl+Z)" aria-label="Annuler">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>
+        </button>
+        <button class="btn btn-ghost btn-icon" id="btn-redo" title="Rétablir (Ctrl+Y)" aria-label="Rétablir">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 7v6h-6"></path><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"></path></svg>
+        </button>
+      </div>
+
+      <div class="topbar-divider"></div>
+
+      <!-- Zoom Controls -->
+      <div class="zoom-controls">
+        <button class="btn btn-ghost btn-icon sm" id="btn-zoom-out" title="Dézoomer" aria-label="Dézoomer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+        <span class="zoom-display" id="zoom-display">100%</span>
+        <button class="btn btn-ghost btn-icon sm" id="btn-zoom-in" title="Zoomer" aria-label="Zoomer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+        <button class="btn btn-outline btn-xs" id="btn-zoom-fit" title="Ajuster à l'écran">Ajuster</button>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <button class="btn btn-ghost btn-sm" id="btn-shortcuts" title="Raccourcis clavier (Ctrl+/)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M6 8h.001M10 8h.001M14 8h.001M18 8h.001M8 12h.001M12 12h.001M16 12h.001M6 16h12"></path></svg>
+        <span>Raccourcis</span>
+      </button>
+
+      <button class="btn btn-outline btn-sm" id="btn-manual-save" title="Sauvegarder immédiatement sur le serveur (Ctrl+S)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+        <span>Sauvegarder</span>
+      </button>
+
+      <!-- Export Dropdown -->
+      <div class="dropdown-wrapper">
+        <button class="btn btn-primary btn-sm" id="btn-export-dropdown" aria-haspopup="true" aria-expanded="false">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Exporter</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="dropdown-menu" id="export-menu">
+          <button class="dropdown-item" id="btn-export-pdf">
+            <div class="dropdown-item-icon pdf">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            </div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-title">Document PDF (.pdf)</span>
+              <span class="dropdown-desc">Rendu haute fidélité pour impression et client</span>
+            </div>
+          </button>
+          <button class="dropdown-item" id="btn-export-pptx">
+            <div class="dropdown-item-icon pptx">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            </div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-title">Présentation PowerPoint (.pptx)</span>
+              <span class="dropdown-desc">Diapositives vectorielles éditables MS Office</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- MAIN WORKSPACE LAYOUT                                           -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="studio-layout">
+
+    <!-- Trigger zone for hovering from left edge -->
+    <div class="sidebar-trigger-zone"></div>
+
+    <!-- 1. Left Nav Rail (Icons) -->
+    <nav class="nav-rail" aria-label="Navigation latérale">
+      <button class="nav-rail-btn active" data-panel="panel-slides" title="Diapositives (S)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+        <span>Slides</span>
+      </button>
+      <button class="nav-rail-btn" data-panel="panel-elements" title="Ajouter des éléments (T)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+        <span>Éléments</span>
+      </button>
+      <button class="nav-rail-btn" data-panel="panel-uploads" title="Images et médias (M)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        <span>Uploads</span>
+      </button>
+      <button class="nav-rail-btn" data-panel="panel-theme" title="Charte graphique et thème">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path></svg>
+        <span>Thème</span>
+      </button>
+      <button class="nav-rail-btn" data-panel="panel-review" id="nav-btn-review" title="Revue, alertes et approbations">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Revue</span>
+      </button>
+      <button class="nav-rail-btn" data-panel="panel-layers" title="Calques de la diapositive active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 12 9 5 9-5"></path><path d="m3 16 9 5 9-5"></path></svg>
+        <span>Calques</span>
+      </button>
+    </nav>
+
+    <!-- 2. Expandable Sidebar Drawer -->
+    <aside class="sidebar-drawer" id="sidebar-drawer">
+      <!-- ── Panel: SLIDES ── -->
+      <div id="panel-slides" class="drawer-panel active">
+        <div class="drawer-header">
+          <div class="drawer-title-row">
+            <h2 class="drawer-title">Diapositives</h2>
+            <span class="slide-count-badge" id="slide-count-badge">3</span>
+          </div>
+          <p class="drawer-subtitle">Les diapositives sont dans la barre en bas : glissez pour réorganiser.</p>
+        </div>
+
+        <div class="drawer-body">
+          <div class="add-slide-section">
+            <div class="section-label">+ Nouvelle diapositive</div>
+            <div class="add-slide-buttons">
+              <button class="btn btn-outline btn-sm full-width" id="add-slide-blank">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+                <span>Diapositive vierge</span>
+              </button>
+              <button class="btn btn-outline btn-sm full-width" id="add-slide-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                <span>Diapositive Titre RFP</span>
+              </button>
+              <button class="btn btn-outline btn-sm full-width" id="add-slide-thanks">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <span>Diapositive Conclusion / QR</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Panel: ELEMENTS ── -->
+      <div id="panel-elements" class="drawer-panel">
+        <div class="drawer-header">
+          <h2 class="drawer-title">Insérer des éléments</h2>
+          <p class="drawer-subtitle">Cliquez pour ajouter directement sur la diapositive active.</p>
+        </div>
+
+        <div class="drawer-body">
+          <div class="elements-category">
+            <span class="category-title">Typographie</span>
+            <div class="text-insertion-cards">
+              <button class="insert-text-card heading" id="add-text-heading">
+                <span class="text-preview">Titre principal</span>
+                <span class="text-desc">72px • Bold</span>
+              </button>
+              <button class="insert-text-card subheading" id="add-text-subheading">
+                <span class="text-preview">Sous-titre de section</span>
+                <span class="text-desc">36px • Semi-bold</span>
+              </button>
+              <button class="insert-text-card body" id="add-text-body">
+                <span class="text-preview">Paragraphe / Corps de texte</span>
+                <span class="text-desc">24px • Normal</span>
+              </button>
+              <button class="insert-text-card bullet" id="add-element-bullets">
+                <span class="text-preview">• Liste à puces structurée</span>
+                <span class="text-desc">Type bullets • disc, num, check</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="elements-category">
+            <span class="category-title">Tableaux & Données</span>
+            <div class="text-insertion-cards">
+              <button class="insert-text-card" id="add-element-table">
+                <span class="text-preview">⊞ Tableau comparatif RFP</span>
+                <span class="text-desc">Matrice de conformité • 3 cols × 3 lignes</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="elements-category">
+            <span class="category-title">Cartes & Références</span>
+            <div class="text-insertion-cards">
+              <button class="insert-text-card" id="add-element-card">
+                <span class="text-preview">🪪 Carte profil / référence</span>
+                <span class="text-desc">Équipe, cas client • Titre, texte & média</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="elements-category">
+            <span class="category-title">Formes vectorielles</span>
+            <div class="shapes-palette">
+              <button class="shape-palette-btn" id="add-shape-rect" title="Rectangle">
+                <div class="shape-icon-rect"></div>
+                <span>Rectangle</span>
+              </button>
+              <button class="shape-palette-btn" id="add-shape-rounded" title="Rectangle arrondi">
+                <div class="shape-icon-rounded"></div>
+                <span>Arrondi</span>
+              </button>
+              <button class="shape-palette-btn" id="add-shape-circle" title="Cercle">
+                <div class="shape-icon-circle"></div>
+                <span>Cercle</span>
+              </button>
+              <button class="shape-palette-btn" id="add-shape-card" title="Carte conteneur">
+                <div class="shape-icon-card"></div>
+                <span>Encadré RFP</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Panel: UPLOADS & MEDIA ── -->
+      <div id="panel-uploads" class="drawer-panel">
+        <div class="drawer-header">
+          <h2 class="drawer-title">Médias & Images</h2>
+          <p class="drawer-subtitle">Importez vos visuels d'entreprise, logos et captures.</p>
+        </div>
+
+        <div class="drawer-body">
+          <div class="upload-drop-card" id="media-drop-zone">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <div class="drop-text">Glissez une image ici</div>
+            <div class="drop-sub">ou cliquez pour parcourir vos fichiers</div>
+            <input type="file" id="media-file-input" accept="image/png, image/jpeg, image/svg+xml, image/webp,video/mp4,video/webm" style="display:none;">
+            <button class="btn btn-outline btn-sm" id="btn-browse-media" style="margin-top:10px;">Choisir un fichier</button>
+          </div>
+
+          <div style="margin-top:20px;">
+            <span class="category-title">Vidéo intégrée</span>
+            <button class="btn btn-outline btn-sm full-width" id="add-video-btn" style="margin-top:6px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+              <span>Intégrer vidéo YouTube / Vimeo</span>
+            </button>
+          </div>
+
+          <div class="media-library-header" style="margin-top:24px;">
+            <span class="category-title">Bibliothèque partagée</span>
+            <button class="btn btn-ghost btn-xs" id="btn-refresh-media" title="Actualiser les médias">Actualiser</button>
+          </div>
+          <p class="media-library-note">Médias téléversés dans toutes vos présentations, du plus récent au plus ancien.</p>
+          <div id="media-library" class="media-library" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <!-- ── Panel: THEME ── -->
+      <div id="panel-theme" class="drawer-panel">
+        <div class="drawer-header">
+          <h2 class="drawer-title">Charte & Couleurs</h2>
+          <p class="drawer-subtitle">Palette globale appliquée à la présentation.</p>
+        </div>
+
+        <div class="drawer-body">
+          <div class="theme-field">
+            <label>Couleur d'arrière-plan des diapositives</label>
+            <div class="theme-color-input-row">
+              <input type="color" id="theme-bg-color" value="#0f172a">
+              <input type="text" id="theme-bg-hex" value="#0f172a" class="hex-input" spellcheck="false">
+            </div>
+          </div>
+
+          <div class="theme-field">
+            <label>Couleur Primaire (Boutons, titres clés)</label>
+            <div class="theme-color-input-row">
+              <input type="color" id="theme-primary-color" value="#6366f1">
+              <input type="text" id="theme-primary-hex" value="#6366f1" class="hex-input" spellcheck="false">
+            </div>
+          </div>
+
+          <div class="theme-field">
+            <label>Couleur Secondaire (Accents)</label>
+            <div class="theme-color-input-row">
+              <input type="color" id="theme-secondary-color" value="#10b981">
+              <input type="text" id="theme-secondary-hex" value="#10b981" class="hex-input" spellcheck="false">
+            </div>
+          </div>
+
+          <div class="theme-field">
+            <label>Police des titres</label>
+            <select id="theme-font-heading" class="theme-select">
+              <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+              <option value="'Inter', sans-serif">Inter</option>
+              <option value="'Outfit', sans-serif">Outfit</option>
+              <option value="'Montserrat', sans-serif">Montserrat</option>
+              <option value="'Roboto', sans-serif">Roboto</option>
+            </select>
+          </div>
+
+          <div class="theme-field">
+            <label>Police du corps de texte</label>
+            <select id="theme-font-body" class="theme-select">
+              <option value="'Inter', sans-serif">Inter</option>
+              <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+              <option value="'Outfit', sans-serif">Outfit</option>
+              <option value="'Roboto', sans-serif">Roboto</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary btn-sm full-width" id="btn-apply-theme" style="margin-top:12px;">
+            Appliquer le thème à tout le deck
+          </button>
+        </div>
+      </div>
+
+      <!-- ── Panel: REVIEW & APPROVALS ── -->
+      <div id="panel-review" class="drawer-panel">
+        <div class="drawer-header">
+          <div class="drawer-title-row">
+            <h2 class="drawer-title">Revue & Approbations</h2>
+            <span class="slide-count-badge" id="review-pending-badge">0</span>
+          </div>
+          <p class="drawer-subtitle">Contrôlez les placeholders, alertes et approbations de prix avant export.</p>
+        </div>
+        <div class="drawer-body">
+          <div id="review-list" class="review-list">
+            <!-- Populated dynamically by app.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Panel: LAYERS (active slide only) ── -->
+      <div id="panel-layers" class="drawer-panel">
+        <div class="drawer-header">
+          <div class="drawer-title-row">
+            <h2 class="drawer-title">Calques</h2>
+            <span class="slide-count-badge" id="layers-count-badge">0</span>
+          </div>
+          <p class="drawer-subtitle">Le premier calque est au premier plan. Le dernier est en arrière-plan.</p>
+        </div>
+        <div class="drawer-body">
+          <div class="layers-legend">
+            <span>Premier plan ↑</span>
+            <span>Arrière-plan ↓</span>
+          </div>
+          <div id="layers-list" class="layers-list" aria-label="Calques de la diapositive active">
+            <!-- Populated dynamically by app.js -->
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 3. Central Canvas Area -->
+    <main class="canvas-area" role="main">
+      <!-- Contextual Element Property Bar (Floats above canvas when element is selected) -->
+      <section class="context-bar" id="context-bar" aria-label="Propriétés contextuelles de l'élément">
+        <!-- Text Specific Controls -->
+        <div id="bar-text-controls" class="context-group" style="display:none;">
+          <select id="prop-font-family" class="bar-select" title="Famille de police">
+            <option value="'Inter', sans-serif">Inter</option>
+            <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+            <option value="'Outfit', sans-serif">Outfit</option>
+            <option value="'Montserrat', sans-serif">Montserrat</option>
+            <option value="'Roboto', sans-serif">Roboto</option>
+            <option value="'Playfair Display', serif">Playfair Display</option>
+            <option value="'Georgia', serif">Georgia</option>
+          </select>
+
+          <div class="bar-numeric">
+            <input type="number" id="prop-font-size" value="24" min="8" max="400" title="Taille du texte (px)">
+            <span class="unit">px</span>
+          </div>
+
+          <div class="color-picker-compact" title="Couleur du texte">
+            <input type="color" id="prop-font-color" value="#ffffff">
+          </div>
+
+          <div class="bar-divider"></div>
+
+          <div class="btn-group">
+            <button class="btn btn-ghost btn-icon sm" id="btn-bold" title="Gras (Ctrl+B)"><b>B</b></button>
+            <button class="btn btn-ghost btn-icon sm" id="btn-italic" title="Italique (Ctrl+I)"><i>I</i></button>
+            <button class="btn btn-ghost btn-icon sm" id="btn-underline" title="Souligné (Ctrl+U)"><u>U</u></button>
+            <button class="btn btn-ghost btn-icon sm" id="btn-link" title="Lien hypertexte (optionnel)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></button>
+          </div>
+
+          <div class="bar-divider"></div>
+
+          <div class="btn-group">
+            <button class="btn btn-ghost btn-icon sm active" id="btn-align-left" data-align="left" title="Aligner à gauche">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="17" y1="18" x2="3" y2="18"></line></svg>
+            </button>
+            <button class="btn btn-ghost btn-icon sm" id="btn-align-center" data-align="center" title="Centrer">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="10" x2="6" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="18" y1="18" x2="6" y2="18"></line></svg>
+            </button>
+            <button class="btn btn-ghost btn-icon sm" id="btn-align-right" data-align="right" title="Aligner à droite">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="10" x2="7" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="7" y2="18"></line></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bullets Specific Controls -->
+        <div id="bar-bullets-controls" class="context-group" style="display:none;">
+          <select id="prop-bullets-style" class="bar-select compact" title="Style de puce">
+            <option value="disc">• Disque</option>
+            <option value="number">1. Numéroté</option>
+            <option value="check">✓ Coche</option>
+          </select>
+
+          <select id="prop-bullets-font" class="bar-select font-family" title="Police de caractères">
+            <option value="'Inter', sans-serif">Inter</option>
+            <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+            <option value="'Outfit', sans-serif">Outfit</option>
+            <option value="'Montserrat', sans-serif">Montserrat</option>
+            <option value="'Roboto', sans-serif">Roboto</option>
+            <option value="'Playfair Display', serif">Playfair Display</option>
+            <option value="'Georgia', serif">Georgia</option>
+          </select>
+
+          <div class="bar-numeric" title="Taille du texte (px)">
+            <input type="number" id="prop-bullets-size" value="24" min="8" max="200">
+            <span class="unit">px</span>
+          </div>
+
+          <div class="color-picker-compact" title="Couleur du texte">
+            <input type="color" id="prop-bullets-color" value="#ffffff">
+          </div>
+
+          <div class="bar-numeric" title="Interligne">
+            <input type="number" id="prop-bullets-lineheight" value="1.5" min="1" max="3" step="0.1">
+            <span class="unit">lh</span>
+          </div>
+
+          <label class="bar-checkbox-label" title="Ajuster la hauteur automatiquement">
+            <input type="checkbox" id="prop-bullets-autoheight" checked>
+            <span style="font-size:11px;color:var(--text-muted);margin-left:4px;">Auto</span>
+          </label>
+        </div>
+
+        <!-- Table Specific Controls -->
+        <div id="bar-table-controls" class="context-group" style="display:none;">
+          <button class="btn btn-ghost btn-sm" id="btn-table-add-row" title="Ajouter une ligne">+ Ligne</button>
+          <button class="btn btn-ghost btn-sm" id="btn-table-del-row" title="Supprimer la dernière ligne">- Ligne</button>
+          <button class="btn btn-ghost btn-sm" id="btn-table-add-col" title="Ajouter une colonne">+ Col</button>
+          <button class="btn btn-ghost btn-sm" id="btn-table-del-col" title="Supprimer la dernière colonne">- Col</button>
+
+          <div class="prop-labeled-compact" title="Fond d'en-tête">
+            <span class="label">En-tête</span>
+            <input type="color" id="prop-table-headerfill" value="#4338ca">
+          </div>
+
+          <div class="prop-labeled-compact" title="Texte d'en-tête">
+            <span class="label">Texte</span>
+            <input type="color" id="prop-table-headercolor" value="#ffffff">
+          </div>
+
+          <div class="prop-labeled-compact" title="Fond des lignes">
+            <span class="label">Ligne</span>
+            <input type="color" id="prop-table-rowfill" value="#1e293b">
+          </div>
+
+          <div class="prop-labeled-compact" title="Ligne alternée">
+            <span class="label">Alt</span>
+            <input type="color" id="prop-table-altrowfill" value="#0f172a">
+          </div>
+
+          <div class="prop-labeled-compact" title="Couleur de bordure">
+            <span class="label">Bordure</span>
+            <input type="color" id="prop-table-bordercolor" value="#334155">
+          </div>
+
+          <div class="bar-numeric" title="Taille du texte">
+            <input type="number" id="prop-table-fontsize" value="18" min="10" max="64">
+            <span class="unit">px</span>
+          </div>
+        </div>
+
+        <!-- Card Specific Controls -->
+        <div id="bar-card-controls" class="context-group" style="display:none;">
+          <div class="prop-labeled-compact" title="Couleur de fond">
+            <span class="label">Fond</span>
+            <input type="color" id="prop-card-fill" value="#1e293b">
+          </div>
+
+          <div class="bar-numeric" title="Rayon d'arrondi (px)">
+            <input type="number" id="prop-card-radius" value="12" min="0" max="60">
+            <span class="unit">r</span>
+          </div>
+
+          <button class="btn btn-ghost btn-sm" id="btn-card-choose-img" title="Changer l'image">Image...</button>
+          <button class="btn btn-ghost btn-sm" id="btn-card-remove-img" title="Supprimer l'image">Retirer img</button>
+        </div>
+
+        <!-- Shape Specific Controls -->
+        <div id="bar-shape-controls" class="context-group" style="display:none;">
+          <div class="prop-labeled-compact" title="Couleur de remplissage">
+            <span class="label">Remplissage</span>
+            <input type="color" id="prop-shape-fill" value="#6366f1">
+          </div>
+
+          <div class="prop-labeled-compact" title="Couleur de la bordure">
+            <span class="label">Bordure</span>
+            <input type="color" id="prop-shape-stroke" value="#ffffff">
+          </div>
+
+          <div class="bar-numeric" title="Épaisseur de bordure">
+            <input type="number" id="prop-shape-strokewidth" value="2" min="0" max="40">
+            <span class="unit">px</span>
+          </div>
+
+          <select id="prop-shape-strokestyle" class="bar-select compact" title="Style de trait">
+            <option value="solid">Plein</option>
+            <option value="dashed">Tirets</option>
+            <option value="dotted">Points</option>
+          </select>
+
+          <div class="bar-corner-radius" title="Arrondi des coins — comme dans Canva">
+            <span class="label">Coins</span>
+            <input type="range" id="prop-shape-radius-range" value="8" min="0" max="200" step="1" aria-label="Arrondi des coins">
+            <input type="number" id="prop-shape-radius" value="8" min="0" max="200" aria-label="Rayon des coins en pixels">
+            <span class="unit">px</span>
+          </div>
+        </div>
+
+        <!-- Opacity Control (shown for non-text elements: shapes, images, cards, tables, bullets) -->
+        <div id="bar-opacity-control" class="context-group" style="display:none;">
+          <div class="bar-divider"></div>
+          <div class="prop-labeled-compact opacity-control" title="Opacité de l'élément (0-100%)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" opacity="0.3"></circle>
+              <circle cx="12" cy="12" r="6" opacity="0.7"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
+            </svg>
+            <input type="range" id="prop-opacity-slider" min="0" max="100" value="100" class="opacity-slider" aria-label="Opacité de l'élément">
+            <input type="number" id="prop-opacity-value" min="0" max="100" value="100" class="opacity-value" aria-label="Valeur d'opacité">
+            <span class="unit">%</span>
+          </div>
+        </div>
+
+        <!-- Geometry & Layer Actions (Always visible when any element is selected) -->
+        <div class="context-group actions">
+          <div class="bar-divider"></div>
+
+          <div class="btn-group">
+            <button class="btn btn-ghost btn-icon sm" id="btn-bring-front" title="Mettre au premier plan (Ctrl+])">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            </button>
+            <button class="btn btn-ghost btn-icon sm" id="btn-send-back" title="Mettre en arrière-plan (Ctrl+[)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <span class="bar-divider"></span>
+            <button class="btn btn-ghost btn-icon sm" id="btn-move-up" title="Déplacer vers le haut (↑)" aria-label="Déplacer vers le haut">↑</button>
+            <button class="btn btn-ghost btn-icon sm" id="btn-move-left" title="Déplacer vers la gauche (←)" aria-label="Déplacer vers la gauche">←</button>
+            <button class="btn btn-ghost btn-icon sm" id="btn-move-down" title="Déplacer vers le bas (↓)" aria-label="Déplacer vers le bas">↓</button>
+            <button class="btn btn-ghost btn-icon sm" id="btn-move-right" title="Déplacer vers la droite (→)" aria-label="Déplacer vers la droite">→</button>
+            <button class="btn btn-ghost btn-icon sm" id="btn-toggle-lock" title="Verrouiller la position" aria-label="Verrouiller la position" aria-pressed="false">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+            </button>
+            <button class="btn btn-ghost btn-icon sm" id="btn-duplicate" title="Dupliquer l'élément (Ctrl+D)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+            <button class="btn btn-ghost btn-icon sm danger" id="btn-delete" title="Supprimer l'élément (Suppr)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Viewport housing the 16:9 HTML slide canvas -->
+      <div class="canvas-viewport" id="canvas-viewport">
+        <div class="slide-canvas" id="slide-canvas">
+          <!-- Canvas elements rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Bottom slide strip (thumbnails, drag to reorder) -->
+      <div class="slide-strip">
+        <div class="slide-list" id="slide-list">
+          <!-- Rendered dynamically with live canvas previews by app.js -->
+        </div>
+      </div>
+
+      <!-- Bottom Status Bar -->
+      <footer class="status-bar" role="contentinfo">
+        <div class="status-left">
+          <span class="status-tag">Widescreen 16:9</span>
+          <span class="status-text">1920 × 1080 px</span>
+          <span class="status-sep">•</span>
+          <span class="status-guide">Double-clic pour éditer le texte • Poignées pour redimensionner • Flèches pour ajuster</span>
+        </div>
+        <div class="status-right">
+          <span class="status-slide-indicator" id="status-slide-indicator">Slide 1 / 3</span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- EXPORT PROGRESS / SUCCESS MODAL                                 -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- EXPORT PROGRESS / SUCCESS / GATING MODAL                         -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="export-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-dialog">
+      <div class="modal-spinner" id="modal-spinner"></div>
+      <div class="modal-icon-success" id="modal-success-icon" style="display:none;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      </div>
+      <h3 id="modal-title">Génération de l'export...</h3>
+      <p id="modal-desc">Le moteur Playwright compile les diapositives vectorielles au format 16:9...</p>
+
+      <!-- Gating Warning & Approval Box -->
+      <div id="export-gate-box" style="display:none;margin-top:14px;padding:12px;background:rgba(239,68,68,0.1);border:1px solid #ef4444;border-radius:8px;text-align:left;">
+        <div id="export-gate-placeholders-msg" style="display:none;font-size:13px;color:#fca5a5;margin-bottom:8px;font-weight:600;"></div>
+        <div id="export-gate-approval-row" style="display:none;align-items:center;gap:8px;margin-top:8px;">
+          <input type="checkbox" id="chk-pricing-approval" style="cursor:pointer;width:16px;height:16px;">
+          <label for="chk-pricing-approval" style="font-size:13px;color:#ffffff;cursor:pointer;font-weight:600;">
+            J'approuve les tarifs et hypothèses budgétaires
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-actions" id="modal-actions" style="display:none;">
+        <a class="btn btn-primary" id="modal-download" href="#" download>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Télécharger la présentation</span>
+        </a>
+        <button class="btn btn-primary" id="modal-export-anyway-btn" style="display:none;">Exporter quand même</button>
+        <button class="btn btn-outline" id="modal-close-btn">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- SOURCE CODE (MERMAID / DRAWIO) MODAL                             -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="sources-modal" role="dialog" aria-modal="true" aria-labelledby="sources-modal-title">
+    <div class="modal-dialog" style="max-width:700px;text-align:left;">
+      <div class="modal-header-row" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <h3 id="sources-modal-title" style="font-size:16px;font-weight:700;color:#ffffff;">Sources de la diapositive</h3>
+        <button class="btn btn-ghost btn-icon sm" id="sources-close-btn">&times;</button>
+      </div>
+      <div id="sources-modal-body" style="display:flex;flex-direction:column;gap:12px;">
+        <!-- Filled dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- KEYBOARD SHORTCUTS MODAL                                        -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title">
+    <div class="modal-dialog shortcuts-dialog">
+      <div class="modal-header-row">
+        <h3 id="shortcuts-title">Raccourcis clavier</h3>
+        <button class="btn btn-ghost btn-icon sm" id="shortcuts-close-btn">&times;</button>
+      </div>
+      <div class="shortcuts-grid">
+        <div class="shortcut-row"><span class="shortcut-desc">Annuler l'action</span><kbd>Ctrl + Z</kbd></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rétablir l'action</span><kbd>Ctrl + Y</kbd> / <kbd>Ctrl + Shift + Z</kbd></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Sauvegarder immédiatement</span><kbd>Ctrl + S</kbd></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Dupliquer l'élément</span><kbd>Ctrl + D</kbd></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Supprimer l'élément</span><kbd>Suppr</kbd> / <kbd>Backspace</kbd></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Déplacer de 1px</span><kbd>Touches fléchées</kbd></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Déplacer de 10px</span><kbd>Shift + Flèches</kbd></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Désélectionner / Quitter édition</span><kbd>Échap</kbd></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Éditer le texte</span><kbd>Double-clic</kbd></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Mettre au premier plan</span><kbd>Ctrl + ]</kbd></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Mettre en arrière-plan</span><kbd>Ctrl + [</kbd></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Hidden elements for backward-compat event delegation if needed -->
+  <div style="display:none;">
+    <input type="number" id="prop-x" value="0">
+    <input type="number" id="prop-y" value="0">
+    <input type="number" id="prop-w" value="300">
+    <input type="number" id="prop-h" value="100">
+    <input type="number" id="prop-rotation" value="0">
+    <input type="number" id="prop-opacity" value="100">
+    <select id="prop-text-align"><option value="left">left</option></select>
+    <select id="prop-shape-type"><option value="rectangle">rectangle</option></select>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="/static/render.js"></script>
+  <script src="/static/history.js"></script>
+  <script src="/static/canvas.js"></script>
+  <script src="/static/page_numbers.js"></script>
+  <script src="/static/interactions.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

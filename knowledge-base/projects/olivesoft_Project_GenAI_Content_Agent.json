@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_GenAI_Content_Agent",
+  "type": "past_project",
+  "title": "Generative AI content agent and multi-LLM chat interface",
+  "description": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Deployed an AI agent generating social-media content, a chat interface selecting among 5 LLMs, and RAG with LangChain and Pinecone.",
+  "scope": "AI content agent, multi-LLM chat interface, LLM fine-tuning pipelines, LangChain and Pinecone retrieval-augmented generation.",
+  "technologies": [
+    "llm",
+    "langchain",
+    "rag",
+    "pinecone"
+  ],
+  "delivery_status": "completed",
+  "year": 2026,
+  "outcomes": "Copy-writing effort -40 % for 30+ marketing teams; model accuracy from 78 % to 92 %.",
+  "team_cv_ids": [
+    "CV_12_Mateo_Silva.pdf"
+  ],
+  "source": "CV_12_Mateo_Silva.pdf: OliveSoft experience, Artificial Intelligence Engineer, Feb 2024 - Jan 2026"
+}

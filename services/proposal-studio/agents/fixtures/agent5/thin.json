@@ -1,0 +1,98 @@
+{
+  "agent": "credibility",
+  "ok": true,
+  "slides": [
+    {
+      "id": "s4",
+      "type": "content",
+      "title": "Nos atouts",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "[TO FILL: differentiators based on company strengths]",
+            "[TO FILL: certifications or expertise]",
+            "[TO FILL: relevant experience]"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "Minimal input data, using placeholders",
+      "warnings": ["Insufficient data for differentiators"]
+    },
+    {
+      "id": "s6",
+      "type": "content",
+      "title": "Équipe et gouvernance",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Chef de projet dédié et suivi personnalisé",
+            "Points de synchronisation hebdomadaires",
+            "Livraison incrémentale avec validation"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "Generic governance proposal, no team data available",
+      "warnings": ["No team composition data in input"],
+      "assumptions": ["Governance: weekly sync meetings, incremental delivery with client validation"]
+    },
+    {
+      "id": "s7",
+      "type": "content",
+      "title": "Références pertinentes",
+      "blocks": [
+        {
+          "kind": "cards",
+          "cards": [
+            {
+              "title": "[TO FILL: relevant reference projects]",
+              "text": "Aucun projet similaire fourni dans les données d'entrée."
+            }
+          ]
+        }
+      ],
+      "notes": "No similar projects in input",
+      "warnings": ["No reference projects available"]
+    },
+    {
+      "id": "s8",
+      "type": "content",
+      "title": "Support et SLA",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Support technique [TO FILL: response times]",
+            "Maintenance [TO FILL: SLA levels]",
+            "[TO FILL: security and compliance details]"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "No SLA or support details in input, placeholders used",
+      "warnings": ["No certification or SLA data available"]
+    }
+  ],
+  "data": {
+    "evidence": []
+  },
+  "assumptions": [
+    "Governance: weekly sync meetings, incremental delivery with client validation"
+  ],
+  "warnings": [
+    "Insufficient data for differentiators",
+    "No team composition data in input",
+    "No reference projects available",
+    "No certification or SLA data available"
+  ],
+  "usage": {
+    "model": "mock",
+    "promptTokens": 800,
+    "completionTokens": 400,
+    "ms": 80,
+    "attempts": 1
+  }
+}

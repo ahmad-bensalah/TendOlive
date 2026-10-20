@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Luxury_Fashion_SalesCloud",
+  "type": "past_project",
+  "title": "Salesforce Sales Cloud for a luxury fashion client",
+  "description": "Delivered a full-stack Salesforce Sales Cloud implementation in 2 months for a luxury fashion client.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Luxury fashion client (not named in the CV)",
+  "sector": "retail",
+  "company_role": "Delivered a full-stack Salesforce Sales Cloud implementation in 2 months for a luxury fashion client.",
+  "scope": "Scoping, data migration, UAT and production go-live.",
+  "technologies": [
+    "salesforce"
+  ],
+  "delivery_status": "completed",
+  "team_cv_ids": [
+    "CV_04_Noah_Bennett.pdf"
+  ],
+  "source": "CV_04_Noah_Bennett.pdf: OliveSoft experience, Product Owner / Delivery Manager, Jul 2023 - Present"
+}

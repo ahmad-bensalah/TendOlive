@@ -1,0 +1,19 @@
+key,value,unit,note
+daily_rates.backend,250,EUR/jour,"ESTIMATE: mid-level engineer, nearshore services priced in EUR for European clients."
+daily_rates.frontend,230,EUR/jour,ESTIMATE: same basis.
+daily_rates.devops,280,EUR/jour,"ESTIMATE: same basis, slightly higher for infrastructure skills."
+daily_rates.pm,300,EUR/jour,"ESTIMATE: same basis, project manager."
+daily_rates.designer,220,EUR/jour,"ESTIMATE: same basis, UI/UX designer."
+daily_rates.qa,200,EUR/jour,"ESTIMATE: same basis, QA engineer."
+cloud.app_server_month,40,EUR/mois,"ESTIMATE: one general-purpose server, 2 vCPU / 4 GB, typical cloud list price."
+cloud.database_month,60,EUR/mois,ESTIMATE: one small managed database instance.
+cloud.storage_gb_month,0.02,EUR/mois,ESTIMATE: object storage per GB per month.
+api.llm_input_per_1m_tokens,0.60,EUR,ESTIMATE for a mid-size hosted model. CHECK the provider's current price page.
+api.llm_output_per_1m_tokens,0.80,EUR,ESTIMATE for a mid-size hosted model. CHECK the provider's current price page.
+api.sms_each,0.06,EUR,ESTIMATE: typical European SMS price. 0 if the solution sends none.
+api.email_each,0.001,EUR,ESTIMATE: typical transactional email price. 0 if the solution sends none.
+licenses.example_saas_user_month,0,EUR,"EXAMPLE key, no price: replace with a real licence or delete the row."
+support_percent_of_build,0.15,fraction 0..1,ESTIMATE: common yearly maintenance share of the build cost. Confirm with OliveSoft policy.
+contingency_percent,0.10,fraction 0..1,ESTIMATE: common project contingency. Confirm with OliveSoft policy.
+margin_percent,0.15,fraction 0..1,ESTIMATE: placeholder margin. Confirm with OliveSoft policy.
+workdays_per_week,5,jours,Working days per week used to convert weeks into days.

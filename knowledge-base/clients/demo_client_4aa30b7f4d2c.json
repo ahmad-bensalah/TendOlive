@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "demo_client_4aa30b7f4d2c",
+  "type": "client_portfolio",
+  "title": "private hotel chain",
+  "description": "private hotel chain ? fictional client from the predefined project records.",
+  "sector": "tourism",
+  "relationship": "Named as a client in predefined fictional project records.",
+  "origin": "demo",
+  "status": "indexed",
+  "created_at": "2026-10-12T10:42:56+00:00",
+  "updated_at": "2026-10-12T10:42:56+00:00",
+  "linked_ids": [
+    "demo_Project_HotelChain_BookingPlatform"
+  ]
+}

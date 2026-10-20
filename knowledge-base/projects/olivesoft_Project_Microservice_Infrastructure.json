@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Microservice_Infrastructure",
+  "type": "past_project",
+  "title": "Docker micro-service infrastructure and monitoring",
+  "description": "Designed and maintained Docker-based micro-service infrastructure for 12 production systems, with Prometheus and Grafana monitoring.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Designed and maintained Docker-based micro-service infrastructure for 12 production systems, with Prometheus and Grafana monitoring.",
+  "scope": "Docker micro-services, Prometheus and Grafana alerting.",
+  "technologies": [
+    "docker",
+    "microservices",
+    "prometheus",
+    "grafana"
+  ],
+  "delivery_status": "completed",
+  "year": 2023,
+  "outcomes": "Mean time to resolution cut by 50 %.",
+  "team_cv_ids": [
+    "CV_14_Henry_Price.pdf"
+  ],
+  "source": "CV_14_Henry_Price.pdf: OliveSoft experience, DevOps Engineer, Jan 2018 - Dec 2023"
+}

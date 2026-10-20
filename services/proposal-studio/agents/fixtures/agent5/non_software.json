@@ -1,0 +1,116 @@
+{
+  "agent": "credibility",
+  "ok": true,
+  "slides": [
+    {
+      "id": "s4",
+      "type": "content",
+      "title": "Nos atouts",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Réseau de 80 producteurs régionaux partenaires",
+            "Certifications ISO 22000 et Label Ecocert En Cuisine",
+            "5 spécialistes en gestion durable et HACCP",
+            "Programme primé de valorisation des biodéchets"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "Differentiators from non-software domain",
+      "warnings": []
+    },
+    {
+      "id": "s6",
+      "type": "content",
+      "title": "Équipe et gouvernance",
+      "blocks": [
+        {
+          "kind": "table",
+          "columns": ["Rôle", "Effectif"],
+          "rows": [
+            ["PM", "2"],
+            ["QA", "2"],
+            ["DevOps", "1"]
+          ]
+        },
+        {
+          "kind": "bullets",
+          "items": [
+            "Chef de projet dédié et comité de pilotage",
+            "Audits qualité mensuels et reporting hebdomadaire",
+            "Déploiement progressif avec ajustements terrain"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "Team composition and governance proposal",
+      "warnings": [],
+      "assumptions": ["Governance: monthly quality audits, weekly reporting, progressive deployment"]
+    },
+    {
+      "id": "s7",
+      "type": "content",
+      "title": "Références pertinentes",
+      "blocks": [
+        {
+          "kind": "cards",
+          "cards": [
+            {
+              "title": "Restauration Éco-Responsable Campus Fictif",
+              "text": "Client: Université Démo des Sciences. 5000 repas quotidiens avec 75% d'approvisionnement local et zéro plastique. 2025."
+            },
+            {
+              "title": "Cantines Durables du Bocage Virtuel",
+              "text": "Client: Syndicat Mixte Imaginaire. Transition bio réussie pour 12 établissements et baisse de 30% du gaspillage. 2024."
+            }
+          ]
+        }
+      ],
+      "notes": "Top 2 references from non-software domain",
+      "warnings": []
+    },
+    {
+      "id": "s8",
+      "type": "content",
+      "title": "Support et SLA",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Support technique [TO FILL: response times]",
+            "Maintenance et contrôles qualité [TO FILL: frequency]",
+            "Certifications ISO 22000 et Label Ecocert En Cuisine",
+            "Audits indépendants d'hygiène et sécurité alimentaire"
+          ],
+          "bulletStyle": "disc"
+        }
+      ],
+      "notes": "SLA values not provided, using placeholders for specifics",
+      "warnings": ["SLA response times not provided in input"]
+    }
+  ],
+  "data": {
+    "evidence": [
+      { "claim": "80 producteurs régionaux", "source": "match.why_us[0]" },
+      { "claim": "ISO 22000", "source": "match.certifications.list[0]" },
+      { "claim": "Label Ecocert En Cuisine", "source": "match.certifications.list[1]" },
+      { "claim": "5 spécialistes", "source": "match.engineers.specialized" },
+      { "claim": "Programme primé", "source": "match.why_us[2]" }
+    ]
+  },
+  "assumptions": [
+    "Governance: monthly quality audits, weekly reporting, progressive deployment"
+  ],
+  "warnings": [
+    "SLA response times not provided in input"
+  ],
+  "usage": {
+    "model": "mock",
+    "promptTokens": 2200,
+    "completionTokens": 900,
+    "ms": 180,
+    "attempts": 1
+  }
+}

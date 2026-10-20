@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Enterprise_ETL_Orchestration",
+  "type": "past_project",
+  "title": "Enterprise ETL automation for 8 core systems",
+  "description": "Automated enterprise ETL and workflow orchestration for 8 core systems processing more than 2 TB per day.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Automated enterprise ETL and workflow orchestration for 8 core systems processing more than 2 TB per day.",
+  "scope": "End-to-end ETL pipelines and workflow orchestration.",
+  "technologies": [
+    "etl"
+  ],
+  "delivery_status": "completed",
+  "year": 2026,
+  "outcomes": "Data latency from 12 h to 2 h.",
+  "team_cv_ids": [
+    "CV_18_Leila_Morgan.pdf"
+  ],
+  "source": "CV_18_Leila_Morgan.pdf: OliveSoft experience, Data Engineer, Feb 2026 - Jul 2026"
+}

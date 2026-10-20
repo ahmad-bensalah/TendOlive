@@ -1,0 +1,68 @@
+{
+  "name": "Prestations de Restauration Éco-Responsable",
+  "client": "Communauté d'Agglomération Grand Paris Sud",
+  "date": "24 Novembre 2026",
+  "language": "fr",
+  "qr_url": "https://rfp-studio.com/dossier/restauration-durable-2026",
+  "theme": {
+    "primary": "#10b981",
+    "secondary": "#06b6d4",
+    "background": "#0f172a",
+    "fontHeading": "'Plus Jakarta Sans', sans-serif",
+    "fontBody": "'Inter', sans-serif"
+  },
+  "slides": [
+    {
+      "type": "content",
+      "title": "Engagements Filières Courtes & Produits Bio",
+      "notes": "Slide sur les objectifs Egalim et la valorisation des circuits locaux.",
+      "warnings": [],
+      "sources": { "mermaid": "", "drawio": "" },
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Notre offre privilégie un approvisionnement direct auprès de producteurs locaux situés dans un rayon inférieur à 80 km."
+        },
+        {
+          "kind": "kpis",
+          "items": [
+            { "label": "Part Bio & SIQO", "value": "68%" },
+            { "label": "Rayon Moyen Local", "value": "42 km" },
+            { "label": "Gaspillage Évité", "value": "-35%" }
+          ]
+        },
+        {
+          "kind": "bullets",
+          "bulletStyle": "check",
+          "items": [
+            "100% des viandes bovines, porcines et volailles issues d'élevages français",
+            "Pain artisanal et fruits de saison certifiés Haute Valeur Environnementale (HVE)",
+            "Zéro plastique à usage unique en salle et cuisine dès la rentrée 2026"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "title": "Planning de Déploiement & Transition Écologique",
+      "notes": "Planning de mise en service.",
+      "warnings": [],
+      "sources": { "mermaid": "", "drawio": "" },
+      "blocks": [
+        {
+          "kind": "table",
+          "columns": ["Phase", "Période", "Livrables Clés", "Responsable"],
+          "rows": [
+            ["Phase 1 : Cadrage", "Janvier - Février", "Audit des cuisines et sélection des producteurs", "Chef de secteur"],
+            ["Phase 2 : Équipement", "Mars - Avril", "Installation du matériel de compostage et pesage", "Responsable Logistique"],
+            ["Phase 3 : Lancement", "Mai 2026", "Premiers services et réunions de concertation usagers", "Directeur d'Exploitation"]
+          ]
+        },
+        {
+          "kind": "note",
+          "text": "Un comité de suivi trimestriel réunit les représentants des usagers et de la collectivité."
+        }
+      ]
+    }
+  ]
+}

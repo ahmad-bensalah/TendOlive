@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "olivesoft_Project_Streaming_Platform_Selection",
+  "type": "past_project",
+  "title": "Streaming data-platform selection study (GCP vs Azure)",
+  "description": "Built two parallel streaming paths (Kafka to Dataflow/BigQuery and Kafka to Azure Databricks/Delta Lake) and bench-tested them to inform the client's platform decision.",
+  "origin": "user_entered",
+  "status": "indexed",
+  "created_at": "2026-10-18T12:00:00+00:00",
+  "updated_at": "2026-10-18T12:00:00+00:00",
+  "linked_ids": [],
+  "client": "Client not named in the CV",
+  "company_role": "Built two parallel streaming paths (Kafka to Dataflow/BigQuery and Kafka to Azure Databricks/Delta Lake) and bench-tested them to inform the client's platform decision.",
+  "scope": "Kafka streaming, Google Cloud Dataflow and BigQuery, Azure Databricks and Delta Lake, Terraform, Great Expectations data-quality checks.",
+  "technologies": [
+    "kafka",
+    "gcp",
+    "bigquery",
+    "databricks",
+    "azure",
+    "terraform"
+  ],
+  "delivery_status": "completed",
+  "outcomes": "30 % lower latency on Azure and 15 % cost advantage on GCP measured at 10 k events/s.",
+  "team_cv_ids": [
+    "CV_11_Chloe_Martin.pdf"
+  ],
+  "source": "CV_11_Chloe_Martin.pdf: OliveSoft experience, Data Engineering Apprentice, Jun 2026 - Present"
+}

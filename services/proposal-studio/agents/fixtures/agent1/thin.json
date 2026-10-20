@@ -1,0 +1,123 @@
+{
+  "agent": "requirements",
+  "ok": true,
+  "slides": [
+    {
+      "id": "s1",
+      "type": "content",
+      "title": "Synthèse exécutive",
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Notre équipe propose une solution complète pour Mission d'assistance ponctuelle."
+        },
+        {
+          "kind": "kpis",
+          "items": [
+            {
+              "label": "Projets similaires",
+              "value": "0"
+            },
+            {
+              "label": "Score de correspondance",
+              "value": "54%"
+            },
+            {
+              "label": "Ingénieurs spécialisés",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "kind": "bullets",
+          "items": [
+            "Solution éprouvée et conforme aux exigences",
+            "Équipe expérimentée sur des projets similaires",
+            "Méthodologie agile garantissant une livraison progressive"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "type": "content",
+      "title": "Compréhension de vos besoins",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Intervention sous 48 heures ouvrées sur site",
+            "Remise d'un rapport de synthèse hebdomadaire"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "type": "content",
+      "title": "Solution proposée et conformité",
+      "blocks": [
+        {
+          "kind": "table",
+          "columns": [
+            "Exigence",
+            "Notre réponse",
+            "Preuve"
+          ],
+          "rows": [
+            [
+              "Intervention sous 48 heures ouvrées sur site",
+              "Solution technique adaptée",
+              "À préciser"
+            ],
+            [
+              "Remise d'un rapport de synthèse hebdomadaire",
+              "Solution technique adaptée",
+              "À préciser"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s11",
+      "type": "content",
+      "title": "Prochaines étapes",
+      "blocks": [
+        {
+          "kind": "bullets",
+          "items": [
+            "Atelier de cadrage et validation des exigences",
+            "Conception détaillée et plan de déploiement",
+            "Démarrage du développement après validation"
+          ]
+        },
+        {
+          "kind": "text",
+          "text": "[TO FILL: contact]"
+        }
+      ]
+    }
+  ],
+  "data": {
+    "requirement_list": [
+      "Intervention sous 48 heures ouvrées sur site",
+      "Remise d'un rapport de synthèse hebdomadaire"
+    ],
+    "project_type": "other",
+    "key_features": [
+      "Feature 1",
+      "Feature 2",
+      "Feature 3"
+    ]
+  },
+  "assumptions": [],
+  "warnings": [],
+  "usage": {
+    "model": "mock-model",
+    "promptTokens": 1000,
+    "completionTokens": 500,
+    "ms": 150,
+    "attempts": 1
+  }
+}
