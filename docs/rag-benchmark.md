@@ -15,7 +15,7 @@ test-suite execution results (`test_results.txt`).
 | Does it handle French tenders? | French nDCG@5 **0.89** (English 0.90) |
 | Does it count people and check certificates? | **40/42** CV decision checks, against 8/42 for a similarity-threshold RAG and 15/42 for a reranker alone |
 | Does it hold on real tender wording? | **30/39** lines sent by n8n in a live run get the right status (77 %, 28/39 before the live-run fixes); 1 Demo row still cites a fictional record first, 3 rows cite a fragment (see 5.3) |
-| Is it fast enough? | Median **0.24 s** per requirement on a laptop CPU, so about 2.5 s for a 10-requirement tender |
+| Is it fast enough? | Median **0.24 s** per requirement on a laptop CPU, about **1.1 s** in the `rag` container while the whole system runs (run of 2026-10-20 18:55): 2.5 to 11 s for a 10-requirement tender |
 
 ## 2. What is measured
 
@@ -72,6 +72,10 @@ by up to 0.05 because CV lines are now whole sentences; latency depends on the l
 | Hybrid (BM25 + E5) | 0.81 | 0.66 | 1.00 | 0.91 | 1.00 | 36 ms |
 | Hybrid + reranker | 0.86 | 0.67 | 1.00 | 0.91 | 1.00 | 825 ms |
 | **Final (rules + reranker)** | **0.81** | **0.62** | **1.00** | **0.90** | **1.00** | **237 ms** |
+
+Latency in the packaged run of 2026-10-20 18:55 (`results.md`, `rag` container on CPU, the other services running):
+BM25 43 ms, E5 72 ms, MiniLM 57 ms, hybrid 81 ms, hybrid + reranker 840 ms, final 1084 ms. The quality metrics of that
+run are identical to the table above.
 
 Final system as a decision: **set precision 0.95, set recall 0.73** (0.94 and 0.72 before the fixes: T20 "MuleSoft API
 integration" no longer accepts two irrelevant documents, and T04, T05, T15 find more relevant ones); negatives with no

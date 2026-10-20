@@ -3,7 +3,7 @@
 Matches tender requirements to OliveSoft's knowledge base (`knowledge-base/`: the CVs and recorded company
 capabilities) and stores the analysed tenders for the web app. Code: `services/rag`; container `rag`, port 8001
 (http://localhost:8001/docs). Architecture: [architecture.md](architecture.md) (Part 2); API:
-[integration-and-api.md](integration-and-api.md) (section 5); evaluation: [rag-benchmark.md](rag-benchmark.md).
+[integration-and-api.md](integration-and-api.md) (section 4.1); evaluation: [rag-benchmark.md](rag-benchmark.md).
 
 It starts with the system (`docker compose up -d`). The web app shows a loading state while the API starts and
 "The RAG service is not reachable" with Retry when it is down. The first start builds the Company and Demo indexes

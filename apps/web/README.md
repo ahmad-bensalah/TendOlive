@@ -4,12 +4,14 @@ The user interface of the system: dashboard, tenders with their requirements mat
 knowledge base editing, proposals and decks (with "Refine with AI"), templates, and a Quality page showing the RAG
 benchmark. React 18 + Vite + Tailwind, served by nginx in the `web` container on http://localhost:5173.
 
-![Tender overview: fit score, coverage by category, gaps, proposed team](../../docs/screenshots/web-tender-overview.png)
+![Dashboard: tender counts, pipeline funnel, active tenders and upcoming deadlines](../../docs/screenshots/web-dashboard.png)
 
 | | |
 |---|---|
-| ![Market study tab](../../docs/screenshots/web-market-study.png) | ![Deck templates page](../../docs/screenshots/web-templates.png) |
-| **Market** tab: declared value, comparables and past winners | **Templates**: imported PowerPoint designs used by the deck agents |
+| ![Deck templates page](../../docs/screenshots/web-templates.png) | ![PPTX export from the deck page](../../docs/screenshots/web-export-pptx.png) |
+| **Templates**: imported PowerPoint designs; the agents write into them | **Export**: native, editable PPTX from the embedded editor |
+
+The tender tabs (overview, requirements, prospect, market) and the deck page are shown in the [root README](../../README.md#what-it-looks-like).
 
 ## How it fits
 

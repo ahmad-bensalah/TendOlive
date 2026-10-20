@@ -93,12 +93,15 @@ function settings(cfg) {
   return {
     provider: cfg.provider, model: cfg.model,
     // pause between Main's LLM calls (ms): PIPELINE_LLM_DELAY_MS, else by provider (Groq's free tier: about 8 000 tokens a minute)
-    delayMs: /^d+$/.test(env('PIPELINE_LLM_DELAY_MS')) ? Number(env('PIPELINE_LLM_DELAY_MS'))
+    delayMs: /^\d+$/.test(env('PIPELINE_LLM_DELAY_MS')) ? Number(env('PIPELINE_LLM_DELAY_MS'))
       : ({ ollama: 0, groq: 15000, gemini: 4000, openai: 1000 })[cfg.provider] ?? 4000,
     ragUrl: env('PIPELINE_RAG_URL') || 'http://rag:8001/retrieve/tender',
     studioUrl: (env('PIPELINE_STUDIO_URL') || 'http://proposal-studio:8091').replace(/\/+$/, ''),
     demoUrl: env('PIPELINE_DEMO_TENDERS_URL') || 'http://demo-tenders:8004/tenders',
-    demoMode: on('PIPELINE_DEMO_MODE'),
+    // true = the demo tenders only | with = the demo tenders WITH the real sources | false = the real sources only
+    demoMode: /^(with|both|add)$/i.test(env('PIPELINE_DEMO_MODE')) ? 'with' : on('PIPELINE_DEMO_MODE') ? 'only' : 'off',
+    // test (small limits: 20 records per API, 3 buyers, 3 market studies) | production | empty = Config's rule (CLI runs: production)
+    preset: /^(test|production)$/i.test(env('PIPELINE_PRESET')) ? env('PIPELINE_PRESET').toLowerCase() : null,
     // URL sources (francemarches, domainetat-tn) read the portals through Firecrawl: off without a key, unless forced
     urlSources: urlSources === 'auto' ? Boolean(env('FIRECRAWL_KEY')) : urlSources === 'on',
     autoDeck,
@@ -118,7 +121,9 @@ function ourWorkflows(cfg) {
   js = swap(js, "rag: { url: 'http://host.docker.internal:8001/retrieve/tender'", `rag: { url: ${JSON.stringify(s.ragUrl)}`, 'RAG url');
   js = swap(js, "const STUDIO_URL = 'http://host.docker.internal:8091';", `const STUDIO_URL = ${JSON.stringify(s.studioUrl)};`, 'STUDIO_URL');
   js = swap(js, "request: { method: 'GET', url: 'http://host.docker.internal:8004/tenders' }", `request: { method: 'GET', url: ${JSON.stringify(s.demoUrl)} }`, 'demo source');
-  if (s.demoMode) js = swap(js, 'const DEMO_MODE = false;', 'const DEMO_MODE = true;', 'DEMO_MODE');
+  if (s.demoMode === 'only') js = swap(js, 'const DEMO_MODE = false;', 'const DEMO_MODE = true;', 'DEMO_MODE');
+  if (s.demoMode === 'with') js = swap(js, "{ type: 'api', name: 'demo', demo: true, enabled: false,", "{ type: 'api', name: 'demo', demo: true, enabled: true,", 'demo source on');
+  if (s.preset) js = swap(js, 'const FORCE_PRESET = null;', `const FORCE_PRESET = '${s.preset}';`, 'FORCE_PRESET');
   if (s.autoDeck !== 'top1') js = swap(js, "const AUTO_DECK = 'top1';", `const AUTO_DECK = '${s.autoDeck}';`, 'AUTO_DECK');
   if (!s.urlSources) js = swap(js, 'sources: sources.filter(s => (DEMO_MODE ? s.demo : s.enabled !== false)),',
     "sources: sources.filter(s => (DEMO_MODE ? s.demo : s.enabled !== false) && s.type !== 'url'),   // packaged: no Firecrawl key, URL sources off", 'URL sources');
@@ -199,7 +204,7 @@ function prepare() {
     return;
   }
   const s = ours.settings;
-  log(`importing workflows: RAG ${s.ragUrl} | studio ${s.studioUrl} | demo mode ${s.demoMode} | URL sources ${s.urlSources ? 'on' : 'off (no FIRECRAWL_KEY)'} | auto deck ${s.autoDeck}`);
+  log(`importing workflows: RAG ${s.ragUrl} | studio ${s.studioUrl} | demo tenders ${s.demoMode} | preset ${s.preset || 'Config rule'} | URL sources ${s.urlSources ? 'on' : 'off (no FIRECRAWL_KEY)'} | auto deck ${s.autoDeck}`);
   const oursDir = path.join(TMP, 'ours'), studioDir = path.join(TMP, 'studio');
   for (const d of [oursDir, studioDir]) { fs.rmSync(d, { recursive: true, force: true }); fs.mkdirSync(d, { recursive: true }); }
   for (const [f, w] of Object.entries(ours.workflows)) fs.writeFileSync(path.join(oursDir, f), JSON.stringify(w));

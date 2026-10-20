@@ -102,6 +102,7 @@ services:
       AGENTS_WEBHOOK_KEY: ${AGENTS_WEBHOOK_KEY:-} # required (checked at start)
       # our pipeline (Main's Config, patched at import by init.js)
       PIPELINE_DEMO_MODE: ${PIPELINE_DEMO_MODE:-false}
+      PIPELINE_PRESET: ${PIPELINE_PRESET:-}
       PIPELINE_URL_SOURCES: ${PIPELINE_URL_SOURCES:-auto}
       PIPELINE_AUTO_DECK: ${PIPELINE_AUTO_DECK:-top1}
       PIPELINE_LLM_DELAY_MS: ${PIPELINE_LLM_DELAY_MS:-}

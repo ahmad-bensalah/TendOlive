@@ -109,15 +109,65 @@ corrected from the offer.
   the full v2.
 - **Proposal studio** (`Adapt for Studio` → `Send to Proposal Service` → `Start Deck`): the team's studio (rfp-studio,
   port 8091) stores every proposal input in its tender inbox (`proposal.url`, header `X-API-Key` from the n8n credential
-  **Proposal Studio key**) and makes the decks with its agents: inside the studio (`-Generate cli`), or in n8n with the
-  teammate's 9 workflows next to ours (`-Generate webhook`, the production layout; then `RFP - Refine Slide` lets a sales
-  person rewrite one slide with an instruction). The studio does not read our honesty flags, so `Adapt for Studio` sends
+  **Proposal Studio key**) and makes the decks with its agents, which run in this n8n as the teammate's 9 workflows
+  (`GENERATE_MODE=webhook`; `RFP - Refine Slide` then lets a sales person rewrite one slide with an instruction). The
+  studio does not read our honesty flags, so `Adapt for Studio` sends
   it a copy without what a deck would show as proof without being one: fictional demo records, weak neighbours, header
   and CV skills lines as "why us", CVs outside the proposed team (whose certifications it adds), a budget the market
   study does not support, an unknown template id (OliveSoft's own declarations stay). `Start Deck` then starts the deck
   of the rank-1 tender (`proposal.autoDeck: 'top1'`; `'none'` = every deck from the interface): the studio makes one deck
-  at a time, about 4-5 min each with a real LLM. Run Summary says "Proposal inputs: N sent to the studio | deck started
-  for …" or why not. Rules, answers and errors: [integration-and-api.md](integration-and-api.md) section 2; the agents in n8n and Refine Slide: section 3.
+  at a time (about 2-3 min with Groq in the runs of 2026-10-20). Run Summary says "Proposal inputs: N sent to the studio |
+  deck started for …" or why not. Rules: [Proposal input and the studio copy](#proposal-input-and-the-studio-copy) below;
+  routes, answers and errors: [integration-and-api.md](integration-and-api.md) sections 4 and 5.
+
+## Proposal input and the studio copy
+
+Moved here from the integration document (which keeps the field summary). Code: `src/main/PR1_build_proposal_input.js`
+(the proposal input) and `src/main/PR2_adapt_for_studio.js` (the studio's copy).
+
+**RAG request lines.** `requirements.*` sent to the RAG are short English skill lines (2 to 8 words, like a CV line). A
+line is kept only when the tender's own quote states it: its numbers, every technology / role / certification it names,
+a kind of system or a sector only when the quote or the title names it, at least half of its words. Filler words next to
+a technology are dropped ("Angular interface" becomes "Angular", never "SQL Server"). A line listing several skills
+becomes one requirement each. `sector` is one of the RAG's words (public sector, health, education, telecom, finance,
+retail, tourism) and must be written in the tender, else `public sector`. A tender with no verified requirement is not
+sent (`rag.status = skipped_no_requirements`). Rows are matched back to our requirements by text, then by order; a row the
+RAG does not return counts as missing.
+
+**Rules in the proposal input.**
+- `relevance_score` = 70 for fit high (50 for medium) + 30 x RAG coverage; `relevance_basis` writes the calculation.
+- `matrix.rows[].coverage`: covered / partial / gap (the RAG's `missing`) / unknown (RAG not called or failed);
+  `coverage_score` 100 / 50 / 0. `mandatory` is true only when the tender's own words require it.
+- `matrix.summary.recommendation`: `review` without a matrix; `bid` when every requirement is covered and no obligation
+  sentence of the notice is left out of the matrix; `no_bid` when a mandatory technical requirement is a gap and technical
+  coverage is under 50 %; `bid_with_partner` when every gap is a team / experience requirement; otherwise `review`.
+  `recommendation_reason` names the rule.
+- `competition.budget_estimate`: quartiles of the comparables' real prices (framework ceilings and outliers beyond 10x
+  the median left out, from 3 priced contracts); `confidence` medium with 5+ comparables, low with 2-4, very low with 1,
+  one level lower for a wide spread.
+- `analysis.risks` are facts only: short deadline, mandatory gaps, obligations not in the matrix, proof from demo records,
+  certification asked but not named in the proof, team places that cannot be staffed, framework agreement, strong
+  competition, declared value far from comparable contracts.
+
+**What `Adapt for Studio` changes in the studio's copy** (the studio reads every asset as a reference and every
+justification as a "why us" bullet, so the copy leaves out what is not proof):
+
+| Rule | Fields |
+|---|---|
+| demo and non-proving evidence left out | `matrix.rows[].evidence[]` with `origin: "demo"` or `proves: false` |
+| demo and weak-only assets left out | `rag.assets[]` that are demo or only `weak_for` |
+| justifications that are no argument cleared | rows resting on a demo record, a weak proof or a header / skills line |
+| OliveSoft's declarations kept | `justification_kind: "declaration"` |
+| the proposed team only | CVs of `rag.team_proposal.members[]`, with their roles and certifications as assets |
+| unknown coverage | `coverage_score: 0` when `coverage` is `unknown` |
+| default template | `options.template_id: null` |
+| budget only when the study supports it | `budget_estimate: null` unless status OK, confidence above very low and 3+ comparables |
+| language | not `fr` / `en` becomes `en` (original kept in `language_original`) |
+
+The copy carries a `studio_adapter` block listing what was dropped or added, `auto_deck` (rank 1) and `deck_params`
+(`language`, `project_type`: `software_build` and `ai_data` give `software`, `integration_saas` gives `saas`, anything
+else `other`). `node test/studio_adapter.test.js` runs the copy through the studio's own normaliser on the recorded
+inputs.
 
 ## What was removed from the hybrid, and why
 
@@ -314,20 +364,18 @@ tenders, local `qwen3:4b-instruct`, 2026-10-20), three full runs, each followed 
   scout's mistyped host refused without a credit). Its 3 answers without a proof quote and the ATIH buyer matched to a
   namesake were fixed after it and checked on its recorded data (all 22 answers valid; ATIH found by the notice's SIREN).
 
-Not verified yet:
-- a live run after the last two fixes (missing proof quote, buyer identity by the notice's SIREN): replays and the
-  edge-case suite only;
-- a run with a stronger model: the 4B model is fine for wiring, weak as a judge (about 1 doubtful fit in 8);
-- `Save to Google Sheet` (disabled in the tests) running before `Run Summary`;
-- a deck made with a real LLM from the adapted inputs. The hand-off itself ran end to end on 2026-10-20
-  (log of that run, not shipped: 5 proposal inputs stored in the studio, the rank-1 deck started and made by the studio's
-  agents in cli mode with the mock LLM, deck `a2fd6151`);
-- the deck agents in n8n (webhook mode) and `RFP - Refine Slide`: built and planned (`STUDIO_AGENTS=n8n DRY=1`), Refine
-  Slide's Code nodes checked offline on 34 stubbed answers (bad requests, every regenerate and studio answer, the price
-  approval reset); no live run yet.
+Verified in the packaged system (`docker compose`, 2026-10-20): two end-to-end runs on the demo tenders, from Main to
+an exported deck, with the deck agents in n8n (webhook mode) and Refine Slide used from the web app. Results, tokens and
+timings: [evaluation-report.md](evaluation-report.md).
 
-Your RAG service (team RAG v2, live on :8001): `Join RAG` reads its whole answer (matrix, every proof with its origin:
-CV quote, company declaration or fictional demo record, `team_proposal`, `knowledge_gaps`). With the short skill lines
-the real tenders now match (the first RAG answered `missing` to everything: its reranker rejected long tender sentences).
-The issues left on the RAG side (PSM = CSM, fragment quotes, demo records ranked above CVs in demo mode, filler words
-vetoing a rule hit) are listed for the RAG team in [integration-and-api.md](integration-and-api.md).
+Not verified yet:
+- a run with a stronger model for Main on real sources: the 4B model is fine for wiring, weak as a judge (about 1
+  doubtful fit in 8 in the real runs above);
+- the real portals (URL sources) in the packaged system: they need a Firecrawl key, and the packaged runs used the demo
+  feed;
+- `Save to Google Sheet` (disabled in the tests) running before `Run Summary`.
+
+The RAG side (team RAG v2, `rag:8001`): `Join RAG` reads its whole answer (matrix, every proof with its origin: CV quote,
+company declaration or fictional demo record, `team_proposal`, `knowledge_gaps`). Open issues measured on real tender
+wording (generic or French lines under-claimed, team-size lines, a demo record cited before a CV in one case) are in
+[rag-benchmark.md](rag-benchmark.md) section 5.3.

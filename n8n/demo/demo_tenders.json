@@ -1,10 +1,10 @@
 {
-  "_note": "SYNTHETIC DEMO TENDERS. Written by the team to show the pipeline end to end; not real notices. Buyers are fictional (marked 'démo'). Dates are relative to today: pub_days_ago / deadline_in_days. Edit freely.",
+  "_note": "SYNTHETIC DEMO TENDERS, written by the team to show the pipeline end to end. The buyers are real public bodies used as realistic examples; the tenders, values and contacts are FICTIONAL (contacts use example.org). The pipeline flags them by their source (demo), never as real notices. Dates are relative to today: pub_days_ago / deadline_in_days. Edit freely.",
   "tenders": [
     {
       "id": "DEMO-001",
       "title": "Développement d'une plateforme numérique de gestion des licences touristiques",
-      "buyer": "Office du Tourisme de Sampleville (démo)",
+      "buyer": "Office National du Tourisme Tunisien (ONTT)",
       "country": "TN",
       "language": "fr",
       "currency": "TND",
@@ -15,8 +15,8 @@
         "72262000"
       ],
       "estimated_value": "480 000 TND",
-      "email": "achats@tourisme-sampleville.demo",
-      "description": "L'Office du Tourisme de Sampleville lance un appel d'offres pour le développement d'une plateforme web de gestion des licences des établissements touristiques (demandes en ligne, suivi, renouvellement, tableau de bord).\n\nExigences techniques : le frontend doit être développé en React ou Angular. Le backend doit être réalisé en Node.js ou Java/Spring. La base de données doit être PostgreSQL. La plateforme doit exposer une API REST. L'hébergement doit être assuré sur un cloud AWS ou Azure.\n\nÉquipe : le soumissionnaire doit proposer au minimum 3 développeurs seniors, 1 chef de projet certifié PMP et 1 designer UX/UI.\n\nExpérience : le soumissionnaire doit justifier d'au moins 2 projets numériques similaires dans le secteur public. Une certification ISO 27001 est souhaitée.\n\nDurée d'exécution : 6 mois.\n\nCritères d'attribution : valeur technique (60), prix (40).",
+      "email": "marches@ontt.example.org",
+      "description": "L'Office National du Tourisme Tunisien lance un appel d'offres pour le développement d'une plateforme web de gestion des licences des établissements touristiques (demandes en ligne, suivi, renouvellement, tableau de bord).\n\nExigences techniques : le frontend doit être développé en React ou Angular. Le backend doit être réalisé en Node.js ou Java/Spring. La base de données doit être PostgreSQL. La plateforme doit exposer une API REST. L'hébergement doit être assuré sur un cloud AWS ou Azure.\n\nÉquipe : le soumissionnaire doit proposer au minimum 3 développeurs seniors, 1 chef de projet certifié PMP et 1 designer UX/UI.\n\nExpérience : le soumissionnaire doit justifier d'au moins 2 projets numériques similaires dans le secteur public. Une certification ISO 27001 est souhaitée.\n\nDurée d'exécution : 6 mois.\n\nCritères d'attribution : valeur technique (60), prix (40).",
       "duration": "6 mois",
       "award_criteria": [
         "Valeur technique (60)",
@@ -26,7 +26,7 @@
     {
       "id": "DEMO-002",
       "title": "Mise en place d'un assistant conversationnel IA (chatbot RAG) pour le service aux usagers",
-      "buyer": "Agence Nationale des Services Numériques de Sampleville (démo)",
+      "buyer": "Centre National de l'Informatique (CNI)",
       "country": "TN",
       "language": "fr",
       "currency": "TND",
@@ -47,7 +47,7 @@
     {
       "id": "DEMO-003",
       "title": "Tableau de bord décisionnel des indicateurs de santé publique",
-      "buyer": "Direction Régionale de la Santé de Sampleville (démo)",
+      "buyer": "Agence Régionale de Santé Auvergne-Rhône-Alpes",
       "country": "FR",
       "language": "fr",
       "currency": "EUR",
@@ -58,7 +58,7 @@
         "48482000"
       ],
       "estimated_value": "220 000 EUR",
-      "description": "La Direction Régionale de la Santé souhaite disposer d'un tableau de bord décisionnel consolidant les indicateurs des établissements de santé.\n\nExigences techniques : les tableaux de bord doivent être réalisés sous Power BI. Les flux de données doivent être automatisés avec des pipelines Python. La solution doit être hébergée sur Azure. L'accès doit être géré par rôles.\n\nÉquipe : le titulaire doit proposer 1 chef de projet et 2 ingénieurs data.\n\nExpérience : le titulaire doit justifier d'au moins 1 projet de tableau de bord dans le secteur de la santé.\n\nDurée : 6 mois.\n\nCritères d'attribution : valeur technique (60), prix (40).",
+      "description": "L'Agence Régionale de Santé Auvergne-Rhône-Alpes souhaite disposer d'un tableau de bord décisionnel consolidant les indicateurs des établissements de santé.\n\nExigences techniques : les tableaux de bord doivent être réalisés sous Power BI. Les flux de données doivent être automatisés avec des pipelines Python. La solution doit être hébergée sur Azure. L'accès doit être géré par rôles.\n\nÉquipe : le titulaire doit proposer 1 chef de projet et 2 ingénieurs data.\n\nExpérience : le titulaire doit justifier d'au moins 1 projet de tableau de bord dans le secteur de la santé.\n\nDurée : 6 mois.\n\nCritères d'attribution : valeur technique (60), prix (40).",
       "duration": "6 mois",
       "award_criteria": [
         "Valeur technique (60)",
@@ -68,7 +68,7 @@
     {
       "id": "DEMO-004",
       "title": "Application mobile de relation citoyen intégrée au CRM Salesforce",
-      "buyer": "Communauté de Communes de Sampleville (démo)",
+      "buyer": "Métropole de Lyon",
       "country": "FR",
       "language": "fr",
       "currency": "EUR",
@@ -88,7 +88,7 @@
     {
       "id": "DEMO-005",
       "title": "بوابة الخدمات الإلكترونية للمواطنين",
-      "buyer": "بلدية سامبلفيل (démo)",
+      "buyer": "بلدية صفاقس",
       "country": "TN",
       "language": "ar",
       "currency": "TND",
@@ -108,7 +108,7 @@
     {
       "id": "DEMO-006",
       "title": "Fourniture et livraison de mobilier de bureau pour les services administratifs",
-      "buyer": "Mairie de Sampleville (démo)",
+      "buyer": "Ville de Villeurbanne",
       "country": "FR",
       "language": "fr",
       "currency": "EUR",
